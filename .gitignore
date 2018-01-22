@@ -1,0 +1,24 @@
+*.ilk
+*.pdb
+*.exe
+*.dll
+*.lib
+*.user*
+MakeFile*
+*-ubyte
+*.stash
+*qmake*
+QCustomPlot/
+other/
+picture/
+temp/
+sqlite*/
+build/
+
+!build 32 bits/*.keep
+
+build 32 bits/
+build 64 bits/
+
+debug/
+release/
