@@ -24,15 +24,9 @@ SOURCES += main.cpp \
 HEADERS += $$PWD/perceptron.h \
     $$PWD/neuralNetwork.h \
 
+Matthieu {
 
-DESTDIR = $$PWD/release
-OBJECTS_DIR = $$PWD/release/obj
-
-INCLUDEPATH += "C:/Programming/LightPunchBot/Neural Network/NeuralNetwork" \
-               "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt" \
-
-DEPENDPATH += "optimization.cu" \
-              "C:/Programming/LightPunchBot/Neural Network/NeuralNetwork" \
+INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt" \
 
 QMAKE_LIBDIR += "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.16299.0/um/x64/" \
                 "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.16299.0/ucrt/x64" \
@@ -58,3 +52,10 @@ CONFIG(debug, debug|release) {
                             /NODEFAULTLIB:libcmt.lib
 }
 
+}
+
+Theo {
+
+blabla
+
+}
