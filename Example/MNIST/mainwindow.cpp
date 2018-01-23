@@ -6,10 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    cout << "STEP 00 : Start" << endl;
-    readData();
-    //compute();
-    //exit(0);
+    cout << "STEP 00 finished : Start" << endl;
+    this->initialize();
+    cout << "STEP 01 finished : Initialize" << endl;
 }
 
 MainWindow::~MainWindow()
@@ -17,43 +16,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::readData()
+MainWindow::initialize()
 {
-    labelsTest.clear();
-    imagesTest.clear();
-    ifstream imagesTestFile;
-    ifstream labelsTestFile;
-    imagesTestFile.open("C:\\Programming\\LightPunchBot\\tests\\MNIST\\mnist\\t10k-images.idx3-ubyte", ios::in | ios::binary);
-    labelsTestFile.open("C:\\Programming\\LightPunchBot\\tests\\MNIST\\mnist\\t10k-labels.idx1-ubyte", ios::in | ios::binary);
-
-    int c;
-    int i;
-
-    if(imagesTestFile.is_open() == true
-    && labelsTestFile.is_open() == true)
-    {
-        i = 0;
-        while(!labelsTestFile.eof())
-        {
-            c = labelsTestFile.get();
-            if(c >= 0 && c <= 9 && i > 5)
-                labelsTest.push_back(c);
-            i++;
-        }
-        i = 0;
-        while(!imagesTestFile.eof())
-        {
-            c = imagesTestFile.get();
-            if(c >= 0 && c <= 255 && i > 15)
-                imagesTest.push_back(c);
-            i++;
-        }
-        imagesTestFile.close();
-        labelsTestFile.close();
-        cout << "STEP 01 : Data read" << endl;
-        return;
-    }
-    cout << "STEP 01 FAILED" << endl;
+    this->MNIST = Data::create_MNIST();
 }
 
 unsigned char MainWindow::getImagesTest(int number, int x, int y)
@@ -86,7 +51,7 @@ void MainWindow::on_spinBoxLabel_valueChanged(int value)
 
 void MainWindow::compute()
 {
-    this->initialize();
+    this->initializeNeuralNetwork();
 
     clock_t numberOfClockCycle = clock();
     float cluseringRateMax = -1;
@@ -132,14 +97,11 @@ void MainWindow::compute()
         cout << "clustering rate : " << neuralNetwork.getClusteringRate() << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
         cout << "clustering rate max : " << cluseringRateMax << " epoch : " << epochMax << endl;
     }
-    //numberOfClockCycle = clock() - numberOfClockCycle;
-    //cout << "Time for " << count-1 << " epochs : " << numberOfClockCycle << " clock cycles" << " (" << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes)" << endl;
-
 }
 
-void MainWindow::initialize()
+void MainWindow::initializeNeuralNetwork()
 {
-    NeuralNetwork neuralNetwork(784, 1, 100, 10);
+    this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
 
     neuralNetwork.resetCalculationOfClusteringRate();
     neuralNetwork.setLearningRate(0.01f);
@@ -153,6 +115,7 @@ void MainWindow::initialize()
     this->input.resize(784);
     this->desired.resize(10);
 }
+
 void MainWindow::on_pushButton_clicked()
 {
     compute();

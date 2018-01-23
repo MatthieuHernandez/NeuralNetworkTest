@@ -2,13 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <sstream>
 #include <time.h>
+
 #include "neuralNetwork.h"
+#include "data.cpp"
+
 
 using namespace std;
 
@@ -33,23 +35,27 @@ private slots:
 
 private:
 
-    const int trainnig_set_size = 60000;
-    const int testing_set_size = 10000;
+
 
     Ui::MainWindow *ui;
 
+    Data::MNIST_struct MNIST;
     NeuralNetwork neuralNetwork;
+
     vector<float> input;
     vector<float> desired;
 
     list<vector<float>> desired_outputs;
 
-    void readData();
     void compute();
     void initialize();
+    void initializeNeuralNetwork();
 
     vector<unsigned char> imagesTest;
     vector<unsigned char> labelsTest;
+
+    vector<unsigned char> imagesLearn;
+    vector<unsigned char> labelsLearn;
 
     unsigned char getImagesTest(int number, int x, int y);
 };
