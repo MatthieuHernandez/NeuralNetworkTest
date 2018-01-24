@@ -24,6 +24,12 @@ class NeuralNetwork
         int numberOfSameClusteringAfterReset;
         int counterOfSameClusteringAfterReset;
 
+        unsigned int numberOfInput;
+        unsigned int numberOfHiddenLayers;
+        unsigned int numberOfLayers;
+        unsigned int numberOfNeuronsInHiddenLayers;
+        unsigned int numberOfOutput;
+
         vector<vector<float>> results;
         vector<float> binaryResult;
         vector<vector<float>> errors;
@@ -46,13 +52,7 @@ class NeuralNetwork
         vector<float> out;
 
 
-    protected :
-
-        unsigned int numberOfInput;
-        unsigned int numberOfHiddenLayers;
-        unsigned int numberOfLayers;
-        unsigned int numberOfNeuronsInHiddenLayers;
-        unsigned int numberOfOutput;
+    public :
 
         float learningRate;
         float clusteringRate;
@@ -64,9 +64,6 @@ class NeuralNetwork
 
         bool train(const vector<float> &inputs, const vector<float> &desired); // return true if it has been trained
         bool train(const vector<vector<float>> &inputs, const vector<vector<float>> &desired); // return true if it has been trained
-
-
-    public :
 
         vector<float> outputFloat(const vector<float> &inputs);
         bool calculateClusteringRate(const vector<float> &inputs, const vector<float> &desired); // return true if it has right
