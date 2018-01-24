@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     cout << "STEP 00 finished : Start" << endl;
     this->initialize();
     cout << "STEP 01 finished : Initialize" << endl;
+
+    displayImage(0);
+    ui->comboBoxSet->addItem("Testing set");
+    ui->comboBoxSet->addItem("Training set");
 }
 
 MainWindow::~MainWindow()
@@ -16,22 +20,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-MainWindow::initialize()
+void MainWindow::initialize()
 {
     this->MNIST = Data::create_MNIST();
 }
 
-unsigned char MainWindow::getImagesTest(int number, int x, int y)
+unsigned char MainWindow::getImages(int number, int x, int y)
 {
-    return imagesTest[number * 784 + y * 28 + x];
+    if(displayedSet == testing)
+        return this->MNIST.testing.images[number][y * 28 + x];
+    else
+        return this->MNIST.trainig.images[number][y * 28 + x];
 }
 
-void MainWindow::on_spinBoxLabel_editingFinished()
+void MainWindow::on_spinBoxImageId_valueChanged(int value)
 {
-
+    displayImage(value);
 }
 
-void MainWindow::on_spinBoxLabel_valueChanged(int value)
+void MainWindow::displayImage(int value)
 {
     int size = 28;
     int multiple = 10;
@@ -40,18 +47,23 @@ void MainWindow::on_spinBoxLabel_valueChanged(int value)
     {
         for(int y = 0; y < size; y++)
         {
-            picture.setPixel(x, y, qRgb((int)getImagesTest(value, x, y),
-                                        (int)getImagesTest(value, x, y),
-                                        (int)getImagesTest(value, x, y)));
+            picture.setPixel(x, y, qRgb((int)getImages(value, x, y),
+                                        (int)getImages(value, x, y),
+                                        (int)getImages(value, x, y)));
         }
     }
     QImage scalePicture = picture.scaled(size*multiple, size*multiple, Qt::KeepAspectRatio);
-    ui->labelPicture->setPixmap(QPixmap::fromImage(scalePicture));
+    ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
+
+    if(displayedSet == training)
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.trainig.labels[value])));
+    else
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.testing.labels[value])));
 }
 
 void MainWindow::compute()
 {
-    this->initializeNeuralNetwork();
+    /*this->initializeNeuralNetwork();
 
     clock_t numberOfClockCycle = clock();
     float cluseringRateMax = -1;
@@ -96,7 +108,7 @@ void MainWindow::compute()
         }
         cout << "clustering rate : " << neuralNetwork.getClusteringRate() << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
         cout << "clustering rate max : " << cluseringRateMax << " epoch : " << epochMax << endl;
-    }
+    }*/
 }
 
 void MainWindow::initializeNeuralNetwork()
@@ -119,4 +131,22 @@ void MainWindow::initializeNeuralNetwork()
 void MainWindow::on_pushButton_clicked()
 {
     compute();
+}
+
+void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
+{
+    if(index == 0)
+    {
+        this->displayedSet = testing;
+        ui->spinBoxImageId->setMaximum(9999);
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.testing.labels[ui->spinBoxImageId->value()])));
+    }
+    if(index == 1)
+    {
+        this->displayedSet = training;
+        ui->spinBoxImageId->setMaximum(59999);
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.trainig.labels[ui->spinBoxImageId->value()])));
+    }
+
+    displayImage(ui->spinBoxImageId->value());
 }

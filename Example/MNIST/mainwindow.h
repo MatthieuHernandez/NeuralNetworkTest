@@ -3,13 +3,12 @@
 
 #include <QMainWindow>
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <sstream>
 #include <time.h>
 
 #include "neuralNetwork.h"
-#include "data.cpp"
+#include "data.h"
 
 
 using namespace std;
@@ -18,46 +17,48 @@ namespace Ui {
 class MainWindow;
 }
 
+enum DisplayedSet
+{
+    testing,
+    training
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    public:
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-
-private slots:
-    void on_spinBoxLabel_editingFinished();
-
-    void on_spinBoxLabel_valueChanged(int value);
-
-    void on_pushButton_clicked();
-
-private:
+        explicit MainWindow(QWidget *parent = 0);
+        ~MainWindow();
 
 
+    private:
 
-    Ui::MainWindow *ui;
+        Ui::MainWindow *ui;
 
-    Data::MNIST_struct MNIST;
-    NeuralNetwork neuralNetwork;
+        Data::MNIST_struct MNIST;
+        NeuralNetwork neuralNetwork;
 
-    vector<float> input;
-    vector<float> desired;
+        vector<float> input;
+        vector<float> desired;
 
-    list<vector<float>> desired_outputs;
+        list<vector<float>> desired_outputs;
 
-    void compute();
-    void initialize();
-    void initializeNeuralNetwork();
+        DisplayedSet displayedSet = testing;
 
-    vector<unsigned char> imagesTest;
-    vector<unsigned char> labelsTest;
+        void compute();
+        void initialize();
+        void initializeNeuralNetwork();
+        void displayImage(int value);
 
-    vector<unsigned char> imagesLearn;
-    vector<unsigned char> labelsLearn;
+        unsigned char getImages(int number, int x, int y);
 
-    unsigned char getImagesTest(int number, int x, int y);
+
+    private slots:
+
+        void on_spinBoxImageId_valueChanged(int value);
+        void on_pushButton_clicked();
+        void on_comboBoxSet_currentIndexChanged(int index);
 };
 
 #endif // MAINWINDOW_H

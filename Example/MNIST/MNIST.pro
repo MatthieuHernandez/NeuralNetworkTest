@@ -17,7 +17,7 @@ Matthieu {
 
     include("$$PWD\..\..\src\NeuralNetwork.pro")
 
-    INCLUDEPATH += $$PWD \
+    INCLUDEPATH += $$PWD\
                    "$$PWD\..\..\src" \
                    "C:/Qt/5.10.0/msvc2015_64/bin" \
                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include" \
@@ -27,7 +27,7 @@ Matthieu {
     #LIBS += C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0\um\x64\shell32.lib
 
     SOURCES += \
-            main.cpp \
+            ../MNIST/main.cpp \
             mainwindow.cpp
 
     HEADERS += \
@@ -50,3 +50,6 @@ Matthieu {
 
 SOURCES += \
     data.cpp
+
+HEADERS += \
+    data.h

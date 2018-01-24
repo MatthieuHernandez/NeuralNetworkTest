@@ -1,62 +1,51 @@
-#include <string>
-#include <vector>
-
-using namespace std;
+#include "data.h"
 
 namespace Data
 {
 
-const string path_MNIST[4] = {".\\mnist\\t10k-images.idx3-ubyte"
-                              ".\\mnist\\t10k-labels.idx1-ubyte"
-                              ".\\mnist\\train-images.idx3-ubyte"
-                              ".\\mnist\\train-labels.idx1-ubyte"};
+string path = "mnist\\";
 
-struct Set
+const string path_MNIST[4] = {path + "t10k-images.idx3-ubyte",
+                              path + "t10k-labels.idx1-ubyte",
+                              path + "train-images.idx3-ubyte",
+                              path + "train-labels.idx1-ubyte",};
+
+
+
+MNIST_struct create_MNIST()
 {
-    const int size;
-    vector<vector<char>> images;
-};
+   MNIST_struct MNIST = Initialize_MNIST();
+   readImages(MNIST);
 
-struct MNIST_struct
-{
-   Set testing;
-   Set learning;
-};
-
-
-MNIST_struct* create_MNIST()
-{
-   MNIST_struct *MNIST = Initialize_MNIST();
-   readImages(&MNIST);
+   return MNIST;
 }
 
-MNIST_struct* create_MNIST()
+MNIST_struct Initialize_MNIST()
 {
-    MNIST_struct *MNIST = new MNIST_struct();
+    MNIST_struct MNIST;
 
-    MNIST->learning = new Set();
-    MNIST->testing = new Set();
+    MNIST.trainig.size = 60000;
+    MNIST.testing.size = 10000;
 
-    MNIST->learning.size = 60000;
-    MNIST->testing.size = 10000;
+    return MNIST;
 }
 
-void readImages(MNIST_struct *MNIST)
+void readImages(MNIST_struct &MNIST)
 {
     ifstream imagesTestFile;
     ifstream labelsTestFile;
-    ifstream imagesLearnFile;
-    ifstream labelsLearnFile;
+    ifstream imagesTrainFile;
+    ifstream labelsTrainFile;
     imagesTestFile.open(path_MNIST[0], ios::in | ios::binary);
     labelsTestFile.open(path_MNIST[1], ios::in | ios::binary);
-    imagesLearnFile.open(path_MNIST[2], ios::in | ios::binary);
-    labelsLearnFile.open(path_MNIST[3], ios::in | ios::binary);
+    imagesTrainFile.open(path_MNIST[2], ios::in | ios::binary);
+    labelsTrainFile.open(path_MNIST[3], ios::in | ios::binary);
 
-    readSet(&MNIST->testing, imagesTestFile, labelsTestFile);
-    readSet(&MNIST->learning, imagesLearnFile, labelsLearnFile);
+    readSet(MNIST.testing, imagesTestFile, labelsTestFile);
+    readSet(MNIST.trainig, imagesTrainFile, labelsTrainFile);
 }
 
-void readSet(Set *set, ifstream &images, ifstream &labels)
+void readSet(Set &set, ifstream &images, ifstream &labels)
 {
     if(images.is_open() != true
     && labels.is_open() != true)
@@ -65,24 +54,32 @@ void readSet(Set *set, ifstream &images, ifstream &labels)
         return;
     }
     int i = 0;
-    int c = 0;
+    char c = 0;
 
-    while(!labels.eof())
+    for(i = 0; !labels.eof(); i++)
     {
         c = labels.get();
-        if(c >= 0 && c <= 9 && i > 5)
-            set->labels.push_back(c);
-        i++;
+        if(c >= 0 && c <= 9)
+            set.labels.push_back(c);
     }
-
-    i = 0;
-
-    while(!images.eof())
+    int shift = 0;
+    for(i = 0; !images.eof(); i++)
     {
-        c = images.get();
-        if(c >= 0 && c <= 255 && i > 15)
-            set->images.push_back(c);
-        i++;
+        vector<unsigned char> v;
+        set.images.push_back(v);
+
+        for(int j = 0; !images.eof() && j < 784;)
+        {
+            c = images.get();
+            if(shift > 15)
+            {
+                set.images.back().push_back(c);
+                j++;
+            }
+            else
+                shift ++;
+        }
+
     }
     images.close();
     labels.close();

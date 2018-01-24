@@ -14,11 +14,17 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QSpinBox" name="spinBoxLabel">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <widget class="QSpinBox" name="spinBoxImageId">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>410</y>
+      <y>440</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -27,7 +33,7 @@
      <number>9999</number>
     </property>
    </widget>
-   <widget class="QLabel" name="labelPicture">
+   <widget class="QLabel" name="Image">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -44,7 +50,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>420</y>
+      <y>440</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -53,26 +59,30 @@
      <string>Compute</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelImage">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>420</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Label :</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxSet">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>470</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>500</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

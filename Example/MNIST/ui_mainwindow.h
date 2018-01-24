@@ -13,14 +13,12 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -29,12 +27,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QSpinBox *spinBoxLabel;
-    QLabel *labelPicture;
+    QSpinBox *spinBoxImageId;
+    QLabel *Image;
     QPushButton *pushButton;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
-    QStatusBar *statusBar;
+    QLabel *labelImage;
+    QComboBox *comboBoxSet;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -43,27 +40,24 @@ public:
         MainWindow->resize(500, 500);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        spinBoxLabel = new QSpinBox(centralWidget);
-        spinBoxLabel->setObjectName(QStringLiteral("spinBoxLabel"));
-        spinBoxLabel->setGeometry(QRect(10, 410, 81, 22));
-        spinBoxLabel->setMaximum(9999);
-        labelPicture = new QLabel(centralWidget);
-        labelPicture->setObjectName(QStringLiteral("labelPicture"));
-        labelPicture->setGeometry(QRect(100, 40, 280, 280));
+        centralWidget->setMinimumSize(QSize(0, 0));
+        spinBoxImageId = new QSpinBox(centralWidget);
+        spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
+        spinBoxImageId->setGeometry(QRect(10, 440, 81, 22));
+        spinBoxImageId->setMaximum(9999);
+        Image = new QLabel(centralWidget);
+        Image->setObjectName(QStringLiteral("Image"));
+        Image->setGeometry(QRect(100, 40, 280, 280));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(410, 420, 80, 21));
+        pushButton->setGeometry(QRect(410, 440, 80, 21));
+        labelImage = new QLabel(centralWidget);
+        labelImage->setObjectName(QStringLiteral("labelImage"));
+        labelImage->setGeometry(QRect(10, 420, 81, 16));
+        comboBoxSet = new QComboBox(centralWidget);
+        comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
+        comboBoxSet->setGeometry(QRect(10, 470, 81, 22));
         MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 500, 20));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 
@@ -73,8 +67,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        labelPicture->setText(QString());
+        Image->setText(QString());
         pushButton->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        labelImage->setText(QApplication::translate("MainWindow", "Label :", nullptr));
     } // retranslateUi
 
 };
