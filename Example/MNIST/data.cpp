@@ -54,26 +54,34 @@ void readSet(Set &set, ifstream &images, ifstream &labels)
         return;
     }
     int i = 0;
-    char c = 0;
+    unsigned char c = 0;
 
     for(i = 0; !labels.eof(); i++)
     {
         c = labels.get();
-        if(c >= 0 && c <= 9)
-            set.labels.push_back(c);
+
+        vector<float> v;
+        v.resize(10, 0.0);
+        set.labels.push_back(v);
+
+        if(!labels.eof())
+            set.labels.back()[c] = 1.0;
     }
     int shift = 0;
+    float value;
     for(i = 0; !images.eof(); i++)
     {
-        vector<unsigned char> v;
+        vector<float> v;
         set.images.push_back(v);
 
         for(int j = 0; !images.eof() && j < 784;)
         {
             c = images.get();
+
             if(shift > 15)
             {
-                set.images.back().push_back(c);
+                value = (float)((int)(c)/255.0);
+                set.images.back().push_back(value);
                 j++;
             }
             else

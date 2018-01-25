@@ -28,9 +28,9 @@ void MainWindow::initialize()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
     if(displayedSet == testing)
-        return this->MNIST.testing.images[number][y * 28 + x];
+        return (unsigned char)(this->MNIST.testing.images[number][y * 28 + x]*255.0);
     else
-        return this->MNIST.trainig.images[number][y * 28 + x];
+        return (unsigned char)(this->MNIST.trainig.images[number][y * 28 + x]*255.0);
 }
 
 void MainWindow::on_spinBoxImageId_valueChanged(int value)
@@ -47,23 +47,51 @@ void MainWindow::displayImage(int value)
     {
         for(int y = 0; y < size; y++)
         {
-            picture.setPixel(x, y, qRgb((int)getImages(value, x, y),
-                                        (int)getImages(value, x, y),
-                                        (int)getImages(value, x, y)));
+            picture.setPixel(x, y, qRgb(getImages(value, x, y),
+                                        getImages(value, x, y),
+                                        getImages(value, x, y)));
         }
     }
     QImage scalePicture = picture.scaled(size*multiple, size*multiple, Qt::KeepAspectRatio);
     ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
     if(displayedSet == training)
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.trainig.labels[value])));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value))));
     else
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.testing.labels[value])));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value))));
+}
+
+int MainWindow::getLabel(int value)
+{
+    if(displayedSet == training)
+        if      (this->MNIST.trainig.labels[value][0] == 1) return 0;
+        else if (this->MNIST.trainig.labels[value][1] == 1) return 1;
+        else if (this->MNIST.trainig.labels[value][2] == 1) return 2;
+        else if (this->MNIST.trainig.labels[value][3] == 1) return 3;
+        else if (this->MNIST.trainig.labels[value][4] == 1) return 4;
+        else if (this->MNIST.trainig.labels[value][5] == 1) return 5;
+        else if (this->MNIST.trainig.labels[value][6] == 1) return 6;
+        else if (this->MNIST.trainig.labels[value][7] == 1) return 7;
+        else if (this->MNIST.trainig.labels[value][8] == 1) return 8;
+        else if (this->MNIST.trainig.labels[value][9] == 1) return 9;
+        else return -1;
+    else
+        if      (this->MNIST.testing.labels[value][0] == 1) return 0;
+        else if (this->MNIST.testing.labels[value][1] == 1) return 1;
+        else if (this->MNIST.testing.labels[value][2] == 1) return 2;
+        else if (this->MNIST.testing.labels[value][3] == 1) return 3;
+        else if (this->MNIST.testing.labels[value][4] == 1) return 4;
+        else if (this->MNIST.testing.labels[value][5] == 1) return 5;
+        else if (this->MNIST.testing.labels[value][6] == 1) return 6;
+        else if (this->MNIST.testing.labels[value][7] == 1) return 7;
+        else if (this->MNIST.testing.labels[value][8] == 1) return 8;
+        else if (this->MNIST.testing.labels[value][9] == 1) return 9;
+        else return -1;
 }
 
 void MainWindow::compute()
 {
-    /*this->initializeNeuralNetwork();
+    this->initializeNeuralNetwork();
 
     clock_t numberOfClockCycle = clock();
     float cluseringRateMax = -1;
@@ -71,35 +99,21 @@ void MainWindow::compute()
 
     for(int count = 1; ; count++)
     {
-        for(int index = 0; index < trainnig_set_size; index ++)
+        for(int index = 0; index < MNIST.trainig.size; index ++)
         {
-           input.assign(&imagesTest[index*784], &imagesTest[(index+1)*784]);
-           for(int j = 0; j < 10; j++)
-           {
-               if(labelsTest[index] == j)
-                   desired[j] = 1;
-               else
-                   desired[j] = 0;
-           }
-           //neuralNetwork.train(input, desired);
-           cout << index << endl;
-        }
-        neuralNetwork.resetCalculationOfClusteringRate();
-        for(int index = 0; index < testing_set_size; index ++)
-        {
-            for(unsigned int i = 0; i < labelsTest.size(); i++)
+            neuralNetwork.train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
+            if(index%100 == 0)
             {
-                input.assign(&imagesTest[index*784], &imagesTest[(index+1)*784]);
-
-                for(int j = 0; j < 10; j++)
-                {
-                    if(labelsTest[i] == j)
-                        desired[j] = 1;
-                    else
-                        desired[j] = 0;
-                }
-                neuralNetwork.calculateClusteringRate(input, desired);
+                ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
+                QApplication::processEvents();
             }
+        }
+
+        neuralNetwork.resetCalculationOfClusteringRate();
+
+        for(int index = 0; index < MNIST.testing.size; index ++)
+        {
+            neuralNetwork.calculateClusteringRate(MNIST.testing.images[index], MNIST.testing.labels[index]);
         }
         if(neuralNetwork.getClusteringRate() > cluseringRateMax)
         {
@@ -107,8 +121,8 @@ void MainWindow::compute()
             epochMax = count;
         }
         cout << "clustering rate : " << neuralNetwork.getClusteringRate() << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
-        cout << "clustering rate max : " << cluseringRateMax << " epoch : " << epochMax << endl;
-    }*/
+        cout << "clustering rate max : " << cluseringRateMax << " epoch : " << epochMax << endl << endl;
+    }
 }
 
 void MainWindow::initializeNeuralNetwork()
@@ -139,13 +153,13 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
     {
         this->displayedSet = testing;
         ui->spinBoxImageId->setMaximum(9999);
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.testing.labels[ui->spinBoxImageId->value()])));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value()))));
     }
     if(index == 1)
     {
         this->displayedSet = training;
         ui->spinBoxImageId->setMaximum(59999);
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(this->MNIST.trainig.labels[ui->spinBoxImageId->value()])));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value()))));
     }
 
     displayImage(ui->spinBoxImageId->value());

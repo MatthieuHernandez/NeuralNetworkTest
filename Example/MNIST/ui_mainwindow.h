@@ -32,6 +32,7 @@ public:
     QPushButton *pushButton;
     QLabel *labelImage;
     QComboBox *comboBoxSet;
+    QLabel *labelCount;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -57,6 +58,9 @@ public:
         comboBoxSet = new QComboBox(centralWidget);
         comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
         comboBoxSet->setGeometry(QRect(10, 470, 81, 22));
+        labelCount = new QLabel(centralWidget);
+        labelCount->setObjectName(QStringLiteral("labelCount"));
+        labelCount->setGeometry(QRect(410, 420, 81, 16));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -70,6 +74,7 @@ public:
         Image->setText(QString());
         pushButton->setText(QApplication::translate("MainWindow", "Compute", nullptr));
         labelImage->setText(QApplication::translate("MainWindow", "Label :", nullptr));
+        labelCount->setText(QApplication::translate("MainWindow", "Count :", nullptr));
     } // retranslateUi
 
 };

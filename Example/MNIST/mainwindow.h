@@ -50,6 +50,7 @@ class MainWindow : public QMainWindow
         void initialize();
         void initializeNeuralNetwork();
         void displayImage(int value);
+        int getLabel(int value);
 
         unsigned char getImages(int number, int x, int y);
 

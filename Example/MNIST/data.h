@@ -13,8 +13,8 @@ namespace Data
     struct Set
     {
         int size;
-        vector<vector<unsigned char>> images;
-        vector<unsigned char> labels;
+        vector<vector<float>> images;
+        vector<vector<float>> labels;
     };
 
     struct MNIST_struct
