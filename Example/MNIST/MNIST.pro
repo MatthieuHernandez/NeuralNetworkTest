@@ -11,7 +11,25 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MNIST
 TEMPLATE = app
 
-#DEFINES += QT_DEPRECATED_WARNINGS
+SOURCES += \
+        ../MNIST/main.cpp \
+        mainwindow.cpp \
+        data.cpp \
+
+HEADERS += mainwindow.h\
+           data.h \
+
+FORMS += \
+        mainwindow.ui
+
+if(msvc) {
+    message("MSVC")
+    QMAKE_CXXFLAGS += /O2
+}
+if(mingw) {
+    message("MinGW")
+    QMAKE_CXXFLAGS += -O3
+}
 
 Matthieu {
 
@@ -26,30 +44,7 @@ Matthieu {
 
     #LIBS += C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0\um\x64\shell32.lib
 
-    SOURCES += \
-            ../MNIST/main.cpp \
-            mainwindow.cpp
-
-    HEADERS += \
-            mainwindow.h
-
-    FORMS += \
-            mainwindow.ui
 
     LIBS += -lpsapi \
-
-    if(msvc) {
-        message("MSVC")
-        QMAKE_CXXFLAGS += /O2
-    }
-    if(mingw) {
-        message("MinGW")
-        QMAKE_CXXFLAGS += -O3
-    }
 }
 
-SOURCES += \
-    data.cpp
-
-HEADERS += \
-    data.h
