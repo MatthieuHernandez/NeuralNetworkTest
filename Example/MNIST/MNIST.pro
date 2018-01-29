@@ -53,6 +53,6 @@ Matthieu {
 
 nutsxy {
 
- message("COMPIL OF NUTSXY")
+ message("COMPILE OF NUTSXY")
 }
 
