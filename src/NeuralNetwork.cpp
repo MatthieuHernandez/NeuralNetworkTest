@@ -19,7 +19,6 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
     this->learningRate = learningRate;
     this->lenghtOfShortRuns = 0;
     this->shortRunCounter = 0;
-    this->lastError = 0;
     this->numberOfResultsClassifiedWell = 0;
     this->numberOfResultsMisclassefied = 0;
     this->clusteringRate = -1;
@@ -28,9 +27,12 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
     this->numberOfLayers = this->numberOfHiddenLayers+1;
     this->numberOfNeuronsInHiddenLayers = numberOfNeuronsInHiddenLayers;
     this->numberOfOutput = numberOfOutputs;
-    this->numberOfSameClusteringAfterReset = 0;
     this->momentum = 0;
-    error = 0;
+    this->lastError = 0;
+    this->error = 0;
+    this->numberOfResultsClassifiedWell = 0;
+
+    outputs.resize(numberOfOutput);
 
     vector<Perceptron> temp;
     vector<float> temp2;
@@ -65,33 +67,9 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
         results[numberOfHiddenLayers].push_back(0);
         errors[numberOfHiddenLayers].push_back(0);
     }
-    countDesired.resize(numberOfOutputs, 0);
-    averageInputs.resize(numberOfInputs, 0);
-    averageDesired.resize(numberOfOutputs, 0);
-    averageOutput.resize(numberOfOutputs, 0);
-    binaryResult.resize(numberOfOutputs, 0);
 }
 
-vector<float> NeuralNetwork::binaryOutput(const vector<float> &inputs) // ALSO CHANGE BACKPROP // WARNING : calculateOutput(inputs) between 0 and 1 ???
-{
-    calculateOutput(inputs);
-    for(unsigned int i = 0; i < numberOfOutput; i++)
-    {
-        if(results[numberOfHiddenLayers][i] > 0.5)
-            binaryResult[i] = 1;
-        else
-            binaryResult[i] = 0;
-    }
-    return binaryResult;
-}
-
-vector<float> NeuralNetwork::outputFloat(const vector<float> &inputs)
-{
-    calculateOutput(inputs);
-    return results[numberOfHiddenLayers];
-}
-
-void NeuralNetwork::calculateOutput(const vector<float> &inputs)
+vector<float> NeuralNetwork::calculateOutput(const vector<float> &inputs)
 {
     for(unsigned int n = 0; n < neurons[0].size(); n++) // first layer
     {
@@ -108,159 +86,73 @@ void NeuralNetwork::calculateOutput(const vector<float> &inputs)
     {
        results[numberOfHiddenLayers][n] = neurons[numberOfHiddenLayers][n].outputFloat(results[numberOfHiddenLayers-1])/2.0f + 0.5f; // between 0 and 1
     }
+    return results[numberOfHiddenLayers];
 }
 
-void NeuralNetwork::resetCalculationOfClusteringRate()
+void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float> &inputs, const vector<int> &desired)
 {
-    if(numberOfSameClusteringAfterReset > 0)
+    this->calculateOutput(inputs);
+    for(int i = 0; i < results[numberOfHiddenLayers].size(); i++)
     {
-        if(previousClusteringRate == clusteringRate)
+        classifiedWell = true;
+        if((int)round(results[numberOfHiddenLayers][i]) == desired[i] && desired[i] != -1.0)
         {
-            counterOfSameClusteringAfterReset ++;
-            if(counterOfSameClusteringAfterReset >= numberOfSameClusteringAfterReset)
-            {
-                resetAllNeurons();
-                cout << "reset" << endl;
-                counterOfSameClusteringAfterReset = 0;
-            }
-        }
-        else
-        {
-            counterOfSameClusteringAfterReset = 0;
+            classifiedWell = false;
+            break;
         }
     }
-    numberOfResultsClassifiedWell = 0;
-    numberOfResultsMisclassefied = 0;
-    previousClusteringRate = clusteringRate;
-    clusteringRate = 0;
-}
-
-bool NeuralNetwork::calculateClusteringRate(const vector<float> &inputs, const vector<float> &desired)
-{
-    vector<vector<float>> i; // take time ?
-    vector<vector<float>> d;
-    i.push_back(inputs);
-    d.push_back(desired);
-    return train(i, d, false);
-}
-
-bool NeuralNetwork::train(const vector<float> &inputs, const vector<float> &desired) // backpropagation
-{
-    vector<vector<float>> i;
-    vector<vector<float>> d;
-    i.push_back(inputs);
-    d.push_back(desired);
-    return !train(i, d, true);
-}
-
-bool NeuralNetwork::train(const vector<vector<float>> &inputs, const vector<vector<float>> &desired) // backpropagation
-{
-    if(inputs.size() != desired.size())
+    if(classifiedWell == true)
     {
-        lastError = 8;
-        return false;
+        numberOfResultsClassifiedWell++;
     }
-    return train(inputs, desired, true);
-}
-
-bool NeuralNetwork::train(const vector<vector<float>> &inputs, const vector<vector<float> > &desired, const bool isTrainnig)
-{
-    int numberOfMisclassified = 0;
-    bool classifiedWell;
-    if(isTrainnig == false)
-    {
-        for(int j = 0; j < inputs.size(); j++)
-        {
-            out = binaryOutput(inputs[j]);
-            classifiedWell = true;
-            for(int i = 0; i < out.size(); i++)
-            {
-                if(out[i] != desired[j][i] && desired[j][i] != -1.0)
-                {
-                    classifiedWell = false;
-                    break;
-                }
-            }
-            if(classifiedWell == true)
-            {
-                //numberOfClassifiedWell++;
-                numberOfResultsClassifiedWell++;
-            }
-            else
-            {
-                numberOfMisclassified++;
-                numberOfResultsMisclassefied++;
-            }
-        }
-        clusteringRate = (float)(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
-    }
-    else // if(isTrainnig == true)
-    {
-        backpropagationAlgorithm(inputs, desired); // THE MOST IMPORTANT
-        //resetAllNeurons();
-        geneticModification(0.004f); // 1/250
-
-
-        if(lenghtOfShortRuns > 0)
-        {
-            shortRunCounter ++;
-            if(shortRunCounter >= lenghtOfShortRuns)
-            {
-                shortRunCounter = 0;
-                resetAllNeurons();
-            }
-        }
-        return true;
-    }
-    if(numberOfMisclassified == 0)
-        return true;
     else
-        return false;
+    {
+        numberOfResultsMisclassefied++;
+    }
+
 }
 
-inline
-void NeuralNetwork::backpropagationAlgorithm(const vector<vector<float>> &inputs, const vector<vector<float>> &desired)
+void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float> &inputs, const int classNumber)
 {
-    countDesired.assign(numberOfOutput, 0);
-    averageInputs.assign(numberOfInput, 0);
-    averageDesired.assign(numberOfOutput, 0);
-    averageOutput.assign(numberOfOutput, 0);
-    for(unsigned int i = 0; i < numberOfInput; i++) // average inputs
+    maxOutputValue = 0;
+    this->calculateOutput(inputs);
+
+    for(int i = 0; i < results[numberOfHiddenLayers].size(); i++)
     {
-        for(int j = 0; j < inputs.size();j++)
+        if(maxOutputValue < results[numberOfHiddenLayers][i])
         {
-            averageInputs[i] += inputs[j][i];
+            maxOutputValue = results[numberOfHiddenLayers][i];
+            maxOutputIndex = i;
         }
-        averageInputs[i] /= inputs.size();
     }
-    for(unsigned int i = 0; i < numberOfOutput; i++) //average desired
+    if(maxOutputIndex == classNumber)
     {
-        for(int j = 0; j < desired.size(); j++)
-        {
-            if(desired[j][i] != -1.0f)
-            {
-                averageDesired[i] += desired[j][i];
-                countDesired[i] ++;
-            }
-        }
-        if(countDesired[i] > 0.0f)
-            averageDesired[i] /= countDesired[i];
-        else
-           averageDesired[i] = -1.0f;
+        numberOfResultsClassifiedWell++;
     }
-    averageOutput = outputFloat(averageInputs);
-    //error = 0;
+    else
+    {
+        numberOfResultsMisclassefied++;
+    }
+}
+
+void NeuralNetwork::train(const vector<float> &inputs, const vector<float> &desired)
+{
+    backpropagationAlgorithm(inputs, desired);
+}
+
+void NeuralNetwork::backpropagationAlgorithm(const vector<float> &inputs, const vector<float> &desired)
+{
+    this->calculateOutput(inputs);
+
     for(unsigned int i = 0; i < numberOfOutput; i++) // for each neurons in upper layer
     {
-        if(averageDesired[i] != -1.0f)
+        if(desired[i] != -1.0f)
         {
-            errors[numberOfHiddenLayers][i] = (float)averageDesired[i] - (float)averageOutput[i];
-            errors[numberOfHiddenLayers][i] = (float)errors[numberOfHiddenLayers][i] * (float)abs(errors[numberOfHiddenLayers][i]);
+            errors[numberOfHiddenLayers][i] = desired[i] - results[numberOfHiddenLayers][i];
+            //errors[numberOfHiddenLayers][i] = (float)errors[numberOfHiddenLayers][i] * (float)abs(errors[numberOfHiddenLayers][i]);
         }
         else
-        {
             errors[numberOfHiddenLayers][i] = 0;
-        }
     }
     for(int l = (int)(neurons.size()-1); l >= 0; l--) // from last hidden layer to first layer
     {
@@ -270,10 +162,6 @@ void NeuralNetwork::backpropagationAlgorithm(const vector<vector<float>> &inputs
             {
                 calculateError(l, n);
             }
-            /*if(l == 0) // WARNING : to delete
-            {
-                cout << "error CPU : " << errors[l][n] << endl;
-            }*/
         }
     }
     for(int l = (int)(neurons.size()-1); l >= 0; l--) // from last hidden layer to first layer
@@ -281,15 +169,13 @@ void NeuralNetwork::backpropagationAlgorithm(const vector<vector<float>> &inputs
         for(unsigned int n = 0; n < neurons[l].size(); n++)
         {
             if(l == 0)
-                neurons[l][n].trainWithError(averageInputs, errors[l][n], learningRate, momentum);
+                neurons[l][n].trainWithError(inputs, errors[l][n], learningRate, momentum);
             else
                 neurons[l][n].trainWithError(results[l-1], errors[l][n], learningRate, momentum);
         }
     }
-    //cout << endl; // TO REMOVE
 }
 
-inline
 void NeuralNetwork::calculateError(const int neuronNumberLayer, const int neuronNumber) // TO RE READ
 {
     float error = 0;
@@ -297,23 +183,9 @@ void NeuralNetwork::calculateError(const int neuronNumberLayer, const int neuron
     {
         error += errors[neuronNumberLayer+1][i] * neurons[neuronNumberLayer+1][i].getWeight(neuronNumber);
     }
-    error /= neurons[neuronNumberLayer+1].size();
     errors[neuronNumberLayer][neuronNumber] = error;
 }
 
-inline
-void NeuralNetwork::geneticModification(float probability)
-{
-    if(rand()/(float)RAND_MAX <= probability)
-    {
-        int a = randomBetween(0, (int)neurons.size());
-        int b = randomBetween(0, (int)neurons[a].size());
-        neurons[a][b] = Perceptron(neurons[a][b].getNumberOfInputs(), a, b, true);
-    }
-
-}
-
-inline
 void NeuralNetwork::resetAllNeurons()
 {
     for(int i = 0; i < neurons.size(); i++)
@@ -329,11 +201,11 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber, bool isVirgin)
 {
     results[layerNumber].push_back(0);
     errors[layerNumber].push_back(0);
+    outputs.push_back(0);
 
     if(layerNumber == 0)
     {
         numberOfInput ++;
-        averageInputs.resize(numberOfInput, 0);
         neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfInput-1, isVirgin));
         for(unsigned int i = 0; i < neurons[layerNumber+1].size(); i++)
         {
@@ -344,10 +216,6 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber, bool isVirgin)
     else if(layerNumber == numberOfHiddenLayers)
     {
         numberOfOutput ++;
-        countDesired.resize(numberOfOutput, 0);
-        averageDesired.resize(numberOfOutput, 0);
-        averageOutput.resize(numberOfOutput, 0);
-        binaryResult.resize(numberOfOutput, 0);
         neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfOutput-1, isVirgin));
 
     }
@@ -474,7 +342,7 @@ bool NeuralNetwork::operator!=(const NeuralNetwork &neuralNetwork)
 
 string NeuralNetwork::display()
 {
-    string str;
+   string str;
    str = "Learning rate : " + to_string(learningRate);
     for(int i = 0; i < neurons.size(); i++)
     {

@@ -10,10 +10,14 @@ class NeuralNetwork
 
         static bool isTheFirst;
 
+        float maxOutputValue;
+        float maxOutputIndex;
+
         int lastError;
+        float learningRate;
+        float clusteringRate;
         float previousClusteringRate;
         float error;
-        float previousError;
         float momentum;
 
         int numberOfResultsClassifiedWell;
@@ -21,8 +25,6 @@ class NeuralNetwork
 
         int lenghtOfShortRuns;
         int shortRunCounter;
-        int numberOfSameClusteringAfterReset;
-        int counterOfSameClusteringAfterReset;
 
         unsigned int numberOfInput;
         unsigned int numberOfHiddenLayers;
@@ -30,50 +32,43 @@ class NeuralNetwork
         unsigned int numberOfNeuronsInHiddenLayers;
         unsigned int numberOfOutput;
 
+        bool classifiedWell;
+
         vector<vector<float>> results;
-        vector<float> binaryResult;
         vector<vector<float>> errors;
-
-        void backpropagationAlgorithm(const vector<vector<float>> &inputs, const vector<vector<float> > &desired);
+        void backpropagationAlgorithm(const vector<float> &inputs, const vector<float> &desired);
         void calculateError(const int neuronNumberLayer, const int neuronNumber);
-        void geneticModification(float probability = 1.0f);
-
-        void calculateOutput(const vector<float> &inputs);
-        vector<float> binaryOutput(const vector<float> &inputs);
-
-        bool train(const vector<vector<float>> &inputs, const vector<vector<float>> &desired, const bool isTrainnig);
 
         void resetAllNeurons();
 
-        vector<float> averageInputs;
-        vector<float> averageDesired;
-        vector<float> countDesired;
-        vector<float> averageOutput;
-        vector<float> out;
+        vector<vector<Perceptron>> neurons;
+
+        vector<float> outputs;
 
 
     public :
 
-        float learningRate;
-        float clusteringRate;
-
-        vector<vector<Perceptron>> neurons;
 
         NeuralNetwork();
         NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
 
-        bool train(const vector<float> &inputs, const vector<float> &desired); // return true if it has been trained
-        bool train(const vector<vector<float>> &inputs, const vector<vector<float>> &desired); // return true if it has been trained
+        void train(const vector<float> &inputs, const vector<float> &desired);
 
-        vector<float> outputFloat(const vector<float> &inputs);
-        bool calculateClusteringRate(const vector<float> &inputs, const vector<float> &desired); // return true if it has right
-        void resetCalculationOfClusteringRate();
+        vector<float> calculateOutput(const vector<float> &inputs);
+
+        void calculateClusteringRateForRegressionProblem(const vector<float> &inputs, const vector<int> &desired);
+        void calculateClusteringRateForClassificationProblem(const vector<float> &inputs, const int classNumber);
+
         void addANeuron(unsigned int layerNumber, bool isVirgin = true);
         string display();
 
         int isValid();
-
         int getLastError();
+
+
+
+
+
 
         void setLearningRate(float learningRate);
         float getLearningRate() const;
@@ -83,6 +78,7 @@ class NeuralNetwork
         int getNumberOfSameClusteringAfterReset() const;
         void setLenghtOfShortRuns(unsigned int lenght);
 
+
         int getLenghtOfShortRuns() const;
         int getShortRunCounter() const;
         int getNumberOfInputs() const;
@@ -91,11 +87,10 @@ class NeuralNetwork
         int getNumberOfResultsClassifiedWell() const;
         int getNumberOfNegativeResultsMisclassefied() const;
         int getNumberOfOutputs() const;
-        float getClusteringRate() const;
+        float getClusteringRate();
 
         bool operator==(const NeuralNetwork &neuralNetwork);
         bool operator!=(const NeuralNetwork &neuralNetwork);
-        //void equals(const NeuralNetwork &neuralNetwork);
 };
 
 #endif // NEURAL_NETWORK_H

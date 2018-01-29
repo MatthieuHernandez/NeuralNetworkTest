@@ -56,12 +56,12 @@ void MainWindow::displayImage(int value)
     ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
     if(displayedSet == training)
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value))));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
     else
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value))));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 }
 
-int MainWindow::getLabel(int value)
+int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 {
     if(displayedSet == training)
         if      (this->MNIST.trainig.labels[value][0] == 1) return 0;
@@ -94,49 +94,50 @@ void MainWindow::compute()
     this->initializeNeuralNetwork();
 
     clock_t numberOfClockCycle = clock();
-    float cluseringRateMax = -1;
+    float clusteringRateMax = -1;
+    float clusteringRate = -1;
     int epochMax = 0;
+
 
     for(int count = 1; ; count++)
     {
         for(int index = 0; index < MNIST.trainig.size; index ++)
         {
             neuralNetwork.train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
-            if(index%100 == 0)
+            if(index%500 == 0)
             {
                 ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
                 QApplication::processEvents();
             }
         }
 
-        neuralNetwork.resetCalculationOfClusteringRate();
-
         for(int index = 0; index < MNIST.testing.size; index ++)
         {
-            neuralNetwork.calculateClusteringRate(MNIST.testing.images[index], MNIST.testing.labels[index]);
+            neuralNetwork.calculateClusteringRateForClassificationProblem(MNIST.testing.images[index], getLabel(index, testing));
         }
-        if(neuralNetwork.getClusteringRate() > cluseringRateMax)
+        clusteringRate = neuralNetwork.getClusteringRate();
+        if(clusteringRate > clusteringRateMax)
         {
-            cluseringRateMax = neuralNetwork.getClusteringRate();
+            clusteringRateMax = clusteringRate;
             epochMax = count;
         }
-        cout << "clustering rate : " << neuralNetwork.getClusteringRate() << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
-        cout << "clustering rate max : " << cluseringRateMax << " epoch : " << epochMax << endl << endl;
+        cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
+        cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
+        //cout << neuralNetwork.display() << endl << endl;
     }
 }
 
 void MainWindow::initializeNeuralNetwork()
 {
     this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
+    neuralNetwork.setLearningRate(0.05f);
 
-    neuralNetwork.resetCalculationOfClusteringRate();
-    neuralNetwork.setLearningRate(0.01f);
-
-    if(neuralNetwork.isValid() != 0)
+    //neuralNetwork.setMomentum(0.90f);
+    /*if(neuralNetwork.isValid() != 0)
     {
         cout << "ERROR : " << neuralNetwork.getLastError() << endl;
         exit(0);
-    }
+    }*/
 
     this->input.resize(784);
     this->desired.resize(10);
@@ -153,13 +154,13 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
     {
         this->displayedSet = testing;
         ui->spinBoxImageId->setMaximum(9999);
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value()))));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value(), this->displayedSet))));
     }
     if(index == 1)
     {
         this->displayedSet = training;
         ui->spinBoxImageId->setMaximum(59999);
-        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value()))));
+        ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value(), this->displayedSet))));
     }
 
     displayImage(ui->spinBoxImageId->value());

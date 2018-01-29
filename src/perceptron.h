@@ -46,7 +46,7 @@ class Perceptron
         void activationFunction(float &x);
         float inverseOfTheActivationFunction(const float &x);
 
-        static float derivativeOfActivationFunction(float &x);
+        static float derivativeOfActivationFunction(float x);
 
         void addAWeight(bool isVirgin = true);
         int isValid();
