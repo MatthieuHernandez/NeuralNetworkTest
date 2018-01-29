@@ -33,14 +33,16 @@ void Perceptron::activationFunction(float &x)
 }
 
 //cannot be inline and NO USED
-float Perceptron::inverseOfTheActivationFunction(const float &x)
+/*float Perceptron::inverseOfTheActivationFunction(const float &x)
 {
     return (float)log((1/x)-1)/(-2);
-}
+}*/
 
-float Perceptron::derivativeOfActivationFunction(float &x)
+float Perceptron::derivativeOfActivationFunction(float x)
 {
-    return 1-x*x;
+    return 1/(x*x+1);
+    //return 1/cosh(x);
+    //return x;
 }
 
 int Perceptron::output(const vector<float> &inputs)
@@ -76,9 +78,9 @@ void Perceptron::train(const vector<float> &inputs, const float &error, const fl
 {
     for (int i = 0; i < numberOfInputs; i++)
     {
-        deltaWeights[i] = learningRate * error * inputs[i] + momentum * previousDeltaWeights[i];
+        deltaWeights[i] = learningRate * error * inputs[i] ;//+ momentum * previousDeltaWeights[i];
         weights[i] +=  deltaWeights[i];
-        previousDeltaWeights[i] = deltaWeights[i];
+        //previousDeltaWeights[i] = deltaWeights[i];
 
         if(weights[i] < -MAX)
         {
