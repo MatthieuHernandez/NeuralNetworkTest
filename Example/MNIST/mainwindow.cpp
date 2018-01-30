@@ -132,12 +132,11 @@ void MainWindow::initializeNeuralNetwork()
     this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
     neuralNetwork.setLearningRate(0.05f);
 
-    //neuralNetwork.setMomentum(0.90f);
-    /*if(neuralNetwork.isValid() != 0)
+    if(neuralNetwork.isValid() != 0)
     {
         cout << "ERROR : " << neuralNetwork.getLastError() << endl;
         exit(0);
-    }*/
+    }
 
     this->input.resize(784);
     this->desired.resize(10);

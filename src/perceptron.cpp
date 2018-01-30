@@ -21,7 +21,7 @@ Perceptron::Perceptron(unsigned int numberOfInputs, int layerNumber, int numberI
 inline
 float Perceptron::randomInitializeWeight()
 {
-    float rangeMax = 2.4f/this->numberInLayer;
+    float rangeMax = 2.4f/this->numberOfInputs;
     return (rand()/(float)RAND_MAX * 2.0f - 1.0f) * rangeMax;
 }
 
