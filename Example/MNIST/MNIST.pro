@@ -51,8 +51,8 @@ Matthieu {
     LIBS += -lpsapi \
 }
 
-Pierre {
+nutsxy {
 
-
+ message("COMPILE FOR NUTSXY")
 }
 
