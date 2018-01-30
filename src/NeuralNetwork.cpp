@@ -63,7 +63,7 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
     errors.push_back(temp2);
     for(unsigned int i = 0; i < this->numberOfOutput; i++)
     {
-        neurons[numberOfHiddenLayers].push_back(Perceptron(this->numberOfNeuronsInHiddenLayers, numberOfHiddenLayers, i, false));
+        neurons[numberOfHiddenLayers].push_back(Perceptron(this->numberOfNeuronsInHiddenLayers, numberOfHiddenLayers, i));
         results[numberOfHiddenLayers].push_back(0);
         errors[numberOfHiddenLayers].push_back(0);
     }
@@ -192,12 +192,12 @@ void NeuralNetwork::resetAllNeurons()
     {
         for(int j = 0; j < neurons[i].size(); j++)
         {
-            neurons[i][j] = Perceptron(neurons[i][j].getNumberOfInputs(), neurons[i][j].getLayerNumber(), neurons[i][j].getNumberInLayer(), false);
+            neurons[i][j] = Perceptron(neurons[i][j].getNumberOfInputs(), neurons[i][j].getLayerNumber(), neurons[i][j].getNumberInLayer());
         }
     }
 }
 
-void NeuralNetwork::addANeuron(unsigned int layerNumber, bool isVirgin)
+void NeuralNetwork::addANeuron(unsigned int layerNumber)
 {
     results[layerNumber].push_back(0);
     errors[layerNumber].push_back(0);
@@ -206,10 +206,10 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber, bool isVirgin)
     if(layerNumber == 0)
     {
         numberOfInput ++;
-        neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfInput-1, isVirgin));
+        neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfInput-1));
         for(unsigned int i = 0; i < neurons[layerNumber+1].size(); i++)
         {
-            neurons[layerNumber+1][i].addAWeight(isVirgin);
+            neurons[layerNumber+1][i].addAWeight();
         }
 
     }
