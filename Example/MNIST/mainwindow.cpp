@@ -129,7 +129,11 @@ void MainWindow::compute()
 
 void MainWindow::initializeNeuralNetwork()
 {
-    this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
+    int NNstructure [] = {784, 100, 10};
+    this->neuralNetwork = NeuralNetwork(NNstructure);
+
+//    this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
+
     neuralNetwork.setLearningRate(0.05f);
 
     if(neuralNetwork.isValid() != 0)

@@ -50,8 +50,8 @@ class NeuralNetwork
 
 
         NeuralNetwork();
-        NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
-
+        //NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
+        NeuralNetwork(int NNstructure[], float learningRate = 0.05f);
         void train(const vector<float> &inputs, const vector<float> &desired);
 
         vector<float> calculateOutput(const vector<float> &inputs);

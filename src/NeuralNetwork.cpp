@@ -3,11 +3,14 @@
 bool NeuralNetwork::isTheFirst = true;
 
 NeuralNetwork::NeuralNetwork()
+
+
 {
 
 }
-
-NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutputs, float learningRate)
+//Table defines the structure of the network
+//NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutputs, float learningRate)
+NeuralNetwork::NeuralNetwork(int NNstructure[], float learningRate)
 {
     // IS VIRGIN
     if(isTheFirst == true)
@@ -22,11 +25,22 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
     this->numberOfResultsClassifiedWell = 0;
     this->numberOfResultsMisclassefied = 0;
     this->clusteringRate = -1;
-    this->numberOfInput = numberOfInputs;
-    this->numberOfHiddenLayers = numberOfHiddenLayers;
+    //this->numberOfInput = numberOfInputs;
+    this->numberOfInput = NNstructure[0];
+    cout<<this->numberOfInput<<endl;
+
+    //this->numberOfHiddenLayers = numberOfHiddenLayers;
+    this->numberOfHiddenLayers = (sizeof(NNstructure)/sizeof(int))-1;
+    cout<<this->numberOfHiddenLayers<<endl;
+
+
+
     this->numberOfLayers = this->numberOfHiddenLayers+1;
-    this->numberOfNeuronsInHiddenLayers = numberOfNeuronsInHiddenLayers;
-    this->numberOfOutput = numberOfOutputs;
+    //this->numberOfNeuronsInHiddenLayers = numberOfNeuronsInHiddenLayers;
+    //this->numberOfOutput = numberOfOutputs;
+    this->numberOfOutput = NNstructure[sizeof(NNstructure)/sizeof(int)];
+    cout<<this->numberOfOutput<<endl;
+
     this->momentum = 0;
     this->lastError = 0;
     this->error = 0;
