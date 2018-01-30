@@ -216,7 +216,7 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber)
     else if(layerNumber == numberOfHiddenLayers)
     {
         numberOfOutput ++;
-        neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfOutput-1, isVirgin));
+        neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfOutput-1));
 
     }
     else if(layerNumber > 0 && layerNumber < numberOfHiddenLayers)
@@ -224,10 +224,10 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber)
         numberOfNeuronsInHiddenLayers ++;
         for(int j = 1;  j < numberOfHiddenLayers; j++) // output neuron
         {
-            neurons[j].push_back(Perceptron(neurons[j][0].getWeights().size(), j, numberOfNeuronsInHiddenLayers-1, isVirgin));
+            neurons[j].push_back(Perceptron(neurons[j][0].getWeights().size(), j, numberOfNeuronsInHiddenLayers-1));
             for(int i = 0; i < neurons[j+1].size(); i++)
             {
-                neurons[j+1][i].addAWeight(isVirgin);
+                neurons[j+1][i].addAWeight();
             }
         }
     }
