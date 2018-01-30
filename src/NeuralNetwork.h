@@ -59,7 +59,7 @@ class NeuralNetwork
         void calculateClusteringRateForRegressionProblem(const vector<float> &inputs, const vector<int> &desired);
         void calculateClusteringRateForClassificationProblem(const vector<float> &inputs, const int classNumber);
 
-        void addANeuron(unsigned int layerNumber, bool isVirgin = true);
+        void addANeuron(unsigned int layerNumber);
         string display();
 
         int isValid();

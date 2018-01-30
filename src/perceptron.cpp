@@ -2,41 +2,35 @@
 #define MAX 1000000.0f
 
 
-Perceptron::Perceptron(unsigned int numberOfInputs, int layerNumber, int numberInLayer, bool isVirgin)
+Perceptron::Perceptron(unsigned int numberOfInputs, int layerNumber, int numberInLayer)
 {
     this->numberOfInputs = numberOfInputs;
     this->layerNumber = layerNumber;
     this->numberInLayer = numberInLayer;
-    this->previousError = 0.0f;
 
     for (unsigned int i = 0; i < numberOfInputs; i++)
     {
-        //if(isVirgin == false)
-        //{
-            weights.push_back(rand()/(float)RAND_MAX * 2.0f - 1.0f);
-            deltaWeights.push_back(0);
-            previousDeltaWeights.push_back(0);
-        //}
-        //else
-        //{
-            //weights.push_back( (rand()/(float)RAND_MAX * 4 - 2) /0.01 );// between -2/N and +2/N
-        //}
+        this->weights.push_back(randomInitializeWeight());
+
+        this->deltaWeights.push_back(0);
+        this->previousDeltaWeights.push_back(0);
     }
     this->bias = 1.0f;
 }
 
-//cannot be inline
+inline
+float Perceptron::randomInitializeWeight()
+{
+    float rangeMax = 2.4f/this->numberInLayer;
+    return (rand()/(float)RAND_MAX * 2.0f - 1.0f) * rangeMax;
+}
+
 inline
 void Perceptron::activationFunction(float &x)
 {
     x = tanh(x);
 }
 
-//cannot be inline and NO USED
-/*float Perceptron::inverseOfTheActivationFunction(const float &x)
-{
-    return (float)log((1/x)-1)/(-2);
-}*/
 
 float Perceptron::derivativeOfActivationFunction(float x)
 {
@@ -105,13 +99,10 @@ void Perceptron::trainWithDesired(const vector<float> &inputs, float &desired, c
     train(inputs, error, learningRate, momentum);
 }
 
-void Perceptron::addAWeight(bool isVirgin)
+void Perceptron::addAWeight()
 {
     numberOfInputs ++;
-    if(isVirgin)
-        weights.push_back(0);
-    else
-        weights.push_back((rand()/(float)RAND_MAX * 2 - 1));
+    weights.push_back((rand()/(float)RAND_MAX * 2 - 1));
 }
 
 int Perceptron::isValid()

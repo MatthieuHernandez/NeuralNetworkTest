@@ -29,15 +29,15 @@ class Perceptron
 
         int layerNumber;
         int numberInLayer;
-        float previousError;
         float sum;
 
+       float randomInitializeWeight();
         void train(const vector<float> &inputs, const float &error, const float &learningRate, const int &momentum);
 
 
     public :
 
-        Perceptron(unsigned int numberOfInputs, int layerNumber, int numberInLayer, bool isVirgin = false);
+        Perceptron(unsigned int numberOfInputs, int layerNumber, int numberInLayer);
         int output(const vector<float> &inputs);
         float outputFloat(const vector<float> &inputs);
         void trainWithDesired(const vector<float> &inputs, float &desired, const float &learningRate, const int &momentum = 0);
@@ -48,7 +48,7 @@ class Perceptron
 
         static float derivativeOfActivationFunction(float x);
 
-        void addAWeight(bool isVirgin = true);
+        void addAWeight();
         int isValid();
         string display();
 
