@@ -253,19 +253,19 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber)
     cout << "neuron added" << endl;
 }
 
-int NeuralNetwork::isValid(int layerNumber)
+int NeuralNetwork::isValid()
 {
-    unsigned int real_sum = 0;
-    unsigned int virtual_sum = 0;
+    unsigned int numberOfWeightsReal = 0;
+    unsigned int computedNumberWeights = 0;
 
     for(unsigned int i = 0; i < neurons.size(); i++)
     {
-        if(((unsigned int)neurons[i].size() !=  structureOfNetwork[layerNumber+1] && i < numberOfHiddenLayers)
+        if(((unsigned int)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
         || ((unsigned int)neurons[i].size() != numberOfOutput && i == numberOfHiddenLayers))
         {
             cout << "i = " << i << endl;
             //cout << numberOfNeuronsInHiddenLayers << endl;
-            cout << structureOfNetwork[layerNumber+1] << endl;
+            cout << structureOfNetwork[i+1] << endl;
             cout << neurons[i].size() << endl;
             lastError = 10;
             return lastError;
@@ -275,18 +275,23 @@ int NeuralNetwork::isValid(int layerNumber)
     {
         for(unsigned int j = 0; j < neurons[i].size(); j++)
         {
-           real_sum += neurons[i][j].getNumberOfInputs();
+           numberOfWeightsReal += neurons[i][j].getNumberOfInputs();
         }
     }
 
     //virtual_sum += numberOfNeuronsInHiddenLayers*numberOfInput + numberOfNeuronsInHiddenLayers*numberOfOutput + (int)pow(numberOfNeuronsInHiddenLayers, 2) * (numberOfHiddenLayers-1);
-    virtual_sum += structureOfNetwork[layerNumber+1] *numberOfInput + structureOfNetwork[layerNumber+1] *numberOfOutput + (int)pow(structureOfNetwork[layerNumber+1] , 2) * (numberOfHiddenLayers-1);
+    for(unsigned int i=1; i<structureOfNetwork.size();i++)
+    {
+        computedNumberWeights += structureOfNetwork[i-1] * structureOfNetwork[i];
+    }
+    cout<<"Computed"<<computedNumberWeights<< endl;
+    cout<<"real"<< numberOfWeightsReal << endl;
 
-    if(real_sum != virtual_sum)
+    if(numberOfWeightsReal != computedNumberWeights)
     {
         lastError = 11;
-        cout << real_sum << endl;
-        cout << virtual_sum << endl;
+        cout << numberOfWeightsReal << endl;
+        cout << computedNumberWeights << endl;
         return lastError;
     }
     if(numberOfInput < 1 || numberOfInput > 2073600) // 1920 * 1080

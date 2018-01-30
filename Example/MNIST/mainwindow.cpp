@@ -129,7 +129,7 @@ void MainWindow::compute()
 
 void MainWindow::initializeNeuralNetwork()
 {
-    int structureOfNn[]= {784, 400, 150 ,100, 10};
+    int structureOfNn[]= {784, 100, 10};
     vector<int> structureOfNetwork(structureOfNn, structureOfNn + sizeof(structureOfNn) / sizeof(int));
     cout<<structureOfNetwork.size()<<endl;
     cout<<structureOfNetwork[0]<<structureOfNetwork[1]<<structureOfNetwork[2]<<endl;
@@ -148,7 +148,7 @@ void MainWindow::initializeNeuralNetwork()
 
     this->input.resize(784);
     this->desired.resize(10);
-  //  int error = NeuralNetwork::isValid(1);
+   int error = neuralNetwork.isValid();
 }
 
 void MainWindow::on_pushButton_clicked()

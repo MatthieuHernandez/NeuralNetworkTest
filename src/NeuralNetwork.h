@@ -63,7 +63,7 @@ class NeuralNetwork
         void addANeuron(unsigned int layerNumber);
         string display();
 
-        int isValid(int layerNumber);
+        int isValid();
         int getLastError();
 
 
