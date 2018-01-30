@@ -59,9 +59,9 @@ int NeuralNetwork::getNumberOfHiddenLayers() const
     return numberOfHiddenLayers;
 }
 
-int NeuralNetwork::getNumberOfNeuronsInHiddenLayers() const
+int NeuralNetwork::getNumberOfNeuronsInHiddenLayers(int layerNumber) const
 {
-    return numberOfNeuronsInHiddenLayers;
+    return structureOfNetwork[layerNumber];
 }
 
 int NeuralNetwork::getNumberOfResultsClassifiedWell() const

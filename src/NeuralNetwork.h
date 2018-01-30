@@ -29,7 +29,8 @@ class NeuralNetwork
         unsigned int numberOfInput;
         unsigned int numberOfHiddenLayers;
         unsigned int numberOfLayers;
-        unsigned int numberOfNeuronsInHiddenLayers;
+        //unsigned int numberOfNeuronsInHiddenLayers;
+        vector<int> structureOfNetwork;
         unsigned int numberOfOutput;
 
         bool classifiedWell;
@@ -51,7 +52,7 @@ class NeuralNetwork
 
         NeuralNetwork();
         //NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
-        NeuralNetwork(int NNstructure[], float learningRate = 0.05f);
+        NeuralNetwork(vector<int> structureOfNetwork, float learningRate = 0.05f);
         void train(const vector<float> &inputs, const vector<float> &desired);
 
         vector<float> calculateOutput(const vector<float> &inputs);
@@ -62,7 +63,7 @@ class NeuralNetwork
         void addANeuron(unsigned int layerNumber);
         string display();
 
-        int isValid();
+        int isValid(int layerNumber);
         int getLastError();
 
 
@@ -83,7 +84,7 @@ class NeuralNetwork
         int getShortRunCounter() const;
         int getNumberOfInputs() const;
         int getNumberOfHiddenLayers() const;
-        int getNumberOfNeuronsInHiddenLayers() const;
+        int getNumberOfNeuronsInHiddenLayers(int layerNumber) const;
         int getNumberOfResultsClassifiedWell() const;
         int getNumberOfNegativeResultsMisclassefied() const;
         int getNumberOfOutputs() const;
