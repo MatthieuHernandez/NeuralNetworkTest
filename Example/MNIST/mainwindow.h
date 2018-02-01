@@ -2,6 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QtGui>
+#include <QTimer>
+#include <string>
+#include <QComboBox>
+#include <qscrollbar.h>
+#include <QScrollArea>
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -51,9 +58,14 @@ class MainWindow : public QMainWindow
         void initializeNeuralNetwork();
         void displayImage(int value);
         int getLabel(int value, DisplayedSet displayedSet);
+        void graphClusteringRate();
 
         unsigned char getImages(int number, int x, int y);
+        bool flag_graph = true;
 
+        QVector<double> clusteringRateVector;
+
+        QVector<double> x;
 
     private slots:
 

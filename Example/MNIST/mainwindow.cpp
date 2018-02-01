@@ -100,16 +100,6 @@ void MainWindow::compute()
 
     for(int count = 1; ; count++)
     {
-        for(int index = 0; index < MNIST.trainig.size; index ++)
-        {
-            neuralNetwork.train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
-            if(index%100 == 0)
-            {
-                ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
-                QApplication::processEvents();
-            }
-        }
-
         for(int index = 0; index < MNIST.testing.size; index ++)
         {
             neuralNetwork.calculateClusteringRateForClassificationProblem(MNIST.testing.images[index], getLabel(index, testing));
@@ -122,6 +112,21 @@ void MainWindow::compute()
         }
         cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes" << endl;
         cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
+        clusteringRateVector.push_back(clusteringRate*100);
+        graphClusteringRate();
+        ui->CRMAX->setText(QString::fromStdString((string)"CRMAX(%)" + to_string(clusteringRateMax*100)));
+        QApplication::processEvents();
+
+        for(int index = 0; index < MNIST.trainig.size; index ++)
+        {
+            neuralNetwork.train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
+            if(index%500 == 0)
+            {
+                ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
+                QApplication::processEvents();
+            }
+        }
+
         //cout << neuralNetwork.display() << endl << endl;
     }
 }
@@ -165,3 +170,34 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 
     displayImage(ui->spinBoxImageId->value());
 }
+
+void MainWindow::graphClusteringRate()
+{
+
+        if(flag_graph == true)
+        {
+            ui->custom_plot->addGraph();
+            ui->custom_plot->addGraph();
+            ui->custom_plot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
+            ui->custom_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
+            ui->custom_plot->graph(1)->setPen(QPen(Qt::red));
+            ui->custom_plot->xAxis2->setVisible(true);
+            ui->custom_plot->xAxis2->setTickLabels(false);
+            ui->custom_plot->yAxis2->setVisible(true);
+            ui->custom_plot->yAxis2->setTickLabels(false);
+            connect(ui->custom_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->xAxis2, SLOT(setRange(QCPRange)));
+            connect(ui->custom_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->yAxis2, SLOT(setRange(QCPRange)));
+            ui->custom_plot->yAxis->setRange(0, 100); // (0, 100)
+            flag_graph = false;
+        }
+        // make left and bottom axes always transfer their ranges to right and top axes:
+        x.clear();
+        for(double i = 0; i < clusteringRateVector.size(); i = i+1)
+        {
+          x.push_back(i);
+        }
+        ui->custom_plot->graph(0)->setData(x, clusteringRateVector);
+        ui->custom_plot->xAxis->setRange(0, clusteringRateVector.size()-1);
+        ui->custom_plot->replot();
+}
+
