@@ -148,7 +148,7 @@ void MainWindow::initializeNeuralNetwork()
 
     this->input.resize(784);
     this->desired.resize(10);
-   int error = neuralNetwork.isValid();
+    int error = neuralNetwork.isValid();
 }
 
 void MainWindow::on_pushButton_clicked()

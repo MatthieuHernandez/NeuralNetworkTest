@@ -128,7 +128,6 @@ void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector
 {
     maxOutputValue = 0;
     this->calculateOutput(inputs);
-
     for(int i = 0; i < results[numberOfHiddenLayers].size(); i++)
     {
         if(maxOutputValue < results[numberOfHiddenLayers][i])
@@ -376,3 +375,4 @@ string NeuralNetwork::display()
     }
     return str;
 }
+
