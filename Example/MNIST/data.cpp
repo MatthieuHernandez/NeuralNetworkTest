@@ -23,7 +23,8 @@ MNIST_struct create_MNIST()
 MNIST_struct Initialize_MNIST()
 {
     MNIST_struct MNIST;
-
+    MNIST.sizeOfImages = 784;
+    MNIST.numberOfLabel = 10;
     MNIST.trainig.size = 60000;
     MNIST.testing.size = 10000;
 

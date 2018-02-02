@@ -19,6 +19,8 @@ namespace Data
 
     struct MNIST_struct
     {
+       int sizeOfImages;
+       int numberOfLabel;
        Set testing;
        Set trainig;
     };

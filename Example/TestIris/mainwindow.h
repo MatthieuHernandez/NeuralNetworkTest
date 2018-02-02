@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow
         Ui::MainWindow *ui;
         void intialisation();
         void loadData();
+        int getLabel(int value);
 
         vector<vector<float>> inputs;
         vector<vector<float>> desires;

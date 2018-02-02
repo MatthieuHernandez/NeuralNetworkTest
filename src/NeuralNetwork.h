@@ -26,11 +26,14 @@ class NeuralNetwork
         int lenghtOfShortRuns;
         int shortRunCounter;
 
-        unsigned int numberOfInput;
-        unsigned int numberOfHiddenLayers;
-        unsigned int numberOfLayers;
-        unsigned int numberOfNeuronsInHiddenLayers;
-        unsigned int numberOfOutput;
+
+        int numberOfHiddenLayers;
+        int numberOfLayers;
+        int numberOfInput;
+        int numberOfOutput;
+
+        vector<int> structureOfNetwork;
+
 
         bool classifiedWell;
 
@@ -50,8 +53,8 @@ class NeuralNetwork
 
 
         NeuralNetwork();
-        NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
-
+        //NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
+        NeuralNetwork(vector<int> structureOfNetwork, float learningRate = 0.05f);
         void train(const vector<float> &inputs, const vector<float> &desired);
 
         vector<float> calculateOutput(const vector<float> &inputs);
@@ -83,7 +86,7 @@ class NeuralNetwork
         int getShortRunCounter() const;
         int getNumberOfInputs() const;
         int getNumberOfHiddenLayers() const;
-        int getNumberOfNeuronsInHiddenLayers() const;
+        int getNumberOfNeuronsInHiddenLayers(int layerNumber) const;
         int getNumberOfResultsClassifiedWell() const;
         int getNumberOfNegativeResultsMisclassefied() const;
         int getNumberOfOutputs() const;

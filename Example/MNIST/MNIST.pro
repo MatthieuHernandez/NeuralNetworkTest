@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MNIST
 TEMPLATE = app
 
+CONFIG += c++14
+
 SOURCES += \
         ../MNIST/main.cpp \
         mainwindow.cpp \
@@ -38,15 +40,10 @@ include("$$PWD\..\..\src\NeuralNetwork.pro")
 
 Matthieu {
 
-
-
     INCLUDEPATH += "C:/Qt/5.10.0/msvc2015_64/bin" \
                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include" \
                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/shared" \
                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt" \
-
-    #LIBS += C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0\um\x64\shell32.lib
-
 
     LIBS += -lpsapi \
 }

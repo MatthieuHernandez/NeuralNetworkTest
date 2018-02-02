@@ -3,11 +3,14 @@
 bool NeuralNetwork::isTheFirst = true;
 
 NeuralNetwork::NeuralNetwork()
+
+
 {
 
 }
-
-NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutputs, float learningRate)
+//Table defines the structure of the network
+//NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutputs, float learningRate)
+NeuralNetwork::NeuralNetwork(vector<int> structureOfNetwork, float learningRate)
 {
     // IS VIRGIN
     if(isTheFirst == true)
@@ -16,56 +19,41 @@ NeuralNetwork::NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int n
         rand();
         isTheFirst = false;
     }
+    this->structureOfNetwork = structureOfNetwork;
     this->learningRate = learningRate;
     this->lenghtOfShortRuns = 0;
     this->shortRunCounter = 0;
     this->numberOfResultsClassifiedWell = 0;
     this->numberOfResultsMisclassefied = 0;
     this->clusteringRate = -1;
-    this->numberOfInput = numberOfInputs;
-    this->numberOfHiddenLayers = numberOfHiddenLayers;
-    this->numberOfLayers = this->numberOfHiddenLayers+1;
-    this->numberOfNeuronsInHiddenLayers = numberOfNeuronsInHiddenLayers;
-    this->numberOfOutput = numberOfOutputs;
+
+    // Aliasing
+    this->numberOfLayers = structureOfNetwork.size()-1;
+    this->numberOfHiddenLayers = structureOfNetwork.size()-2;
+    this->numberOfInput = structureOfNetwork[0];
+    this->numberOfOutput = structureOfNetwork.back();
+
     this->momentum = 0;
     this->lastError = 0;
     this->error = 0;
-    this->numberOfResultsClassifiedWell = 0;
 
     outputs.resize(numberOfOutput);
 
     vector<Perceptron> temp;
     vector<float> temp2;
-    neurons.push_back(temp);
-    results.push_back(temp2);
-    errors.push_back(temp2);
-    for (unsigned int i = 0; i < this->numberOfNeuronsInHiddenLayers; i++) // layer 0
-    {
-        neurons[0].push_back(Perceptron(this->numberOfInput, 0, i)); // this->numberOfInputs
-        results[0].push_back(0);
-        errors[0].push_back(0);
-    }
-    for (unsigned int i = 1; i < this->numberOfHiddenLayers; i++) // layers
+
+    for (unsigned int i = 0; i < this->numberOfLayers; i++)
     {
         neurons.push_back(temp);
         results.push_back(temp2);
         errors.push_back(temp2);
-        for(unsigned int j = 0;  j < this->numberOfNeuronsInHiddenLayers; j++) // output neuron
-        {
-            neurons[i].push_back(Perceptron(numberOfNeuronsInHiddenLayers, i, j));
 
+        for(unsigned int j = 0;  j < structureOfNetwork[i+1]; j++)
+        {
+            neurons[i].push_back(Perceptron(structureOfNetwork[i], i, j));
             results[i].push_back(0);
             errors[i].push_back(0);
         }
-    }
-    neurons.push_back(temp);
-    results.push_back(temp2);
-    errors.push_back(temp2);
-    for(unsigned int i = 0; i < this->numberOfOutput; i++)
-    {
-        neurons[numberOfHiddenLayers].push_back(Perceptron(this->numberOfNeuronsInHiddenLayers, numberOfHiddenLayers, i));
-        results[numberOfHiddenLayers].push_back(0);
-        errors[numberOfHiddenLayers].push_back(0);
     }
 }
 
@@ -116,7 +104,6 @@ void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector
 {
     maxOutputValue = 0;
     this->calculateOutput(inputs);
-
     for(int i = 0; i < results[numberOfHiddenLayers].size(); i++)
     {
         if(maxOutputValue < results[numberOfHiddenLayers][i])
@@ -221,10 +208,12 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber)
     }
     else if(layerNumber > 0 && layerNumber < numberOfHiddenLayers)
     {
-        numberOfNeuronsInHiddenLayers ++;
+        //numberOfNeuronsInHiddenLayers ++;
+        this->structureOfNetwork[layerNumber+1] ++;
         for(int j = 1;  j < numberOfHiddenLayers; j++) // output neuron
         {
-            neurons[j].push_back(Perceptron(neurons[j][0].getWeights().size(), j, numberOfNeuronsInHiddenLayers-1));
+            neurons[j].push_back(Perceptron(neurons[j][0].getWeights().size(), j,  structureOfNetwork[layerNumber+1]-1));
+
             for(int i = 0; i < neurons[j+1].size(); i++)
             {
                 neurons[j+1][i].addAWeight();
@@ -241,17 +230,14 @@ void NeuralNetwork::addANeuron(unsigned int layerNumber)
 
 int NeuralNetwork::isValid()
 {
-    unsigned int real_sum = 0;
-    unsigned int virtual_sum = 0;
+    unsigned int numberOfWeightsReal = 0;
+    unsigned int computedNumberWeights = 0;
 
     for(unsigned int i = 0; i < neurons.size(); i++)
     {
-        if(((unsigned int)neurons[i].size() != numberOfNeuronsInHiddenLayers && i < numberOfHiddenLayers)
+        if(((unsigned int)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
         || ((unsigned int)neurons[i].size() != numberOfOutput && i == numberOfHiddenLayers))
         {
-            cout << "i = " << i << endl;
-            cout << numberOfNeuronsInHiddenLayers << endl;
-            cout << neurons[i].size() << endl;
             lastError = 10;
             return lastError;
         }
@@ -260,17 +246,20 @@ int NeuralNetwork::isValid()
     {
         for(unsigned int j = 0; j < neurons[i].size(); j++)
         {
-           real_sum += neurons[i][j].getNumberOfInputs();
+           numberOfWeightsReal += neurons[i][j].getNumberOfInputs();
         }
     }
 
-    virtual_sum += numberOfNeuronsInHiddenLayers*numberOfInput + numberOfNeuronsInHiddenLayers*numberOfOutput + (int)pow(numberOfNeuronsInHiddenLayers, 2) * (numberOfHiddenLayers-1);
+    for(unsigned int i=1; i<structureOfNetwork.size();i++)
+    {
+        computedNumberWeights += structureOfNetwork[i-1] * structureOfNetwork[i];
+    }
 
-    if(real_sum != virtual_sum)
+    if(numberOfWeightsReal != computedNumberWeights)
     {
         lastError = 11;
-        cout << real_sum << endl;
-        cout << virtual_sum << endl;
+        cout << numberOfWeightsReal << endl;
+        cout << computedNumberWeights << endl;
         return lastError;
     }
     if(numberOfInput < 1 || numberOfInput > 2073600) // 1920 * 1080
@@ -317,7 +306,7 @@ bool NeuralNetwork::operator==(const NeuralNetwork &neuralNetwork)
 {
     if(this->numberOfInput != neuralNetwork.numberOfInput
     || this->numberOfHiddenLayers != neuralNetwork.numberOfHiddenLayers
-    || this->numberOfNeuronsInHiddenLayers != neuralNetwork.numberOfNeuronsInHiddenLayers
+    || this->structureOfNetwork != neuralNetwork.structureOfNetwork
     || this->neurons.size() !=  neuralNetwork.neurons.size())
         return false;
 
@@ -355,3 +344,4 @@ string NeuralNetwork::display()
     }
     return str;
 }
+
