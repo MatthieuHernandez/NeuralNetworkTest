@@ -2,13 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMessageBox>
-#include <QtGui>
-#include <QTimer>
+
 #include <string>
-#include <QComboBox>
-#include <qscrollbar.h>
-#include <QScrollArea>
+
 #include <iostream>
 #include <vector>
 #include <sstream>
