@@ -6,6 +6,12 @@
 
 QT += core gui
 
+QT += widgets # greaterThan(QT_MAJOR_VERSION, 4):
+
+
+QT += printsupport
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MNIST
@@ -16,10 +22,14 @@ CONFIG += c++14
 SOURCES += \
         ../MNIST/main.cpp \
         mainwindow.cpp \
-        data.cpp
+        data.cpp \
+        ./../../lib/qcustomplot.cpp \
+        ./../../lib/qcustomplot.cpp
 
 HEADERS += mainwindow.h\
-           data.h
+           data.h\
+           ./../../lib/qcustomplot.h
+
 
 FORMS += \
         mainwindow.ui
@@ -49,7 +59,8 @@ Matthieu {
 }
 
 nutsxy {
-
- message("COMPILE FOR NUTSXY")
+    INCLUDEPATH += "C:/Programming/Qt/5.6/mingw49_32/bin" \
+                   ""
+    message("COMPILE FOR NUTSXY")
 }
 
