@@ -98,13 +98,12 @@ void MainWindow::compute()
     float clusteringRate = -1;
     int epochMax = 0;
 
-
     for(int count = 1; ; count++)
     {
         for(int index = 0; index < MNIST.trainig.size; index ++)
         {
             neuralNetwork.train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
-            if(index%500 == 0)
+            if(index%100 == 0)
             {
                 ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
                 QApplication::processEvents();
@@ -129,26 +128,19 @@ void MainWindow::compute()
 
 void MainWindow::initializeNeuralNetwork()
 {
-    int structureOfNn[]= {784, 100, 10};
-    vector<int> structureOfNetwork(structureOfNn, structureOfNn + sizeof(structureOfNn) / sizeof(int));
-    cout<<structureOfNetwork.size()<<endl;
-    cout<<structureOfNetwork[0]<<structureOfNetwork[1]<<structureOfNetwork[2]<<endl;
+    vector<int> structureOfNetwork {MNIST.sizeOfImages, 150, 50, MNIST.numberOfLabel};
 
     this->neuralNetwork = NeuralNetwork(structureOfNetwork);
 
-//    this->neuralNetwork = NeuralNetwork(784, 1, 100, 10);
-
-    neuralNetwork.setLearningRate(0.05f);
+    neuralNetwork.setLearningRate(0.04f);
 
     if(neuralNetwork.isValid() != 0)
     {
         cout << "ERROR : " << neuralNetwork.getLastError() << endl;
         exit(0);
     }
-
-    this->input.resize(784);
+    this->input.resize(MNIST.sizeOfImages);
     this->desired.resize(10);
-    int error = neuralNetwork.isValid();
 }
 
 void MainWindow::on_pushButton_clicked()

@@ -26,12 +26,14 @@ class NeuralNetwork
         int lenghtOfShortRuns;
         int shortRunCounter;
 
-        unsigned int numberOfInput;
-        unsigned int numberOfHiddenLayers;
-        unsigned int numberOfLayers;
-        //unsigned int numberOfNeuronsInHiddenLayers;
+
+        int numberOfHiddenLayers;
+        int numberOfLayers;
+        int numberOfInput;
+        int numberOfOutput;
+
         vector<int> structureOfNetwork;
-        unsigned int numberOfOutput;
+
 
         bool classifiedWell;
 

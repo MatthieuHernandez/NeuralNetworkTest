@@ -26,58 +26,34 @@ NeuralNetwork::NeuralNetwork(vector<int> structureOfNetwork, float learningRate)
     this->numberOfResultsClassifiedWell = 0;
     this->numberOfResultsMisclassefied = 0;
     this->clusteringRate = -1;
-    //this->numberOfInput = numberOfInputs;
-    this->numberOfInput = structureOfNetwork[0];
-    cout<<this->numberOfInput<<endl;
 
+    // Aliasing
+    this->numberOfLayers = structureOfNetwork.size()-1;
     this->numberOfHiddenLayers = structureOfNetwork.size()-2;
-    cout<<this->numberOfHiddenLayers<<endl;
-
-    this->numberOfLayers = this->numberOfHiddenLayers+1;
+    this->numberOfInput = structureOfNetwork[0];
     this->numberOfOutput = structureOfNetwork.back();
-    cout<<this->numberOfOutput<<endl;
 
     this->momentum = 0;
     this->lastError = 0;
     this->error = 0;
-    this->numberOfResultsClassifiedWell = 0;
 
     outputs.resize(numberOfOutput);
 
     vector<Perceptron> temp;
     vector<float> temp2;
-    neurons.push_back(temp);
-    results.push_back(temp2);
-    errors.push_back(temp2);
 
-
-
-    for (unsigned int i = 0; i < structureOfNetwork[1]; i++) // first hidden layer
-    {
-        neurons[0].push_back(Perceptron(this->numberOfInput, 0, i)); // this->numberOfInputs
-        results[0].push_back(0);
-        errors[0].push_back(0);
-    }
-    for (unsigned int i = 1; i < this->numberOfHiddenLayers; i++) // layers
+    for (unsigned int i = 0; i < this->numberOfLayers; i++)
     {
         neurons.push_back(temp);
         results.push_back(temp2);
         errors.push_back(temp2);
-        for(unsigned int j = 0;  j < structureOfNetwork[1+i]; j++) // output neuron
+
+        for(unsigned int j = 0;  j < structureOfNetwork[i+1]; j++)
         {
             neurons[i].push_back(Perceptron(structureOfNetwork[i], i, j));
             results[i].push_back(0);
             errors[i].push_back(0);
         }
-    }
-    neurons.push_back(temp);
-    results.push_back(temp2);
-    errors.push_back(temp2);
-    for(unsigned int i = 0; i < this->numberOfOutput; i++)
-    {
-        neurons[numberOfHiddenLayers].push_back(Perceptron(structureOfNetwork[this->numberOfHiddenLayers], numberOfHiddenLayers, i));
-        results[numberOfHiddenLayers].push_back(0);
-        errors[numberOfHiddenLayers].push_back(0);
     }
 }
 
@@ -262,10 +238,6 @@ int NeuralNetwork::isValid()
         if(((unsigned int)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
         || ((unsigned int)neurons[i].size() != numberOfOutput && i == numberOfHiddenLayers))
         {
-            cout << "i = " << i << endl;
-            //cout << numberOfNeuronsInHiddenLayers << endl;
-            cout << structureOfNetwork[i+1] << endl;
-            cout << neurons[i].size() << endl;
             lastError = 10;
             return lastError;
         }
@@ -278,13 +250,10 @@ int NeuralNetwork::isValid()
         }
     }
 
-    //virtual_sum += numberOfNeuronsInHiddenLayers*numberOfInput + numberOfNeuronsInHiddenLayers*numberOfOutput + (int)pow(numberOfNeuronsInHiddenLayers, 2) * (numberOfHiddenLayers-1);
     for(unsigned int i=1; i<structureOfNetwork.size();i++)
     {
         computedNumberWeights += structureOfNetwork[i-1] * structureOfNetwork[i];
     }
-    cout<<"Computed"<<computedNumberWeights<< endl;
-    cout<<"real"<< numberOfWeightsReal << endl;
 
     if(numberOfWeightsReal != computedNumberWeights)
     {

@@ -5,35 +5,15 @@
 #-------------------------------------------------
 
 QT += core gui
-QT += widgets
-CONFIG += console
-CONFIG += no_batch
 
-#greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += console
 
 TARGET = TestIris
 TEMPLATE = app
 
 CONFIG += c++14
-
-Matthieu {
-INCLUDEPATH += "C:/Programming/LightPunchBot/Neural Network/NeuralNetwork" \
-                "C:/Qt/5.10.0/msvc2015_64/bin" \
-                "$$PWD/../Neural Network/NeuralNetwork/cuda/bin" \
-                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include" \
-                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/um" \
-                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/shared" \
-                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt"
-
-include("C:/Programming/LightPunchBot/Neural Network/NeuralNetwork/NeuralNetwork.pro")
-}
-
-nutsxy {
-   INCLUDEPATH += "."\
-                  ".\..\..\src\."\
-
-   include(".\..\..\src\NeuralNetwork.pro")
-}
 
 QMAKE_CXXFLAGS += /O2
 
@@ -42,6 +22,32 @@ SOURCES += main.cpp \
 
 HEADERS += mainwindow.h \
 
-LIBS += -lpsapi \
-
 FORMS += mainwindow.ui
+
+if(msvc) {
+    message("MSVC")
+    QMAKE_CXXFLAGS += /O2
+}
+if(mingw) {
+    message("MinGW")
+    QMAKE_CXXFLAGS += -O3
+}
+
+INCLUDEPATH += $$PWD\
+               "$$PWD\..\..\src" \
+
+include("$$PWD\..\..\src\NeuralNetwork.pro")
+
+Matthieu {
+
+    INCLUDEPATH += "C:/Qt/5.10.0/msvc2015_64/bin" \
+                   "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include" \
+                   "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/shared" \
+                   "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt" \
+
+    LIBS += -lpsapi \
+}
+
+nutsxy {
+
+}

@@ -125,23 +125,15 @@ void MainWindow::intialisation() // less than 100 times train to obtain 90%
     srand(time(NULL));
     loadData();
 
-    int structureOfN[]= {4,40,40,3};
-    vector<int> structureOfNetwork(structureOfN, structureOfN + sizeof(structureOfN)/sizeof(int));
+    vector<int> structureOfNetwork {4, 15, 10, 3};
 
-    //NeuralNetwork neuralNetwork(4, 2, 10, 3); // 95.333% neuralNetwork(4, 1, 15, 3) // 3 * 100 for speed test
     NeuralNetwork neuralNetwork(structureOfNetwork);
-   // neuralNetwork.resetCalculationOfClusteringRate();
-    neuralNetwork.setLearningRate(0.01f);
-    neuralNetwork.setMomentum(0.9f);
+    neuralNetwork.setLearningRate(0.2f);
+    //neuralNetwork.setMomentum(0.9f);
 
-    //NeuralNetwork neuralNetwork2(1, 1, 1, 3);
-    //neuralNetwork2 = neuralNetwork;
-    //neuralNetwork2.setUseGPU(true);
+    int numberOfEpochs = 50;
 
-    int numberOfEpochs = 200000;
-
-    if(neuralNetwork.isValid() != 0
-    /*&& neuralNetwork2.isValid() != 0*/)
+    if(neuralNetwork.isValid() != 0)
     {
         cout << "ERROR : " << neuralNetwork.getLastError() << endl;
         exit(0);
@@ -152,35 +144,32 @@ void MainWindow::intialisation() // less than 100 times train to obtain 90%
     float clusteringRate = -1;
     int r, c, epochMax = 0;
 
-    //numberOfClockCycle = clock();
-    //neuralNetwork2.trainOnAllDataBase(inputs, desires, inputs, desires, numberOfEpochs, 1);
-    //numberOfClockCycle = clock() - numberOfClockCycle;
-    //cout << "\nclustering rate max on GPU : " << cluseringRateMax << endl;
-    //cout << "Time for " << numberOfEpochs << " epochs : " << numberOfClockCycle << " clock cycles" << " (" << (float)numberOfClockCycle/CLOCKS_PER_SEC << " secondes)\n" << endl;
-
     numberOfClockCycle = clock();
-    for(c = 1; c <= numberOfEpochs; c++) // c <= 500
+    for(c = 1; c <= numberOfEpochs; c++)
     {
+        r = rand();
+        srand(r);
+        std::random_shuffle(inputs.begin(),inputs.end());
+        srand(r);
+        std::random_shuffle(desires.begin(),desires.end());
 
-        r = randomBetween(0, 150);
-        neuralNetwork.train(inputs[r], desires[r]);
+        for(unsigned int i = 0; i < 150; i++)
+        {
+           neuralNetwork.train(inputs[i], desires[i]);
+        }
 
         for(unsigned int i = 0; i < inputs.size(); i++)
+        {
             neuralNetwork.calculateClusteringRateForClassificationProblem(inputs[i], getLabel(i));
-
+        }
         clusteringRate = neuralNetwork.getClusteringRate();
         if(clusteringRate > clusteringRateMax)
         {
             clusteringRateMax = clusteringRate;
             epochMax = c;
         }
-
-        if(c%1000 == 0)
-        {
-            //cout << neuralNetwork.display() << endl;
-            cout << "clustering rate : " << clusteringRate << " epoch : " << c << endl;
-            cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
-        }
+        cout << "clustering rate : " << clusteringRate << " epoch : " << c << endl;
+        cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
     }
 //    cluseringRateMax = neuralNetwork.getClusteringRate();
 //    cout << "clustering rate max on CPU : " << cluseringRateMax << endl;
