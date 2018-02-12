@@ -54,6 +54,7 @@ Matthieu {
                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include" \
                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/shared" \
                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt" \
+                   "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/um" \
 
     LIBS += -lpsapi \
 }
