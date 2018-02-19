@@ -46,8 +46,6 @@ void readImages(MNIST_struct &MNIST)
 
     readSet(MNIST.testing, imagesTestFile, labelsTestFile);
     readSet(MNIST.trainig, imagesTrainFile, labelsTrainFile);
-
-    std::cout << MNIST.testing.labels.size() << std::endl;
 }
 
 void readSet(Set &set, ifstream &images, ifstream &labels)
