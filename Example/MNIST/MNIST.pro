@@ -20,11 +20,11 @@ TEMPLATE = app
 CONFIG += c++14
 
 SOURCES += \
-        ../MNIST/main.cpp \
+        main.cpp\
         mainwindow.cpp \
         data.cpp \
         ./../../lib/qcustomplot.cpp \
-        ./../../lib/qcustomplot.cpp
+
 
 HEADERS += mainwindow.h\
            data.h\
@@ -43,10 +43,10 @@ if(mingw) {
     QMAKE_CXXFLAGS += -O3
 }
 
-INCLUDEPATH += $$PWD\
-               "$$PWD\..\..\src" \
+INCLUDEPATH += $$PWD/
+               "$$PWD/../../src" \
 
-include("$$PWD\..\..\src\NeuralNetwork.pro")
+include("$$PWD/../../src/neuralNetwork.pro")
 
 Matthieu {
 

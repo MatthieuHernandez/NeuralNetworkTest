@@ -4,6 +4,7 @@
 *.dll
 *.lib
 *.user*
+*.o
 MakeFile*
 *-ubyte
 *.stash
@@ -14,6 +15,7 @@ picture/
 temp/
 sqlite*/
 build/
+Example/build-MNIST-Desktop-Debug/
 
 !build 32 bits/*.keep
 
