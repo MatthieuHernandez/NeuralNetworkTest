@@ -15,6 +15,7 @@ picture/
 temp/
 sqlite*/
 build*/
+moc*
 
 !build 32 bits/*.keep
 
