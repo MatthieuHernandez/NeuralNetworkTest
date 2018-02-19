@@ -5,7 +5,7 @@
 *.lib
 *.user*
 *.o
-MakeFile*
+Makefile*
 *-ubyte
 *.stash
 *qmake*
@@ -14,8 +14,7 @@ other/
 picture/
 temp/
 sqlite*/
-build/
-Example/build-MNIST-Desktop-Debug/
+build*/
 
 !build 32 bits/*.keep
 
