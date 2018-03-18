@@ -118,7 +118,7 @@
      <string>Clustering Rate %</string>
     </property>
    </widget>
-   <widget class="QLabel" name="CRMAX">
+   <widget class="QLabel" name="labelClusteringRateMax">
     <property name="geometry">
      <rect>
       <x>400</x>

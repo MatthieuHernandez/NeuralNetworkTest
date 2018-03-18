@@ -114,7 +114,7 @@ void MainWindow::compute()
         cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
         clusteringRateVector.push_back(clusteringRate*100);
         graphClusteringRate();
-        ui->CRMAX->setText(QString::fromStdString((string)"Clustering max : " + Data::to_string_with_precision(clusteringRateMax*100, 2) + "%"));
+        ui->labelClusteringRateMax->setText(QString::fromStdString((string)"Clustering max : " + Data::to_string_with_precision(clusteringRateMax*100, 2) + "%"));
         QApplication::processEvents();
 
         for(int index = 0; index < MNIST.trainig.size; index ++)
@@ -126,18 +126,14 @@ void MainWindow::compute()
                 QApplication::processEvents();
             }
         }
-
-        //cout << neuralNetwork.display() << endl << endl;
     }
 }
 
 void MainWindow::initializeNeuralNetwork()
 {
-    vector<int> structureOfNetwork {MNIST.sizeOfImages, 10, MNIST.numberOfLabel};
-
-    this->neuralNetwork = NeuralNetwork(structureOfNetwork);
-
-    neuralNetwork.setLearningRate(0.04f);
+    /*this->neuralNetwork = NeuralNetwork(vector<int> {MNIST.sizeOfImages, 10, MNIST.numberOfLabel},
+                                        vector<ActivationFunction> {ActivationFunction::Sigmoid, ActivationFunction::Sigmoid, ActivationFunction::Sigmoid},
+                                        0.04f);*/
 
     if(neuralNetwork.isValid() != 0)
     {
@@ -173,7 +169,6 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 
 void MainWindow::graphClusteringRate()
 {
-
         if(flag_graph == true)
         {
             ui->custom_plot->addGraph();
@@ -181,10 +176,6 @@ void MainWindow::graphClusteringRate()
             ui->custom_plot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
             ui->custom_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
             ui->custom_plot->graph(1)->setPen(QPen(Qt::red));
-            ui->custom_plot->xAxis2->setVisible(true);
-            ui->custom_plot->xAxis2->setTickLabels(false);
-            ui->custom_plot->yAxis2->setVisible(true);
-            ui->custom_plot->yAxis2->setTickLabels(false);
             connect(ui->custom_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->xAxis2, SLOT(setRange(QCPRange)));
             connect(ui->custom_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->yAxis2, SLOT(setRange(QCPRange)));
             ui->custom_plot->yAxis->setRange(0, 100); // (0, 100)

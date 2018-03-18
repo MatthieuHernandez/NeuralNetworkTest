@@ -19,17 +19,19 @@ TEMPLATE = app
 
 CONFIG += c++14
 
-SOURCES += \
-        main.cpp\
-        mainwindow.cpp \
-        data.cpp \
-        ./../../lib/qcustomplot.cpp \
+SOURCES += $$PWD/main.cpp \
+        $$PWD/mainwindow.cpp \
+        $$PWD/data.cpp \
+        $$PWD/../../lib/qcustomplot.cpp \
 
 
 HEADERS += mainwindow.h\
            data.h\
-           ./../../lib/qcustomplot.h
+           $$PWD/../../lib/qcustomplot.h
 
+INCLUDEPATH += $$PWD \
+               $$PWD/../../src \
+               $$PWD/../../lib \
 
 FORMS += \
         mainwindow.ui
@@ -43,10 +45,7 @@ if(mingw) {
     QMAKE_CXXFLAGS += -O3
 }
 
-INCLUDEPATH += $$PWD/
-               "$$PWD/../../src" \
-
-include("$$PWD/../../src/neuralNetwork.pro")
+include("$$PWD/../../src/NeuralNetwork.pro")
 
 Matthieu {
 
@@ -57,11 +56,14 @@ Matthieu {
                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/um" \
 
     LIBS += -lpsapi \
+
+    message("compile configuration for Matthieu")
 }
 
 nutsxy {
+
     INCLUDEPATH += "C:/Programming/Qt/5.6/mingw49_32/bin" \
-                   ""
-    message("COMPILE FOR NUTSXY")
+
+    message("compile configuration for NUTSXY")
 }
 
