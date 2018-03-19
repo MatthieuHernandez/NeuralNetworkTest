@@ -1,10 +1,10 @@
-#include "NeuralNetwork.h"
+#include "neuralNetwork.h"
 
 //=====================================================================
 //  Getters and setters
 //=====================================================================
 
-void NeuralNetwork::setLearningRate(float learningRate)
+void NeuralNetwork::setLearningRate(const float learningRate)
 {
     this->learningRate = learningRate;
 }
@@ -13,7 +13,7 @@ float NeuralNetwork::getLearningRate() const
     return learningRate;
 }
 
-void NeuralNetwork::setMomentum(float value)
+void NeuralNetwork::setMomentum(const float value)
 {
     if(value >= 0.0f && value <= 1.0f)
     {
@@ -30,7 +30,7 @@ float NeuralNetwork::getMomentum() const
     return this->momentum;
 }
 
-void NeuralNetwork::setLenghtOfShortRuns(uint lenght)
+void NeuralNetwork::setLenghtOfShortRuns(const uint lenght)
 {
     this->lenghtOfShortRuns = lenght;
 }
@@ -59,7 +59,7 @@ uint NeuralNetwork::getNumberOfHiddenLayers() const
     return numberOfHiddenLayers;
 }
 
-uint NeuralNetwork::getNumberOfNeuronsInHiddenLayers(int layerNumber) const
+uint NeuralNetwork::getNumberOfNeuronsInHiddenLayers(const int layerNumber) const
 {
     return structureOfNetwork[layerNumber+1];
 }
@@ -81,7 +81,7 @@ uint NeuralNetwork::getNumberOfOutputs() const
 
 float NeuralNetwork::getClusteringRate()
 {
-    float clusteringRate = (float)(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
+	auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
     numberOfResultsClassifiedWell = 0;
     numberOfResultsMisclassefied = 0;
     return clusteringRate;

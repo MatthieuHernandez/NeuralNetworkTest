@@ -17,34 +17,45 @@ Perceptron::Perceptron(const uint numberOfInputs,
 	this->previousDeltaWeights.resize(numberOfInputs, 0);
 	this->lastInputs.resize(numberOfInputs, 0);
 	this->errors.resize(numberOfInputs, 0);
-	this->weights.resize(numberOfInputs, randomInitializeWeight());
+
+	this->weights.resize(numberOfInputs);
+	for(auto &&w : weights)
+	{
+		w = randomInitializeWeight();
+	}
 
 	this->bias = 1.0f;
 }
 
 float Perceptron::randomInitializeWeight() const
 {
-	const float rangeMax = 2.4f / this->numberOfInputs;
-	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f) * rangeMax;
+	const float rangeMax = 2.4f / sqrt(this->numberOfInputs);
+	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f);//* rangeMax;
 }
 
 float Perceptron::output(const vector<float>& inputs)
 {
-	lastInputs = inputs;
-	sum = 0;
+	//lastInputs = inputs;
+	float sum = 0;
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		sum += inputs[w] * weights[w];
 	}
-	sum += bias;
-	sum = activationFunction->function(sum);
+	sum = activationFunction->function(sum + bias);
 	return sum;
+	//sum += 1.0f;
+
+	//if (sum > 1.0f) return 1.0f;
+	//if (sum < 0.0f) return 0.0f;
+	//return sum;
 }
 
 std::vector<float> Perceptron::backOutput(float error)
 {
-	error = activationFunction->derivate(error);
+	//error = error * abs(error);
+	//error = activationFunction->derivate(error);
 	this->train(lastInputs, error);
+
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		errors[w] = error * weights[w];
@@ -52,14 +63,18 @@ std::vector<float> Perceptron::backOutput(float error)
 	return errors;
 }
 
-inline
-void Perceptron::train(const std::vector<float>& inputs, float error)
+void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		deltaWeights[w] = learningRate * error * inputs[w] + momentum * previousDeltaWeights[w];
-		weights[w] += deltaWeights[w];
-		previousDeltaWeights[w] = deltaWeights[w];
+		deltaWeights[w] = learningRate * error * /*abs(inputs[w]) * */abs(weights[w]) * 0.001;//+ momentum * previousDeltaWeights[w];
+
+		if (weights[w] < -100000 || weights[w] > 10000)
+		{
+			weights[w] += deltaWeights[w];
+		}
+		//weights[w] += error * 0.0001;
+		//previousDeltaWeights[w] = deltaWeights[w];
 	}
 }
 

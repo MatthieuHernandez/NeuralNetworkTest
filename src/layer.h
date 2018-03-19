@@ -5,6 +5,7 @@
 
 class Layer
 {
+
 protected:
 
 	uint numberOfInputs = 0;
@@ -18,9 +19,9 @@ protected:
 
 public:
 
-	~Layer() = default;
-	std::vector<float> output(std::vector<float>& inputs);
-	std::vector<float> backOutput(std::vector<float>& inputs);
+	virtual std::vector<float> output(const std::vector<float>& inputs) = 0;
+	virtual std::vector<float> backOutput(std::vector<float>& inputsError) = 0;
+	virtual void train(std::vector<float>& inputsError) = 0;
 
 	bool operator==(const Layer& layer);
 	bool operator!=(const Layer& layer);

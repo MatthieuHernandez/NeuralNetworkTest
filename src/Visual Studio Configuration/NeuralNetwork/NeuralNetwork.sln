@@ -5,6 +5,13 @@ VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeuralNetwork", "NeuralNetwork.vcxproj", "{0401F2EC-A5D1-4E57-A8D5-BF5840E47960}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MNIST", "..\..\..\Example\MNIST\MNIST.vcxproj", "{5BCF4C3A-032D-351D-B946-8B941E3721D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0401F2EC-A5D1-4E57-A8D5-BF5840E47960} = {0401F2EC-A5D1-4E57-A8D5-BF5840E47960}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestIris", "..\..\..\Example\TestIris\TestIris.vcxproj", "{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +28,18 @@ Global
 		{0401F2EC-A5D1-4E57-A8D5-BF5840E47960}.Release|x64.Build.0 = Release|x64
 		{0401F2EC-A5D1-4E57-A8D5-BF5840E47960}.Release|x86.ActiveCfg = Release|Win32
 		{0401F2EC-A5D1-4E57-A8D5-BF5840E47960}.Release|x86.Build.0 = Release|Win32
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x64.ActiveCfg = Debug|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x64.Build.0 = Debug|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x86.ActiveCfg = Debug|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x64.ActiveCfg = Release|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x64.Build.0 = Release|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x86.ActiveCfg = Release|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Debug|x64.ActiveCfg = Debug|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Debug|x64.Build.0 = Debug|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Debug|x86.ActiveCfg = Debug|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Release|x64.ActiveCfg = Release|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Release|x64.Build.0 = Release|x64
+		{A8FDA4B7-9383-3F79-AB57-F57C58785BC5}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

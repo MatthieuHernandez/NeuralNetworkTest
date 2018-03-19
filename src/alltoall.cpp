@@ -1,5 +1,6 @@
 #include "alltoall.h"
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -14,7 +15,8 @@ AllToAll::AllToAll(const uint numberOfInputs,
     this->learningRate = learningRate;
     this->momentum = momentum;
     this->neurons.reserve(numberOfNeurons);
-    this->outputs.resize(numberOfNeurons, 0);
+	this->outputs.resize(numberOfNeurons);
+    this->errors.resize(numberOfInputs);
 
     for(uint n = 0; n < numberOfNeurons; ++n)
     {
@@ -22,7 +24,7 @@ AllToAll::AllToAll(const uint numberOfInputs,
     }
 }
 
-vector<float> AllToAll::output(vector<float> &inputs)
+vector<float> AllToAll::output(const vector<float> &inputs)
 {
     for(uint n = 0; n < numberOfNeurons; ++n)
     {
@@ -31,13 +33,22 @@ vector<float> AllToAll::output(vector<float> &inputs)
     return outputs;
 }
 
-vector<float> AllToAll::backOutput(vector<float> &inputError)
+vector<float> AllToAll::backOutput(vector<float> &inputsError)
 {
-    fill(errors.begin(), errors.end(), 0);
+	fill(errors.begin(), errors.end(), 0);
+	  
+	for (uint n = 0; n < numberOfNeurons; ++n)
+	{
+		auto result = neurons[n].backOutput(inputsError[n]);
+		transform(result.begin(), result.end(), errors.begin(), errors.begin(), plus<float>());
+	}
+	return errors;
+}
 
-    for(uint n = 0; n < numberOfNeurons; ++n)
-    {
-        transform(inputError.begin(), inputError.end(), errors.begin(), errors.end(), plus<float>());
-    }
-    return errors;
+void AllToAll::train(vector<float> &inputsError)
+{
+	for (uint n = 0; n < numberOfNeurons; ++n)
+	{
+		neurons[n].backOutput(inputsError[n]);
+	}
 }

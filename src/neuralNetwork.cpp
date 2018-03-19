@@ -1,23 +1,20 @@
-#include "NeuralNetwork.h"
+#include "neuralNetwork.h"
 #include <ctime>
+#include <algorithm>
 
 using namespace std;
 
 bool NeuralNetwork::isTheFirst = true;
 
-NeuralNetwork::NeuralNetwork()
-{
-}
-
 void NeuralNetwork::initialize()
 {
 	srand(static_cast<uint>(time(nullptr)));
 	rand();
-	initialize();
+	ActivationFunction::initialize();
 	isTheFirst = false;
 }
 
-NeuralNetwork::NeuralNetwork(std::vector<uint> structureOfNetwork,
+NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
                              std::vector<activationFunction>& activationFunctionByLayer,
                              const float learningRate,
                              const float momentum)
@@ -42,89 +39,68 @@ NeuralNetwork::NeuralNetwork(std::vector<uint> structureOfNetwork,
 	this->lastError = 0;
 	this->error = 0;
 
-	outputs.resize(numberOfOutput);
+	errors.resize(numberOfOutput);
 
 	layers.reserve(numberOfLayers);
 	for (uint l = 1; l < structureOfNetwork.size(); ++l)
 	{
-		/*ActivationFunction* function = */ActivationFunction::listOfActivationFunction[0]->derivate(0); // static_cast<int>(activationFunctionByLayer[l])
+		const auto index = static_cast<int>(activationFunctionByLayer[l-1]);
+		const auto function = ActivationFunction::listOfActivationFunction[index];
 
-		/*const auto layer = AllToAll(structureOfNetwork[l - 1],
-		                            structureOfNetwork[l],
-		                            function,
-		                            learningRate,
-		                            momentum);*/
-
-		//layers.push_back(layer);
+		unique_ptr<Layer> layer(new AllToAll(structureOfNetwork[l - 1],
+		                                     structureOfNetwork[l],
+		                                     function,
+		                                     learningRate,
+		                                     momentum));
+		layers.push_back(move(layer));
 	}
 }
 
-vector<float> NeuralNetwork::calculateOutput(const vector<float>& inputs)
+vector<float> NeuralNetwork::output(const vector<float>& inputs)
 {
-	// TODO: reword calculateOutput
+	auto output = layers[0]->output(inputs);
 
-	/*for(uint n = 0; n < neurons[0].size(); n++) // first layer
+	for (uint l = 1; l < numberOfLayers; ++l)
 	{
-	   results[0][n] = neurons[0][n].output(inputs);
+		output = layers[l]->output(output);
 	}
-	for(uint l = 1; l < numberOfHiddenLayers; l++) // hidden layers
-	{
-	    for(uint n = 0; n < neurons[l].size(); n++)
-	    {
-	       results[l][n] = neurons[l][n].output(results[l-1]);
-	    }
-	}
-	for(int n = 0; n < neurons[numberOfHiddenLayers].size(); n++)
-	{
-	   results[numberOfHiddenLayers][n] = neurons[numberOfHiddenLayers][n].output(results[numberOfHiddenLayers-1])/2.0f + 0.5f; // between 0 and 1
-	}*/
-	return results[numberOfHiddenLayers];
+	return output;
 }
 
 void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<int>& desired)
 {
-	//TODO : reword calculateClusteringRateForRegressionProblem
-
-	/*this->calculateOutput(inputs);
-	for(int i = 0; i < results[numberOfHiddenLayers].size(); i++)
+	auto output = this->output(inputs);
+	for (uint n = 0; n < output.size(); ++n)
 	{
-	    classifiedWell = true;
-	    if((int)round(results[numberOfHiddenLayers][i]) == desired[i] && desired[i] != -1.0)
-	    {
-	        classifiedWell = false;
-	        break;
-	    }
+		classifiedWell = true;
+		if (static_cast<int>(round(output[n])) == desired[n] && desired[n] != -1.0)
+		{
+			classifiedWell = false;
+			break;
+		}
 	}
-	if(classifiedWell == true)
-	{
-	    numberOfResultsClassifiedWell++;
-	}
+	if (classifiedWell)
+		numberOfResultsClassifiedWell++;
 	else
-	{
-	    numberOfResultsMisclassefied++;
-	}*/
+		numberOfResultsMisclassefied++;
 }
 
 void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const uint classNumber)
 {
 	maxOutputValue = 0;
-	this->calculateOutput(inputs);
-	for (uint i = 0; i < results[numberOfHiddenLayers].size(); i++)
+	auto output = this->output(inputs);
+	for (uint n = 0; n < output.size(); ++n)
 	{
-		if (maxOutputValue < results[numberOfHiddenLayers][i])
+		if (maxOutputValue < output[n])
 		{
-			maxOutputValue = results[numberOfHiddenLayers][i];
-			maxOutputIndex = i;
+			maxOutputValue = output[n];
+			maxOutputIndex = n;
 		}
 	}
 	if (maxOutputIndex == classNumber)
-	{
 		numberOfResultsClassifiedWell++;
-	}
 	else
-	{
 		numberOfResultsMisclassefied++;
-	}
 }
 
 void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desired)
@@ -134,40 +110,29 @@ void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desi
 
 void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const vector<float>& desired)
 {
-	// TODO: reword backpropagationAlgorithm
+	auto outputs = this->output(inputs);
+	auto errors = calculateError(outputs, desired);
 
-	/*this->calculateOutput(inputs);
+	for (int l = numberOfLayers - 1; l > 0; --l)
+	{
+		errors = layers[l]->backOutput(errors);
+	}
+	layers[0]->train(errors);
+}
 
-	for(uint i = 0; i < numberOfOutput; i++) // for each neurons in upper layer
+inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs, const vector<float>& desired)
+{
+	for (uint n = 0; n < numberOfOutput; ++n)
 	{
-	    if(desired[i] != -1.0f)
-	    {
-	        errors[numberOfHiddenLayers][i] = desired[i] - results[numberOfHiddenLayers][i];
-	        //errors[numberOfHiddenLayers][i] = (float)errors[numberOfHiddenLayers][i] * (float)abs(errors[numberOfHiddenLayers][i]);
-	    }
-	    else
-	        errors[numberOfHiddenLayers][i] = 0;
+		if (desired[n] != -1.0f)
+		{
+			const float e = desired[n] - outputs[n];
+			errors[n] = e;//* abs(e);
+		}
+		else
+			errors[n] = 0;
 	}
-	for(int l = laye=.size()-1; l >= 0; l--) // from last hidden layer to first layer
-	{
-	    for(uint n = 0; n < neurons[l].size(); n++)
-	    {
-	        if(l < (int)numberOfHiddenLayers)
-	        {
-	            calculateError(l, n);
-	        }
-	    }
-	}
-	for(int l = (int)(neurons.size()-1); l >= 0; l--) // from last hidden layer to first layer
-	{
-	    for(uint n = 0; n < neurons[l].size(); n++)
-	    {
-	        if(l == 0)
-	            neurons[l][n].train(inputs, errors[l][n], learningRate, momentum);
-	        else
-	            neurons[l][n].train(results[l-1], errors[l][n], learningRate, momentum);
-	    }
-	}*/
+	return errors;
 }
 
 void NeuralNetwork::resetAllNeurons()

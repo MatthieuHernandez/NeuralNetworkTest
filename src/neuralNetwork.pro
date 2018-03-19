@@ -22,11 +22,12 @@ SOURCES += \
     $$PWD/perceptron.cpp \
     $$PWD/neuralNetworkGettersAndSetters.cpp \
     $$PWD/layer.cpp \
+    $$PWD/activationfunction.cpp \
     $$PWD/alltoall.cpp
 
 HEADERS += $$PWD/perceptron.h \
     $$PWD/neuralNetwork.h \
-    $$PWD/activationfunctions.h \
+    $$PWD/activationfunction.h \
     $$PWD/layer.h \
     $$PWD/alltoall.h
 

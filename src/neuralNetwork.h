@@ -3,6 +3,7 @@
 
 #include "activationfunction.h"
 #include "alltoall.h"
+#include <memory>
 
 class NeuralNetwork
 {
@@ -11,13 +12,13 @@ class NeuralNetwork
         static bool isTheFirst;
         static void initialize();
 
-        float maxOutputValue{};
-        uint maxOutputIndex{};
+        float maxOutputValue;
+        uint maxOutputIndex;
 
         uint lastError;
         float learningRate;
         float clusteringRate;
-        float previousClusteringRate{};
+        float previousClusteringRate;
         float error;
         float momentum;
 
@@ -33,29 +34,27 @@ class NeuralNetwork
         uint numberOfOutput;
 
         std::vector<uint> structureOfNetwork;
-        std::vector<Layer> layers;
+        std::vector<std::unique_ptr<Layer>> layers;
 
-        bool classifiedWell{};
+        bool classifiedWell;
 
-        std::vector<std::vector<float>> results;
-        std::vector<std::vector<float>> errors;
-        std::vector<float> outputs;
+        std::vector<float> errors;
 
         void backpropagationAlgorithm(const std::vector<float> &inputs, const std::vector<float> &desired);
+		std::vector<float> calculateError(const std::vector<float> &inputs, const std::vector<float> &desired);
 
         void resetAllNeurons();
 
 
     public :
 
-        NeuralNetwork();
-        NeuralNetwork(std::vector<uint> structureOfNetwork,
-                      std::vector<activationFunction> &activationFunctionByLayer,
-                      float learningRate = 0.05f,
-                      float momentum = 0.0f);
+        NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
+                      std::vector<activationFunction>& activationFunctionByLayer,
+                      const float learningRate = 0.05f,
+                      const float momentum = 0.0f);
 
         void train(const std::vector<float> &inputs, const std::vector<float> &desired);
-        std::vector<float> calculateOutput(const std::vector<float> &inputs);
+        std::vector<float> output(const std::vector<float>& inputs);
 
         void calculateClusteringRateForRegressionProblem(const std::vector<float> &inputs, const std::vector<int> &desired);
         void calculateClusteringRateForClassificationProblem(const std::vector<float> &inputs, const uint classNumber);

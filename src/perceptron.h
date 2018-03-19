@@ -8,7 +8,6 @@
 
 typedef unsigned int uint;
 
-inline
 static int randomBetween(const int a, const int b)  // WARNING TO : b excluded
 {
     return rand()%(b-a)+a;
@@ -29,13 +28,11 @@ class Perceptron
         float learningRate;
         float momentum;
         float bias;
-        float sum{};
 
         ActivationFunction *activationFunction;
 
         float randomInitializeWeight() const;
-
-        void train(const std::vector<float> &inputs, float error);
+        
 
     public :
 
@@ -43,6 +40,7 @@ class Perceptron
 
         std::vector<float> backOutput(float error);
         float output(const std::vector<float> &inputs);
+		void train(const std::vector<float> &inputs, float error);
 
         void addAWeight();
         uint isValid();

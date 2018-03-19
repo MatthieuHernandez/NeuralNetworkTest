@@ -1,4 +1,4 @@
-#include "neuralnetwork.h"
+#include "neuralNetwork.h"
 #include <iostream>
 
 //#define PRECISION 1e-6f // 2e-7f

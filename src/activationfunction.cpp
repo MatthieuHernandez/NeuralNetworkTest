@@ -2,7 +2,7 @@
 
 std::vector<ActivationFunction*> ActivationFunction::listOfActivationFunction;
 
-inline void ActivationFunction::initialize()
+void ActivationFunction::initialize()
 {
 	listOfActivationFunction.reserve(4);
 
