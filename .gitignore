@@ -16,6 +16,7 @@ temp/
 sqlite*/
 build*/
 moc*
+Visual*/
 
 !build 32 bits/*.keep
 
