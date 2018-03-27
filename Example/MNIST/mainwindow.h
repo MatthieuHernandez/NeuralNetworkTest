@@ -3,12 +3,7 @@
 
 #include <QMainWindow>
 
-#include <string>
-
-#include <iostream>
 #include <vector>
-#include <sstream>
-#include <time.h>
 
 #include "./../../src/neuralNetwork.h"
 #include "data.h"
@@ -39,8 +34,8 @@ class MainWindow : public QMainWindow
 
         Ui::MainWindow *ui;
 
-        Data::MNIST_struct MNIST;
-        NeuralNetwork neuralNetwork;
+        data::MNIST_struct MNIST;
+        std::unique_ptr<NeuralNetwork> neuralNetwork;
 
         vector<float> input;
         vector<float> desired;

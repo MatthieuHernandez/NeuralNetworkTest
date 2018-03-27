@@ -1,6 +1,7 @@
 #include "data.h"
+#include <fstream>
 
-namespace Data
+namespace data
 {
 
 string path = "mnist/";
@@ -50,14 +51,14 @@ void readImages(MNIST_struct &MNIST)
 
 void readSet(Set &set, ifstream &images, ifstream &labels)
 {
-    if(images.is_open() != true
-    && labels.is_open() != true)
+    if(!images.is_open()
+    && !labels.is_open())
     {
         cout << "STEP FAILED" << endl;
         return;
     }
-    int i = 0;
-    unsigned char c = 0;
+    int i;
+    unsigned char c;
 
     for(i = 0; !labels.eof(); i++)
     {
@@ -70,11 +71,10 @@ void readSet(Set &set, ifstream &images, ifstream &labels)
         if(!labels.eof())
             set.labels.back()[c] = 1.0;
     }
-    int shift = 0;
-    float value;
-    for(i = 0; !images.eof(); i++)
+	auto shift = 0;
+	for(i = 0; !images.eof(); i++)
     {
-        vector<float> v;
+	    const vector<float> v;
         set.images.push_back(v);
 
         for(int j = 0; !images.eof() && j < 784;)
@@ -83,7 +83,7 @@ void readSet(Set &set, ifstream &images, ifstream &labels)
 
             if(shift > 15)
             {
-                value = (float)((int)(c)/255.0);
+	            auto value = static_cast<float>(static_cast<int>(c) / 255.0);
                 set.images.back().push_back(value);
                 j++;
             }

@@ -4,14 +4,13 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <iomanip>
 
 
 using namespace std;
 
-namespace Data
+namespace data
 {
     struct Set
     {
