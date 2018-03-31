@@ -36,7 +36,7 @@ class NeuralNetwork
         std::vector<uint> structureOfNetwork;
         std::vector<std::unique_ptr<Layer>> layers;
 
-        bool classifiedWell;
+        bool classifiedWell{};
 
         std::vector<float> errors;
 

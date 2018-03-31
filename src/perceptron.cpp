@@ -25,40 +25,44 @@ Perceptron::Perceptron(const uint numberOfInputs,
 	}
 
 	this->bias = 1.0f;
+	for (uint w = 0; w < numberOfInputs; ++w)
+	{
+		if (abs(weights[w]) > 1.0)
+			w = 2;
+		if (weights[w] != weights[w])
+			w = 4;
+	}
 }
 
 float Perceptron::randomInitializeWeight() const
 {
-	const float rangeMax = 2.4f / sqrt(this->numberOfInputs);
-	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f);//* rangeMax;
+	//const float rangeMax = 2.4f / sqrt(this->numberOfInputs);
+	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f);// *rangeMax;
 }
 
 float Perceptron::output(const vector<float>& inputs)
 {
-	//lastInputs = inputs;
+	lastInputs = inputs;
 	float sum = 0;
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		sum += inputs[w] * weights[w];
 	}
-	sum = activationFunction->function(sum + bias);
+	sum += bias;
+	sum = activationFunction->function(sum);
 	return sum;
-	//sum += 1.0f;
-
-	//if (sum > 1.0f) return 1.0f;
-	//if (sum < 0.0f) return 0.0f;
-	//return sum;
 }
 
-std::vector<float> Perceptron::backOutput(float error)
+std::vector<float> Perceptron::backOutput(const float error)
 {
-	//error = error * abs(error);
 	//error = activationFunction->derivate(error);
 	this->train(lastInputs, error);
 
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		errors[w] = error * weights[w];
+		if (abs(errors[w]) > abs(error))
+			float merdeeeeeeeeee = -99999999;
 	}
 	return errors;
 }
@@ -67,13 +71,13 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		deltaWeights[w] = learningRate * error * /*abs(inputs[w]) * */abs(weights[w]) * 0.001;//+ momentum * previousDeltaWeights[w];
+		deltaWeights[w] = learningRate * error;// *abs(inputs[w]) * abs(weights[w]);
+		weights[w] += deltaWeights[w];
 
-		if (weights[w] < -100000 || weights[w] > 10000)
-		{
-			weights[w] += deltaWeights[w];
-		}
-		//weights[w] += error * 0.0001;
+		if (abs(weights[w]) > 20)
+			w = w;
+		if (weights[w] != weights[w])
+			w = w;
 		//previousDeltaWeights[w] = deltaWeights[w];
 	}
 }

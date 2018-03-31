@@ -24,7 +24,7 @@ AllToAll::AllToAll(const uint numberOfInputs,
     }
 }
 
-vector<float> AllToAll::output(const vector<float> &inputs)
+vector<float>& AllToAll::output(const vector<float> &inputs)
 {
     for(uint n = 0; n < numberOfNeurons; ++n)
     {
@@ -33,7 +33,25 @@ vector<float> AllToAll::output(const vector<float> &inputs)
     return outputs;
 }
 
-vector<float> AllToAll::backOutput(vector<float> &inputsError)
+vector<float>& AllToAll::backOutput(vector<float> &inputsError)
+{
+	for (uint n = 0; n < numberOfInputs; ++n)
+	{
+		errors[n] = 0;
+	}
+
+	for (uint n = 0; n < numberOfNeurons; ++n)
+	{
+		auto result = neurons[n].backOutput(inputsError[n]);
+		for (uint r = 0; r < result.size(); ++r)
+			errors[r] += result[r];
+	}
+	if (errors.size() == 10)
+		float t = 4;
+	return errors;
+}
+
+/*vector<float> AllToAll::backOutput(vector<float> &inputsError)
 {
 	fill(errors.begin(), errors.end(), 0);
 	  
@@ -43,7 +61,7 @@ vector<float> AllToAll::backOutput(vector<float> &inputsError)
 		transform(result.begin(), result.end(), errors.begin(), errors.begin(), plus<float>());
 	}
 	return errors;
-}
+}*/
 
 void AllToAll::train(vector<float> &inputsError)
 {

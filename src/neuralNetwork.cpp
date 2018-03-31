@@ -87,7 +87,7 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<flo
 
 void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const uint classNumber)
 {
-	maxOutputValue = 0;
+	maxOutputValue = -1;
 	auto output = this->output(inputs);
 	for (uint n = 0; n < output.size(); ++n)
 	{
@@ -131,6 +131,8 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 		}
 		else
 			errors[n] = 0;
+
+		//errors[n] = -1;/////////////////
 	}
 	return errors;
 }

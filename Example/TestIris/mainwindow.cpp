@@ -133,13 +133,13 @@ int MainWindow::getLabel(const int value)
 void MainWindow::intialisation() // less than 100 times train to obtain 90%
 {
 	cout << "Start" << endl;
-	srand(time(NULL));
+	srand(time(nullptr));
 	loadData();
 
-	vector<unsigned int> a{4, 15, 10, 3};
-	vector<activationFunction> b{sigmoid, sigmoid, sigmoid};
+	vector<unsigned int> a{4, 3, 3};
+	vector<activationFunction> b{sigmoid, sigmoid};
 
-	NeuralNetwork neuralNetwork(a, b, 0.2f, 0.0f);
+	NeuralNetwork neuralNetwork(a, b, 0.001f, 0.0f);
 
 	const int numberOfEpochs = 50;
 
