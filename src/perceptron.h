@@ -38,7 +38,7 @@ class Perceptron
 
         Perceptron(uint numberOfInputs, ActivationFunction *activationFunction, float learningRate, float momentum);
 
-        std::vector<float> backOutput(float error);
+        std::vector<float>& backOutput(float error);
         float output(const std::vector<float> &inputs);
 		void train(const std::vector<float> &inputs, float error);
 

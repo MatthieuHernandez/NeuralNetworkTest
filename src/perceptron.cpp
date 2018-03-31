@@ -53,7 +53,7 @@ float Perceptron::output(const vector<float>& inputs)
 	return sum;
 }
 
-std::vector<float> Perceptron::backOutput(const float error)
+std::vector<float>& Perceptron::backOutput(const float error)
 {
 	//error = activationFunction->derivate(error);
 	this->train(lastInputs, error);
@@ -61,8 +61,8 @@ std::vector<float> Perceptron::backOutput(const float error)
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		errors[w] = error * weights[w];
-		if (abs(errors[w]) > abs(error))
-			float merdeeeeeeeeee = -99999999;
+		//if (abs(errors[w]) > abs(error))
+			//float merdeeeeeeeeee = 0.0f;
 	}
 	return errors;
 }
@@ -71,7 +71,7 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		deltaWeights[w] = learningRate * error * abs(weights[w]);// *abs(inputs[w]) ;
+		deltaWeights[w] = learningRate * error * abs(weights[w]) * abs(inputs[w]);
 		weights[w] += deltaWeights[w];
 
 		if (abs(weights[w]) > 20)
@@ -153,7 +153,7 @@ bool Perceptron::operator==(const Perceptron& perceptron)
 		|| this->numberOfInputs != perceptron.numberOfInputs
 		|| this->weights.size() != perceptron.weights.size())
 		return false;
-	for (auto w : weights)
+	for (uint w = 0; w < numberOfInputs; ++w)
 		if (this->weights[w] != perceptron.weights[w])
 			return false;
 	return true;
