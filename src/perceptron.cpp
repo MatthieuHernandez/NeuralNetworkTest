@@ -71,7 +71,7 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		deltaWeights[w] = learningRate * error;// *abs(inputs[w]) * abs(weights[w]);
+		deltaWeights[w] = learningRate * error * abs(weights[w]);// *abs(inputs[w]) ;
 		weights[w] += deltaWeights[w];
 
 		if (abs(weights[w]) > 20)

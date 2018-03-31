@@ -40,6 +40,7 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 	this->error = 0;
 
 	errors.resize(numberOfOutput);
+	outputs.resize(numberOfOutput);
 
 	layers.reserve(numberOfLayers);
 	for (uint l = 1; l < structureOfNetwork.size(); ++l)
@@ -58,13 +59,13 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 
 vector<float> NeuralNetwork::output(const vector<float>& inputs)
 {
-	auto output = layers[0]->output(inputs);
+	this->outputs = layers[0]->output(inputs);
 
 	for (uint l = 1; l < numberOfLayers; ++l)
 	{
-		output = layers[l]->output(output);
+		outputs = layers[l]->output(outputs);
 	}
-	return output;
+	return outputs;
 }
 
 void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<int>& desired)
@@ -110,7 +111,7 @@ void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desi
 
 void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const vector<float>& desired)
 {
-	auto outputs = this->output(inputs);
+	this->outputs = this->output(inputs);
 	auto errors = calculateError(outputs, desired);
 
 	for (int l = numberOfLayers - 1; l > 0; --l)
@@ -126,15 +127,12 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 	{
 		if (desired[n] != -1.0f)
 		{
-			const float e = desired[n] - outputs[n];
-			errors[n] = e;//* abs(e);
+			this->errors[n] = desired[n] - outputs[n]; // pow 2
 		}
 		else
-			errors[n] = 0;
-
-		//errors[n] = -1;/////////////////
+			this->errors[n] = 0;
 	}
-	return errors;
+	return this->errors;
 }
 
 void NeuralNetwork::resetAllNeurons()

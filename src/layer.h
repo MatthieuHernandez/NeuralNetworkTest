@@ -19,8 +19,8 @@ protected:
 
 public:
 
-	virtual std::vector<float>& output(const std::vector<float>& inputs) = 0;
-	virtual std::vector<float>& backOutput(std::vector<float>& inputsError) = 0;
+	virtual std::vector<float> output(const std::vector<float>& inputs) = 0;
+	virtual std::vector<float> backOutput(std::vector<float>& inputsError) = 0;
 	virtual void train(std::vector<float>& inputsError) = 0;
 
 	bool operator==(const Layer& layer);

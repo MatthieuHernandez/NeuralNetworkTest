@@ -136,8 +136,8 @@ void MainWindow::intialisation() // less than 100 times train to obtain 90%
 	srand(time(nullptr));
 	loadData();
 
-	vector<unsigned int> a{4, 3, 3};
-	vector<activationFunction> b{sigmoid, sigmoid};
+	vector<unsigned int> a{4, 200, 3};
+	vector<activationFunction> b{sigmoid, sigmoid, sigmoid, sigmoid};
 
 	NeuralNetwork neuralNetwork(a, b, 0.001f, 0.0f);
 

@@ -24,7 +24,7 @@ AllToAll::AllToAll(const uint numberOfInputs,
     }
 }
 
-vector<float>& AllToAll::output(const vector<float> &inputs)
+vector<float> AllToAll::output(const vector<float> &inputs)
 {
     for(uint n = 0; n < numberOfNeurons; ++n)
     {
@@ -33,7 +33,7 @@ vector<float>& AllToAll::output(const vector<float> &inputs)
     return outputs;
 }
 
-vector<float>& AllToAll::backOutput(vector<float> &inputsError)
+vector<float> AllToAll::backOutput(vector<float> &inputsError)
 {
 	for (uint n = 0; n < numberOfInputs; ++n)
 	{

@@ -39,6 +39,7 @@ class NeuralNetwork
         bool classifiedWell{};
 
         std::vector<float> errors;
+		std::vector<float> outputs;
 
         void backpropagationAlgorithm(const std::vector<float> &inputs, const std::vector<float> &desired);
 		std::vector<float> calculateError(const std::vector<float> &inputs, const std::vector<float> &desired);
