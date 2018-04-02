@@ -23,20 +23,12 @@ Perceptron::Perceptron(const uint numberOfInputs,
 	{
 		w = randomInitializeWeight();
 	}
-
 	this->bias = 1.0f;
-	for (uint w = 0; w < numberOfInputs; ++w)
-	{
-		if (abs(weights[w]) > 1.0)
-			w = 2;
-		if (weights[w] != weights[w])
-			w = 4;
-	}
 }
 
 float Perceptron::randomInitializeWeight() const
 {
-	//const float rangeMax = 2.4f / sqrt(this->numberOfInputs);
+	const float rangeMax = 1.0f / sqrt(this->numberOfInputs);
 	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f);// *rangeMax;
 }
 
@@ -53,16 +45,14 @@ float Perceptron::output(const vector<float>& inputs)
 	return sum;
 }
 
-std::vector<float>& Perceptron::backOutput(const float error)
+std::vector<float>& Perceptron::backOutput(float error)
 {
-	//error = activationFunction->derivate(error);
+	error = activationFunction->derivate(error);
 	this->train(lastInputs, error);
 
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
 		errors[w] = error * weights[w];
-		//if (abs(errors[w]) > abs(error))
-			//float merdeeeeeeeeee = 0.0f;
 	}
 	return errors;
 }
@@ -71,14 +61,18 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		deltaWeights[w] = learningRate * error * abs(weights[w]) * abs(inputs[w]);
-		weights[w] += deltaWeights[w];
-
-		if (abs(weights[w]) > 20)
-			w = w;
-		if (weights[w] != weights[w])
-			w = w;
-		//previousDeltaWeights[w] = deltaWeights[w];
+		if (abs(weights[w]) < abs(1000))
+		{
+			auto deltaWeights = learningRate * error * activationFunction->test(weights[w]) *abs(inputs[w]);
+			deltaWeights += momentum * previousDeltaWeights[w];
+			weights[w] += deltaWeights;
+		}
+		else
+		{
+			deltaWeights[w] = 0;
+			break;
+		}
+		previousDeltaWeights[w] = deltaWeights[w];
 	}
 }
 

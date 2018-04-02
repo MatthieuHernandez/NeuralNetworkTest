@@ -31,7 +31,7 @@ class NeuralNetwork
         uint numberOfHiddenLayers;
         uint numberOfLayers;
         uint numberOfInput;
-        uint numberOfOutput;
+        uint numberOfOutputs;
 
         std::vector<uint> structureOfNetwork;
         std::vector<std::unique_ptr<Layer>> layers;

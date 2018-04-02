@@ -46,8 +46,6 @@ vector<float>& AllToAll::backOutput(vector<float> &inputsError)
 		for (uint r = 0; r < result.size(); ++r)
 			errors[r] += result[r];
 	}
-	if (errors.size() == 10)
-		float t = 4;
 	return errors;
 }
 

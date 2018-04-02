@@ -95,26 +95,29 @@ void MainWindow::compute()
 {
 	this->initializeNeuralNetwork();
 
-	const auto numberOfClockCycle = 0;//clock();
-	float clusteringRateMax = -1;
-	float clusteringRate;
-	int epochMax = 0;
 
+	auto clusteringRateMax = -1.0f;
+	auto epochMax = 0;
+
+	auto numberOfClockCycles = clock();
 	for (int count = 1; ; count++)
 	{
+
 		for (int index = 0; index < MNIST.testing.size; index ++)
 		{
 			neuralNetwork->
 				calculateClusteringRateForClassificationProblem(MNIST.testing.images[index], getLabel(index, testing));
 		}
-		clusteringRate = neuralNetwork->getClusteringRate();
+		const auto clusteringRate = neuralNetwork->getClusteringRate();
 		if (clusteringRate > clusteringRateMax)
 		{
 			clusteringRateMax = clusteringRate;
 			epochMax = count;
 		}
-		cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)numberOfClockCycle /
+		cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)(clock() - numberOfClockCycles) /
 			CLOCKS_PER_SEC << " secondes" << endl;
+		numberOfClockCycles = clock();
+
 		cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
 		clusteringRateVector.push_back(clusteringRate * 100);
 		graphClusteringRate();
@@ -123,23 +126,27 @@ void MainWindow::compute()
 				(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
 		QApplication::processEvents();
 
-		for (int index = 0; index < MNIST.trainig.size; index ++)
+		const int index_max = MNIST.trainig.size;
+
+		for (int index = 0; index < index_max; index ++)
 		{
 			neuralNetwork->train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
-			if (index % 500 == 0)
+			if (index % 1000 == 0)
 			{
 				ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
 				QApplication::processEvents();
 			}
 		}
+		ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
+		QApplication::processEvents();
 	}
 }
 
 void MainWindow::initializeNeuralNetwork()
 {
 	this->neuralNetwork = std::make_unique<NeuralNetwork>(
-		vector<unsigned int>{(unsigned int)MNIST.sizeOfImages, 15, (unsigned int)MNIST.numberOfLabel},
-		vector<activationFunction>{sigmoid, sigmoid}, 0.04f, 0.0f);
+		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 50, static_cast<unsigned int>(MNIST.numberOfLabel)},
+		vector<activationFunction>{sigmoid, sigmoid, sigmoid, sigmoid}, 0.02f, 0.0f);
 
 	if (neuralNetwork->isValid() != 0)
 	{

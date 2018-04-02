@@ -1,4 +1,4 @@
-#include "neuralNetwork.h"
+#include "NeuralNetwork.h"
 #include <ctime>
 #include <algorithm>
 
@@ -33,19 +33,19 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 	this->numberOfLayers = structureOfNetwork.size() - 1;
 	this->numberOfHiddenLayers = structureOfNetwork.size() - 2;
 	this->numberOfInput = structureOfNetwork[0];
-	this->numberOfOutput = structureOfNetwork.back();
+	this->numberOfOutputs = structureOfNetwork.back();
 
 	this->momentum = 0;
 	this->lastError = 0;
 	this->error = 0;
 
-	errors.resize(numberOfOutput);
-	outputs.resize(numberOfOutput);
+	errors.resize(numberOfOutputs);
+	outputs.resize(numberOfOutputs);
 
 	layers.reserve(numberOfLayers);
 	for (uint l = 1; l < structureOfNetwork.size(); ++l)
 	{
-		const auto index = static_cast<int>(activationFunctionByLayer[l-1]);
+		const auto index = static_cast<int>(activationFunctionByLayer[l - 1]);
 		const auto function = ActivationFunction::listOfActivationFunction[index];
 
 		unique_ptr<Layer> layer(new AllToAll(structureOfNetwork[l - 1],
@@ -70,11 +70,11 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 
 void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<int>& desired)
 {
-	auto output = this->output(inputs);
-	for (uint n = 0; n < output.size(); ++n)
+	this->outputs = this->output(inputs);
+	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
 		classifiedWell = true;
-		if (static_cast<int>(round(output[n])) == desired[n] && desired[n] != -1.0)
+		if (static_cast<int>(round(this->outputs[n])) == desired[n] && desired[n] != -1.0)
 		{
 			classifiedWell = false;
 			break;
@@ -89,12 +89,12 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<flo
 void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const uint classNumber)
 {
 	maxOutputValue = -1;
-	auto output = this->output(inputs);
-	for (uint n = 0; n < output.size(); ++n)
+	this->outputs = this->output(inputs);
+	for (uint n = 0; n < this->outputs.size(); ++n)
 	{
-		if (maxOutputValue < output[n])
+		if (maxOutputValue < this->outputs[n])
 		{
-			maxOutputValue = output[n];
+			maxOutputValue = this->outputs[n];
 			maxOutputIndex = n;
 		}
 	}
@@ -112,7 +112,7 @@ void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desi
 void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const vector<float>& desired)
 {
 	this->outputs = this->output(inputs);
-	auto errors = calculateError(outputs, desired);
+	auto errors = calculateError(this->outputs, desired);
 
 	for (int l = numberOfLayers - 1; l > 0; --l)
 	{
@@ -123,7 +123,7 @@ void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const 
 
 inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs, const vector<float>& desired)
 {
-	for (uint n = 0; n < numberOfOutput; ++n)
+	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
 		if (desired[n] != -1.0f)
 		{
@@ -148,7 +148,7 @@ void NeuralNetwork::resetAllNeurons()
 	}*/
 }
 
-void NeuralNetwork::addANeuron(uint layerNumber)
+void NeuralNetwork::addANeuron(uint)
 {
 	// TODO: rework function addANeuron
 
@@ -168,8 +168,8 @@ void NeuralNetwork::addANeuron(uint layerNumber)
 	}
 	else if(layerNumber == numberOfHiddenLayers)
 	{
-	    numberOfOutput ++;
-	    neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfOutput-1));
+	    numberOfOutputs ++;
+	    neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfOutputs-1));
 
 	}
 	else if(layerNumber > 0 && layerNumber < numberOfHiddenLayers)
@@ -202,7 +202,7 @@ int NeuralNetwork::isValid()
 	for(uint i = 0; i < neurons.size(); i++)
 	{
 	    if(((uint)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
-	    || ((uint)neurons[i].size() != numberOfOutput && i == numberOfHiddenLayers))
+	    || ((uint)neurons[i].size() != numberOfOutputs && i == numberOfHiddenLayers))
 	    {
 	        lastError = 10;
 	        return lastError;

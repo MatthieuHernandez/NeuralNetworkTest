@@ -22,15 +22,16 @@ public :
 	static void initialize();
 
 	~ActivationFunction() = default;
-	virtual float function(const float x) const { return NAN; }
-	virtual float derivate(const float x) const { return NAN; }
+	virtual float function(const float) const { return NAN; }
+	virtual float derivate(const float) const { return NAN; }
+	float test(const float x) const { return exp(-x) / pow((1.0f + exp(-x)), 2); }
 };
 
 class Sigmoid : public ActivationFunction
 {
 public:
-	float function(const float x) const override { return 1.0 / (1.0 + exp(-x)); }
-	float derivate(const float x) const override { return exp(-x) / pow((1 + exp(-x)), 2); } // * x stdp
+	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
+	float derivate(const float x) const override { return x*exp(-x) / pow((1.0f + exp(-x)), 2); } // * x stdp
 };
 
 class TanH : public ActivationFunction

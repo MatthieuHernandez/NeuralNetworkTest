@@ -76,12 +76,12 @@ uint NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
 
 uint NeuralNetwork::getNumberOfOutputs() const
 {
-    return numberOfOutput;
+    return numberOfOutputs;
 }
 
 float NeuralNetwork::getClusteringRate()
 {
-	auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
+	const auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
     numberOfResultsClassifiedWell = 0;
     numberOfResultsMisclassefied = 0;
     return clusteringRate;
