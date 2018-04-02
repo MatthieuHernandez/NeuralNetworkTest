@@ -43,7 +43,7 @@ vector<float>& AllToAll::backOutput(vector<float> &inputsError)
 	for (uint n = 0; n < numberOfNeurons; ++n)
 	{
 		auto result = neurons[n].backOutput(inputsError[n]);
-		for (uint r = 0; r < result.size(); ++r)
+		for (uint r = 0; r < numberOfInputs; ++r)
 			errors[r] += result[r];
 	}
 	return errors;

@@ -18,10 +18,11 @@ class Perceptron
     private :
 
         std::vector<float> weights;
-        std::vector<float> deltaWeights;
         std::vector<float> previousDeltaWeights;
         std::vector<float> lastInputs;
         std::vector<float> errors;
+
+		float lastOutput;
 
         uint numberOfInputs;
 

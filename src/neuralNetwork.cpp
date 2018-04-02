@@ -127,7 +127,8 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 	{
 		if (desired[n] != -1.0f)
 		{
-			this->errors[n] = desired[n] - outputs[n]; // pow 2
+			auto e = desired[n] - outputs[n];
+			this->errors[n] = e * abs(e); // pow 2
 		}
 		else
 			this->errors[n] = 0;

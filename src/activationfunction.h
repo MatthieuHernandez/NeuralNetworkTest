@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 
 enum activationFunction
@@ -20,18 +21,21 @@ public :
 	static std::vector<ActivationFunction*> listOfActivationFunction;
 
 	static void initialize();
+	virtual ~ActivationFunction() = default;
 
-	~ActivationFunction() = default;
-	virtual float function(const float) const { return NAN; }
-	virtual float derivate(const float) const { return NAN; }
-	float test(const float x) const { return exp(-x) / pow((1.0f + exp(-x)), 2); }
+	virtual float function(const float) const { throw std::exception(); }
+
+	virtual float derivate(const float) const { throw std::exception(); }
+
+	float stdp(const float x) const { return 2 * x * exp(-x*0.4) / pow((1.0f + exp(-x*0.4)), 2); }
 };
 
 class Sigmoid : public ActivationFunction
 {
 public:
 	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
-	float derivate(const float x) const override { return x*exp(-x) / pow((1.0f + exp(-x)), 2); } // * x stdp
+	float derivate(const float x) const override { return x * (1.0 - x); }
+	// * x stdp // x*exp(-x) / pow((1.0f + exp(-x)), 2);
 };
 
 class TanH : public ActivationFunction

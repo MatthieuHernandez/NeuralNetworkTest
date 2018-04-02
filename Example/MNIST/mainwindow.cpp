@@ -28,9 +28,9 @@ void MainWindow::initialize()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)(this->MNIST.testing.images[number][y * 28 + x] * 255.0);
+		return (unsigned char)((this->MNIST.testing.images[number][y * 28 + x] + 1.0) * 127.4);
 	else
-		return (unsigned char)(this->MNIST.trainig.images[number][y * 28 + x] * 255.0);
+		return (unsigned char)((this->MNIST.trainig.images[number][y * 28 + x] + 1.0) * 127.4);
 }
 
 void MainWindow::on_spinBoxImageId_valueChanged(int value)
@@ -126,7 +126,7 @@ void MainWindow::compute()
 				(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
 		QApplication::processEvents();
 
-		const int index_max = MNIST.trainig.size;
+		const int index_max = 5000;//MNIST.trainig.size;
 
 		for (int index = 0; index < index_max; index ++)
 		{
@@ -145,8 +145,8 @@ void MainWindow::compute()
 void MainWindow::initializeNeuralNetwork()
 {
 	this->neuralNetwork = std::make_unique<NeuralNetwork>(
-		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 50, static_cast<unsigned int>(MNIST.numberOfLabel)},
-		vector<activationFunction>{sigmoid, sigmoid, sigmoid, sigmoid}, 0.02f, 0.0f);
+		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 200, 90, static_cast<unsigned int>(MNIST.numberOfLabel)},
+		vector<activationFunction>{sigmoid, sigmoid, sigmoid, sigmoid}, 0.05f, 0.1f);
 
 	if (neuralNetwork->isValid() != 0)
 	{

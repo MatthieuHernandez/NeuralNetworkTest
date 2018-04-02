@@ -83,7 +83,7 @@ void readSet(Set &set, ifstream &images, ifstream &labels)
 
             if(shift > 15)
             {
-	            auto value = static_cast<float>(static_cast<int>(c) / 255.0);
+				const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
                 set.images.back().push_back(value);
                 j++;
             }
