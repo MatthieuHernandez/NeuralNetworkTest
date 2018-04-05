@@ -1,13 +1,13 @@
+#include "neuralNetwork.h"
 #include <iostream>
-#include <iomanip>
-#include <neuralnetwork.h>
 
-#define PRECISION 1e-6f // 2e-7f
+//#define PRECISION 1e-6f // 2e-7f
 
 int main()
 {
-    cout << "IT COMPILES !" << endl << endl;
-
+    std::cout << "IT COMPILES !" << std::endl << std::endl;
+    return 0;
+}
     /*NeuralNetwork testCPU(4, 4, 100, 2);
     NeuralNetwork testGPU(1, 1, 1, 1);
     testCPU.setLearningRate(0.7f);
@@ -77,7 +77,3 @@ int main()
         cout << setprecision(50) << output_CPU[0] << " != " << output_GPU[0] << endl;
         cout << setprecision(50) << output_CPU[1] << " != " << output_GPU[1] << endl;
     }*/
-
-    cout << endl;
-    return 0;
-}

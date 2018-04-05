@@ -3,13 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <vector>
-#include <sstream>
-#include <iterator>
-#include <time.h>
 #include "neuralNetwork.h"
 
 using namespace std;

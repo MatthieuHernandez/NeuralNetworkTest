@@ -4,7 +4,7 @@
 //  Getters and setters
 //=====================================================================
 
-void NeuralNetwork::setLearningRate(float learningRate)
+void NeuralNetwork::setLearningRate(const float learningRate)
 {
     this->learningRate = learningRate;
 }
@@ -13,7 +13,7 @@ float NeuralNetwork::getLearningRate() const
     return learningRate;
 }
 
-void NeuralNetwork::setMomentum(float value)
+void NeuralNetwork::setMomentum(const float value)
 {
     if(value >= 0.0f && value <= 1.0f)
     {
@@ -21,7 +21,7 @@ void NeuralNetwork::setMomentum(float value)
     }
     else
     {
-        std::cout << "ERROR : Momentum must be in 0 and 1, 0 for don't use momentum." << std::endl;
+		lastError = 16;
     }
 }
 
@@ -30,12 +30,12 @@ float NeuralNetwork::getMomentum() const
     return this->momentum;
 }
 
-void NeuralNetwork::setLenghtOfShortRuns(unsigned int lenght)
+void NeuralNetwork::setLenghtOfShortRuns(const uint lenght)
 {
     this->lenghtOfShortRuns = lenght;
 }
 
-int NeuralNetwork::getLenghtOfShortRuns() const
+uint NeuralNetwork::getLenghtOfShortRuns() const
 {
     return lenghtOfShortRuns;
 }
@@ -44,44 +44,44 @@ int NeuralNetwork::getLenghtOfShortRuns() const
 //  Only getters
 //=====================================================================
 
-int NeuralNetwork::getShortRunCounter() const
+uint NeuralNetwork::getShortRunCounter() const
 {
     return shortRunCounter;
 }
 
-int NeuralNetwork::getNumberOfInputs() const
+uint NeuralNetwork::getNumberOfInputs() const
 {
     return numberOfInput;
 }
 
-int NeuralNetwork::getNumberOfHiddenLayers() const
+uint NeuralNetwork::getNumberOfHiddenLayers() const
 {
     return numberOfHiddenLayers;
 }
 
-int NeuralNetwork::getNumberOfNeuronsInHiddenLayers(int layerNumber) const
+uint NeuralNetwork::getNumberOfNeuronsInHiddenLayers(const int layerNumber) const
 {
     return structureOfNetwork[layerNumber+1];
 }
 
-int NeuralNetwork::getNumberOfResultsClassifiedWell() const
+uint NeuralNetwork::getNumberOfResultsClassifiedWell() const
 {
     return numberOfResultsClassifiedWell;
 }
 
-int NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
+uint NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
 {
     return numberOfResultsMisclassefied;
 }
 
-int NeuralNetwork::getNumberOfOutputs() const
+uint NeuralNetwork::getNumberOfOutputs() const
 {
-    return numberOfOutput;
+    return numberOfOutputs;
 }
 
 float NeuralNetwork::getClusteringRate()
 {
-    float clusteringRate = (float)(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
+	const auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
     numberOfResultsClassifiedWell = 0;
     numberOfResultsMisclassefied = 0;
     return clusteringRate;

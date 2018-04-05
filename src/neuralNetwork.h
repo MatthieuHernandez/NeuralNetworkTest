@@ -1,95 +1,86 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
 
-#include "perceptron.h"
-#include <time.h>
+#include "activationfunction.h"
+#include "alltoall.h"
+#include <memory>
 
 class NeuralNetwork
 {
     private :
 
         static bool isTheFirst;
+        static void initialize();
 
         float maxOutputValue;
-        float maxOutputIndex;
+        uint maxOutputIndex;
 
-        int lastError;
+        uint lastError;
         float learningRate;
         float clusteringRate;
         float previousClusteringRate;
         float error;
         float momentum;
 
-        int numberOfResultsClassifiedWell;
-        int numberOfResultsMisclassefied;
+        uint numberOfResultsClassifiedWell;
+        uint numberOfResultsMisclassefied;
 
         int lenghtOfShortRuns;
         int shortRunCounter;
 
+        uint numberOfHiddenLayers;
+        uint numberOfLayers;
+        uint numberOfInput;
+        uint numberOfOutputs;
 
-        int numberOfHiddenLayers;
-        int numberOfLayers;
-        int numberOfInput;
-        int numberOfOutput;
-
-        vector<int> structureOfNetwork;
-
+        std::vector<uint> structureOfNetwork;
+        std::vector<std::unique_ptr<Layer>> layers;
 
         bool classifiedWell;
 
-        vector<vector<float>> results;
-        vector<vector<float>> errors;
-        void backpropagationAlgorithm(const vector<float> &inputs, const vector<float> &desired);
-        void calculateError(const int neuronNumberLayer, const int neuronNumber);
+        std::vector<float> errors;
+		std::vector<float> outputs;
+
+        void backpropagationAlgorithm(const std::vector<float> &inputs, const std::vector<float> &desired);
+		std::vector<float> calculateError(const std::vector<float> &inputs, const std::vector<float> &desired);
 
         void resetAllNeurons();
-
-        vector<vector<Perceptron>> neurons;
-
-        vector<float> outputs;
 
 
     public :
 
+        NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
+                      std::vector<activationFunction>& activationFunctionByLayer,
+                      const float learningRate = 0.05f,
+                      const float momentum = 0.0f);
 
-        NeuralNetwork();
-        //NeuralNetwork(int numberOfInput, int numberOfHiddenLayers, int numberOfNeuronsInHiddenLayers, int numberOfOutput = 1, float learningRate = 0.05f);
-        NeuralNetwork(vector<int> structureOfNetwork, float learningRate = 0.05f);
-        void train(const vector<float> &inputs, const vector<float> &desired);
+        void train(const std::vector<float> &inputs, const std::vector<float> &desired);
+        std::vector<float> output(const std::vector<float>& inputs);
 
-        vector<float> calculateOutput(const vector<float> &inputs);
+        void calculateClusteringRateForRegressionProblem(const std::vector<float> &inputs, const std::vector<int> &desired);
+        void calculateClusteringRateForClassificationProblem(const std::vector<float> &inputs, const uint classNumber);
 
-        void calculateClusteringRateForRegressionProblem(const vector<float> &inputs, const vector<int> &desired);
-        void calculateClusteringRateForClassificationProblem(const vector<float> &inputs, const int classNumber);
-
-        void addANeuron(unsigned int layerNumber);
-        string display();
+        void addANeuron(uint layerNumber);
 
         int isValid();
-        int getLastError();
-
-
-
-
-
+        int getLastError() const;
 
         void setLearningRate(float learningRate);
         float getLearningRate() const;
         void setMomentum(float value);
         float getMomentum() const;
-        void setNumberOfSameClusteringAfterReset(unsigned int number);
-        int getNumberOfSameClusteringAfterReset() const;
-        void setLenghtOfShortRuns(unsigned int lenght);
+        //void setNumberOfSameClusteringAfterReset(uint number);
+        //int getNumberOfSameClusteringAfterReset() const;
+        void setLenghtOfShortRuns(uint lenght);
 
-
-        int getLenghtOfShortRuns() const;
-        int getShortRunCounter() const;
-        int getNumberOfInputs() const;
-        int getNumberOfHiddenLayers() const;
-        int getNumberOfNeuronsInHiddenLayers(int layerNumber) const;
-        int getNumberOfResultsClassifiedWell() const;
-        int getNumberOfNegativeResultsMisclassefied() const;
-        int getNumberOfOutputs() const;
+        uint getLenghtOfShortRuns() const;
+        uint getShortRunCounter() const;
+        uint getNumberOfInputs() const;
+        uint getNumberOfHiddenLayers() const;
+        uint getNumberOfNeuronsInHiddenLayers(int layerNumber) const;
+        uint getNumberOfResultsClassifiedWell() const;
+        uint getNumberOfNegativeResultsMisclassefied() const;
+        uint getNumberOfOutputs() const;
         float getClusteringRate();
 
         bool operator==(const NeuralNetwork &neuralNetwork);
