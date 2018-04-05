@@ -126,7 +126,7 @@ void MainWindow::compute()
 				(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
 		QApplication::processEvents();
 
-		const int index_max = 5000;//MNIST.trainig.size;
+		const int index_max = MNIST.trainig.size;
 
 		for (int index = 0; index < index_max; index ++)
 		{
@@ -145,8 +145,8 @@ void MainWindow::compute()
 void MainWindow::initializeNeuralNetwork()
 {
 	this->neuralNetwork = std::make_unique<NeuralNetwork>(
-		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 200, 90, static_cast<unsigned int>(MNIST.numberOfLabel)},
-		vector<activationFunction>{sigmoid, sigmoid, sigmoid, sigmoid}, 0.05f, 0.1f);
+		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 80, static_cast<unsigned int>(MNIST.numberOfLabel)},
+		vector<activationFunction>{stdp, stdp, stdp, stdp}, 0.05f, 0.0f);
 
 	if (neuralNetwork->isValid() != 0)
 	{

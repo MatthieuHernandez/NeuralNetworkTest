@@ -24,10 +24,7 @@ public :
 	virtual ~ActivationFunction() = default;
 
 	virtual float function(const float) const { throw std::exception(); }
-
 	virtual float derivate(const float) const { throw std::exception(); }
-
-	float stdp(const float x) const { return 2 * x * exp(-x*0.4) / pow((1.0f + exp(-x*0.4)), 2); }
 };
 
 class Sigmoid : public ActivationFunction
