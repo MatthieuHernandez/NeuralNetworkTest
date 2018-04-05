@@ -9,7 +9,8 @@ enum activationFunction
 	sigmoid = 0,
 	tanH,
 	reLU,
-	gaussian
+	gaussian,
+	stdp
 };
 
 class ActivationFunction
@@ -54,9 +55,18 @@ public :
 	float derivate(const float x) const override { return -2 * x * exp(-pow(x, 2)); }
 };
 
+class STDP : public ActivationFunction
+{
+private :
+	constexpr const static float a = 5; // 6
+	constexpr const static float b = 1; // 2
+
+public :
+	float function(const float x) const override { return a * x * exp(-x * b) / pow((1.0f + exp(-x * b)), 2); }
+	float derivate(const float x) const override { return -((a*exp(b*x)*((b*x-1)*exp(b*x)-(b*x)-1))/(pow(exp(b*x)+1, 3))); } // -((6*exp(2*x)*((2*x-1)*exp(2*x)-2*x-1))/(exp(2*x)+1)^3)
+};
 
 #endif // ACTIVATIONFUNCTIONS_H
-
 
 //A * pa = &b;
 //pa->F1(); // affiche "A::F1()"
