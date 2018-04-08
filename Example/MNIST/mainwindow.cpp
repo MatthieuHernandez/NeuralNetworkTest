@@ -146,7 +146,7 @@ void MainWindow::initializeNeuralNetwork()
 {
 	this->neuralNetwork = std::make_unique<NeuralNetwork>(
 		vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 80, static_cast<unsigned int>(MNIST.numberOfLabel)},
-		vector<activationFunction>{stdp, stdp, stdp, stdp}, 0.05f, 0.0f);
+		vector<activationFunction>{sigmoid, sigmoid, sigmoid}, 0.05f, 0.0f);
 
 	if (neuralNetwork->isValid() != 0)
 	{
