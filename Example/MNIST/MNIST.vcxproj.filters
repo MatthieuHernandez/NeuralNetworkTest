@@ -23,93 +23,69 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files">
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{52e01ab2-1a4f-4de7-b40c-c1b83bc26134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files">
+    <Filter Include="src\Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="lib">
+      <UniqueIdentifier>{15608c07-f924-4c06-9207-e55f66dad4cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\activationfunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\alltoall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\layer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\neuralNetwork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\neuralNetworkGettersAndSetters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\perceptron.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\lib\qcustomplot.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MNIST.cpp">
+      <Filter>src\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Source Files\Data.cpp">
+      <Filter>src\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\activationfunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\alltoall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\layer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="..\..\src\neuralNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\perceptron.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MNIST.h">
+      <Filter>src\Header Files</Filter>
     </ClInclude>
     <QtMoc Include="..\..\lib\qcustomplot.h">
-      <Filter>Header Files</Filter>
+      <Filter>lib</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
-    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Header FIles\Data.h">
+      <Filter>src\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,8 +5,8 @@
 
 #include <vector>
 
-#include "./../../src/neuralNetwork.h"
-#include "data.h"
+#include "Header FIles/neuralNetwork.h"
+#include "Header FIles/Data.h"
 
 
 using namespace std;

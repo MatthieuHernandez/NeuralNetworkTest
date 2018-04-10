@@ -15,6 +15,7 @@
     <RootNamespace>NeuralNetwork</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>GUI</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -59,12 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">bin\release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NeuralNetwork</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">bin\debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NeuralNetwork</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
@@ -191,26 +192,17 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\activationfunction.cpp" />
-    <ClCompile Include="..\..\src\alltoall.cpp" />
-    <ClCompile Include="data.cpp" />
-    <ClCompile Include="..\..\src\layer.cpp" />
+    <ClCompile Include="..\..\src\Source Files\Data.cpp" />
+    <ClCompile Include="MNIST.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="..\..\src\neuralNetwork.cpp" />
-    <ClCompile Include="..\..\src\neuralNetworkGettersAndSetters.cpp" />
-    <ClCompile Include="..\..\src\perceptron.cpp" />
     <ClCompile Include="..\..\lib\qcustomplot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\activationfunction.h" />
-    <ClInclude Include="..\..\src\alltoall.h" />
-    <ClInclude Include="data.h" />
-    <ClInclude Include="..\..\src\layer.h" />
+    <ClInclude Include="..\..\src\Header FIles\Data.h" />
+    <ClInclude Include="MNIST.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
-    <ClInclude Include="..\..\src\neuralNetwork.h" />
-    <ClInclude Include="..\..\src\perceptron.h" />
     <QtMoc Include="..\..\lib\qcustomplot.h">
     </QtMoc>
   </ItemGroup>
@@ -235,6 +227,11 @@
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\neuralNetwork.vcxproj">
+      <Project>{d4aae28c-e4ea-3212-82f0-74c31bd9c662}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

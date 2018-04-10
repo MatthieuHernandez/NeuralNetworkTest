@@ -1,40 +1,31 @@
-#include "data.h"
+#include "MNIST.h"
 #include <fstream>
 
-namespace data
+using namespace std;
+
+MNIST::MNIST()
 {
-
-string path = "mnist/";
-
-const string path_MNIST[4] = {path + "t10k-images.idx3-ubyte",
-                              path + "t10k-labels.idx1-ubyte",
-                              path + "train-images.idx3-ubyte",
-                              path + "train-labels.idx1-ubyte",};
-
-
-
-MNIST_struct create_MNIST()
-{
-   MNIST_struct MNIST = Initialize_MNIST();
-   readImages(MNIST);
-
-   return MNIST;
+	this->sizeOfData = 784;
+	this->numberOfLabel = 10;
+	this->trainig.size = 60000;
+	this->testing.size = 10000;
 }
 
-MNIST_struct Initialize_MNIST()
+void MNIST::loadData()
 {
-    MNIST_struct MNIST;
-    MNIST.sizeOfImages = 784;
-    MNIST.numberOfLabel = 10;
-    MNIST.trainig.size = 60000;
-    MNIST.testing.size = 10000;
+	string path = "mnist/";
 
-    return MNIST;
+	const string path_MNIST[4] = {
+		path + "t10k-images.idx3-ubyte",
+		path + "t10k-labels.idx1-ubyte",
+		path + "train-images.idx3-ubyte",
+		path + "train-labels.idx1-ubyte"};
+
+	this->readImages(path_MNIST);
 }
 
-void readImages(MNIST_struct &MNIST)
+void MNIST::readImages(const string path_MNIST[])
 {
-
     ifstream imagesTestFile;
     ifstream labelsTestFile;
     ifstream imagesTrainFile;
@@ -45,11 +36,11 @@ void readImages(MNIST_struct &MNIST)
     imagesTrainFile.open(path_MNIST[2], ios::in | ios::binary);
     labelsTrainFile.open(path_MNIST[3], ios::in | ios::binary);
 
-    readSet(MNIST.testing, imagesTestFile, labelsTestFile);
-    readSet(MNIST.trainig, imagesTrainFile, labelsTrainFile);
+    readSet(this->testing, imagesTestFile, labelsTestFile);
+	readSet(this->trainig, imagesTrainFile, labelsTrainFile);
 }
 
-void readSet(Set &set, ifstream &images, ifstream &labels)
+void MNIST::readSet(Set &set, ifstream &images, ifstream &labels)
 {
     if(!images.is_open()
     && !labels.is_open())
@@ -94,6 +85,4 @@ void readSet(Set &set, ifstream &images, ifstream &labels)
     }
     images.close();
     labels.close();
-}
-
 }
