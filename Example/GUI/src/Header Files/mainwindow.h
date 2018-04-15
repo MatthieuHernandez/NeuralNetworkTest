@@ -2,12 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include <vector>
 
-#include "Header FIles/neuralNetwork.h"
-#include "Header FIles/Data.h"
-
+#include "neuralNetwork.h"
+#include "Data.h"
 
 using namespace std;
 

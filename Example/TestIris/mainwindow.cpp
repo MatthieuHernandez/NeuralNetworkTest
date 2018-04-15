@@ -130,14 +130,14 @@ int MainWindow::getLabel(const int value)
 	return -1;
 }
 
-void MainWindow::intialisation() // less than 100 times train to obtain 90%
+void MainWindow::intialisation() // less than 100 times training to obtain 90%
 {
 	cout << "Start" << endl;
-	srand(time(nullptr));
+	srand(time(nullptr))
 	loadData();
 
 	vector<unsigned int> a{4, 200, 3};
-	vector<activationFunction> b{sigmoid, sigmoid, sigmoid, sigmoid};
+	vector<activationFunction> {sigmoid, sigmoid, sigmoid, sigmoid};
 
 	NeuralNetwork neuralNetwork(a, b, 0.001f, 0.0f);
 

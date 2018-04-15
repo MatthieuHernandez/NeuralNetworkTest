@@ -7,14 +7,13 @@ MNIST::MNIST()
 {
 	this->sizeOfData = 784;
 	this->numberOfLabel = 10;
-	this->trainig.size = 60000;
-	this->testing.size = 10000;
+	this->sets[training].size = 60000;
+	this->sets[testing].size = 10000;
 }
 
 void MNIST::loadData()
 {
 	string path = "mnist/";
-
 	const string path_MNIST[4] = {
 		path + "t10k-images.idx3-ubyte",
 		path + "t10k-labels.idx1-ubyte",
@@ -36,17 +35,16 @@ void MNIST::readImages(const string path_MNIST[])
     imagesTrainFile.open(path_MNIST[2], ios::in | ios::binary);
     labelsTrainFile.open(path_MNIST[3], ios::in | ios::binary);
 
-    readSet(this->testing, imagesTestFile, labelsTestFile);
-	readSet(this->trainig, imagesTrainFile, labelsTrainFile);
+    this->readSet(this->testing, imagesTestFile, labelsTestFile);
+	this->readSet(this->training, imagesTrainFile, labelsTrainFile);
 }
 
-void MNIST::readSet(Set &set, ifstream &images, ifstream &labels)
+void MNIST::readSet(const set set, ifstream &images, ifstream &labels)
 {
     if(!images.is_open()
     && !labels.is_open())
     {
-        cout << "STEP FAILED" << endl;
-        return;
+		throw new OpenFailFailedException();
     }
     int i;
     unsigned char c;
@@ -57,16 +55,16 @@ void MNIST::readSet(Set &set, ifstream &images, ifstream &labels)
 
         vector<float> v;
         v.resize(10, 0.0);
-        set.labels.push_back(v);
+        sets[set].labels.push_back(v);
 
         if(!labels.eof())
-            set.labels.back()[c] = 1.0;
+			sets[set].labels.back()[c] = 1.0;
     }
 	auto shift = 0;
 	for(i = 0; !images.eof(); i++)
     {
 	    const vector<float> v;
-        set.images.push_back(v);
+		sets[set].data.push_back(v);
 
         for(int j = 0; !images.eof() && j < 784;)
         {
@@ -75,7 +73,7 @@ void MNIST::readSet(Set &set, ifstream &images, ifstream &labels)
             if(shift > 15)
             {
 				const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
-                set.images.back().push_back(value);
+				sets[set].data.back().push_back(value);
                 j++;
             }
             else

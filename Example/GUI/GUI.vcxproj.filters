@@ -27,47 +27,16 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{52e01ab2-1a4f-4de7-b40c-c1b83bc26134}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="src\Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="lib">
-      <UniqueIdentifier>{15608c07-f924-4c06-9207-e55f66dad4cd}</UniqueIdentifier>
+    <Filter Include="External Library">
+      <UniqueIdentifier>{7070a453-e9e8-46b7-b221-af5cebc64166}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>src\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>src\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\qcustomplot.cpp">
-      <Filter>src\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MNIST.cpp">
-      <Filter>src\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Source Files\Data.cpp">
-      <Filter>src\Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="mainwindow.h">
-      <Filter>src\Header Files</Filter>
+    <QtMoc Include="src\Header Files\mainwindow.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="MNIST.h">
-      <Filter>src\Header Files</Filter>
-    </ClInclude>
-    <QtMoc Include="..\..\lib\qcustomplot.h">
-      <Filter>lib</Filter>
+    <QtMoc Include="External Library\qcustomplot.h">
+      <Filter>External Library</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +53,14 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Header FIles\Data.h">
-      <Filter>src\Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="src\Source Files\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="External Library\qcustomplot.cpp">
+      <Filter>External Library</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

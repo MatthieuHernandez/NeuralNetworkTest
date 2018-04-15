@@ -71,7 +71,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;release;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Source Files;$(ProjectDir)\src\Header Files;release;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -112,7 +112,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;debug;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Source Files;$(ProjectDir)\src\Header Files;debug;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -151,21 +151,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="activationfunction.cpp" />
-    <ClCompile Include="alltoall.cpp" />
-    <ClCompile Include="layer.cpp" />
-    <ClCompile Include="neuralNetwork.cpp" />
-    <ClCompile Include="neuralNetworkGettersAndSetters.cpp" />
-    <ClCompile Include="perceptron.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="activationfunction.h" />
-    <ClInclude Include="alltoall.h" />
-    <ClInclude Include="layer.h" />
-    <ClInclude Include="neuralNetwork.h" />
-    <ClInclude Include="perceptron.h" />
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -182,6 +167,21 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_predefs.h;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Header Files\activationfunction.h" />
+    <ClInclude Include="src\Header Files\alltoall.h" />
+    <ClInclude Include="src\Header Files\layer.h" />
+    <ClInclude Include="src\Header Files\neuralNetwork.h" />
+    <ClInclude Include="src\Header Files\perceptron.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Source Files\activationfunction.cpp" />
+    <ClCompile Include="src\Source Files\alltoall.cpp" />
+    <ClCompile Include="src\Source Files\layer.cpp" />
+    <ClCompile Include="src\Source Files\neuralNetwork.cpp" />
+    <ClCompile Include="src\Source Files\neuralNetworkGettersAndSetters.cpp" />
+    <ClCompile Include="src\Source Files\perceptron.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

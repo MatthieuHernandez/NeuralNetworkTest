@@ -3,17 +3,17 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
-#include <sstream>
 #include <iomanip>
+#include <exception>
+#include "Data.h"
 
-#include "Header FIles/Data.h"
+using namespace std;
 
 class MNIST : public Data
 {
 private :
     void readImages(const std::string path_MNIST[]);
-	static void readSet(Set &set, std::ifstream &images, std::ifstream &labels);
+	void readSet(const set set, std::ifstream& images, std::ifstream& labels);
 	MNIST();
 	void loadData() override;
 };
@@ -25,5 +25,9 @@ std::string to_string_with_precision(const T value, const int n = 3)
 	out << fixed << std::setprecision(n) << value;
 	return out.str();
 }
+
+class OpenFailFailedException : public exception
+{
+};
 
 #endif // MNIST_H
