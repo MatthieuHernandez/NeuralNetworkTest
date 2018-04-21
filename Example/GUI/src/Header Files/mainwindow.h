@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <vector>
 
-#include "neuralNetwork.h"
-#include "Data.h"
+#include "Controller.h"
 
 using namespace std;
 
@@ -32,8 +31,9 @@ class MainWindow : public QMainWindow
 
         Ui::MainWindow *ui;
 
+		Controller *controller;
+
         data::MNIST_struct MNIST;
-        std::unique_ptr<NeuralNetwork> neuralNetwork;
 
         vector<float> input;
         vector<float> desired;
@@ -61,6 +61,7 @@ class MainWindow : public QMainWindow
         void on_spinBoxImageId_valueChanged(int value);
         void on_pushButton_clicked();
         void on_comboBoxSet_currentIndexChanged(int index);
+		void on_pushButtonConsole_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -55,6 +55,7 @@ public:
     QLabel *label_4;
     QLineEdit *lineEditInformation;
     QLabel *label_5;
+    QPushButton *pushButtonConsole;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -139,9 +140,13 @@ public:
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(467, 460, 71, 21));
+        pushButtonConsole = new QPushButton(centralWidget);
+        pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
+        pushButtonConsole->setGeometry(QRect(20, 460, 80, 22));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
+        QObject::connect(pushButtonConsole, SIGNAL(clicked()), MainWindow, SLOT(on_pushButtonConsole_clicked()));
 
         tabWidget->setCurrentIndex(0);
 
@@ -167,6 +172,7 @@ public:
         label_4->setText(QApplication::translate("MainWindow", "activation\n"
 "function :", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
+        pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
     } // retranslateUi
 
 };

@@ -7,7 +7,7 @@ class Data
 {
 protected :
 
-	const enum set
+	enum set
 	{
 		testing = 0,
 		training = 1

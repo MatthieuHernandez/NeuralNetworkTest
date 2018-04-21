@@ -19,19 +19,20 @@ TEMPLATE = app
 
 CONFIG += c++14
 
-SOURCES += $$PWD/main.cpp \
-        $$PWD/mainwindow.cpp \
-        $$PWD/data.cpp \
-        $$PWD/../../lib/qcustomplot.cpp \
+SOURCES += "C:\Programming\Github\NeuralNetwork\Example\GUI\src\Source Files\main.cpp" \
+           "C:\Programming\Github\NeuralNetwork\Example\GUI\src\Source Files\mainwindow.cpp" \
+#           "C:\Programming\Github\NeuralNetwork\Example\GUI\src\Source Files\data.cpp" \
+           "C:\Programming\Github\NeuralNetwork\Example\GUI\External Library\qcustomplot.cpp" \
 
-
-HEADERS += mainwindow.h\
-           data.h\
-           $$PWD/../../lib/qcustomplot.h
+HEADERS += "C:\Programming\Github\NeuralNetwork\Example\GUI\src\Header Files\mainwindow.h"\
+#           "C:\Programming\Github\NeuralNetwork\Example\GUI\src\Header Files\data.h"\
+           "C:\Programming\Github\NeuralNetwork\Example\GUI\External Library\qcustomplot.h" \
+           "C:\Programming\Github\NeuralNetwork\Example\GUI\ui_mainwindow.h" \
 
 INCLUDEPATH += $$PWD \
-               $$PWD/../../src \
-               $$PWD/../../lib \
+#               "$$PWD/GUI/src/Header Files" \
+#               "C:\Programming\Github\NeuralNetwork\NeuralNetwork\src\Source Files" \
+#               $$PWD/../../lib \
 
 FORMS += \
         mainwindow.ui
