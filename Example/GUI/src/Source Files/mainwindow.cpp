@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+
 MainWindow::MainWindow(QWidget* parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -9,7 +11,7 @@ MainWindow::MainWindow(QWidget* parent) :
 	ui->lineEditInformation->setText("loading ...");
 	this->controller = new Controller();
 	this->controller->initialize();
-	QTimer::singleShot(200, this, SLOT(this->controller->initialize()));
+	QtConcurrent::run(200, this, SLOT(this->controller->initialize()));
 	ui->lineEditInformation->setText("data loaded");
 }
 
@@ -133,11 +135,11 @@ void MainWindow::graphClusteringRate()
 	}
 	// make left and bottom axes always transfer their ranges to right and top axes:
 	x.clear();
-	for (auto i = 0; i < clusteringRateVector.size(); i++)
+	for (auto i = 0; i < clusteringRates.size(); i++)
 	{
 		x.push_back(i);
 	}
-	ui->custom_plot->graph(0)->setData(x, clusteringRateVector);
-	ui->custom_plot->xAxis->setRange(0, clusteringRateVector.size() - 1);
+	ui->custom_plot->graph(0)->setData(x, clusteringRates);
+	ui->custom_plot->xAxis->setRange(0, clusteringRates.size() - 1);
 	ui->custom_plot->replot();
 }

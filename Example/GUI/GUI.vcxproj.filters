@@ -38,9 +38,6 @@
     <QtMoc Include="External Library\qcustomplot.h">
       <Filter>External Library</Filter>
     </QtMoc>
-    <QtMoc Include="Console.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -68,16 +65,13 @@
     <ClCompile Include="External Library\qcustomplot.cpp">
       <Filter>External Library</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Console.cpp">
+    <ClCompile Include="src\Source Files\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Controller.h">
-      <Filter>Generated Files</Filter>
+    <ClInclude Include="src\Header Files\Controller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
