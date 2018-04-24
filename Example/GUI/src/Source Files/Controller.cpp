@@ -4,17 +4,14 @@
 
 using namespace std; 
 
-Controller::Controller()
-{
-}
-
-Controller::~Controller()
-{
-}
-
-void Controller::initializeData(Data& data)
+Controller::Controller(Data& data)
 {
 	this->data = &data;
+}
+
+void Controller::initializeData()
+{
+	this->data->loadData();
 }
 
 /*this->neuralNetwork = std::make_unique<NeuralNetwork>(
@@ -25,15 +22,16 @@ void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
 										 float learningRate,
 										 float momentum)
 {
-	this->neuralNetwork = std::make_unique<NeuralNetwork>(structure,
+	/*this->neuralNetwork = std::make_unique<NeuralNetwork>(structure,
 														  activationFunction, 
 														  learningRate,
-		                                                  momentum);
+		                                                  momentum);*/
 }
 
 void Controller::compute()
 {
-	auto clusteringRateMax = -1.0f;
+	// TODO
+	/*auto clusteringRateMax = -1.0f;
 	auto epochMax = 0;
 
 	auto numberOfClockCycles = clock();
@@ -76,5 +74,5 @@ void Controller::compute()
 		}
 		ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
 		QApplication::processEvents();
-	}
+	}*/
 }

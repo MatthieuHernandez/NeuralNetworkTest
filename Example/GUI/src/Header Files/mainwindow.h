@@ -3,65 +3,74 @@
 
 #include <QMainWindow>
 #include <vector>
-
 #include "Controller.h"
+#include "Console.h"
 
-using namespace std;
-
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+	class MainWindow;
 }
 
 enum DisplayedSet
 {
-    testing,
-    training
+	testing = 0,
+	training
+};
+
+enum indexData
+{
+	indexMNIST = 0,
+	indexIris,
+	indexParisTrees,
+	End
 };
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
-    public:
+Q_OBJECT
+public:
 
-        explicit MainWindow(QWidget *parent = 0);
-        ~MainWindow();
+	explicit MainWindow(QWidget* parent = 0);
+	~MainWindow();
 
 
-    private:
+private:
 
-        Ui::MainWindow *ui;
+	Ui::MainWindow* ui;
+	Console* console;
 
-		Controller *controller;
+	int indexController = 0;
+	Controller* currentController;
+	std::vector<Controller*> controllers;
 
-        data::MNIST_struct MNIST;
+	//data::MNIST_struct MNIST;
 
-        vector<float> input;
-        vector<float> desired;
+	std::vector<float> input;
+	std::vector<float> desired;
 
-        list<vector<float>> desired_outputs;
+	//list<std::vector<float>> desired_outputs;
 
-        DisplayedSet displayedSet = testing;
+	DisplayedSet displayedSet = testing;
 
-        void compute();
-        void initialize();
-        void initializeNeuralNetwork();
-        void displayImage(int value);
-        int getLabel(int value, DisplayedSet displayedSet);
-        void graphClusteringRate();
+	void compute();
+	void initialize();
+	void initializeNeuralNetwork();
+	void displayImage(int value);
+	int getLabel(int value, DisplayedSet displayedSet);
+	void graphClusteringRate();
 
-        unsigned char getImages(int number, int x, int y);
-        bool flag_graph = true;
+	unsigned char getImages(int number, int x, int y);
+	bool flag_graph = true;
 
-        QVector<double> clusteringRateVector;
+	QVector<double> clusteringRates;
+	QVector<double> x;
 
-        QVector<double> x;
+private slots:
 
-    private slots:
-
-        void on_spinBoxImageId_valueChanged(int value);
-        void on_pushButton_clicked();
-        void on_comboBoxSet_currentIndexChanged(int index);
-		void on_pushButtonConsole_clicked();
+	void on_spinBoxImageId_valueChanged(int value);
+	void on_pushButton_clicked();
+	void on_comboBoxSet_currentIndexChanged(int index);
+	void on_pushButtonConsole_clicked();
 };
 
 #endif // MAINWINDOW_H

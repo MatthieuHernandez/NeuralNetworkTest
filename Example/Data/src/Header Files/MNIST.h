@@ -14,8 +14,10 @@ class MNIST : public Data
 private :
     void readImages(const std::string path_MNIST[]);
 	void readSet(const set set, std::ifstream& images, std::ifstream& labels);
-	MNIST();
 	void loadData() override;
+
+public :
+	MNIST();
 };
 
 template <typename T>

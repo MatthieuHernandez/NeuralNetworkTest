@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <qtconcurrentrun.h>
+#include <QApplication>
+#include <qpen.h>
+#include "MNIST.h"
 
+using namespace std;
 
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -9,9 +14,12 @@ MainWindow::MainWindow(QWidget* parent) :
 {
 	ui->setupUi(this);
 	ui->lineEditInformation->setText("loading ...");
-	this->controller = new Controller();
-	this->controller->initialize();
-	QtConcurrent::run(200, this, SLOT(this->controller->initialize()));
+
+	console = new Console();
+	console->hide();
+	Controller* controller = new Controller(*new MNIST());
+	controllers.push_back(controller);
+
 	ui->lineEditInformation->setText("data loaded");
 }
 
@@ -23,9 +31,9 @@ MainWindow::~MainWindow()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)((this->MNIST.testing.images[number][y * 28 + x] + 1.0) * 127.4);
+		return (unsigned char)((this->controllers[indexMNIST]->data->sets[testing].data[number][y * 28 + x] + 1.0) * 127.4);
 	else
-		return (unsigned char)((this->MNIST.trainig.images[number][y * 28 + x] + 1.0) * 127.4);
+		return (unsigned char)((this->controllers[indexMNIST]->data->sets[training].data[number][y * 28 + x] + 1.0) * 127.4);
 }
 
 void MainWindow::on_spinBoxImageId_valueChanged(int value)
@@ -35,7 +43,8 @@ void MainWindow::on_spinBoxImageId_valueChanged(int value)
 
 void MainWindow::displayImage(int value)
 {
-	const int size = 28;
+	// TODO
+	/*const int size = 28;
 	const int multiple = 10;
 	QImage picture(size, size, QImage::Format_RGB32);
 	for (int x = 0; x < size; x++)
@@ -53,12 +62,13 @@ void MainWindow::displayImage(int value)
 	if (displayedSet == training)
 		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 	else
-		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
+		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));*/
 }
 
 int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 {
-	if (displayedSet == training)
+	// TODO 
+	/*if (displayedSet == training)
 	{
 		if (this->MNIST.trainig.labels[value][0] == 1) return 0;
 		if (this->MNIST.trainig.labels[value][1] == 1) return 1;
@@ -82,13 +92,13 @@ int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 	if (this->MNIST.testing.labels[value][6] == 1) return 6;
 	if (this->MNIST.testing.labels[value][7] == 1) return 7;
 	if (this->MNIST.testing.labels[value][8] == 1) return 8;
-	if (this->MNIST.testing.labels[value][9] == 1) return 9;
+	if (this->MNIST.testing.labels[value][9] == 1) return 9;*/
 	return -1;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
-	QTimer::singleShot(200, this, SLOT(this->controller->compute()));
+	auto future = QtConcurrent::run(currentController, &Controller::compute);
 }
 
 void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
@@ -115,6 +125,7 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 
 void MainWindow::on_pushButtonConsole_clicked()
 {
+	console->show();
 }
 
 void MainWindow::graphClusteringRate()
