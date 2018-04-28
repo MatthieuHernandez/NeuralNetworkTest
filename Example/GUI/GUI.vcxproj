@@ -224,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ControllersManager.cpp" />
     <ClCompile Include="External Library\qcustomplot.cpp" />
     <ClCompile Include="src\Source Files\Controller.cpp" />
     <ClCompile Include="src\Source Files\main.cpp" />
@@ -242,6 +243,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\..\NeuralNetwork\src\Header Files;$(ProjectDir)\..\Data\src\Header Files;$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;.\..\Source Files;.\..\Header Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;.\..\..\src;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;.\release;\include;$(QTDIR)\mkspecs\win32-msvc</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG</Define>
     </QtMoc>
+    <ClInclude Include="ControllersManager.h" />
     <ClInclude Include="src\Header Files\Controller.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

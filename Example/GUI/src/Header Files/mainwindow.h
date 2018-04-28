@@ -5,6 +5,7 @@
 #include <vector>
 #include "Controller.h"
 #include "Console.h"
+#include "ControllersManager.h"
 
 namespace Ui
 {
@@ -17,20 +18,13 @@ enum DisplayedSet
 	training
 };
 
-enum indexData
-{
-	indexMNIST = 0,
-	indexIris,
-	indexParisTrees,
-	End
-};
-
 class MainWindow : public QMainWindow
 {
 Q_OBJECT
 public:
 
 	explicit MainWindow(QWidget* parent = 0);
+	void write(std::string text, bool onlyConsole = true);
 	~MainWindow();
 
 
@@ -41,7 +35,7 @@ private:
 
 	int indexController = 0;
 	Controller* currentController;
-	std::vector<Controller*> controllers;
+	ControllersManager* manager;
 
 	//data::MNIST_struct MNIST;
 
@@ -71,6 +65,9 @@ private slots:
 	void on_pushButton_clicked();
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_pushButtonConsole_clicked();
+
+	/* DATA */
+	void on_comboBox_currentIndexChanged(int index);
 };
 
 #endif // MAINWINDOW_H

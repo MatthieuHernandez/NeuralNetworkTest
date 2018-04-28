@@ -32,6 +32,7 @@ public:
         textEdit = new QTextEdit(Console);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         textEdit->setGeometry(QRect(0, 0, 500, 300));
+        textEdit->setReadOnly(true);
 
         retranslateUi(Console);
 

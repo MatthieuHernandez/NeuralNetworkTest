@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <qpen.h>
 #include "MNIST.h"
+#include "ControllersManager.h"
 
 using namespace std;
 
@@ -13,14 +14,9 @@ MainWindow::MainWindow(QWidget* parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->lineEditInformation->setText("loading ...");
-
-	console = new Console();
-	console->hide();
-	Controller* controller = new Controller(*new MNIST());
-	controllers.push_back(controller);
-
-	ui->lineEditInformation->setText("data loaded");
+	this->write("loading ...", false);
+	
+	this->write("data loaded", false);
 }
 
 MainWindow::~MainWindow()
@@ -31,9 +27,9 @@ MainWindow::~MainWindow()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)((this->controllers[indexMNIST]->data->sets[testing].data[number][y * 28 + x] + 1.0) * 127.4);
+		return (unsigned char)((this->manager->getController(indexMNIST).data->sets[testing].data[number][y * 28 + x] + 1.0) * 127.4);
 	else
-		return (unsigned char)((this->controllers[indexMNIST]->data->sets[training].data[number][y * 28 + x] + 1.0) * 127.4);
+		return (unsigned char)((this->manager->getController(indexMNIST).data->sets[training].data[number][y * 28 + x] + 1.0) * 127.4);
 }
 
 void MainWindow::on_spinBoxImageId_valueChanged(int value)
@@ -41,10 +37,14 @@ void MainWindow::on_spinBoxImageId_valueChanged(int value)
 	displayImage(value);
 }
 
+void MainWindow::write(std::string text, bool onlyConsole)
+{
+	ui->lineEditInformation->setText("data loaded");
+}
+
 void MainWindow::displayImage(int value)
 {
-	// TODO
-	/*const int size = 28;
+	const int size = 28;
 	const int multiple = 10;
 	QImage picture(size, size, QImage::Format_RGB32);
 	for (int x = 0; x < size; x++)
@@ -62,37 +62,21 @@ void MainWindow::displayImage(int value)
 	if (displayedSet == training)
 		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 	else
-		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));*/
+		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 }
 
 int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 {
-	// TODO 
-	/*if (displayedSet == training)
-	{
-		if (this->MNIST.trainig.labels[value][0] == 1) return 0;
-		if (this->MNIST.trainig.labels[value][1] == 1) return 1;
-		if (this->MNIST.trainig.labels[value][2] == 1) return 2;
-		if (this->MNIST.trainig.labels[value][3] == 1) return 3;
-		if (this->MNIST.trainig.labels[value][4] == 1) return 4;
-		if (this->MNIST.trainig.labels[value][5] == 1) return 5;
-		if (this->MNIST.trainig.labels[value][6] == 1) return 6;
-		if (this->MNIST.trainig.labels[value][7] == 1) return 7;
-		if (this->MNIST.trainig.labels[value][8] == 1) return 8;
-		if (this->MNIST.trainig.labels[value][9] == 1) return 9;
-		return -1;
-	}
-
-	if (this->MNIST.testing.labels[value][0] == 1) return 0;
-	if (this->MNIST.testing.labels[value][1] == 1) return 1;
-	if (this->MNIST.testing.labels[value][2] == 1) return 2;
-	if (this->MNIST.testing.labels[value][3] == 1) return 3;
-	if (this->MNIST.testing.labels[value][4] == 1) return 4;
-	if (this->MNIST.testing.labels[value][5] == 1) return 5;
-	if (this->MNIST.testing.labels[value][6] == 1) return 6;
-	if (this->MNIST.testing.labels[value][7] == 1) return 7;
-	if (this->MNIST.testing.labels[value][8] == 1) return 8;
-	if (this->MNIST.testing.labels[value][9] == 1) return 9;*/
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][0] == 1) return 0;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][1] == 1) return 1;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][2] == 1) return 2;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][3] == 1) return 3;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][4] == 1) return 4;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][5] == 1) return 5;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][6] == 1) return 6;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][7] == 1) return 7;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][8] == 1) return 8;
+	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][9] == 1) return 9;
 	return -1;
 }
 
@@ -128,20 +112,25 @@ void MainWindow::on_pushButtonConsole_clicked()
 	console->show();
 }
 
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+	currentController = &this->manager->getController(index);
+}
+
 void MainWindow::graphClusteringRate()
 {
 	QApplication::processEvents();
 	if (flag_graph)
 	{
-		ui->custom_plot->addGraph();
-		ui->custom_plot->addGraph();
-		ui->custom_plot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-		ui->custom_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+		ui->customPlot->addGraph();
+		ui->customPlot->addGraph();
+		ui->customPlot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
+		ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
 		// first graph will be filled with translucent blue
-		ui->custom_plot->graph(1)->setPen(QPen(Qt::red));
-		connect(ui->custom_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->xAxis2, SLOT(setRange(QCPRange)));
-		connect(ui->custom_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->custom_plot->yAxis2, SLOT(setRange(QCPRange)));
-		ui->custom_plot->yAxis->setRange(0, 100); // (0, 100)
+		ui->customPlot->graph(1)->setPen(QPen(Qt::red));
+		connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
+		connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
+		ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
 		flag_graph = false;
 	}
 	// make left and bottom axes always transfer their ranges to right and top axes:
@@ -150,7 +139,7 @@ void MainWindow::graphClusteringRate()
 	{
 		x.push_back(i);
 	}
-	ui->custom_plot->graph(0)->setData(x, clusteringRates);
-	ui->custom_plot->xAxis->setRange(0, clusteringRates.size() - 1);
-	ui->custom_plot->replot();
+	ui->customPlot->graph(0)->setData(x, clusteringRates);
+	ui->customPlot->xAxis->setRange(0, clusteringRates.size() - 1);
+	ui->customPlot->replot();
 }
