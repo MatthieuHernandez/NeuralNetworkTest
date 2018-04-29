@@ -8,23 +8,25 @@ class Controller
 {
 private :
 
-	void initializeData();
-	void initializeNeuralNetwork(std::vector<unsigned int> structure,
-	                             std::vector<activationFunction> activationFunction,
-	                             float learningRate,
-	                             float momentum);
-
-	std::unique_ptr<NeuralNetwork> neuralNetwork;
+	Data* data;
+	NeuralNetwork* neuralNetwork;
 
 
 public:
 
-	Data* data;
-
 	Controller(Data& data);
 	~Controller() = default;
 
+	void initializeData();
+	void initializeNeuralNetwork(std::vector<unsigned int> structure,
+								 std::vector<activationFunction> activationFunction,
+								 float learningRate,
+								 float momentum);
+
 	void compute();
+
+	NeuralNetwork& getNeuralNetwork() const;
+	Data& getData() const;
 };
 
 #endif // CONTROLLER_H

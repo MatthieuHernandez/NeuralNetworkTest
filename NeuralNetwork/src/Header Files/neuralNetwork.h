@@ -25,7 +25,6 @@ class NeuralNetwork
         uint numberOfResultsClassifiedWell;
         uint numberOfResultsMisclassefied;
 
-        int lenghtOfShortRuns;
         int shortRunCounter;
 
         uint numberOfHiddenLayers;
@@ -34,6 +33,8 @@ class NeuralNetwork
         uint numberOfOutputs;
 
         std::vector<uint> structureOfNetwork;
+		std::vector<activationFunction> activationFunctionByLayer;
+
         std::vector<std::unique_ptr<Layer>> layers;
 
         bool classifiedWell;
@@ -73,14 +74,15 @@ class NeuralNetwork
         //int getNumberOfSameClusteringAfterReset() const;
         void setLenghtOfShortRuns(uint lenght);
 
-        uint getLenghtOfShortRuns() const;
-        uint getShortRunCounter() const;
-        uint getNumberOfInputs() const;
-        uint getNumberOfHiddenLayers() const;
-        uint getNumberOfNeuronsInHiddenLayers(int layerNumber) const;
-        uint getNumberOfResultsClassifiedWell() const;
-        uint getNumberOfNegativeResultsMisclassefied() const;
-        uint getNumberOfOutputs() const;
+        int getLenghtOfShortRuns() const;
+        int getShortRunCounter() const;
+        int getNumberOfInputs() const;
+        int getNumberOfHiddenLayers() const;
+        int getNumberOfNeuronsInLayer(int layerNumber) const;
+		activationFunction getActivationFunctionInLayer(int layerNumber) const;
+        int getNumberOfResultsClassifiedWell() const;
+        int getNumberOfNegativeResultsMisclassefied() const;
+        int getNumberOfOutputs() const;
         float getClusteringRate();
 
         bool operator==(const NeuralNetwork &neuralNetwork);

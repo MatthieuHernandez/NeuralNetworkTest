@@ -49,6 +49,7 @@ private:
 	void compute();
 	void initialize();
 	void initializeNeuralNetwork();
+	void refreshDataUI();
 	void displayImage(int value);
 	int getLabel(int value, DisplayedSet displayedSet);
 	void graphClusteringRate();

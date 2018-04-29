@@ -1,5 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
+#include <vector>
 
 class Data
 {
@@ -33,7 +34,7 @@ public:
 	} sets[2];
 
 	virtual ~Data() = default;
-	virtual void loadData() = 0;
+	virtual void loadData();
 
 	std::vector<float>& getNextTrainingData(bool isRandom = true);
 	std::vector<float>& getNextTrainingLabel();

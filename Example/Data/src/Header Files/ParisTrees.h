@@ -1,5 +1,7 @@
 #pragma once
-class ParisTrees
+#include "Data.h"
+
+class ParisTrees : public Data
 {
 public:
 	ParisTrees();
@@ -7,4 +9,3 @@ public:
 
 	void loadData();
 };
-

@@ -31,7 +31,7 @@ class Sigmoid : public ActivationFunction
 {
 public:
 	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
-	float derivate(const float x) const override { return x * (1.0 - x); }
+	float derivate(const float x) const override { return x * (1.0f - x); }
 	// * x stdp // x*exp(-x) / pow((1.0f + exp(-x)), 2);
 };
 

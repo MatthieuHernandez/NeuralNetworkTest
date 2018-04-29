@@ -8,6 +8,7 @@ void NeuralNetwork::setLearningRate(const float learningRate)
 {
     this->learningRate = learningRate;
 }
+
 float NeuralNetwork::getLearningRate() const
 {
     return learningRate;
@@ -30,51 +31,46 @@ float NeuralNetwork::getMomentum() const
     return this->momentum;
 }
 
-void NeuralNetwork::setLenghtOfShortRuns(const uint lenght)
-{
-    this->lenghtOfShortRuns = lenght;
-}
-
-uint NeuralNetwork::getLenghtOfShortRuns() const
-{
-    return lenghtOfShortRuns;
-}
-
 //=====================================================================
 //  Only getters
 //=====================================================================
 
-uint NeuralNetwork::getShortRunCounter() const
+int NeuralNetwork::getShortRunCounter() const
 {
     return shortRunCounter;
 }
 
-uint NeuralNetwork::getNumberOfInputs() const
+int NeuralNetwork::getNumberOfInputs() const
 {
     return numberOfInput;
 }
 
-uint NeuralNetwork::getNumberOfHiddenLayers() const
+int NeuralNetwork::getNumberOfHiddenLayers() const
 {
     return numberOfHiddenLayers;
 }
 
-uint NeuralNetwork::getNumberOfNeuronsInHiddenLayers(const int layerNumber) const
+int NeuralNetwork::getNumberOfNeuronsInLayer(const int layerNumber) const
 {
     return structureOfNetwork[layerNumber+1];
 }
 
-uint NeuralNetwork::getNumberOfResultsClassifiedWell() const
+activationFunction NeuralNetwork::getActivationFunctionInLayer(int layerNumber) const
+{
+	return activationFunctionByLayer[layerNumber];
+}
+
+int NeuralNetwork::getNumberOfResultsClassifiedWell() const
 {
     return numberOfResultsClassifiedWell;
 }
 
-uint NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
+int NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
 {
     return numberOfResultsMisclassefied;
 }
 
-uint NeuralNetwork::getNumberOfOutputs() const
+int NeuralNetwork::getNumberOfOutputs() const
 {
     return numberOfOutputs;
 }

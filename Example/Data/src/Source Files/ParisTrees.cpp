@@ -1,7 +1,6 @@
 #include "ParisTrees.h"
 
 
-
 ParisTrees::ParisTrees()
 {
 }

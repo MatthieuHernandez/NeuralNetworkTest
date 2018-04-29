@@ -190,7 +190,7 @@
      <string>Layer  :</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButtonAddLayer">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -203,7 +203,7 @@
      <string>Add layer</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_3">
+   <widget class="QComboBox" name="comboBoxLayer">
     <property name="geometry">
      <rect>
       <x>53</x>
@@ -226,7 +226,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="comboBoxActivationfunction">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -236,7 +236,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox">
+   <widget class="QSpinBox" name="spinBoxNeurons">
     <property name="geometry">
      <rect>
       <x>60</x>

@@ -1,7 +1,7 @@
 #pragma once
 #include "Data.h"
 
-class Iris : Data
+class Iris : public Data
 {
 public:
 	Iris();

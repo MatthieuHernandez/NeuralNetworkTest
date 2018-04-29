@@ -4,6 +4,10 @@
 
 using namespace std;
 
+void Data::loadData()
+{
+}
+
 vector<float>& Data::getNextTrainingData(bool isRandom)
 {
 	return this->getNextData(training, isRandom);

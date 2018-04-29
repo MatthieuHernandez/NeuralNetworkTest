@@ -2,11 +2,12 @@
 #include <QApplication>
 #include <ctime>
 
-using namespace std; 
+using namespace std;
 
 Controller::Controller(Data& data)
 {
 	this->data = &data;
+	this->neuralNetwork = nullptr;
 }
 
 void Controller::initializeData()
@@ -18,14 +19,14 @@ void Controller::initializeData()
 vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 80, static_cast<unsigned int>(MNIST.numberOfLabel)},
 vector<activationFunction>{sigmoid, sigmoid, sigmoid}, 0.05f, 0.0f);*/
 void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
-										 vector<activationFunction> activationFunction,
-										 float learningRate,
-										 float momentum)
+                                         vector<activationFunction> activationFunction,
+                                         float learningRate,
+                                         float momentum)
 {
-	/*this->neuralNetwork = std::make_unique<NeuralNetwork>(structure,
-														  activationFunction, 
-														  learningRate,
-		                                                  momentum);*/
+	/*this->neuralNetwork = new NeuralNetwork(structure,
+	                                        activationFunction,
+	                                        learningRate,
+	                                        momentum);*/
 }
 
 void Controller::compute()
@@ -75,4 +76,14 @@ void Controller::compute()
 		ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
 		QApplication::processEvents();
 	}*/
+}
+
+NeuralNetwork& Controller::getNeuralNetwork() const
+{
+	return *neuralNetwork;
+}
+
+Data& Controller::getData() const
+{
+	return *data;
 }

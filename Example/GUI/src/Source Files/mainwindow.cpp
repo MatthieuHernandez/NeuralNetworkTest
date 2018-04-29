@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget* parent) :
 {
 	ui->setupUi(this);
 	this->write("loading ...", false);
-	
+	ui->spinBoxNeurons->setValue(0);
+	this->refreshDataUI();
 	this->write("data loaded", false);
 }
 
@@ -27,19 +28,27 @@ MainWindow::~MainWindow()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)((this->manager->getController(indexMNIST).data->sets[testing].data[number][y * 28 + x] + 1.0) * 127.4);
+		return (unsigned char)((this->manager->getController(indexMNIST).getData().sets[testing].data[number][y * 28 + x] + 1.0) *
+			127.4);
 	else
-		return (unsigned char)((this->manager->getController(indexMNIST).data->sets[training].data[number][y * 28 + x] + 1.0) * 127.4);
-}
-
-void MainWindow::on_spinBoxImageId_valueChanged(int value)
-{
-	displayImage(value);
+		return (unsigned char)((this->manager->getController(indexMNIST).getData().sets[training].data[number][y * 28 + x] + 1.0)
+			* 127.4);
 }
 
 void MainWindow::write(std::string text, bool onlyConsole)
 {
-	ui->lineEditInformation->setText("data loaded");
+	ui->lineEditInformation->setText(QString::fromStdString(text));
+}
+
+void MainWindow::refreshDataUI()
+{
+	ui->comboBoxLayer->setCurrentIndex(0);
+
+	//const int neuronsNumber = currentController->getNeuralNetwork().getNumberOfNeuronsInLayer(0);
+	//ui->spinBoxNeurons->setValue(neuronsNumber);
+
+	//const int function = currentController->getNeuralNetwork().getActivationFunctionInLayer(0);
+	//ui->comboBoxActivationfunction->setCurrentIndex(function);
 }
 
 void MainWindow::displayImage(int value)
@@ -67,18 +76,16 @@ void MainWindow::displayImage(int value)
 
 int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 {
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][0] == 1) return 0;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][1] == 1) return 1;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][2] == 1) return 2;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][3] == 1) return 3;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][4] == 1) return 4;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][5] == 1) return 5;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][6] == 1) return 6;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][7] == 1) return 7;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][8] == 1) return 8;
-	if (this->controllers[indexMNIST]->data->sets[displayedSet].labels[value][9] == 1) return 9;
+	for (int i = 0; i > 10; i++)
+	{
+		if (this->manager->getController(indexMNIST).getData().sets[displayedSet].labels[value][i] == 1) return i;
+	}
 	return -1;
 }
+
+/**************************************************
+ *				  	    SLOTS				  	  *
+ **************************************************/
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -105,6 +112,11 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 	}
 
 	displayImage(ui->spinBoxImageId->value());
+}
+
+void MainWindow::on_spinBoxImageId_valueChanged(int value)
+{
+	displayImage(value);
 }
 
 void MainWindow::on_pushButtonConsole_clicked()

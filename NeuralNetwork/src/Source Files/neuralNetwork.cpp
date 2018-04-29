@@ -23,8 +23,8 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 		this->initialize();
 
 	this->structureOfNetwork = structureOfNetwork;
+	this->activationFunctionByLayer = activationFunctionByLayer;
 	this->learningRate = learningRate;
-	this->lenghtOfShortRuns = 0;
 	this->shortRunCounter = 0;
 	this->numberOfResultsClassifiedWell = 0;
 	this->numberOfResultsMisclassefied = 0;
