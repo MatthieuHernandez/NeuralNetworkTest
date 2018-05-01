@@ -71,9 +71,6 @@
     <ClCompile Include="src\Source Files\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControllersManager.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
   <ItemGroup>
     <ClInclude Include="src\Header Files\Controller.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControllersManager.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\ControllersManager.h">
       <Filter>Header Files</Filter>

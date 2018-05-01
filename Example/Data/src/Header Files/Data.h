@@ -12,10 +12,6 @@ protected :
 		training = 1
 	};
 
-	int sizeOfData{}; // size of one data, equal to size of neural network inputs
-	int numberOfLabel{}; // the number of class, equal to size of neural network outputs
-
-
 private:
 
 	void shuffle();
@@ -24,6 +20,9 @@ private:
 
 	
 public:
+
+	int sizeOfData{}; // size of one data, equal to size of neural network inputs
+	int numberOfLabel{}; // the number of class, equal to size of neural network outputs
 
 	struct Set
 	{

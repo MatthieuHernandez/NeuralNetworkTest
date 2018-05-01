@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget* parent) :
 {
 	ui->setupUi(this);
 	this->write("loading ...", false);
+	this->console = new Console();
 	ui->spinBoxNeurons->setValue(0);
 	this->refreshDataUI();
 	this->write("data loaded", false);
@@ -28,10 +29,10 @@ MainWindow::~MainWindow()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)((this->manager->getController(indexMNIST).getData().sets[testing].data[number][y * 28 + x] + 1.0) *
+		return (unsigned char)((this->manager.getController(indexMNIST).getData().sets[testing].data[number][y * 28 + x] + 1.0) *
 			127.4);
 	else
-		return (unsigned char)((this->manager->getController(indexMNIST).getData().sets[training].data[number][y * 28 + x] + 1.0)
+		return (unsigned char)((this->manager.getController(indexMNIST).getData().sets[training].data[number][y * 28 + x] + 1.0)
 			* 127.4);
 }
 
@@ -74,11 +75,30 @@ void MainWindow::displayImage(int value)
 		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 }
 
+void MainWindow::StartLoadingLogo()
+{
+	if (loadingLogo == nullptr)
+	{
+		loadingLogo = new QMovie("./Extra Files/loading.gif");
+		loadingLogo->setScaledSize(QSize(50, 50));
+	}
+
+	if (!loadingLogo->isValid())
+		write("[ERROR] Loading picture failed");
+	ui->labelLoading->setMovie(loadingLogo);
+	loadingLogo->start();
+}
+
+void MainWindow::StopLoadingLogo()
+{
+	loadingLogo->stop();
+}
+
 int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 {
 	for (int i = 0; i > 10; i++)
 	{
-		if (this->manager->getController(indexMNIST).getData().sets[displayedSet].labels[value][i] == 1) return i;
+		if (this->manager.getController(indexMNIST).getData().sets[displayedSet].labels[value][i] == 1) return i;
 	}
 	return -1;
 }
@@ -87,9 +107,16 @@ int MainWindow::getLabel(int value, DisplayedSet displayedSet)
  *				  	    SLOTS				  	  *
  **************************************************/
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButtonCompute_clicked()
 {
-	auto future = QtConcurrent::run(currentController, &Controller::compute);
+	this->StartLoadingLogo();
+	connect(&watcher, SIGNAL(finished()), this, SLOT(StopLoadingLogo()));
+	auto future = QtConcurrent::run([=]()
+	{
+		//currentController->compute();
+		Sleep(2000);
+	});
+	watcher.setFuture(future);
 }
 
 void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
@@ -124,9 +151,9 @@ void MainWindow::on_pushButtonConsole_clicked()
 	console->show();
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
+void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
-	currentController = &this->manager->getController(index);
+	currentController = &this->manager.getController(index);
 }
 
 void MainWindow::graphClusteringRate()

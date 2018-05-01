@@ -31,7 +31,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QPushButton *pushButton;
+    QPushButton *pushButtonCompute;
     QLabel *labelCount;
     QLabel *labelClusteringRateMax;
     QComboBox *comboBoxData;
@@ -56,6 +56,8 @@ public:
     QLineEdit *lineEditInformation;
     QLabel *label_5;
     QPushButton *pushButtonConsole;
+    QPushButton *pushButtonRemoveLayer;
+    QLabel *labelLoading;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -65,18 +67,21 @@ public:
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setMinimumSize(QSize(0, 0));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(750, 460, 80, 22));
+        pushButtonCompute = new QPushButton(centralWidget);
+        pushButtonCompute->setObjectName(QStringLiteral("pushButtonCompute"));
+        pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
         labelCount = new QLabel(centralWidget);
         labelCount->setObjectName(QStringLiteral("labelCount"));
-        labelCount->setGeometry(QRect(750, 440, 81, 16));
+        labelCount->setGeometry(QRect(720, 440, 81, 16));
         labelClusteringRateMax = new QLabel(centralWidget);
         labelClusteringRateMax->setObjectName(QStringLiteral("labelClusteringRateMax"));
         labelClusteringRateMax->setGeometry(QRect(180, 459, 150, 21));
         comboBoxData = new QComboBox(centralWidget);
+        comboBoxData->addItem(QString());
+        comboBoxData->addItem(QString());
+        comboBoxData->addItem(QString());
         comboBoxData->setObjectName(QStringLiteral("comboBoxData"));
-        comboBoxData->setGeometry(QRect(70, 10, 90, 22));
+        comboBoxData->setGeometry(QRect(70, 10, 101, 22));
         labelProject = new QLabel(centralWidget);
         labelProject->setObjectName(QStringLiteral("labelProject"));
         labelProject->setGeometry(QRect(10, 10, 60, 21));
@@ -113,7 +118,10 @@ public:
         label_2->setGeometry(QRect(10, 70, 41, 21));
         pushButtonAddLayer = new QPushButton(centralWidget);
         pushButtonAddLayer->setObjectName(QStringLiteral("pushButtonAddLayer"));
-        pushButtonAddLayer->setGeometry(QRect(110, 70, 61, 22));
+        pushButtonAddLayer->setGeometry(QRect(120, 70, 22, 22));
+        QIcon icon;
+        icon.addFile(QStringLiteral("Extra Files/add-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonAddLayer->setIcon(icon);
         comboBoxLayer = new QComboBox(centralWidget);
         comboBoxLayer->setObjectName(QStringLiteral("comboBoxLayer"));
         comboBoxLayer->setGeometry(QRect(53, 70, 51, 22));
@@ -124,10 +132,10 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         comboBoxActivationfunction = new QComboBox(centralWidget);
         comboBoxActivationfunction->setObjectName(QStringLiteral("comboBoxActivationfunction"));
-        comboBoxActivationfunction->setGeometry(QRect(60, 150, 106, 22));
+        comboBoxActivationfunction->setGeometry(QRect(60, 150, 111, 22));
         spinBoxNeurons = new QSpinBox(centralWidget);
         spinBoxNeurons->setObjectName(QStringLiteral("spinBoxNeurons"));
-        spinBoxNeurons->setGeometry(QRect(60, 110, 106, 22));
+        spinBoxNeurons->setGeometry(QRect(60, 110, 111, 22));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 110, 47, 21));
@@ -143,12 +151,22 @@ public:
         pushButtonConsole = new QPushButton(centralWidget);
         pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
         pushButtonConsole->setGeometry(QRect(20, 460, 80, 22));
+        pushButtonRemoveLayer = new QPushButton(centralWidget);
+        pushButtonRemoveLayer->setObjectName(QStringLiteral("pushButtonRemoveLayer"));
+        pushButtonRemoveLayer->setGeometry(QRect(150, 70, 22, 22));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonRemoveLayer->setIcon(icon1);
+        labelLoading = new QLabel(centralWidget);
+        labelLoading->setObjectName(QStringLiteral("labelLoading"));
+        labelLoading->setGeometry(QRect(800, 445, 40, 40));
+        labelLoading->setScaledContents(true);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
         QObject::connect(pushButtonConsole, SIGNAL(clicked()), MainWindow, SLOT(on_pushButtonConsole_clicked()));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -157,9 +175,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
         labelCount->setText(QApplication::translate("MainWindow", "Count :", nullptr));
         labelClusteringRateMax->setText(QApplication::translate("MainWindow", "Clustering Max : ", nullptr));
+        comboBoxData->setItemText(0, QApplication::translate("MainWindow", "MNIST", nullptr));
+        comboBoxData->setItemText(1, QApplication::translate("MainWindow", "Iris", nullptr));
+        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "ParisTrees", nullptr));
+
         labelProject->setText(QApplication::translate("MainWindow", "Project :", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
         Image->setText(QString());
@@ -167,12 +189,14 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
         label->setText(QApplication::translate("MainWindow", "Clustering Rate :", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
-        pushButtonAddLayer->setText(QApplication::translate("MainWindow", "Add layer", nullptr));
+        pushButtonAddLayer->setText(QString());
         label_3->setText(QApplication::translate("MainWindow", "Neurons :", nullptr));
         label_4->setText(QApplication::translate("MainWindow", "activation\n"
 "function :", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
         pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
+        pushButtonRemoveLayer->setText(QString());
+        labelLoading->setText(QString());
     } // retranslateUi
 
 };

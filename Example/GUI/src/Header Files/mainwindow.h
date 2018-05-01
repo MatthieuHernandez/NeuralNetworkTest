@@ -2,10 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMovie>
 #include <vector>
 #include "Controller.h"
 #include "Console.h"
 #include "ControllersManager.h"
+#include <qfuturewatcher.h>
 
 namespace Ui
 {
@@ -32,12 +34,10 @@ private:
 
 	Ui::MainWindow* ui;
 	Console* console;
+	Controller* currentController;
+	ControllersManager manager;
 
 	int indexController = 0;
-	Controller* currentController;
-	ControllersManager* manager;
-
-	//data::MNIST_struct MNIST;
 
 	std::vector<float> input;
 	std::vector<float> desired;
@@ -46,11 +46,17 @@ private:
 
 	DisplayedSet displayedSet = testing;
 
+	QMovie *loadingLogo = nullptr;
+	QFutureWatcher<void> watcher;
+
 	void compute();
 	void initialize();
 	void initializeNeuralNetwork();
 	void refreshDataUI();
 	void displayImage(int value);
+
+	void StartLoadingLogo();
+
 	int getLabel(int value, DisplayedSet displayedSet);
 	void graphClusteringRate();
 
@@ -63,12 +69,14 @@ private:
 private slots:
 
 	void on_spinBoxImageId_valueChanged(int value);
-	void on_pushButton_clicked();
+	void on_pushButtonCompute_clicked();
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_pushButtonConsole_clicked();
 
+	void StopLoadingLogo();
+
 	/* DATA */
-	void on_comboBox_currentIndexChanged(int index);
+	void on_comboBoxData_currentIndexChanged(int index);
 };
 
 #endif // MAINWINDOW_H

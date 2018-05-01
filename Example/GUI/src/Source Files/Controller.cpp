@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <ctime>
+#include <windows.h>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
 void Controller::compute()
 {
 	// TODO
+	//Sleep(5000);
 	/*auto clusteringRateMax = -1.0f;
 	auto epochMax = 0;
 
