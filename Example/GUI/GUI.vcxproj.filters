@@ -38,7 +38,7 @@
     <QtMoc Include="External Library\qcustomplot.h">
       <Filter>External Library</Filter>
     </QtMoc>
-    <QtMoc Include="Console.h">
+    <QtMoc Include="src\Header Files\Console.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -71,11 +71,14 @@
     <ClCompile Include="src\Source Files\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ControllersManager.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\ControllersManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="ControllersManager.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\ControllersManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

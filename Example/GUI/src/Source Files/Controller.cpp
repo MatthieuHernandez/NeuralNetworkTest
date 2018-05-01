@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include <QApplication>
 #include <ctime>
 
 using namespace std;
@@ -23,10 +22,7 @@ void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
                                          float learningRate,
                                          float momentum)
 {
-	/*this->neuralNetwork = new NeuralNetwork(structure,
-	                                        activationFunction,
-	                                        learningRate,
-	                                        momentum);*/
+	this->neuralNetwork = new NeuralNetwork(structure, activationFunction, learningRate, momentum);
 }
 
 void Controller::compute()
