@@ -9,12 +9,17 @@
 #include "ControllersManager.h"
 #include <qfuturewatcher.h>
 
+
+Q_ENUMS(set)
+Q_ENUMS(activationFunction)
+Q_ENUMS(indexData)
+
 namespace Ui
 {
 	class MainWindow;
 }
 
-enum DisplayedSet
+enum set
 {
 	testing = 0,
 	training
@@ -44,24 +49,22 @@ private:
 
 	//list<std::vector<float>> desired_outputs;
 
-	DisplayedSet displayedSet = testing;
+	set displayedSet = testing;
 
-	QMovie *loadingLogo = nullptr;
+	QMovie* loadingLogo = nullptr;
 	QFutureWatcher<void> watcher;
 
-	void compute();
-	void initialize();
-	void initializeNeuralNetwork();
-	void refreshDataUI();
 	void displayImage(int value);
 
-	void StartLoadingLogo();
+	void startLoadingLogo();
 
-	int getLabel(int value, DisplayedSet displayedSet);
+	int getLabel(int value, set displayedSet);
 	void graphClusteringRate();
 
 	unsigned char getImages(int number, int x, int y);
-	bool flag_graph = true;
+
+	bool isOnGraphTab = true;
+	bool isComputing = false;
 
 	QVector<double> clusteringRates;
 	QVector<double> x;
@@ -73,7 +76,7 @@ private slots:
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_pushButtonConsole_clicked();
 
-	void StopLoadingLogo();
+	void stopLoadingLogo();
 
 	/* DATA */
 	void on_comboBoxData_currentIndexChanged(int index);

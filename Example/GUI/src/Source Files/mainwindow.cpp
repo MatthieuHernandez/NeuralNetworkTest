@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 MainWindow::MainWindow(QWidget* parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -17,7 +16,7 @@ MainWindow::MainWindow(QWidget* parent) :
 	this->write("loading ...", false);
 	this->console = new Console();
 	ui->spinBoxNeurons->setValue(0);
-	this->refreshDataUI();
+	this->on_comboBoxData_currentIndexChanged(0);
 	this->write("data loaded", false);
 }
 
@@ -36,20 +35,9 @@ unsigned char MainWindow::getImages(int number, int x, int y)
 			* 127.4);
 }
 
-void MainWindow::write(std::string text, bool onlyConsole)
+void MainWindow::write(const string text, bool onlyConsole)
 {
 	ui->lineEditInformation->setText(QString::fromStdString(text));
-}
-
-void MainWindow::refreshDataUI()
-{
-	ui->comboBoxLayer->setCurrentIndex(0);
-
-	//const int neuronsNumber = currentController->getNeuralNetwork().getNumberOfNeuronsInLayer(0);
-	//ui->spinBoxNeurons->setValue(neuronsNumber);
-
-	//const int function = currentController->getNeuralNetwork().getActivationFunctionInLayer(0);
-	//ui->comboBoxActivationfunction->setCurrentIndex(function);
 }
 
 void MainWindow::displayImage(int value)
@@ -75,7 +63,7 @@ void MainWindow::displayImage(int value)
 		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
 }
 
-void MainWindow::StartLoadingLogo()
+void MainWindow::startLoadingLogo()
 {
 	if (loadingLogo == nullptr)
 	{
@@ -89,12 +77,13 @@ void MainWindow::StartLoadingLogo()
 	loadingLogo->start();
 }
 
-void MainWindow::StopLoadingLogo()
+void MainWindow::stopLoadingLogo()
 {
 	loadingLogo->stop();
+	ui->pushButtonCompute->setText("Compute");
 }
 
-int MainWindow::getLabel(int value, DisplayedSet displayedSet)
+int MainWindow::getLabel(int value, set displayedSet)
 {
 	for (int i = 0; i > 10; i++)
 	{
@@ -109,14 +98,21 @@ int MainWindow::getLabel(int value, DisplayedSet displayedSet)
 
 void MainWindow::on_pushButtonCompute_clicked()
 {
-	this->StartLoadingLogo();
-	connect(&watcher, SIGNAL(finished()), this, SLOT(StopLoadingLogo()));
-	auto future = QtConcurrent::run([=]()
+	if(!isComputing)
 	{
-		//currentController->compute();
-		Sleep(2000);
-	});
-	watcher.setFuture(future);
+		this->startLoadingLogo();
+		connect(&watcher, SIGNAL(finished()), this, SLOT(stopLoadingLogo()));
+		auto future = QtConcurrent::run([=]()
+		{
+			currentController->compute();
+		});
+		watcher.setFuture(future);
+		ui->pushButtonCompute->setText("Stop");
+	}
+	else
+	{
+		
+	}
 }
 
 void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
@@ -154,12 +150,29 @@ void MainWindow::on_pushButtonConsole_clicked()
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
 	currentController = &this->manager.getController(index);
+	
+	ui->comboBoxLayer->setCurrentIndex(0);
+
+	const int neuronsNumber = currentController->getNeuralNetwork().getNumberOfNeuronsInLayer(0);
+	ui->spinBoxNeurons->setValue(neuronsNumber);
+
+	const int function = currentController->getNeuralNetwork().getActivationFunctionInLayer(0);
+	ui->comboBoxActivationfunction->setCurrentIndex(function);
+
+	const int numberOfLayer = currentController->getNeuralNetwork().getNumberOfHiddenLayers();
+	ui->comboBoxLayer->clear();
+	ui->comboBoxLayer->addItem("Input");
+	for (int i = 0; i < numberOfLayer; i++)
+	{
+		ui->comboBoxLayer->addItem(QString::number(i));
+	}
+	ui->comboBoxLayer->addItem("Ouput");
 }
 
 void MainWindow::graphClusteringRate()
 {
 	QApplication::processEvents();
-	if (flag_graph)
+	if (isOnGraphTab)
 	{
 		ui->customPlot->addGraph();
 		ui->customPlot->addGraph();
@@ -170,7 +183,7 @@ void MainWindow::graphClusteringRate()
 		connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
 		connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
 		ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
-		flag_graph = false;
+		isOnGraphTab = false;
 	}
 	// make left and bottom axes always transfer their ranges to right and top axes:
 	x.clear();

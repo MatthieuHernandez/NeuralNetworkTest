@@ -2,16 +2,15 @@
 #define DATA_H
 #include <vector>
 
+
+enum set
+{
+	testing = 0,
+	training = 1
+};
+
 class Data
 {
-protected :
-
-	enum set
-	{
-		testing = 0,
-		training = 1
-	};
-
 private:
 
 	void shuffle();

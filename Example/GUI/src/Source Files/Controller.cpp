@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include <ctime>
 #include <windows.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -26,21 +27,20 @@ void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
 	this->neuralNetwork = new NeuralNetwork(structure, activationFunction, learningRate, momentum);
 }
 
-void Controller::compute()
+void Controller::compute(const bool* const stop )
 {
-	// TODO
-	//Sleep(5000);
-	/*auto clusteringRateMax = -1.0f;
+
+	auto clusteringRateMax = -1.0f;
 	auto epochMax = 0;
 
 	auto numberOfClockCycles = clock();
-	for (int count = 1; ; count++)
+	for (int count = 1; !stop ; count++)
 	{
 
-		for (int index = 0; index < data.testing.size; index++)
+		for (int index = 0; index < data->sets[testing].size && !stop; index++)
 		{
-			neuralNetwork->
-				calculateClusteringRateForClassificationProblem(MNIST.testing.images[index], getLabel(index, testing));
+			neuralNetwork->calculateClusteringRateForClassificationProblem(data->sets[testing].data[index], *max_element(data->sets[testing].data[index].begin(),
+																														 data->sets[testing].data[index].end()));
 		}
 		const auto clusteringRate = neuralNetwork->getClusteringRate();
 		if (clusteringRate > clusteringRateMax)
@@ -62,7 +62,7 @@ void Controller::compute()
 
 		const int index_max = MNIST.trainig.size;
 
-		for (int index = 0; index < index_max; index++)
+		for (int index = 0; index < index_max && !stop; index++)
 		{
 			neuralNetwork->train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
 			if (index % 1000 == 0)
@@ -73,7 +73,7 @@ void Controller::compute()
 		}
 		ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
 		QApplication::processEvents();
-	}*/
+	}
 }
 
 NeuralNetwork& Controller::getNeuralNetwork() const
