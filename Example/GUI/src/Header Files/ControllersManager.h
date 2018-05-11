@@ -14,12 +14,13 @@ class ControllersManager
 public:
 
 	ControllersManager();
+	virtual ~ControllersManager() = default;
 
-	Controller& getController(int index);
+	void initializeInputsNNs(int index);
 
+	Controller* getController(int index);
 
 private:
 
 	std::vector<Controller*> controllers;
 };
-

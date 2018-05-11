@@ -41,6 +41,9 @@
     <QtMoc Include="src\Header Files\Console.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\Header Files\Controller.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -79,9 +82,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Header Files\Controller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header Files\ControllersManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

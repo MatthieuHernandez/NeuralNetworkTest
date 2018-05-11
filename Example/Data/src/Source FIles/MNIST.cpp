@@ -13,7 +13,7 @@ MNIST::MNIST()
 
 void MNIST::loadData()
 {
-	string path = "mnist/";
+	string path = "../Data/mnist/";
 	const string path_MNIST[4] = {
 		path + "t10k-images.idx3-ubyte",
 		path + "t10k-labels.idx1-ubyte",
@@ -35,8 +35,8 @@ void MNIST::readImages(const string path_MNIST[])
     imagesTrainFile.open(path_MNIST[2], ios::in | ios::binary);
     labelsTrainFile.open(path_MNIST[3], ios::in | ios::binary);
 
-    this->readSet(this->testing, imagesTestFile, labelsTestFile);
-	this->readSet(this->training, imagesTrainFile, labelsTrainFile);
+    this->readSet(testing, imagesTestFile, labelsTestFile);
+	this->readSet(training, imagesTrainFile, labelsTrainFile);
 }
 
 void MNIST::readSet(const set set, ifstream &images, ifstream &labels)
@@ -44,7 +44,7 @@ void MNIST::readSet(const set set, ifstream &images, ifstream &labels)
     if(!images.is_open()
     && !labels.is_open())
     {
-		throw new OpenFailFailedException();
+		throw OpenFailFailedException();
     }
     int i;
     unsigned char c;

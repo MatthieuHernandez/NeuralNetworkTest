@@ -127,7 +127,7 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 	{
 		if (desired[n] != -1.0f)
 		{
-			auto e = desired[n] - outputs[n];
+			float e = desired[n] - outputs[n];
 			this->errors[n] = e * abs(e); // pow 2
 		}
 		else
@@ -139,7 +139,7 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 void NeuralNetwork::resetAllNeurons()
 {
 	// TODO: rework function resetAllNeurons
-
+	throw notImplementedException();
 	/*for(int i = 0; i < neurons.size(); i++)
 	{
 	    for(int j = 0; j < neurons[i].size(); j++)
@@ -152,7 +152,7 @@ void NeuralNetwork::resetAllNeurons()
 void NeuralNetwork::addANeuron(uint)
 {
 	// TODO: rework function addANeuron
-
+	throw notImplementedException();
 	/*results[layerNumber].push_back(0);
 	errors[layerNumber].push_back(0);
 	outputs.push_back(0);
@@ -196,7 +196,7 @@ void NeuralNetwork::addANeuron(uint)
 int NeuralNetwork::isValid()
 {
 	//TODO: rework isValid
-
+	throw notImplementedException();
 	/*uint numberOfWeightsReal = 0;
 	uint computedNumberWeights = 0;
 

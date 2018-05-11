@@ -2,6 +2,7 @@
 #include <ctime>
 #include <windows.h>
 #include <algorithm>
+#include "MNIST.h"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ Controller::Controller(Data& data)
 {
 	this->data = &data;
 	this->neuralNetwork = nullptr;
+	this->initializeData();
 }
 
 void Controller::initializeData()
@@ -16,63 +18,35 @@ void Controller::initializeData()
 	this->data->loadData();
 }
 
-/*this->neuralNetwork = std::make_unique<NeuralNetwork>(
-vector<unsigned int>{static_cast<unsigned int>(MNIST.sizeOfImages), 150, 80, static_cast<unsigned int>(MNIST.numberOfLabel)},
-vector<activationFunction>{sigmoid, sigmoid, sigmoid}, 0.05f, 0.0f);*/
-void Controller::initializeNeuralNetwork(vector<unsigned int> structure,
-                                         vector<activationFunction> activationFunction,
-                                         float learningRate,
-                                         float momentum)
+void Controller::initializeNeuralNetwork()
 {
-	this->neuralNetwork = new NeuralNetwork(structure, activationFunction, learningRate, momentum);
+	this->neuralNetwork = new NeuralNetwork(this->inputs.structure,
+	                                        this->inputs.activationFunction,
+	                                        this->inputs.learningRate,
+	                                        this->inputs.momentum);
 }
 
-void Controller::compute(const bool* const stop )
+void Controller::compute(bool* stop)
 {
-
-	auto clusteringRateMax = -1.0f;
-	auto epochMax = 0;
-
-	auto numberOfClockCycles = clock();
-	for (int count = 1; !stop ; count++)
+	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
-
-		for (int index = 0; index < data->sets[testing].size && !stop; index++)
+		emit updateNumberOfIteration();
+		for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size && !(*stop); outputs.currentIndex++)
 		{
-			neuralNetwork->calculateClusteringRateForClassificationProblem(data->sets[testing].data[index], *max_element(data->sets[testing].data[index].begin(),
-																														 data->sets[testing].data[index].end()));
+			neuralNetwork->calculateClusteringRateForClassificationProblem(data->sets[testing].data[outputs.currentIndex],
+			                                                               *max_element(data->sets[testing].data[outputs.currentIndex].begin(),
+			                                                                            data->sets[testing].data[outputs.currentIndex].end()));
 		}
-		const auto clusteringRate = neuralNetwork->getClusteringRate();
-		if (clusteringRate > clusteringRateMax)
+		outputs.clusteringRate = neuralNetwork->getClusteringRate();
+		if (outputs.clusteringRate > outputs.clusteringRateMax)
 		{
-			clusteringRateMax = clusteringRate;
-			epochMax = count;
+			outputs.clusteringRateMax = outputs.clusteringRate;
 		}
-		cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)(clock() - numberOfClockCycles) /
-			CLOCKS_PER_SEC << " secondes" << endl;
-		numberOfClockCycles = clock();
-
-		cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
-		clusteringRateVector.push_back(clusteringRate * 100);
-		graphClusteringRate();
-		ui->labelClusteringRateMax->setText(
-			QString::fromStdString(
-			(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
-		QApplication::processEvents();
-
-		const int index_max = MNIST.trainig.size;
-
-		for (int index = 0; index < index_max && !stop; index++)
+		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.currentIndex++)
 		{
-			neuralNetwork->train(MNIST.trainig.images[index], MNIST.trainig.labels[index]);
-			if (index % 1000 == 0)
-			{
-				ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
-				QApplication::processEvents();
-			}
+			neuralNetwork->train(data->sets[training].data[outputs.currentIndex],
+			                     data->sets[training].labels[outputs.currentIndex]);
 		}
-		ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
-		QApplication::processEvents();
 	}
 }
 

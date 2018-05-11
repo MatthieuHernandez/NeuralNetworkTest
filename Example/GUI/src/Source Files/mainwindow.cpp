@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
-#include <QApplication>
 #include <qpen.h>
 #include "MNIST.h"
 #include "ControllersManager.h"
@@ -13,11 +12,16 @@ MainWindow::MainWindow(QWidget* parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	this->write("loading ...", false);
 	this->console = new Console();
+
 	ui->spinBoxNeurons->setValue(0);
 	this->on_comboBoxData_currentIndexChanged(0);
-	this->write("data loaded", false);
+
+	connect(&watcherCompute, SIGNAL(finished()), this, SLOT(stopCompute()));
+	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingData()));
+
+	timerForCount = new QTimer(this);
+	connect(timerForCount, SIGNAL(timeout()), this, SLOT(updateCount()));
 }
 
 MainWindow::~MainWindow()
@@ -28,16 +32,21 @@ MainWindow::~MainWindow()
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
 	if (displayedSet == testing)
-		return (unsigned char)((this->manager.getController(indexMNIST).getData().sets[testing].data[number][y * 28 + x] + 1.0) *
+		return (unsigned char)((this->manager.getController(indexMNIST)->getData().sets[testing].data[number][y * 28 + x] +
+				1.0
+			) *
 			127.4);
 	else
-		return (unsigned char)((this->manager.getController(indexMNIST).getData().sets[training].data[number][y * 28 + x] + 1.0)
+		return (unsigned char)((this->manager.getController(indexMNIST)->getData().sets[training].data[number][y * 28 + x] +
+				1.0)
 			* 127.4);
 }
 
 void MainWindow::write(const string text, bool onlyConsole)
 {
-	ui->lineEditInformation->setText(QString::fromStdString(text));
+	if (onlyConsole)
+		ui->lineEditInformation->setText(QString::fromStdString(text));
+	console->write(text);
 }
 
 void MainWindow::displayImage(int value)
@@ -77,19 +86,103 @@ void MainWindow::startLoadingLogo()
 	loadingLogo->start();
 }
 
-void MainWindow::stopLoadingLogo()
+void MainWindow::stopCompute()
 {
+	computeIsStop = true;
 	loadingLogo->stop();
+	timerForCount->stop();
 	ui->pushButtonCompute->setText("Compute");
+}
+
+void MainWindow::endOfLoadingData()
+{
+	const int neuronsNumber = this->currentController->inputs.structure[0];
+	ui->spinBoxNeurons->setValue(neuronsNumber);
+
+	const int function = this->currentController->inputs.structure[0];
+	ui->comboBoxActivationfunction->setCurrentIndex(function);
+
+	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
+	ui->comboBoxLayer->clear();
+	ui->comboBoxLayer->addItem("Input");
+	for (int i = 0; i < numberOfLayer; i++)
+	{
+		ui->comboBoxLayer->addItem(QString::number(i));
+	}
+	ui->comboBoxLayer->addItem("Ouput");
+
+	if(firstLoading)
+	{
+		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
+		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
+		firstLoading = false;
+	}
+
+	this->ui->pushButtonCompute->setEnabled(true);
+	this->write("data loaded");
+
 }
 
 int MainWindow::getLabel(int value, set displayedSet)
 {
 	for (int i = 0; i > 10; i++)
 	{
-		if (this->manager.getController(indexMNIST).getData().sets[displayedSet].labels[value][i] == 1) return i;
+		if (this->manager.getController(indexMNIST)->getData().sets[displayedSet].labels[value][i] == 1) return i;
 	}
 	return -1;
+}
+
+void MainWindow::initialiseInputs()
+{
+	float learningRate = 0.5f;
+	float momentum = 0.0f;
+	int numberOfTrainbyRating = this->currentController->getData().sets[training].size;
+
+	vector<uint> structure;
+	for (int i = 0; i < ui->comboBoxLayer->count(); i++)
+	{
+		uint value = (uint)ui->comboBoxLayer->itemText(i).toInt();
+		structure.push_back(value);
+	}
+
+	vector<activationFunction> activationFunctions;
+	for (int i = 0; i < ui->comboBoxActivationfunction->count(); i++)
+	{
+		const string text = ui->comboBoxActivationfunction->itemText(i).toStdString();
+
+		if (text == "Sigmoid")
+			activationFunctions.push_back(sigmoid);
+		else if (text == "TanH")
+			activationFunctions.push_back(tanH);
+		else if (text == "ReLU")
+			activationFunctions.push_back(reLU);
+		else if (text == "Gaussian")
+			activationFunctions.push_back(gaussian);
+		else
+			throw exception();
+	}
+	this->currentController->inputs.structure = structure;
+	this->currentController->inputs.activationFunction = activationFunctions;
+	this->currentController->inputs.learningRate = learningRate;
+	this->currentController->inputs.momentum = momentum;
+	this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
+}
+
+void MainWindow::resetGraphOfClusteringRate()
+{
+	x.clear();
+	y.clear();
+
+	ui->customPlot->addGraph();
+	ui->customPlot->addGraph();
+	ui->customPlot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
+	ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+	// first graph will be filled with translucent blue
+	ui->customPlot->graph(1)->setPen(QPen(Qt::red));
+	connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
+	connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
+	ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
+	ui->customPlot->replot();
 }
 
 /**************************************************
@@ -98,20 +191,24 @@ int MainWindow::getLabel(int value, set displayedSet)
 
 void MainWindow::on_pushButtonCompute_clicked()
 {
-	if(!isComputing)
+	if (computeIsStop)
 	{
+		this->initialiseInputs();
+		this->currentController->initializeNeuralNetwork();
+		this->resetGraphOfClusteringRate();
+		computeIsStop = false;
 		this->startLoadingLogo();
-		connect(&watcher, SIGNAL(finished()), this, SLOT(stopLoadingLogo()));
 		auto future = QtConcurrent::run([=]()
 		{
-			currentController->compute();
+			currentController->compute(&computeIsStop);
 		});
-		watcher.setFuture(future);
+		watcherCompute.setFuture(future);
+		timerForCount->start(250);
 		ui->pushButtonCompute->setText("Stop");
 	}
 	else
 	{
-		
+		stopCompute();
 	}
 }
 
@@ -149,49 +246,35 @@ void MainWindow::on_pushButtonConsole_clicked()
 
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
-	currentController = &this->manager.getController(index);
-	
-	ui->comboBoxLayer->setCurrentIndex(0);
+	this->write("loading ...");
+	this->ui->pushButtonCompute->setEnabled(false);
 
-	const int neuronsNumber = currentController->getNeuralNetwork().getNumberOfNeuronsInLayer(0);
-	ui->spinBoxNeurons->setValue(neuronsNumber);
-
-	const int function = currentController->getNeuralNetwork().getActivationFunctionInLayer(0);
-	ui->comboBoxActivationfunction->setCurrentIndex(function);
-
-	const int numberOfLayer = currentController->getNeuralNetwork().getNumberOfHiddenLayers();
-	ui->comboBoxLayer->clear();
-	ui->comboBoxLayer->addItem("Input");
-	for (int i = 0; i < numberOfLayer; i++)
+	auto future = QtConcurrent::run([=]()
 	{
-		ui->comboBoxLayer->addItem(QString::number(i));
-	}
-	ui->comboBoxLayer->addItem("Ouput");
+		currentController = this->manager.getController(index);
+	});
+	watcherLoadingData.setFuture(future);
+
+	ui->comboBoxLayer->setCurrentIndex(0);
 }
 
-void MainWindow::graphClusteringRate()
+void MainWindow::updateGraphOfClusteringRate()
 {
-	QApplication::processEvents();
-	if (isOnGraphTab)
-	{
-		ui->customPlot->addGraph();
-		ui->customPlot->addGraph();
-		ui->customPlot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-		ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-		// first graph will be filled with translucent blue
-		ui->customPlot->graph(1)->setPen(QPen(Qt::red));
-		connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
-		connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
-		ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
-		isOnGraphTab = false;
-	}
-	// make left and bottom axes always transfer their ranges to right and top axes:
-	x.clear();
-	for (auto i = 0; i < clusteringRates.size(); i++)
-	{
-		x.push_back(i);
-	}
-	ui->customPlot->graph(0)->setData(x, clusteringRates);
-	ui->customPlot->xAxis->setRange(0, clusteringRates.size() - 1);
+	x.push_back(currentController->outputs.numberOfIteration);
+	y.push_back(currentController->outputs.clusteringRate);
+
+	ui->customPlot->graph(0)->setData(x, y);
+	ui->customPlot->xAxis->setRange(0, y.size() - 1);
 	ui->customPlot->replot();
 }
+
+void MainWindow::updateNumberOfIteration()
+{
+	ui->lineEditIteration->setText(QString::number(currentController->outputs.numberOfIteration));
+}
+
+void MainWindow::updateCount()
+{
+	ui->lineEditCount->setText(QString::number(currentController->outputs.currentIndex));
+}
+

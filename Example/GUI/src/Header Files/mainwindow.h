@@ -1,33 +1,21 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
 #include <QMainWindow>
 #include <QMovie>
 #include <vector>
+#include <qfuturewatcher.h>
 #include "Controller.h"
 #include "Console.h"
 #include "ControllersManager.h"
-#include <qfuturewatcher.h>
-
-
-Q_ENUMS(set)
-Q_ENUMS(activationFunction)
-Q_ENUMS(indexData)
 
 namespace Ui
 {
 	class MainWindow;
 }
 
-enum set
-{
-	testing = 0,
-	training
-};
-
 class MainWindow : public QMainWindow
 {
 Q_OBJECT
+
 public:
 
 	explicit MainWindow(QWidget* parent = 0);
@@ -52,34 +40,63 @@ private:
 	set displayedSet = testing;
 
 	QMovie* loadingLogo = nullptr;
-	QFutureWatcher<void> watcher;
+	QTimer* timerForCount; // TO RENAME
+	QFutureWatcher<void> watcherCompute;
+	QFutureWatcher<void> watcherLoadingData;
+	bool firstLoading = true;
 
 	void displayImage(int value);
 
 	void startLoadingLogo();
 
 	int getLabel(int value, set displayedSet);
-	void graphClusteringRate();
+	void initialiseInputs();
+	void resetGraphOfClusteringRate();
 
 	unsigned char getImages(int number, int x, int y);
 
 	bool isOnGraphTab = true;
-	bool isComputing = false;
+	bool computeIsStop = true;
 
-	QVector<double> clusteringRates;
 	QVector<double> x;
+	QVector<double> y;
 
 private slots:
+
+	/* Controller slots*/
+	void updateGraphOfClusteringRate();
+	void updateNumberOfIteration();
+	void updateCount();
 
 	void on_spinBoxImageId_valueChanged(int value);
 	void on_pushButtonCompute_clicked();
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_pushButtonConsole_clicked();
 
-	void stopLoadingLogo();
+	void stopCompute();
+	void endOfLoadingData();
 
-	/* DATA */
+	/* Data */
 	void on_comboBoxData_currentIndexChanged(int index);
 };
 
-#endif // MAINWINDOW_H
+
+/*cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)(clock() - numberOfClockCycles) /
+CLOCKS_PER_SEC << " secondes" << endl;
+numberOfClockCycles = clock();
+
+cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
+clusteringRateVector.push_back(clusteringRate * 100);
+updateGraphOfClusteringRate();
+ui->labelClusteringRateMax->setText(
+QString::fromStdString(
+(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
+QApplication::processEvents();
+if (index % 1000 == 0)
+{
+ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
+}
+ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
+
+const int index_max = data->sets[training].size;
+epochMax = count;*/

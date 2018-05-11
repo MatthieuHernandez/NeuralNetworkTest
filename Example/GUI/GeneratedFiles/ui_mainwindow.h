@@ -22,6 +22,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
 #include "qcustomplot.h"
 
@@ -32,7 +33,7 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QPushButton *pushButtonCompute;
-    QLabel *labelCount;
+    QLabel *label_7;
     QLabel *labelClusteringRateMax;
     QComboBox *comboBoxData;
     QLabel *labelProject;
@@ -44,7 +45,7 @@ public:
     QComboBox *comboBoxSet;
     QSpinBox *spinBoxImageId;
     QLabel *labelImage;
-    QLabel *label;
+    QLabel *label_1;
     QLabel *label_2;
     QPushButton *pushButtonAddLayer;
     QComboBox *comboBoxLayer;
@@ -59,6 +60,13 @@ public:
     QPushButton *pushButtonRemoveLayer;
     QLabel *labelLoading;
     QFrame *line_2;
+    QLabel *label_6;
+    QTimeEdit *timeEdit;
+    QLineEdit *lineEditCount;
+    QLineEdit *lineEdit_2;
+    QLineEdit *lineEdit_3;
+    QLabel *label;
+    QLineEdit *lineEditIteration;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -71,12 +79,12 @@ public:
         pushButtonCompute = new QPushButton(centralWidget);
         pushButtonCompute->setObjectName(QStringLiteral("pushButtonCompute"));
         pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
-        labelCount = new QLabel(centralWidget);
-        labelCount->setObjectName(QStringLiteral("labelCount"));
-        labelCount->setGeometry(QRect(710, 440, 81, 16));
+        label_7 = new QLabel(centralWidget);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(10, 270, 51, 21));
         labelClusteringRateMax = new QLabel(centralWidget);
         labelClusteringRateMax->setObjectName(QStringLiteral("labelClusteringRateMax"));
-        labelClusteringRateMax->setGeometry(QRect(180, 459, 150, 21));
+        labelClusteringRateMax->setGeometry(QRect(10, 340, 111, 21));
         comboBoxData = new QComboBox(centralWidget);
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
@@ -88,12 +96,12 @@ public:
         labelProject->setGeometry(QRect(10, 10, 60, 21));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(180, 1, 661, 431));
+        tabWidget->setGeometry(QRect(180, 1, 661, 441));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(10, 14, 641, 381));
+        customPlot->setGeometry(QRect(10, 14, 641, 391));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -111,9 +119,9 @@ public:
         labelImage->setObjectName(QStringLiteral("labelImage"));
         labelImage->setGeometry(QRect(10, 330, 81, 16));
         tabWidget->addTab(tab_2, QString());
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(180, 430, 111, 21));
+        label_1 = new QLabel(centralWidget);
+        label_1->setObjectName(QStringLiteral("label_1"));
+        label_1->setGeometry(QRect(10, 310, 91, 21));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(10, 70, 41, 21));
@@ -141,6 +149,7 @@ public:
         spinBoxNeurons = new QSpinBox(centralWidget);
         spinBoxNeurons->setObjectName(QStringLiteral("spinBoxNeurons"));
         spinBoxNeurons->setGeometry(QRect(60, 110, 51, 22));
+        spinBoxNeurons->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         spinBoxNeurons->setMaximum(20000);
         spinBoxNeurons->setValue(0);
         spinBoxNeurons->setDisplayIntegerBase(10);
@@ -152,10 +161,10 @@ public:
         label_4->setGeometry(QRect(10, 140, 51, 31));
         lineEditInformation = new QLineEdit(centralWidget);
         lineEditInformation->setObjectName(QStringLiteral("lineEditInformation"));
-        lineEditInformation->setGeometry(QRect(540, 460, 120, 22));
+        lineEditInformation->setGeometry(QRect(410, 460, 120, 22));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(467, 460, 71, 21));
+        label_5->setGeometry(QRect(340, 460, 71, 21));
         pushButtonConsole = new QPushButton(centralWidget);
         pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
         pushButtonConsole->setGeometry(QRect(20, 460, 80, 22));
@@ -167,14 +176,77 @@ public:
         pushButtonRemoveLayer->setIcon(icon1);
         labelLoading = new QLabel(centralWidget);
         labelLoading->setObjectName(QStringLiteral("labelLoading"));
-        labelLoading->setGeometry(QRect(800, 445, 40, 40));
+        labelLoading->setEnabled(true);
+        labelLoading->setGeometry(QRect(798, 449, 40, 40));
         labelLoading->setScaledContents(true);
         line_2 = new QFrame(centralWidget);
         line_2->setObjectName(QStringLiteral("line_2"));
-        line_2->setGeometry(QRect(0, 170, 181, 41));
+        line_2->setGeometry(QRect(0, 190, 181, 41));
         line_2->setFrameShape(QFrame::HLine);
         line_2->setFrameShadow(QFrame::Sunken);
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(10, 230, 51, 21));
+        timeEdit = new QTimeEdit(centralWidget);
+        timeEdit->setObjectName(QStringLiteral("timeEdit"));
+        timeEdit->setGeometry(QRect(60, 230, 51, 22));
+        timeEdit->setWrapping(false);
+        timeEdit->setFrame(true);
+        timeEdit->setReadOnly(true);
+        timeEdit->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        timeEdit->setAccelerated(false);
+        timeEdit->setKeyboardTracking(true);
+        timeEdit->setProperty("showGroupSeparator", QVariant(false));
+        timeEdit->setMaximumTime(QTime(23, 59, 59));
+        timeEdit->setCalendarPopup(false);
+        timeEdit->setTime(QTime(0, 0, 0));
+        lineEditCount = new QLineEdit(centralWidget);
+        lineEditCount->setObjectName(QStringLiteral("lineEditCount"));
+        lineEditCount->setGeometry(QRect(60, 270, 50, 22));
+        lineEditCount->setReadOnly(true);
+        lineEdit_2 = new QLineEdit(centralWidget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit_2->setGeometry(QRect(130, 310, 41, 22));
+        lineEdit_2->setReadOnly(true);
+        lineEdit_3 = new QLineEdit(centralWidget);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        lineEdit_3->setGeometry(QRect(130, 340, 41, 22));
+        lineEdit_3->setReadOnly(true);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(180, 450, 51, 21));
+        lineEditIteration = new QLineEdit(centralWidget);
+        lineEditIteration->setObjectName(QStringLiteral("lineEditIteration"));
+        lineEditIteration->setGeometry(QRect(230, 450, 50, 22));
         MainWindow->setCentralWidget(centralWidget);
+        line->raise();
+        line_2->raise();
+        pushButtonCompute->raise();
+        label_7->raise();
+        labelClusteringRateMax->raise();
+        comboBoxData->raise();
+        labelProject->raise();
+        tabWidget->raise();
+        label_1->raise();
+        label_2->raise();
+        pushButtonAddLayer->raise();
+        comboBoxLayer->raise();
+        comboBoxActivationfunction->raise();
+        spinBoxNeurons->raise();
+        label_3->raise();
+        label_4->raise();
+        lineEditInformation->raise();
+        label_5->raise();
+        pushButtonConsole->raise();
+        pushButtonRemoveLayer->raise();
+        labelLoading->raise();
+        label_6->raise();
+        timeEdit->raise();
+        lineEditCount->raise();
+        lineEdit_2->raise();
+        lineEdit_3->raise();
+        label->raise();
+        lineEditIteration->raise();
 
         retranslateUi(MainWindow);
         QObject::connect(pushButtonConsole, SIGNAL(clicked()), MainWindow, SLOT(on_pushButtonConsole_clicked()));
@@ -189,8 +261,8 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
-        labelCount->setText(QApplication::translate("MainWindow", "Count :", nullptr));
-        labelClusteringRateMax->setText(QApplication::translate("MainWindow", "Clustering Max : ", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
+        labelClusteringRateMax->setText(QApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
         comboBoxData->setItemText(0, QApplication::translate("MainWindow", "MNIST", nullptr));
         comboBoxData->setItemText(1, QApplication::translate("MainWindow", "Iris", nullptr));
         comboBoxData->setItemText(2, QApplication::translate("MainWindow", "ParisTrees", nullptr));
@@ -200,7 +272,7 @@ public:
         Image->setText(QString());
         labelImage->setText(QApplication::translate("MainWindow", "Label :", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
-        label->setText(QApplication::translate("MainWindow", "Clustering Rate :", nullptr));
+        label_1->setText(QApplication::translate("MainWindow", "Clustering Rate :", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
         pushButtonAddLayer->setText(QString());
         comboBoxActivationfunction->setItemText(0, QApplication::translate("MainWindow", "Sigmoid", nullptr));
@@ -215,6 +287,9 @@ public:
         pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
         pushButtonRemoveLayer->setText(QString());
         labelLoading->setText(QString());
+        label_6->setText(QApplication::translate("MainWindow", "Timer :", nullptr));
+        timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Iteration : ", nullptr));
     } // retranslateUi
 
 };

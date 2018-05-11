@@ -1,32 +1,51 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
-
+#pragma once
+#include <QObject>
 #include "neuralNetwork.h"
 #include "Data.h"
 
-class Controller
+class Controller : public QObject
 {
+Q_OBJECT
+
 private :
 
 	Data* data;
 	NeuralNetwork* neuralNetwork;
 
+	void initializeData();
 
 public:
 
 	Controller(Data& data);
-	~Controller() = default;
+	virtual ~Controller() = default;
 
-	void initializeData();
-	void initializeNeuralNetwork(std::vector<unsigned int> structure,
-								 std::vector<activationFunction> activationFunction,
-								 float learningRate,
-								 float momentum);
+	void initializeNeuralNetwork();
 
-	void compute();
+	void compute(bool* stop);
 
 	NeuralNetwork& getNeuralNetwork() const;
 	Data& getData() const;
-};
 
-#endif // CONTROLLER_H
+	struct Inputs
+	{
+		std::vector<unsigned int> structure;
+		std::vector<activationFunction> activationFunction;
+		float learningRate;
+		float momentum;
+		int numberOfTrainbyRating;
+
+	} inputs;
+
+	struct Ouputs
+	{
+		int currentIndex = 0;
+		int numberOfIteration = 0;
+		float clusteringRate = -1.0f;
+		float clusteringRateMax = -1.0f;
+
+	} outputs;
+
+signals :
+
+	void updateNumberOfIteration();
+};
