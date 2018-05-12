@@ -30,7 +30,6 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
-
 	case indexIris:
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{

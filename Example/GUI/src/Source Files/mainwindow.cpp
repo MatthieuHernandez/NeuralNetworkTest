@@ -161,11 +161,11 @@ void MainWindow::initialiseInputs()
 		else
 			throw exception();
 	}
-	this->currentController->inputs.structure = structure;
-	this->currentController->inputs.activationFunction = activationFunctions;
-	this->currentController->inputs.learningRate = learningRate;
-	this->currentController->inputs.momentum = momentum;
-	this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
+	//this->currentController->inputs.structure = structure;
+	//this->currentController->inputs.activationFunction = activationFunctions;
+	//this->currentController->inputs.learningRate = learningRate;
+	//this->currentController->inputs.momentum = momentum;
+	//this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
 }
 
 void MainWindow::resetGraphOfClusteringRate()
@@ -261,7 +261,7 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 void MainWindow::updateGraphOfClusteringRate()
 {
 	x.push_back(currentController->outputs.numberOfIteration);
-	y.push_back(currentController->outputs.clusteringRate);
+	y.push_back(currentController->outputs.clusteringRate*100);
 
 	ui->customPlot->graph(0)->setData(x, y);
 	ui->customPlot->xAxis->setRange(0, y.size() - 1);
