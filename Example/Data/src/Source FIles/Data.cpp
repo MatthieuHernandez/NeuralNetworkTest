@@ -31,11 +31,11 @@ vector<float>& Data::getNextTestingLabel()
 void Data::shuffle()
 {
 	const auto random = rand();
-	for (int i = 0; i < 2; ++i)
-	{
-		srand(random);
-		random_shuffle(sets[training].data.begin(), sets[training].data.end());
-	}
+	rand();
+	srand(random);
+	random_shuffle(sets[training].data.begin(), sets[training].data.end());
+	srand(random);
+	random_shuffle(sets[training].labels.begin(), sets[training].labels.end());
 }
 
 vector<float>& Data::getNextData(const set set, bool isRandom)
@@ -54,4 +54,15 @@ vector<float>& Data::getNextData(const set set, bool isRandom)
 vector<float>& Data::getNextLabel(const set set)
 {
 	return sets[set].labels[sets[set].index];
+}
+
+
+int Data::getLabel(int index, set displayedSet)
+{
+	for (int i = 0; i < this->numberOfLabel; i++)
+	{
+		if (this->sets[displayedSet].labels[index][i] == 1)
+			return i;
+	}
+	throw exception("wrong label");
 }

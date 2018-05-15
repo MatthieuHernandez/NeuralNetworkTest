@@ -26,7 +26,7 @@ void ControllersManager::initializeInputsNNs(int index)
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.05f;
+		controllers[index]->inputs.learningRate = 0.5f;
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
@@ -34,18 +34,16 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
 			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
-			20,
-			10,
+			13,
 			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
 			sigmoid,
-			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.04f;
-		controllers[index]->inputs.momentum = 0.0f;
+		controllers[index]->inputs.learningRate = 0.5f;
+		//controllers[index]->inputs.momentum = 0.995;
 		break;
 
 	case indexParisTrees:

@@ -15,5 +15,5 @@ Console::~Console()
 
 void Console::write(const string text)
 {
-	//ui.textEdit->append(QString::fromStdString(text));
+	ui.textEdit->append(QString::fromStdString(text));
 } 

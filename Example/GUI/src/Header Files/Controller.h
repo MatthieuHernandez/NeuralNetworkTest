@@ -32,13 +32,13 @@ public:
 		std::vector<activationFunction> activationFunction;
 		float learningRate;
 		float momentum;
-		int numberOfTrainbyRating;
+		uint numberOfTrainbyRating;
 
 	} inputs;
 
 	struct Ouputs
 	{
-		int currentIndex = 0;
+		uint currentIndex = 0;
 		int numberOfIteration = 0;
 		float clusteringRate = -1.0f;
 		float clusteringRateMax = -1.0f;

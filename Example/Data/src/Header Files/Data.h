@@ -13,12 +13,13 @@ class Data
 {
 private:
 
-	void shuffle();
 	std::vector<float>& getNextData(set set, bool isRandom);
 	std::vector<float>& getNextLabel(set set);
-
+	
 	
 public:
+
+	void shuffle();
 
 	int sizeOfData{}; // size of one data, equal to size of neural network inputs
 	int numberOfLabel{}; // the number of class, equal to size of neural network outputs
@@ -39,6 +40,7 @@ public:
 
 	std::vector<float>& getNextTestingData();
 	std::vector<float>& getNextTestingLabel();
+	int getLabel(int value, set displayedSet);
 };
 
 #endif // DATA_H

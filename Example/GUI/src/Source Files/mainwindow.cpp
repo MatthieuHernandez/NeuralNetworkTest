@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
-#include <qpen.h>
-#include "MNIST.h"
 #include "ControllersManager.h"
 
 using namespace std;
@@ -14,18 +12,23 @@ MainWindow::MainWindow(QWidget* parent) :
 	ui->setupUi(this);
 	this->console = new Console();
 
-	ui->spinBoxNeurons->setValue(0);
-	this->on_comboBoxData_currentIndexChanged(0);
+	ui->comboBoxData->setCurrentIndex(indexIris);
 
-	connect(&watcherCompute, SIGNAL(finished()), this, SLOT(stopCompute()));
 	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingData()));
 
 	timerForCount = new QTimer(this);
+	timerForTimeEdit = new QElapsedTimer();
+
+	connect(&watcherCompute, SIGNAL(finished()), this, SLOT(stopCompute()));
 	connect(timerForCount, SIGNAL(timeout()), this, SLOT(updateCount()));
+
+	ui->tabWidgetData->setCurrentIndex(0);
+	ui->tabWidgetNeuralNetwork->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
 {
+	computeIsStop = true;
 	delete ui;
 }
 
@@ -65,11 +68,9 @@ void MainWindow::displayImage(int value)
 	}
 	QImage scalePicture = picture.scaled(size * multiple, size * multiple, Qt::KeepAspectRatio);
 	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
-
-	if (displayedSet == training)
-		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
-	else
-		ui->labelImage->setText(QString::fromStdString((string)"Label : " + to_string(getLabel(value, this->displayedSet))));
+	ui->labelImage->setText(QString::fromStdString(
+		(string)"Label : " + to_string(
+			manager.getController(indexMNIST)->getData().getLabel(value, this->displayedSet))));
 }
 
 void MainWindow::startLoadingLogo()
@@ -96,47 +97,66 @@ void MainWindow::stopCompute()
 
 void MainWindow::endOfLoadingData()
 {
-	const int neuronsNumber = this->currentController->inputs.structure[0];
-	ui->spinBoxNeurons->setValue(neuronsNumber);
-
-	const int function = this->currentController->inputs.structure[0];
-	ui->comboBoxActivationfunction->setCurrentIndex(function);
-
-	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
-	ui->comboBoxLayer->clear();
-	ui->comboBoxLayer->addItem("Input");
-	for (int i = 0; i < numberOfLayer; i++)
-	{
-		ui->comboBoxLayer->addItem(QString::number(i));
-	}
-	ui->comboBoxLayer->addItem("Ouput");
-
-	if(firstLoading)
+	if (firstLoading)
 	{
 		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
 		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 		firstLoading = false;
 	}
-
+	this->InitializeButtons();
 	this->ui->pushButtonCompute->setEnabled(true);
 	this->write("data loaded");
-
+	if (ui->comboBoxData->currentIndex() == indexMNIST)
+		displayImage(ui->spinBoxImageId->value());
 }
 
-int MainWindow::getLabel(int value, set displayedSet)
+void MainWindow::InitializeButtons()
 {
-	for (int i = 0; i > 10; i++)
+	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
+	ui->comboBoxLayer->clear();
+	ui->comboBoxLayer->addItem("Input");
+	for (int i = 0; i < numberOfLayer-1; i++)
+		ui->comboBoxLayer->addItem(QString::number(i));
+	ui->comboBoxLayer->addItem("Ouput");
+
+	this->InitializeLayerButtons(0);
+
+	ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainbyRating);
+	ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainbyRating);
+};
+
+void MainWindow::InitializeLayerButtons(int layer)
+{
+	const int neuronsNumber = this->currentController->inputs.structure[layer];
+	ui->spinBoxNeurons->setValue(neuronsNumber);
+
+	int function = 0;
+	if (layer > 0)
 	{
-		if (this->manager.getController(indexMNIST)->getData().sets[displayedSet].labels[value][i] == 1) return i;
+		function = this->currentController->inputs.activationFunction[layer - 1];
+		ui->comboBoxActivationfunction->show();
+		if (this->currentController->inputs.structure.size()-1 == layer)
+			ui->spinBoxNeurons->setEnabled(false);
+		else
+			ui->spinBoxNeurons->setEnabled(true);
+		ui->labelNeurons->setText("Neurons :");
+
 	}
-	return -1;
+	else
+	{
+		ui->comboBoxActivationfunction->hide();
+		ui->spinBoxNeurons->setEnabled(false);
+		ui->labelNeurons->setText("Inputs :");
+	}
+
+		ui->comboBoxActivationfunction->setCurrentIndex(function + 1);
 }
 
 void MainWindow::initialiseInputs()
 {
 	float learningRate = 0.5f;
 	float momentum = 0.0f;
-	int numberOfTrainbyRating = this->currentController->getData().sets[training].size;
+	int numberOfTrainbyRating = ui->spinBoxTrainingRating->value();
 
 	vector<uint> structure;
 	for (int i = 0; i < ui->comboBoxLayer->count(); i++)
@@ -161,11 +181,12 @@ void MainWindow::initialiseInputs()
 		else
 			throw exception();
 	}
+
 	//this->currentController->inputs.structure = structure;
 	//this->currentController->inputs.activationFunction = activationFunctions;
 	//this->currentController->inputs.learningRate = learningRate;
 	//this->currentController->inputs.momentum = momentum;
-	//this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
+	this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
 }
 
 void MainWindow::resetGraphOfClusteringRate()
@@ -204,12 +225,19 @@ void MainWindow::on_pushButtonCompute_clicked()
 		});
 		watcherCompute.setFuture(future);
 		timerForCount->start(250);
+		timerForTimeEdit->start();
 		ui->pushButtonCompute->setText("Stop");
+		ui->timeEdit->setTime(QTime(0, 0));
 	}
 	else
 	{
 		stopCompute();
 	}
+}
+
+void MainWindow::on_pushButtonConsole_clicked()
+{
+	console->show();
 }
 
 void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
@@ -218,9 +246,8 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 	{
 		this->displayedSet = testing;
 		ui->spinBoxImageId->setMaximum(9999);
-		ui->labelImage->setText(
-			QString::fromStdString(
-				(string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value(), this->displayedSet))));
+		ui->labelImage->setText("Label : " + QString::number(
+			manager.getController(indexMNIST)->getData().getLabel(ui->spinBoxImageId->value(), this->displayedSet)));
 	}
 	if (index == 1)
 	{
@@ -228,10 +255,16 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 		ui->spinBoxImageId->setMaximum(59999);
 		ui->labelImage->setText(
 			QString::fromStdString(
-				(string)"Label : " + to_string(getLabel(ui->spinBoxImageId->value(), this->displayedSet))));
+				(string)"Label : " + to_string(
+					manager.getController(indexMNIST)->getData().getLabel(ui->spinBoxImageId->value(), this->displayedSet))));
 	}
-
 	displayImage(ui->spinBoxImageId->value());
+}
+
+void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
+{
+	if(index >= 0)
+		this->InitializeLayerButtons(index);
 }
 
 void MainWindow::on_spinBoxImageId_valueChanged(int value)
@@ -239,9 +272,12 @@ void MainWindow::on_spinBoxImageId_valueChanged(int value)
 	displayImage(value);
 }
 
-void MainWindow::on_pushButtonConsole_clicked()
+void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 {
-	console->show();
+	if (ui->spinBoxTrainingRating->value() == currentController->getData().sets[training].size)
+		ui->labelMax->show();
+	else
+		ui->labelMax->hide();
 }
 
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
@@ -249,19 +285,25 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 	this->write("loading ...");
 	this->ui->pushButtonCompute->setEnabled(false);
 
-	auto future = QtConcurrent::run([=]()
+	watcherLoadingData.setFuture(futureLoadingData);
+	futureLoadingData = QtConcurrent::run([=]()
 	{
 		currentController = this->manager.getController(index);
 	});
-	watcherLoadingData.setFuture(future);
 
 	ui->comboBoxLayer->setCurrentIndex(0);
+	ui->spinBoxTrainingRating->setEnabled(false);
 }
 
 void MainWindow::updateGraphOfClusteringRate()
 {
+	auto CR = currentController->outputs.clusteringRate * 100.0f;
+	auto CRM = currentController->outputs.clusteringRateMax * 100.0f;
+	ui->doubleSpinBoxCR->setValue(CR);
+	ui->doubleSpinBoxCRM->setValue(CRM);
+
 	x.push_back(currentController->outputs.numberOfIteration);
-	y.push_back(currentController->outputs.clusteringRate*100);
+	y.push_back(CR);
 
 	ui->customPlot->graph(0)->setData(x, y);
 	ui->customPlot->xAxis->setRange(0, y.size() - 1);
@@ -270,11 +312,11 @@ void MainWindow::updateGraphOfClusteringRate()
 
 void MainWindow::updateNumberOfIteration()
 {
-	ui->lineEditIteration->setText(QString::number(currentController->outputs.numberOfIteration));
+	ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
 }
 
 void MainWindow::updateCount()
 {
-	ui->lineEditCount->setText(QString::number(currentController->outputs.currentIndex));
+	ui->timeEdit->setTime(QTime::fromMSecsSinceStartOfDay(static_cast<int>(timerForTimeEdit->elapsed())));
+	ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
 }
-

@@ -6,6 +6,7 @@
 #include "Controller.h"
 #include "Console.h"
 #include "ControllersManager.h"
+#include <qelapsedtimer.h>
 
 namespace Ui
 {
@@ -18,7 +19,7 @@ Q_OBJECT
 
 public:
 
-	explicit MainWindow(QWidget* parent = 0);
+	explicit MainWindow(QWidget* parent = nullptr);
 	void write(std::string text, bool onlyConsole = true);
 	~MainWindow();
 
@@ -41,15 +42,19 @@ private:
 
 	QMovie* loadingLogo = nullptr;
 	QTimer* timerForCount; // TO RENAME
+	QElapsedTimer* timerForTimeEdit; // TO RENAME
+
 	QFutureWatcher<void> watcherCompute;
+
+	QFuture<void> futureLoadingData;
 	QFutureWatcher<void> watcherLoadingData;
 	bool firstLoading = true;
 
 	void displayImage(int value);
 
 	void startLoadingLogo();
-
-	int getLabel(int value, set displayedSet);
+	void InitializeButtons();
+	void InitializeLayerButtons(int layer);
 	void initialiseInputs();
 	void resetGraphOfClusteringRate();
 
@@ -69,8 +74,12 @@ private slots:
 	void updateCount();
 
 	void on_spinBoxImageId_valueChanged(int value);
-	void on_pushButtonCompute_clicked();
+	void on_spinBoxTrainingRating_valueChanged(int value);
+
 	void on_comboBoxSet_currentIndexChanged(int index);
+	void on_comboBoxLayer_currentIndexChanged(int index);
+
+	void on_pushButtonCompute_clicked();
 	void on_pushButtonConsole_clicked();
 
 	void stopCompute();

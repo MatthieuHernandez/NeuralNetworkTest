@@ -6,7 +6,6 @@
 *.user*
 *.o
 Makefile*
-*-ubyte
 *.stash
 *qmake*
 QCustomPlot/
@@ -15,6 +14,8 @@ picture/
 temp/
 sqlite*/
 build*/
+MNIST/
+numerai/
 moc*
 .vs/
 !*.sln
