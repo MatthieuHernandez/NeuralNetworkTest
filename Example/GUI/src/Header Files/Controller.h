@@ -3,13 +3,15 @@
 #include "neuralNetwork.h"
 #include "Data.h"
 
+
+
 class Controller : public QObject
 {
 Q_OBJECT
 
 private :
 
-	Data* data;
+	std::unique_ptr<Data> data;
 	NeuralNetwork* neuralNetwork;
 
 	void initializeData();

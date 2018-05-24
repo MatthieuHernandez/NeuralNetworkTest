@@ -3,9 +3,10 @@
 
 enum indexData
 {
-	indexMNIST = 0,
-	indexIris,
+	indexIris = 0,
+	indexMNIST,
 	indexParisTrees,
+	indexCurrencyRates,
 	End
 };
 

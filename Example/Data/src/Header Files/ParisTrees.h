@@ -1,7 +1,7 @@
 #pragma once
-#include "Data.h"
+#include "../../DataForClassification.h"
 
-class ParisTrees : public Data
+class ParisTrees : public DataForClassification
 {
 public:
 	ParisTrees();

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <vector>
 #include "Data.h"
+#include "../../../../NeuralNetwork/src/Header Files/perceptron.h"
 
 using namespace std;
 
@@ -8,61 +9,30 @@ void Data::loadData()
 {
 }
 
-vector<float>& Data::getNextTrainingData(bool isRandom)
-{
-	return this->getNextData(training, isRandom);
-}
-
-vector<float>& Data::getNextTrainingLabel()
-{
-	return this->getNextLabel(training);
-}
-
-vector<float>& Data::getNextTestingData()
-{
-	return this->getNextData(testing, false);
-}
-
-vector<float>& Data::getNextTestingLabel()
-{
-	return this->getNextLabel(testing);
-}
-
 void Data::shuffle()
 {
-	const auto random = rand();
 	rand();
-	srand(random);
-	random_shuffle(sets[training].data.begin(), sets[training].data.end());
-	srand(random);
-	random_shuffle(sets[training].labels.begin(), sets[training].labels.end());
-}
-
-vector<float>& Data::getNextData(const set set, bool isRandom)
-{
-	if (set == training && this->sets[set].index == this->sets[set].size)
+	if (indexes.empty())
 	{
-		this->shuffle();
-		this->sets[set].index = 0;
+		indexes.resize(sets[training].size);
+		for (int i = 0;  i < indexes.size(); i++)
+			indexes[i] = i;
 	}
-	else
-		this->sets[set].index++;
 
-	return sets[set].data[sets[set].index];
+	random_shuffle(indexes.begin(), indexes.end());
 }
 
-vector<float>& Data::getNextLabel(const set set)
+vector<float>& Data::getTrainingData(const int index)
 {
-	return sets[set].labels[sets[set].index];
+	return this->sets[training].data[indexes[index]];
 }
 
-
-int Data::getLabel(int index, set displayedSet)
+vector<float>& Data::getTestingData(const int index)
 {
-	for (int i = 0; i < this->numberOfLabel; i++)
-	{
-		if (this->sets[displayedSet].labels[index][i] == 1)
-			return i;
-	}
-	throw exception("wrong label");
+	return this->sets[testing].data[index];
+}
+
+vector<float>& Data::getTrainingOutputs(const int index)
+{
+	return this->sets[training].labels[indexes[index]];
 }

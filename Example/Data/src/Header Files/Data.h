@@ -1,28 +1,34 @@
 #ifndef DATA_H
 #define DATA_H
 #include <vector>
+#include <memory>
 
 
 enum set
 {
 	testing = 0,
-	training = 1
+	training
+};
+
+enum problemType
+{
+	classification = 0,
+	regression
 };
 
 class Data
 {
-private:
+protected:
+	std::vector<int> indexes;
 
-	std::vector<float>& getNextData(set set, bool isRandom);
-	std::vector<float>& getNextLabel(set set);
-	
-	
 public:
 
 	void shuffle();
 
 	int sizeOfData{}; // size of one data, equal to size of neural network inputs
 	int numberOfLabel{}; // the number of class, equal to size of neural network outputs
+
+	problemType problem;
 
 	struct Set
 	{
@@ -33,14 +39,17 @@ public:
 	} sets[2];
 
 	virtual ~Data() = default;
-	virtual void loadData();
+	virtual void loadData() = 0;
 
-	std::vector<float>& getNextTrainingData(bool isRandom = true);
-	std::vector<float>& getNextTrainingLabel();
+	std::vector<float>& getTrainingData(const int index);
+	std::vector<float>& getTestingData(const int index);
 
-	std::vector<float>& getNextTestingData();
-	std::vector<float>& getNextTestingLabel();
-	int getLabel(int value, set displayedSet);
+	virtual int getLabel(const int, set) { throw std::exception(); }
+	virtual int getTrainingLabel(const int) { throw std::exception(); }
+	virtual int getTestingLabel(const int) { throw std::exception(); }
+
+	std::vector<float>& getTrainingOutputs(const int index);
+	virtual std::vector<float>& getTestingOutputs(const int) { throw std::exception(); }
 };
 
 #endif // DATA_H

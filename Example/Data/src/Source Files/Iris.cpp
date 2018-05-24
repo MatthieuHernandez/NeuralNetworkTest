@@ -19,11 +19,11 @@ Iris::~Iris()
 void Iris::loadData()
 {
 	string line;
-	string path = "../TestIris/iris.txt";
+	string path = "../Data/iris/iris.txt";
 	ifstream file(path);
 	int count = 0;
 	vector<vector<string>> individuals;
-	vector<string> temp;
+	const vector<string> temp;
 	if (!file.is_open())
 	{
 		throw exception((" Cannot open :" + path).c_str());

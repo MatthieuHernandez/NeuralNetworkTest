@@ -43,7 +43,7 @@ void ControllersManager::initializeInputsNNs(int index)
 			sigmoid
 		};
 		controllers[index]->inputs.learningRate = 0.5f;
-		//controllers[index]->inputs.momentum = 0.995;
+		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexParisTrees:

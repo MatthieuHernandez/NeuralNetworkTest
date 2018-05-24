@@ -5,11 +5,11 @@
 #include <vector>
 #include <iomanip>
 #include <exception>
-#include "Data.h"
+#include "../../DataForClassification.h"
 
 using namespace std;
 
-class MNIST : public Data
+class MNIST : public DataForClassification
 {
 private :
     void readImages(const std::string path_MNIST[]);

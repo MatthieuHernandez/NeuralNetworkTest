@@ -66,19 +66,20 @@ void MNIST::readSet(const set set, ifstream &images, ifstream &labels)
 	    const vector<float> v;
 		sets[set].data.push_back(v);
 
-        for(int j = 0; !images.eof() && j < 784;)
-        {
-            c = images.get();
+		if(!images.eof())
+			for(int j = 0; !images.eof() && j < 784;)
+			{
+				c = images.get();
 
-            if(shift > 15)
-            {
-				const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
-				sets[set].data.back().push_back(value);
-                j++;
-            }
-            else
-                shift ++;
-        }
+				if(shift > 16)
+				{
+					const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
+					sets[set].data.back().push_back(value);
+					j++;
+				}
+				else
+					shift ++;
+			}
 
     }
     images.close();

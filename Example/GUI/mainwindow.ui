@@ -228,7 +228,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -272,11 +272,9 @@
         <height>22</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>MNIST</string>
-       </property>
-      </item>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
       <item>
        <property name="text">
         <string>Iris</string>
@@ -284,7 +282,17 @@
       </item>
       <item>
        <property name="text">
+        <string>MNIST</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>ParisTrees</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>CurrencyRates</string>
        </property>
       </item>
      </widget>
@@ -364,7 +372,7 @@
        <number>999999</number>
       </property>
       <property name="value">
-       <number>963789</number>
+       <number>0</number>
       </property>
      </widget>
      <widget class="QSpinBox" name="spinBoxTrainingRating">

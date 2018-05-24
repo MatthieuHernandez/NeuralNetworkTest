@@ -36,8 +36,6 @@ private:
 	std::vector<float> input;
 	std::vector<float> desired;
 
-	//list<std::vector<float>> desired_outputs;
-
 	set displayedSet = testing;
 
 	QMovie* loadingLogo = nullptr;
@@ -54,6 +52,7 @@ private:
 
 	void startLoadingLogo();
 	void InitializeButtons();
+	void ResetComboBoxlayer();
 	void InitializeLayerButtons(int layer);
 	void initialiseInputs();
 	void resetGraphOfClusteringRate();
@@ -73,14 +72,19 @@ private slots:
 	void updateNumberOfIteration();
 	void updateCount();
 
+	void on_spinBoxNeurons_valueChanged(int value);
 	void on_spinBoxImageId_valueChanged(int value);
 	void on_spinBoxTrainingRating_valueChanged(int value);
+
+	void on_pushButtonRemoveLayer_clicked();
 
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_comboBoxLayer_currentIndexChanged(int index);
 
 	void on_pushButtonCompute_clicked();
 	void on_pushButtonConsole_clicked();
+
+	void on_pushButtonAddLayer_clicked();
 
 	void stopCompute();
 	void endOfLoadingData();

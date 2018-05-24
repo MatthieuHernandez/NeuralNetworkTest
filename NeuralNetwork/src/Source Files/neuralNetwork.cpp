@@ -68,7 +68,7 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 	return outputs;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<int>& desired)
+void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<float>& desired)
 {
 	this->outputs = this->output(inputs);
 	for (uint n = 0; n < numberOfOutputs; ++n)

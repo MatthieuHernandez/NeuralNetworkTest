@@ -7,7 +7,7 @@ using namespace std;
 
 Controller::Controller(Data& data)
 {
-	this->data = &data;
+	this->data = unique_ptr<Data>(&data);
 	this->neuralNetwork = nullptr;
 	this->initializeData();
 	this->inputs.numberOfTrainbyRating = this->data->sets[training].size;
@@ -15,7 +15,15 @@ Controller::Controller(Data& data)
 
 void Controller::initializeData()
 {
-	this->data->loadData();
+	try
+	{
+		this->data->loadData();
+	}
+	catch (exception e)
+	{
+		auto message = static_cast<string>("Reading data error : ") + e.what();
+		exception(message.c_str());
+	}
 }
 
 void Controller::initializeNeuralNetwork()
@@ -28,13 +36,21 @@ void Controller::initializeNeuralNetwork()
 
 void Controller::compute(bool* stop)
 {
+	outputs.clusteringRateMax = 0.0f;
 	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
 		for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size && !(*stop); outputs.currentIndex++)
 		{
-			auto label = data->getLabel(outputs.currentIndex, testing);
-
-			neuralNetwork->calculateClusteringRateForClassificationProblem(data->sets[testing].data[outputs.currentIndex], label);
+			if (data->problem == classification)
+			{
+				neuralNetwork->calculateClusteringRateForClassificationProblem(data->getTestingData(outputs.currentIndex),
+				                                                               data->getTestingLabel(outputs.currentIndex));
+			}
+			else
+			{
+				neuralNetwork->calculateClusteringRateForRegressionProblem(data->getTestingData(outputs.currentIndex),
+				                                                           data->getTestingOutputs(outputs.currentIndex));
+			}
 		}
 		outputs.clusteringRate = neuralNetwork->getClusteringRate();
 		if (outputs.clusteringRate > outputs.clusteringRateMax)
@@ -44,10 +60,11 @@ void Controller::compute(bool* stop)
 		emit updateNumberOfIteration();
 
 		data->shuffle();
-		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.currentIndex++)
+		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.
+		     currentIndex++)
 		{
-			neuralNetwork->train(data->sets[training].data[outputs.currentIndex],
-			                     data->sets[training].labels[outputs.currentIndex]);
+			neuralNetwork->train(data->getTrainingData(outputs.currentIndex),
+			                     data->getTrainingOutputs(outputs.currentIndex));
 		}
 	}
 }

@@ -126,12 +126,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CurrencyRatesEurToUsd.cpp" />
+    <ClCompile Include="DataForClassification.cpp" />
+    <ClCompile Include="DataForRegression.cpp" />
     <ClCompile Include="src\Source FIles\Data.cpp" />
     <ClCompile Include="src\Source Files\Iris.cpp" />
     <ClCompile Include="src\Source FIles\MNIST.cpp" />
     <ClCompile Include="src\Source Files\ParisTrees.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CurrencyRatesEurToUsd.h" />
+    <ClInclude Include="DataForClassification.h" />
+    <ClInclude Include="DataForRegression.h" />
     <ClInclude Include="src\Header Files\Data.h" />
     <ClInclude Include="src\Header Files\Iris.h" />
     <ClInclude Include="src\Header Files\MNIST.h" />
