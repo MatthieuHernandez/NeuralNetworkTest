@@ -24,6 +24,7 @@ protected:
 public:
 
 	void shuffle();
+	void unshuffle();
 
 	int sizeOfData{}; // size of one data, equal to size of neural network inputs
 	int numberOfLabel{}; // the number of class, equal to size of neural network outputs

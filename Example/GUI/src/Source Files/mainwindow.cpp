@@ -100,8 +100,8 @@ void MainWindow::endOfLoadingData()
 	this->ui->pushButtonCompute->setEnabled(true);
 	ui->comboBoxData->setEnabled(true);
 	this->write("data loaded");
-	if (ui->comboBoxData->currentIndex() == indexMNIST)
-		displayImage(ui->spinBoxImageId->value());
+	//if (ui->comboBoxData->currentIndex() == indexMNIST)
+	//	displayImage(ui->spinBoxImageId->value());
 }
 
 void MainWindow::InitializeButtons()
@@ -283,12 +283,12 @@ void MainWindow::on_spinBoxImageId_valueChanged(int value)
 	displayImage(value);
 }
 
-void MainWindow::on_spinBoxLearningRate_valueChanged(int value)
+void MainWindow::on_spinBoxLearningRate_valueChanged(double value)
 {
 	currentController->inputs.learningRate = ui->spinBoxLearningRate->value();
 }
 
-void MainWindow::on_spinBoxMomentum_valueChanged(int value)
+void MainWindow::on_spinBoxMomentum_valueChanged(double value)
 {
 	currentController->inputs.momentum = ui->spinBoxMomentum->value();
 }
@@ -333,7 +333,7 @@ void MainWindow::updateGraphOfClusteringRate()
 	y.push_back(CR);
 
 	ui->customPlot->graph(0)->setData(x, y);
-	ui->customPlot->xAxis->setRange(0, y.size() - 1);
+	ui->customPlot->xAxis->setRange(0, currentController->outputs.numberOfIteration);
 	ui->customPlot->replot();
 	QApplication::processEvents();
 	this->currentController->blockSignals(false);

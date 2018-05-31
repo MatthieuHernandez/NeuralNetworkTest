@@ -7,6 +7,7 @@ using namespace std;
 
 void Data::loadData()
 {
+	unshuffle();
 }
 
 void Data::shuffle()
@@ -15,11 +16,19 @@ void Data::shuffle()
 	if (indexes.empty())
 	{
 		indexes.resize(sets[training].size);
-		for (int i = 0;  i < indexes.size(); i++)
+		for (int i = 0; i < indexes.size(); i++)
 			indexes[i] = i;
 	}
 
 	random_shuffle(indexes.begin(), indexes.end());
+}
+
+void Data::unshuffle()
+{
+	indexes.clear();
+	indexes.resize(sets[training].size);
+	for (int i = 0; i < indexes.size(); i++)
+		indexes[i] = i;
 }
 
 vector<float>& Data::getTrainingData(const int index)
