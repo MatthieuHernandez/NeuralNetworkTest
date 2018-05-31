@@ -44,7 +44,6 @@ private:
 
 	QFutureWatcher<void> watcherCompute;
 
-	QFuture<void> futureLoadingData;
 	QFutureWatcher<void> watcherLoadingData;
 	bool firstLoading = true;
 
@@ -74,6 +73,8 @@ private slots:
 
 	void on_spinBoxNeurons_valueChanged(int value);
 	void on_spinBoxImageId_valueChanged(int value);
+	void on_spinBoxLearningRate_valueChanged(int value);
+	void on_spinBoxMomentum_valueChanged(int value);
 	void on_spinBoxTrainingRating_valueChanged(int value);
 
 	void on_pushButtonRemoveLayer_clicked();

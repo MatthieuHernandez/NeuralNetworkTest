@@ -73,6 +73,10 @@ public:
     QComboBox *comboBoxActivationfunction;
     QPushButton *pushButtonAddLayer;
     QLabel *label_4;
+    QDoubleSpinBox *spinBoxLearningRate;
+    QLabel *label_3;
+    QLabel *label_10;
+    QDoubleSpinBox *spinBoxMomentum;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -175,6 +179,7 @@ public:
         spinBoxCount = new QSpinBox(tab_3);
         spinBoxCount->setObjectName(QStringLiteral("spinBoxCount"));
         spinBoxCount->setGeometry(QRect(55, 100, 45, 22));
+        spinBoxCount->setReadOnly(true);
         spinBoxCount->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxCount->setProperty("showGroupSeparator", QVariant(true));
         spinBoxCount->setMaximum(999999);
@@ -234,7 +239,7 @@ public:
         label_2->setGeometry(QRect(10, 10, 41, 21));
         spinBoxNeurons = new QSpinBox(tab_4);
         spinBoxNeurons->setObjectName(QStringLiteral("spinBoxNeurons"));
-        spinBoxNeurons->setGeometry(QRect(60, 50, 51, 22));
+        spinBoxNeurons->setGeometry(QRect(60, 50, 50, 22));
         spinBoxNeurons->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         spinBoxNeurons->setMaximum(20000);
         spinBoxNeurons->setValue(0);
@@ -251,7 +256,7 @@ public:
         comboBoxActivationfunction->addItem(QString());
         comboBoxActivationfunction->addItem(QString());
         comboBoxActivationfunction->setObjectName(QStringLiteral("comboBoxActivationfunction"));
-        comboBoxActivationfunction->setGeometry(QRect(60, 90, 111, 22));
+        comboBoxActivationfunction->setGeometry(QRect(70, 90, 101, 22));
         pushButtonAddLayer = new QPushButton(tab_4);
         pushButtonAddLayer->setObjectName(QStringLiteral("pushButtonAddLayer"));
         pushButtonAddLayer->setGeometry(QRect(125, 10, 22, 22));
@@ -261,13 +266,31 @@ public:
         label_4 = new QLabel(tab_4);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(10, 80, 51, 31));
+        spinBoxLearningRate = new QDoubleSpinBox(tab_4);
+        spinBoxLearningRate->setObjectName(QStringLiteral("spinBoxLearningRate"));
+        spinBoxLearningRate->setGeometry(QRect(90, 130, 51, 22));
+        spinBoxLearningRate->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        spinBoxLearningRate->setDecimals(6);
+        spinBoxLearningRate->setMaximum(100);
+        label_3 = new QLabel(tab_4);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(10, 130, 71, 21));
+        label_10 = new QLabel(tab_4);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(10, 170, 71, 21));
+        spinBoxMomentum = new QDoubleSpinBox(tab_4);
+        spinBoxMomentum->setObjectName(QStringLiteral("spinBoxMomentum"));
+        spinBoxMomentum->setGeometry(QRect(90, 170, 51, 22));
+        spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        spinBoxMomentum->setDecimals(6);
+        spinBoxMomentum->setMaximum(100);
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(0);
+        tabWidgetNeuralNetwork->setCurrentIndex(1);
         comboBoxData->setCurrentIndex(3);
 
 
@@ -318,8 +341,10 @@ public:
         comboBoxActivationfunction->setItemText(3, QApplication::translate("MainWindow", "Gaussian", nullptr));
 
         pushButtonAddLayer->setText(QString());
-        label_4->setText(QApplication::translate("MainWindow", "activation\n"
+        label_4->setText(QApplication::translate("MainWindow", "Activation\n"
 "function :", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
+        label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 

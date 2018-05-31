@@ -228,7 +228,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -361,6 +361,9 @@
         <width>45</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
       <property name="buttonSymbols">
        <enum>QAbstractSpinBox::NoButtons</enum>
@@ -576,7 +579,7 @@
        <rect>
         <x>60</x>
         <y>50</y>
-        <width>51</width>
+        <width>50</width>
         <height>22</height>
        </rect>
       </property>
@@ -619,9 +622,9 @@
      <widget class="QComboBox" name="comboBoxActivationfunction">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>70</x>
         <y>90</y>
-        <width>111</width>
+        <width>101</width>
         <height>22</height>
        </rect>
       </property>
@@ -673,8 +676,72 @@
        </rect>
       </property>
       <property name="text">
-       <string>activation
+       <string>Activation
 function :</string>
+      </property>
+     </widget>
+     <widget class="QDoublespinBox" name="spinBoxLearningRate">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>130</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractspinBox::NoButtons</enum>
+      </property>
+      <property name="decimals">
+       <number>6</number>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Learning rate :</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Momentum :</string>
+      </property>
+     </widget>
+     <widget class="QDoublespinBox" name="spinBoxMomentum">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>170</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractspinBox::NoButtons</enum>
+      </property>
+      <property name="decimals">
+       <number>6</number>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
       </property>
      </widget>
     </widget>
