@@ -53,7 +53,8 @@ private:
 	void InitializeButtons();
 	void ResetComboBoxlayer();
 	void InitializeLayerButtons(int layer);
-	void initialiseInputs();
+	void initializeInputs();
+	void initializeGraphOfClusteringRate();
 	void resetGraphOfClusteringRate();
 
 	unsigned char getImages(int number, int x, int y);

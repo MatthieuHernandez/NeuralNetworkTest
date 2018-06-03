@@ -92,16 +92,18 @@ void MainWindow::endOfLoadingData()
 {
 	if (firstLoading)
 	{
-		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
-		connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
+		initializeGraphOfClusteringRate();
 		firstLoading = false;
 	}
+	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
+	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
+
 	this->InitializeButtons();
 	this->ui->pushButtonCompute->setEnabled(true);
 	ui->comboBoxData->setEnabled(true);
 	this->write("data loaded");
-	//if (ui->comboBoxData->currentIndex() == indexMNIST)
-	//	displayImage(ui->spinBoxImageId->value());
+	if (ui->comboBoxData->currentIndex() == indexMNIST)
+		displayImage(ui->spinBoxImageId->value());
 }
 
 void MainWindow::InitializeButtons()
@@ -150,7 +152,7 @@ void MainWindow::InitializeLayerButtons(int layer)
 	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
 }
 
-void MainWindow::initialiseInputs()
+void MainWindow::initializeInputs()
 {
 	const float learningRate = ui->spinBoxLearningRate->value();
 	const float momentum = ui->spinBoxMomentum->value();
@@ -161,21 +163,24 @@ void MainWindow::initialiseInputs()
 	this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
 }
 
-void MainWindow::resetGraphOfClusteringRate()
+void MainWindow::initializeGraphOfClusteringRate()
 {
 	x.clear();
 	y.clear();
 
 	ui->customPlot->addGraph();
-	ui->customPlot->addGraph();
-	ui->customPlot->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
+	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
 	ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-	// first graph will be filled with translucent blue
-	ui->customPlot->graph(1)->setPen(QPen(Qt::red));
-	connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
-	connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
 	ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
 	ui->customPlot->replot();
+	updateGraphOfClusteringRate();
+}
+
+void MainWindow::resetGraphOfClusteringRate()
+{
+	x.clear();
+	y.clear();
+	updateGraphOfClusteringRate();
 }
 
 /**************************************************
@@ -186,7 +191,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 {
 	if (computeIsStop)
 	{
-		this->initialiseInputs();
+		this->initializeInputs();
 		this->currentController->initializeNeuralNetwork();
 		this->resetGraphOfClusteringRate();
 		computeIsStop = false;
@@ -335,7 +340,6 @@ void MainWindow::updateGraphOfClusteringRate()
 	ui->customPlot->graph(0)->setData(x, y);
 	ui->customPlot->xAxis->setRange(0, currentController->outputs.numberOfIteration);
 	ui->customPlot->replot();
-	QApplication::processEvents();
 	this->currentController->blockSignals(false);
 }
 
