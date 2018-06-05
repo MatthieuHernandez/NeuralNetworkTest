@@ -2,10 +2,9 @@
 #define MNIST_H
 
 #include <string>
-#include <vector>
 #include <iomanip>
 #include <exception>
-#include "../../DataForClassification.h"
+#include "DataForClassification.h"
 
 using namespace std;
 

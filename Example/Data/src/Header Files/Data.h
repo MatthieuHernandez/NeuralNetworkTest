@@ -42,14 +42,14 @@ public:
 	virtual ~Data() = default;
 	virtual void loadData() = 0;
 
-	std::vector<float>& getTrainingData(const int index);
-	std::vector<float>& getTestingData(const int index);
+	virtual std::vector<float>& getTrainingData(const int index);
+	virtual std::vector<float>& getTestingData(const int index);
 
 	virtual int getLabel(const int, set) { throw std::exception(); }
 	virtual int getTrainingLabel(const int) { throw std::exception(); }
 	virtual int getTestingLabel(const int) { throw std::exception(); }
 
-	std::vector<float>& getTrainingOutputs(const int index);
+	virtual std::vector<float>& getTrainingOutputs(const int index);
 	virtual std::vector<float>& getTestingOutputs(const int) { throw std::exception(); }
 };
 

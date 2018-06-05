@@ -4,7 +4,7 @@ using namespace std;
 
 DataForRegression::DataForRegression()
 {
-	problem = classification;
+	problem = regression;
 }
 
 vector<float>& DataForRegression::getTestingOutputs(const int index)

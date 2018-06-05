@@ -23,9 +23,15 @@
     <ClCompile Include="src\Source Files\Iris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CurrencyRatesEurToUsd.cpp" />
-    <ClCompile Include="DataForClassification.cpp" />
-    <ClCompile Include="DataForRegression.cpp" />
+    <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\DataForClassification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\DataForRegression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\MNIST.h">
@@ -40,13 +46,13 @@
     <ClInclude Include="src\Header Files\Iris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CurrencyRatesEurToUsd.h">
+    <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataForClassification.h">
+    <ClInclude Include="src\Header Files\DataForClassification.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataForRegression.h">
+    <ClInclude Include="src\Header Files\DataForRegression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../DataForClassification.h"
+#include "DataForClassification.h"
 
 class Iris : public DataForClassification
 {

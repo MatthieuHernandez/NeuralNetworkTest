@@ -3,8 +3,6 @@
 
 #include <cmath>
 #include <vector>
-#include <iostream>
-
 
 enum activationFunction
 {
