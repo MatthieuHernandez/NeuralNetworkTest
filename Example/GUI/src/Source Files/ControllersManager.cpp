@@ -2,6 +2,7 @@
 #include "MNIST.h"
 #include "Iris.h"
 #include "ParisTrees.h"
+#include "CurrencyRatesEurToUsd.h"
 
 ControllersManager::ControllersManager()
 {
@@ -62,6 +63,22 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
+	case indexCurrencyRates:
+		controllers[index]->inputs.structure = vector<unsigned int>
+		{
+			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			200,
+			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+		};
+		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		{
+			sigmoid,
+			sigmoid
+		};
+		controllers[index]->inputs.learningRate = 0.001f;
+		controllers[index]->inputs.momentum = 0.1f;
+		break;
+
 	default:
 		throw new exception();
 	}
@@ -85,8 +102,12 @@ Controller* ControllersManager::getController(int index)
 			controllers[index] = new Controller(*new ParisTrees());
 			break;
 
+		case indexCurrencyRates :
+			controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
+			break;
+
 		default:
-			throw new exception();
+			throw new exception("The data doesn't exist !");
 		}
 		this->initializeInputsNNs(index);
 	}

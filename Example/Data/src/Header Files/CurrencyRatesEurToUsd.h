@@ -19,6 +19,7 @@ private:
 	const int numberOfInputRates = 60;
 	const int dateTimeSize = 6;
 	const int intervalBetweenTwoTrade = 5;
+	const float multiplicationFactor = 100000.0f;
 
 	std::vector<std::vector<float>> dateTimes;
 	std::vector<float> rates;

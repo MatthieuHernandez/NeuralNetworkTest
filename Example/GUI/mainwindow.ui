@@ -680,7 +680,7 @@
 function :</string>
       </property>
      </widget>
-     <widget class="QDoublespinBox" name="spinBoxLearningRate">
+     <widget class="QDoublespinBox" name="spinBoxLearningRate" native="true">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -689,13 +689,10 @@ function :</string>
         <height>22</height>
        </rect>
       </property>
-      <property name="buttonSymbols">
-       <enum>QAbstractspinBox::NoButtons</enum>
-      </property>
-      <property name="decimals">
+      <property name="decimals" stdset="0">
        <number>6</number>
       </property>
-      <property name="maximum">
+      <property name="maximum" stdset="0">
        <double>100.000000000000000</double>
       </property>
      </widget>
@@ -725,7 +722,7 @@ function :</string>
        <string>Momentum :</string>
       </property>
      </widget>
-     <widget class="QDoublespinBox" name="spinBoxMomentum">
+     <widget class="QDoublespinBox" name="spinBoxMomentum" native="true">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -734,13 +731,10 @@ function :</string>
         <height>22</height>
        </rect>
       </property>
-      <property name="buttonSymbols">
-       <enum>QAbstractspinBox::NoButtons</enum>
-      </property>
-      <property name="decimals">
+      <property name="decimals" stdset="0">
        <number>6</number>
       </property>
-      <property name="maximum">
+      <property name="maximum" stdset="0">
        <double>100.000000000000000</double>
       </property>
      </widget>
@@ -755,6 +749,11 @@ function :</string>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QDoublespinBox</class>
+   <extends>QWidget</extends>
+   <header>qdoublespinbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

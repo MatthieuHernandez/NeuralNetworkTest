@@ -62,15 +62,15 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		if (abs(weights[w]) < abs(1000))
-		{
+		//if (abs(weights[w]) < abs(100000))
+		//{
 			auto deltaWeights = learningRate * error * inputs[w];
 			deltaWeights += momentum * previousDeltaWeights[w];
 			weights[w] += deltaWeights;
 			previousDeltaWeights[w] = deltaWeights;
-		}
-		else
-			throw std::exception();
+		//}
+		//else
+		//	throw std::exception();
 	}
 }
 
@@ -139,6 +139,7 @@ uint Perceptron::getNumberOfInputs() const
 {
 	return numberOfInputs;
 }
+
 bool Perceptron::operator==(const Perceptron& perceptron)
 {
 	if (this->bias != perceptron.bias

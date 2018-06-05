@@ -96,7 +96,7 @@ vector<float>& CurrencyRatesEurToUsd::getTestingData(const int index)
 
 vector<float>& CurrencyRatesEurToUsd::getTrainingOutputs(const int index)
 {
-	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * 100.0f;
+	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor;
 	return this->ouputTemp;
 }
 

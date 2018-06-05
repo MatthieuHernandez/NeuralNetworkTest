@@ -147,7 +147,7 @@ void MainWindow::InitializeLayerButtons(int layer)
 		ui->labelNeurons->setText("Inputs :");
 	}
 
-	ui->comboBoxActivationfunction->setCurrentIndex(function + 1);
+	ui->comboBoxActivationfunction->setCurrentIndex(function);
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
 	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
 }

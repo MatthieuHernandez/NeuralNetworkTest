@@ -73,10 +73,10 @@ public:
     QComboBox *comboBoxActivationfunction;
     QPushButton *pushButtonAddLayer;
     QLabel *label_4;
-    QDoubleSpinBox *spinBoxLearningRate;
+	QDoubleSpinBox *spinBoxLearningRate;
     QLabel *label_3;
     QLabel *label_10;
-    QDoubleSpinBox *spinBoxMomentum;
+	QDoubleSpinBox *spinBoxMomentum;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -269,9 +269,8 @@ public:
         spinBoxLearningRate = new QDoubleSpinBox(tab_4);
         spinBoxLearningRate->setObjectName(QStringLiteral("spinBoxLearningRate"));
         spinBoxLearningRate->setGeometry(QRect(90, 130, 51, 22));
-        spinBoxLearningRate->setButtonSymbols(QAbstractSpinBox::NoButtons);
-        spinBoxLearningRate->setDecimals(6);
-        spinBoxLearningRate->setMaximum(100);
+        spinBoxLearningRate->setProperty("decimals", QVariant(6));
+        spinBoxLearningRate->setProperty("maximum", QVariant(100));
         label_3 = new QLabel(tab_4);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 130, 71, 21));
@@ -281,9 +280,8 @@ public:
         spinBoxMomentum = new QDoubleSpinBox(tab_4);
         spinBoxMomentum->setObjectName(QStringLiteral("spinBoxMomentum"));
         spinBoxMomentum->setGeometry(QRect(90, 170, 51, 22));
-        spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
-        spinBoxMomentum->setDecimals(6);
-        spinBoxMomentum->setMaximum(100);
+        spinBoxMomentum->setProperty("decimals", QVariant(6));
+        spinBoxMomentum->setProperty("maximum", QVariant(100));
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
