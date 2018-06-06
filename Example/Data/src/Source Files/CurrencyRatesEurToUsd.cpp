@@ -63,47 +63,51 @@ void CurrencyRatesEurToUsd::loadCSV(int year)
 
 inline vector<float>& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
 {
-	
-	
-
-	this->dateTimeTemp[year] = stof(line.substr(0, 4));
-	this->dateTimeTemp[month] = stof(line.substr(4, 2));
-	this->dateTimeTemp[day] = stof(line.substr(6, 2));
-	this->dateTimeTemp[hour] = stof(line.substr(9, 2));
-	this->dateTimeTemp[minute] = stof(line.substr(11, 2));
-	this->dateTimeTemp[second] = stof(line.substr(13, 2));
+	/*this->dateTimeTemp[year] = (stof(line.substr(0, 4)) - 2000) / 16;
+	this->dateTimeTemp[month] = stof(line.substr(4, 2)) / 12;
+	this->dateTimeTemp[day] = stof(line.substr(6, 2)) / 30;
+	this->dateTimeTemp[hour] = stof(line.substr(9, 2)) / 24;
+	this->dateTimeTemp[minute] = stof(line.substr(11, 2)) / 60;
+	this->dateTimeTemp[second] = stof(line.substr(13, 2)) / 60;*/
 
 	return this->dateTimeTemp;
 }
 
 
-vector<float>& CurrencyRatesEurToUsd::getTrainingData(int index)
+vector<float> CurrencyRatesEurToUsd::getTrainingData(int index)
 {
-	index += numberOfInputRates;
-	for (int i = 0; i < dateTimeSize; i++)
-		this->dataTemp[i] = dateTimes[index][i];
+	//index += numberOfInputRates;
+	/*for (int i = 0; i < dateTimeSize; i++)
+		this->dataTemp[i] = dateTimes[index][i];*/
 
-	for (int i = 0; i < numberOfInputRates; i++)
-		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1];
-
+	/*for (int i = 0; i < numberOfInputRates; i++)
+		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1];*/
+	this->dataTemp[0] = rates[index];
+	this->dataTemp[1] = rates[index + intervalBetweenTwoTrade];
 	return this->dataTemp;
 }
 
-vector<float>& CurrencyRatesEurToUsd::getTestingData(const int index)
+vector<float> CurrencyRatesEurToUsd::getTestingData(const int index)
 {
 	return this->getTrainingData(index);
 }
 
-vector<float>& CurrencyRatesEurToUsd::getTrainingOutputs(const int index)
+vector<float> CurrencyRatesEurToUsd::getTrainingOutputs(const int index)
 {
-	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor;
+	//this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]);// *multiplicationFactor;
+	//return this->ouputTemp;
+	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index];
+	if (this->ouputTemp[0] > 0.0f)
+		this->ouputTemp[0] = 1.0f;
+	else
+		this->ouputTemp[0] = 0.0f;
 	return this->ouputTemp;
 }
 
-vector<float>& CurrencyRatesEurToUsd::getTestingOutputs(const int index)
+vector<float> CurrencyRatesEurToUsd::getTestingOutputs(const int index)
 {
-	this->ouputTemp = this->getTrainingOutputs(index);
-	if (this->ouputTemp[0] > 0)
+	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index];
+	if (this->ouputTemp[0] > 0.0f)
 		this->ouputTemp[0] = 1.0f;
 	else
 		this->ouputTemp[0] = 0.0f;

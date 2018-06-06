@@ -74,7 +74,7 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<flo
 	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
 		classifiedWell = true;
-		if (static_cast<int>(round(this->outputs[n])) == desired[n] && desired[n] != -1.0)
+		if (round(this->outputs[n]) == round(desired[n]) && desired[n] != -1.0)
 		{
 			classifiedWell = false;
 			break;
