@@ -228,7 +228,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -356,9 +356,9 @@
      <widget class="QSpinBox" name="spinBoxCount">
       <property name="geometry">
        <rect>
-        <x>55</x>
+        <x>50</x>
         <y>100</y>
-        <width>45</width>
+        <width>50</width>
         <height>22</height>
        </rect>
       </property>
@@ -387,6 +387,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
+      </property>
       <property name="showGroupSeparator" stdset="0">
        <bool>true</bool>
       </property>
@@ -400,9 +403,9 @@
      <widget class="QTimeEdit" name="timeEdit">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>50</x>
         <y>60</y>
-        <width>51</width>
+        <width>50</width>
         <height>22</height>
        </rect>
       </property>
@@ -477,9 +480,9 @@
      <widget class="QDoubleSpinBox" name="doubleSpinBoxCR">
       <property name="geometry">
        <rect>
-        <x>119</x>
+        <x>120</x>
         <y>140</y>
-        <width>51</width>
+        <width>50</width>
         <height>22</height>
        </rect>
       </property>
@@ -514,9 +517,9 @@
      <widget class="QDoubleSpinBox" name="doubleSpinBoxCRM">
       <property name="geometry">
        <rect>
-        <x>119</x>
+        <x>120</x>
         <y>170</y>
-        <width>51</width>
+        <width>50</width>
         <height>22</height>
        </rect>
       </property>
@@ -680,19 +683,22 @@
 function :</string>
       </property>
      </widget>
-     <widget class="QDoublespinBox" name="spinBoxLearningRate" native="true">
+     <widget class="QDoubleSpinBox" name="spinBoxLearningRate">
       <property name="geometry">
        <rect>
         <x>90</x>
         <y>130</y>
-        <width>51</width>
+        <width>55</width>
         <height>22</height>
        </rect>
       </property>
-      <property name="decimals" stdset="0">
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
+      </property>
+      <property name="decimals">
        <number>6</number>
       </property>
-      <property name="maximum" stdset="0">
+      <property name="maximum">
        <double>100.000000000000000</double>
       </property>
      </widget>
@@ -722,19 +728,22 @@ function :</string>
        <string>Momentum :</string>
       </property>
      </widget>
-     <widget class="QDoublespinBox" name="spinBoxMomentum" native="true">
+     <widget class="QDoubleSpinBox" name="spinBoxMomentum">
       <property name="geometry">
        <rect>
         <x>90</x>
         <y>170</y>
-        <width>51</width>
+        <width>55</width>
         <height>22</height>
        </rect>
       </property>
-      <property name="decimals" stdset="0">
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
+      </property>
+      <property name="decimals">
        <number>6</number>
       </property>
-      <property name="maximum" stdset="0">
+      <property name="maximum">
        <double>100.000000000000000</double>
       </property>
      </widget>
@@ -749,11 +758,6 @@ function :</string>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QDoublespinBox</class>
-   <extends>QWidget</extends>
-   <header>qdoublespinbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

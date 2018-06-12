@@ -16,9 +16,9 @@ class CurrencyRatesEurToUsd : public DataForRegression
 {
 private:
 
-	const int numberOfInputRates = 2;
+	const int numberOfInputRates = 15;
 	const int dateTimeSize = 0;// 6;
-	const int intervalBetweenTwoTrade = 2;
+	const int intervalBetweenTwoTrade = 5;
 	const float multiplicationFactor = 1000.0f;
 
 	std::vector<std::vector<float>> dateTimes;

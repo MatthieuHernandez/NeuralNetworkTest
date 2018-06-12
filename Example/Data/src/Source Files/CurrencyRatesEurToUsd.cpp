@@ -74,39 +74,34 @@ inline vector<float>& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
 }
 
 
-vector<float> CurrencyRatesEurToUsd::getTrainingData(int index)
+vector<float>& CurrencyRatesEurToUsd::getTrainingData(int index)
 {
 	//index += numberOfInputRates;
 	/*for (int i = 0; i < dateTimeSize; i++)
 		this->dataTemp[i] = dateTimes[index][i];*/
 
-	/*for (int i = 0; i < numberOfInputRates; i++)
-		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1];*/
-	this->dataTemp[0] = rates[index];
-	this->dataTemp[1] = rates[index + intervalBetweenTwoTrade];
+	for (int i = 0; i < numberOfInputRates; i++)
+		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1] * multiplicationFactor;
+	/*this->dataTemp[0] = rates[index];
+	this->dataTemp[1] = rates[index + intervalBetweenTwoTrade];*/
 	return this->dataTemp;
 }
 
-vector<float> CurrencyRatesEurToUsd::getTestingData(const int index)
+vector<float>& CurrencyRatesEurToUsd::getTestingData(const int index)
 {
 	return this->getTrainingData(index);
 }
 
-vector<float> CurrencyRatesEurToUsd::getTrainingOutputs(const int index)
+vector<float>& CurrencyRatesEurToUsd::getTrainingOutputs(const int index)
 {
-	//this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]);// *multiplicationFactor;
-	//return this->ouputTemp;
-	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index];
-	if (this->ouputTemp[0] > 0.0f)
-		this->ouputTemp[0] = 1.0f;
-	else
-		this->ouputTemp[0] = 0.0f;
+	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index] * multiplicationFactor/5;
 	return this->ouputTemp;
 }
 
-vector<float> CurrencyRatesEurToUsd::getTestingOutputs(const int index)
+vector<float>& CurrencyRatesEurToUsd::getTestingOutputs(const int index)
 {
-	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index];
+	this->ouputTemp[0] = rates[index + intervalBetweenTwoTrade] - rates[index] * multiplicationFactor/5;
+
 	if (this->ouputTemp[0] > 0.0f)
 		this->ouputTemp[0] = 1.0f;
 	else

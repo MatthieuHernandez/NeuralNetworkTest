@@ -73,10 +73,10 @@ public:
     QComboBox *comboBoxActivationfunction;
     QPushButton *pushButtonAddLayer;
     QLabel *label_4;
-	QDoubleSpinBox *spinBoxLearningRate;
+    QDoubleSpinBox *spinBoxLearningRate;
     QLabel *label_3;
     QLabel *label_10;
-	QDoubleSpinBox *spinBoxMomentum;
+    QDoubleSpinBox *spinBoxMomentum;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -178,7 +178,7 @@ public:
         label_1->setGeometry(QRect(10, 140, 91, 21));
         spinBoxCount = new QSpinBox(tab_3);
         spinBoxCount->setObjectName(QStringLiteral("spinBoxCount"));
-        spinBoxCount->setGeometry(QRect(55, 100, 45, 22));
+        spinBoxCount->setGeometry(QRect(50, 100, 50, 22));
         spinBoxCount->setReadOnly(true);
         spinBoxCount->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxCount->setProperty("showGroupSeparator", QVariant(true));
@@ -187,12 +187,13 @@ public:
         spinBoxTrainingRating = new QSpinBox(tab_3);
         spinBoxTrainingRating->setObjectName(QStringLiteral("spinBoxTrainingRating"));
         spinBoxTrainingRating->setGeometry(QRect(115, 100, 55, 22));
+        spinBoxTrainingRating->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxTrainingRating->setProperty("showGroupSeparator", QVariant(true));
         spinBoxTrainingRating->setMaximum(999999);
         spinBoxTrainingRating->setValue(0);
         timeEdit = new QTimeEdit(tab_3);
         timeEdit->setObjectName(QStringLiteral("timeEdit"));
-        timeEdit->setGeometry(QRect(60, 60, 51, 22));
+        timeEdit->setGeometry(QRect(50, 60, 50, 22));
         timeEdit->setWrapping(false);
         timeEdit->setFrame(true);
         timeEdit->setReadOnly(true);
@@ -211,7 +212,7 @@ public:
         label_8->setGeometry(QRect(10, 170, 111, 21));
         doubleSpinBoxCR = new QDoubleSpinBox(tab_3);
         doubleSpinBoxCR->setObjectName(QStringLiteral("doubleSpinBoxCR"));
-        doubleSpinBoxCR->setGeometry(QRect(119, 140, 51, 22));
+        doubleSpinBoxCR->setGeometry(QRect(120, 140, 50, 22));
         doubleSpinBoxCR->setWrapping(false);
         doubleSpinBoxCR->setFrame(true);
         doubleSpinBoxCR->setReadOnly(true);
@@ -220,7 +221,7 @@ public:
         doubleSpinBoxCR->setMaximum(100);
         doubleSpinBoxCRM = new QDoubleSpinBox(tab_3);
         doubleSpinBoxCRM->setObjectName(QStringLiteral("doubleSpinBoxCRM"));
-        doubleSpinBoxCRM->setGeometry(QRect(119, 170, 51, 22));
+        doubleSpinBoxCRM->setGeometry(QRect(120, 170, 50, 22));
         doubleSpinBoxCRM->setButtonSymbols(QAbstractSpinBox::NoButtons);
         doubleSpinBoxCRM->setDecimals(3);
         doubleSpinBoxCRM->setMaximum(100);
@@ -268,9 +269,10 @@ public:
         label_4->setGeometry(QRect(10, 80, 51, 31));
         spinBoxLearningRate = new QDoubleSpinBox(tab_4);
         spinBoxLearningRate->setObjectName(QStringLiteral("spinBoxLearningRate"));
-        spinBoxLearningRate->setGeometry(QRect(90, 130, 51, 22));
-        spinBoxLearningRate->setProperty("decimals", QVariant(6));
-        spinBoxLearningRate->setProperty("maximum", QVariant(100));
+        spinBoxLearningRate->setGeometry(QRect(90, 130, 55, 22));
+        spinBoxLearningRate->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        spinBoxLearningRate->setDecimals(6);
+        spinBoxLearningRate->setMaximum(100);
         label_3 = new QLabel(tab_4);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 130, 71, 21));
@@ -279,16 +281,17 @@ public:
         label_10->setGeometry(QRect(10, 170, 71, 21));
         spinBoxMomentum = new QDoubleSpinBox(tab_4);
         spinBoxMomentum->setObjectName(QStringLiteral("spinBoxMomentum"));
-        spinBoxMomentum->setGeometry(QRect(90, 170, 51, 22));
-        spinBoxMomentum->setProperty("decimals", QVariant(6));
-        spinBoxMomentum->setProperty("maximum", QVariant(100));
+        spinBoxMomentum->setGeometry(QRect(90, 170, 55, 22));
+        spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        spinBoxMomentum->setDecimals(6);
+        spinBoxMomentum->setMaximum(100);
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(1);
+        tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(3);
 
 
