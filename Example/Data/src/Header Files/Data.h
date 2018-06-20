@@ -21,6 +21,8 @@ class Data
 protected:
 	std::vector<int> indexes;
 
+	void clearData();
+
 public:
 
 	void shuffle();
@@ -34,7 +36,7 @@ public:
 	struct Set
 	{
 		unsigned int index{0};
-		unsigned int size{0};
+		unsigned int size{0}; // number of data inside set
 		std::vector<std::vector<float>> data{};
 		std::vector<std::vector<float>> labels{};
 	} sets[2];
@@ -52,5 +54,6 @@ public:
 	virtual std::vector<float>& getTrainingOutputs(const int index);
 	virtual std::vector<float>& getTestingOutputs(const int) { throw std::exception(); }
 };
+
 
 #endif // DATA_H

@@ -3,7 +3,7 @@
 #include "neuralNetwork.h"
 #include "Data.h"
 
-
+using namespace data;
 
 class Controller : public QObject
 {

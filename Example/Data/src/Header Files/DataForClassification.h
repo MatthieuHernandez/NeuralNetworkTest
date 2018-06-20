@@ -1,6 +1,8 @@
 #pragma once
 #include "Data.h"
 
+using namespace data;
+
 class DataForClassification : public Data
 {
 public:

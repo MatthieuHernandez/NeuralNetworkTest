@@ -196,7 +196,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 		this->resetGraphOfClusteringRate();
 		computeIsStop = false;
 		this->startLoadingLogo();
-		auto future = QtConcurrent::run([=]()
+		const auto future = QtConcurrent::run([=]()
 		{
 			currentController->compute(&computeIsStop);
 		});

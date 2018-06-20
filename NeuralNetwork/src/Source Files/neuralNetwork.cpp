@@ -68,13 +68,35 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 	return outputs;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<float>& desired)
+void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(const vector<float>& inputs, const vector<float>& desired, float precision)
 {
 	this->outputs = this->output(inputs);
 	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
 		classifiedWell = true;
-		if (round(this->outputs[n]) == round(desired[n]) && desired[n] != -1.0)
+		if (desired[n] != NAN 
+			&& this->outputs[n] > desired[n] + precision 
+			&& this->outputs[n] < desired[n] - precision)
+		{
+			classifiedWell = false;
+			break;
+		}
+	}
+	if (classifiedWell)
+		numberOfResultsClassifiedWell++;
+	else
+		numberOfResultsMisclassefied++;
+}
+
+void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(const vector<float>& inputs, const vector<float>& desired, float separator)
+{
+	this->outputs = this->output(inputs);
+	for (uint n = 0; n < numberOfOutputs; ++n)
+	{
+		classifiedWell = true;
+		if (desired[n] != NAN 
+		   && (this->outputs[n] > separator && desired[n] > separator
+			|| this->outputs[n] < separator && desired[n] < separator))
 		{
 			classifiedWell = false;
 			break;

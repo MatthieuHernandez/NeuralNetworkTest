@@ -10,6 +10,16 @@ void Data::loadData()
 	unshuffle();
 }
 
+void Data::clearData()
+{
+	this->sets[training].labels.clear();
+	this->sets[training].data.clear();
+	this->sets[testing].labels.clear();
+	this->sets[testing].data.clear();
+	this->sets[training].size = 0;
+	this->sets[testing].size = 0;
+}
+
 void Data::shuffle()
 {
 	rand();

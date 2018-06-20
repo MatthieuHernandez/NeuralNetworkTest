@@ -58,7 +58,8 @@ class NeuralNetwork
         void train(const std::vector<float> &inputs, const std::vector<float> &desired);
         std::vector<float> output(const std::vector<float>& inputs);
 
-        void calculateClusteringRateForRegressionProblem(const std::vector<float>& inputs, const std::vector<float>& desired);
+        void calculateClusteringRateForRegressionProblemWithPrecision(const std::vector<float>& inputs, const std::vector<float>& desired, float precision = 0.5f);
+        void calculateClusteringRateForRegressionProblemSeparateByValue(const std::vector<float>& inputs, const std::vector<float>& desired, float separator = 0.0f);
         void calculateClusteringRateForClassificationProblem(const std::vector<float> &inputs, const uint classNumber);
 
         void addANeuron(uint layerNumber);
