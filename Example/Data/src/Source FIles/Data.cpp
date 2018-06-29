@@ -4,6 +4,7 @@
 #include "../../../../NeuralNetwork/src/Header Files/perceptron.h"
 
 using namespace std;
+using namespace data;
 
 void Data::loadData()
 {

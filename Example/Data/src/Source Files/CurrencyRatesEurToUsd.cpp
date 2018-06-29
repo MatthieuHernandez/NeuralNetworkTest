@@ -9,7 +9,6 @@ CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 	this->sizeOfData = numberOfInputRates + dateTimeSize;
 	this->numberOfLabel = 1;
 	this->dataTemp.resize(this->sizeOfData);
-	this->dateTimeTemp.resize(this->dateTimeSize);
 	this->ouputTemp.resize(1);
 }
 
@@ -21,6 +20,7 @@ void CurrencyRatesEurToUsd::loadData()
 {
 	this->loadCSV(2016);
 	this->createData();
+	this->unshuffle();
 }
 
 void CurrencyRatesEurToUsd::loadCSV(int year)
@@ -59,14 +59,15 @@ void CurrencyRatesEurToUsd::createData()
 {
 	this->clearData();
 
-	const auto totalSize = this->dateTimes.size() - (numberOfInputRates + intervalBetweenTwoTrade);
-
-	for(int i = 0; i < totalSize; i++)
+	for (int i = numberOfInputRates; i < (dateTimes.size() - intervalBetweenTwoTrade); i++)
 	{
-		if(isAGap(i))
+		if (isAGap(i))
+		{
+			numberOfGap ++;
 			i += numberOfInputRates;
-
-		this->createTrainingData(i-this->sets[training].size);
+			continue;
+		}
+		this->createTrainingData(i - this->sets[training].size);
 		this->createTrainingOutputs(i);
 	}
 	this->sets[training].size = this->sets[training].labels.size();
@@ -75,46 +76,36 @@ void CurrencyRatesEurToUsd::createData()
 
 bool CurrencyRatesEurToUsd::isAGap(const int index)
 {
-	QDateTime dateTime1 = 
-
-	if((this->dateTimes[i][second] == this->dateTimes[j][second])
-	&& (this->dateTimes[i][hour] == this->dateTimes[j][hour] || (this->dateTimes[i][second] == 1 && this->dateTimes[j][second] == 0))
-
-
-		return false;
-	return true;
+	return this->dateTimes[index] != this->dateTimes[index + 1].addSecs(-60);
 }
 
-inline vector<float>& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
+inline QDateTime& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
 {
-	this->dateTimeTemp[year] = (stof(line.substr(0, 4)) - 2000.0f) / 16.0f;
-	this->dateTimeTemp[month] = stof(line.substr(4, 2)) / 12.0f;
-	this->dateTimeTemp[day] = stof(line.substr(6, 2)) / 30.0f;
-	this->dateTimeTemp[hour] = stof(line.substr(9, 2)) / 24.0f;
-	this->dateTimeTemp[minute] = stof(line.substr(11, 2)) / 60.0f;
-	this->dateTimeTemp[second] = stof(line.substr(13, 2)) / 60.0f;
-
-	return this->dateTimeTemp;
+	QDate date(stoi(line.substr(0, 4)), stoi(line.substr(04, 2)), stoi(line.substr(06, 2)));
+	QTime time(stoi(line.substr(9, 2)), stoi(line.substr(11, 2)), stoi(line.substr(13, 2)));
+	dateTimeTemp = new QDateTime(date, time);
+	return *dateTimeTemp;
 }
 
 
-vector<float>& CurrencyRatesEurToUsd::createTrainingData(int index)
+void CurrencyRatesEurToUsd::createTrainingData(int index)
 {
-	this->sets[training].data.push_back()
-	//index += numberOfInputRates;
-	/*for (int i = 0; i < dateTimeSize; i++)
-		this->dataTemp[i] = dateTimes[index][i];*/
-
 	for (int i = 0; i < numberOfInputRates; i++)
 		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1] * multiplicationFactor;
-	/*this->dataTemp[0] = rates[index];
-	this->dataTemp[1] = rates[index + intervalBetweenTwoTrade];*/
-	return this->dataTemp;
+
+	this->dataTemp[numberOfInputRates + 0] = (static_cast<float>(this->dateTimes[index].date().year()) - 2000.0f) / 16.f;
+	this->dataTemp[numberOfInputRates + 1] = static_cast<float>(this->dateTimes[index].date().month()) / 12.0f;
+	this->dataTemp[numberOfInputRates + 2] = static_cast<float>(this->dateTimes[index].date().day()) / 31;
+	this->dataTemp[numberOfInputRates + 3] = static_cast<float>(this->dateTimes[index].time().hour()) / 24;
+	this->dataTemp[numberOfInputRates + 4] = static_cast<float>(this->dateTimes[index].time().minute()) / 60;
+	this->dataTemp[numberOfInputRates + 5] = static_cast<float>(this->dateTimes[index].time().second()) / 60;
+
+	this->sets[training].data.push_back(this->dataTemp);
 }
 
-vector<float>& CurrencyRatesEurToUsd::createTrainingOutputs(const int index)
+void CurrencyRatesEurToUsd::createTrainingOutputs(const int index)
 {
-	this->sets[training].labels.push_back()
-	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor / 5;
-	return this->ouputTemp;
+	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor / 5.0f;
+
+	this->sets[training].labels.push_back(this->ouputTemp);
 }
