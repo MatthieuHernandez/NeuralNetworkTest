@@ -69,16 +69,16 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
 			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
-			12,
+			20,
 			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
 			sigmoid,
-			sigmoid
+			tanH
 		};
-		controllers[index]->inputs.learningRate = 0.001f;
-		controllers[index]->inputs.momentum = 0.01f;
+		controllers[index]->inputs.learningRate = 0.01f;
+		controllers[index]->inputs.momentum = 0.2f;
 		break;
 
 	default:

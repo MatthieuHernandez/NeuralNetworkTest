@@ -84,9 +84,9 @@ TEST_F(CurrencyTest, InputTest)
 		if (inputs != data->getTestingData(i))
 			error[0]++;
 
-		for (int i = 0; i < inputs.size(); i++)
+		for (auto input : inputs)
 		{
-			if (inputs[i] > 10 || inputs[i] < -10)
+			if (input > 10 || input < -10)
 				error[1]++;
 		}
 		if (i + 1 < data->sets[training].size)
@@ -98,5 +98,5 @@ TEST_F(CurrencyTest, InputTest)
 	EXPECT_EQ(size, 21);
 	EXPECT_EQ(error[0], 0);
 	EXPECT_EQ(error[1], 0);
-	EXPECT_EQ(error[2], 0);
+	EXPECT_EQ(error[2], data->getNumberOfGaps(), "Number of non-continus data (must equal to number of gap)");
 }
