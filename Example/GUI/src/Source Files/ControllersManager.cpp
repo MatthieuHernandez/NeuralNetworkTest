@@ -1,7 +1,7 @@
 #include "ControllersManager.h"
 #include "MNIST.h"
 #include "Iris.h"
-#include "ParisTrees.h"
+#include "Wine.h"
 #include "CurrencyRatesEurToUsd.h"
 
 ControllersManager::ControllersManager()
@@ -47,19 +47,21 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.momentum = 0.0;
 		break;
 
-	case indexParisTrees:
+	case indexWine:
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
 			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
-			50,
+			20,
+			8,
 			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
 			sigmoid,
 			sigmoid,
+			sigmoid,
 		};
-		controllers[index]->inputs.learningRate = 0.04f;
+		controllers[index]->inputs.learningRate = 0.01f;
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
@@ -76,11 +78,11 @@ void ControllersManager::initializeInputsNNs(int index)
 			sigmoid
 		};
 		controllers[index]->inputs.learningRate = 0.001f;
-		controllers[index]->inputs.momentum = 1.01f;
+		controllers[index]->inputs.momentum = 0.01f;
 		break;
 
 	default:
-		throw new exception();
+		throw exception();
 	}
 }
 
@@ -98,8 +100,8 @@ Controller* ControllersManager::getController(int index)
 			controllers[index] = new Controller(*new Iris());
 			break;
 
-		case indexParisTrees:
-			controllers[index] = new Controller(*new ParisTrees());
+		case indexWine:
+			controllers[index] = new Controller(*new Wine());
 			break;
 
 		case indexCurrencyRates :
@@ -107,7 +109,7 @@ Controller* ControllersManager::getController(int index)
 			break;
 
 		default:
-			throw new exception("The data doesn't exist !");
+			throw exception("The data doesn't exist !");
 		}
 		this->initializeInputsNNs(index);
 	}

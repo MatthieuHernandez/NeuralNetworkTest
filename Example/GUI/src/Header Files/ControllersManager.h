@@ -5,7 +5,7 @@ enum indexData
 {
 	indexIris = 0,
 	indexMNIST,
-	indexParisTrees,
+	indexWine,
 	indexCurrencyRates,
 	End
 };
