@@ -17,6 +17,7 @@ build*/
 MNIST/
 EURUSD/
 Iris/
+Wine/
 numerai/
 moc*
 .vs/
