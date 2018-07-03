@@ -17,9 +17,6 @@
     <ClCompile Include="src\Source FIles\Data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\ParisTrees.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\Iris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,15 +29,15 @@
     <ClCompile Include="src\Source Files\DataForRegression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Source Files\Wine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\MNIST.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\Data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\ParisTrees.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\Iris.h">
@@ -53,6 +50,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\DataForRegression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\Wine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -132,7 +132,7 @@
     <ClCompile Include="src\Source Files\DataForRegression.cpp" />
     <ClCompile Include="src\Source Files\Iris.cpp" />
     <ClCompile Include="src\Source FIles\MNIST.cpp" />
-    <ClCompile Include="src\Source Files\ParisTrees.cpp" />
+    <ClCompile Include="src\Source Files\Wine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h" />
@@ -141,7 +141,7 @@
     <ClInclude Include="src\Header Files\DataForRegression.h" />
     <ClInclude Include="src\Header Files\Iris.h" />
     <ClInclude Include="src\Header Files\MNIST.h" />
-    <ClInclude Include="src\Header Files\ParisTrees.h" />
+    <ClInclude Include="src\Header Files\Wine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -292,7 +292,7 @@ public:
 
         tabWidgetData->setCurrentIndex(0);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
-        comboBoxData->setCurrentIndex(3);
+        comboBoxData->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -317,7 +317,7 @@ public:
         labelProject->setText(QApplication::translate("MainWindow", "Project :", nullptr));
         comboBoxData->setItemText(0, QApplication::translate("MainWindow", "Iris", nullptr));
         comboBoxData->setItemText(1, QApplication::translate("MainWindow", "MNIST", nullptr));
-        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "ParisTrees", nullptr));
+        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "Wine", nullptr));
         comboBoxData->setItemText(3, QApplication::translate("MainWindow", "CurrencyRates", nullptr));
 
         label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
