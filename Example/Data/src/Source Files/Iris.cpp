@@ -11,10 +11,6 @@ Iris::Iris()
 	this->sets[training].size = 150;
 }
 
-Iris::~Iris()
-{
-}
-
 void Iris::loadData()
 {
 	string line;

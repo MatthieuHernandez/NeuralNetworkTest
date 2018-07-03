@@ -30,7 +30,6 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.learningRate = 0.5f;
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
-
 	case indexIris:
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
@@ -104,7 +103,7 @@ Controller* ControllersManager::getController(int index)
 			controllers[index] = new Controller(*new Wine());
 			break;
 
-		case indexCurrencyRates :
+		case indexCurrencyRates:
 			controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
 			break;
 
