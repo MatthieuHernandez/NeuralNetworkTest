@@ -36,7 +36,7 @@ private:
 
 public:
 
-	const int numberOfInputRates = 15;
+	const int numberOfInputRates = 60;
 	const int dateTimeSize = 6;
 	const int intervalBetweenTwoTrade = 5;
 

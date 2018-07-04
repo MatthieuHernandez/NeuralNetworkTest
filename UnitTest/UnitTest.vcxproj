@@ -142,6 +142,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\GUI\src\Header Files;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtPrintSupport</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

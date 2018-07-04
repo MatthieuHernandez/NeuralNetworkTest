@@ -6,6 +6,7 @@ using namespace std;
 
 CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 {
+	this->dateTimeTemp = nullptr;
 	this->sizeOfData = numberOfInputRates + dateTimeSize;
 	this->numberOfLabel = 1;
 	this->dataTemp.resize(this->sizeOfData);
