@@ -20,7 +20,6 @@ void MNIST::loadData()
 		path + "train-images.idx3-ubyte",
 		path + "train-labels.idx1-ubyte"
 	};
-
 	this->readImages(path_MNIST);
 	this->unshuffle();
 }

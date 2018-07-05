@@ -8,9 +8,8 @@ class DataForClassification : public Data
 public:
 
 	DataForClassification();
-	int getLabel(const int index, set set);
-	int getTrainingLabel(const int index);
-	int getTestingLabel(const int index);
+	int getTrainingLabel(const int index) override;
+	int getTestingLabel(const int index) override;
 	void loadData() override = 0;
 };
 

@@ -7,13 +7,13 @@ namespace data
 	enum set
 	{
 		testing = 0,
-		training
+		training = 1
 	};
 
 	enum problemType
 	{
 		classification = 0,
-		regression
+		regression = 1
 	};
 
 	class Data
@@ -47,12 +47,15 @@ namespace data
 		virtual std::vector<float>& getTrainingData(const int index);
 		virtual std::vector<float>& getTestingData(const int index);
 
-		virtual int getLabel(const int, set) { throw std::exception(); }
 		virtual int getTrainingLabel(const int) { throw std::exception(); }
 		virtual int getTestingLabel(const int) { throw std::exception(); }
 
 		virtual std::vector<float>& getTrainingOutputs(const int index);
 		virtual std::vector<float>& getTestingOutputs(const int) { throw std::exception(); }
+
+		std::vector<float>& getData(set set, const int index);
+		std::vector<float>& getOutputs(set set, const int index);
+		int getLabel(set set, const int index);
 	};
 }
 #endif // DATA_H

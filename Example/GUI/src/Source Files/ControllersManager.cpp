@@ -4,6 +4,8 @@
 #include "Wine.h"
 #include "CurrencyRatesEurToUsd.h"
 
+using namespace std;
+
 ControllersManager::ControllersManager()
 {
 	controllers.resize(End, nullptr);
@@ -27,9 +29,10 @@ void ControllersManager::initializeInputsNNs(int index)
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.5f;
+		controllers[index]->inputs.learningRate = 0.1f;
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
+
 	case indexIris:
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{

@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <vector>
 #include "Data.h"
-#include "../../../../NeuralNetwork/src/Header Files/perceptron.h"
 
 using namespace std;
 using namespace data;
@@ -36,7 +35,6 @@ void Data::shuffle()
 
 void Data::unshuffle()
 {
-	indexes.clear();
 	indexes.resize(sets[training].size);
 	for (int i = 0; i < indexes.size(); i++)
 		indexes[i] = i;
@@ -55,4 +53,28 @@ vector<float>& Data::getTestingData(const int index)
 vector<float>& Data::getTrainingOutputs(const int index)
 {
 	return this->sets[training].labels[indexes[index]];
+}
+
+std::vector<float>& Data::getData(set set, const int index)
+{
+	if (set == training)
+		return this->getTrainingData(index);
+
+	return this->getTestingData(index);
+}
+
+std::vector<float>& Data::getOutputs(set set, const int index)
+{
+	if (set == training)
+		return this->getTrainingOutputs(index);
+
+	return this->getTestingOutputs(index);
+}
+
+int Data::getLabel(set set, const int index)
+{
+	if (set == training)
+		return this->getTrainingLabel(index);
+
+	return this->getTestingLabel(index);
 }
