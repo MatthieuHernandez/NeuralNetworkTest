@@ -74,9 +74,8 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(con
 	classifiedWell = true;
 	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
-		if (desired[n] != NAN
-			&& this->outputs[n] > desired[n] + precision
-			&& this->outputs[n] < desired[n] - precision)
+		if (this->outputs[n] > desired[n] + precision
+	     && this->outputs[n] < desired[n] - precision)
 		{
 			classifiedWell = false;
 			break;
@@ -94,8 +93,7 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(c
 	classifiedWell = true;
 	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
-		if (desired[n] != -NAN
-		&& (this->outputs[n] >= separator && desired[n] < separator
+		if ((this->outputs[n] >= separator && desired[n] < separator
 		 || this->outputs[n] <= separator && desired[n] > separator))
 		{
 			classifiedWell = false;

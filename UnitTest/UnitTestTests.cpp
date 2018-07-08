@@ -1,12 +1,12 @@
 #pragma once
 #include "gtest/gtest.h"
 
-TEST(TestCaseName, TestName) 
+TEST(DISABLED_TestCaseName, TestName) 
 {
   EXPECT_EQ(1, 1);
 }
 
-TEST(TestCaseName, TestName2)
+TEST(DISABLED_TestCaseName, TestName2)
 {
 	EXPECT_TRUE(true) << "message test";
 }

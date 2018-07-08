@@ -62,12 +62,15 @@ void CurrencyRatesEurToUsd::createData()
 
 	for (int i = numberOfInputRates; i < (dateTimes.size() - intervalBetweenTwoTrade); i++)
 	{
-		if (isAGap(i))
+		if (isAGap(i) || isWrongDate(i))
 		{
 			numberOfGap ++;
-			i += numberOfInputRates;
+			i += numberOfInputRates-1;
 			continue;
 		}
+		if(i < numberOfInputRates)
+		 continue;
+
 		this->createTrainingData(i - this->sets[training].size);
 		this->createTrainingOutputs(i);
 	}
@@ -75,9 +78,17 @@ void CurrencyRatesEurToUsd::createData()
 	this->sets[testing] = this->sets[training];
 }
 
+inline
 bool CurrencyRatesEurToUsd::isAGap(const int index)
 {
 	return this->dateTimes[index] != this->dateTimes[index + 1].addSecs(-60);
+}
+
+inline
+bool CurrencyRatesEurToUsd::isWrongDate(const int index)
+{
+	return this->dateTimes[index].date() <= QDate(2015, 12, 31)
+		|| this->dateTimes[index].date() >= QDate(2017, 01, 01);
 }
 
 inline QDateTime& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
