@@ -6,8 +6,6 @@
 #include <exception>
 #include "DataForClassification.h"
 
-using namespace std;
-
 class MNIST : public DataForClassification
 {
 private :
@@ -22,12 +20,12 @@ public :
 template <typename T>
 std::string to_string_with_precision(const T value, const int n = 3)
 {
-	ostringstream out;
+	std::ostringstream out;
 	out << fixed << std::setprecision(n) << value;
 	return out.str();
 }
 
-class OpenFailFailedException : public exception
+class OpenFailFailedException : public std::exception
 {
 };
 

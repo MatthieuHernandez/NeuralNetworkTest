@@ -1,6 +1,8 @@
 #pragma once
 #include "Data.h"
 
+using namespace data;
+
 class DataForRegression : public Data
 {
 public:

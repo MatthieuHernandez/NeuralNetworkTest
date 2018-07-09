@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <QDateTime>
 #include "Data.h"
 #include "DataForRegression.h"
 
@@ -16,21 +18,33 @@ class CurrencyRatesEurToUsd : public DataForRegression
 {
 private:
 
-	const int numberOfInputRates = 15;
-	const int dateTimeSize = 0;// 6;
-	const int intervalBetweenTwoTrade = 5;
-	const float multiplicationFactor = 1000.0f;
+	int numberOfGap = 0;
 
-	std::vector<std::vector<float>> dateTimes;
+	const float multiplicationFactor = 1000;
+
+	std::vector<QDateTime> dateTimes;
+	QDateTime* dateTimeTemp;
 	std::vector<float> rates;
-	std::vector<float>& getDateTimeFromLine(std::string& line);
+	QDateTime& getDateTimeFromLine(std::string& line);
 
 	std::vector<float> dataTemp;
-	std::vector<float> dateTimeTemp;
 	std::vector<float> ouputTemp;
+
+	void createData();
+	bool isAGap(const int index);
+	bool isWrongDate(const int index);
 
 
 public:
+
+	const int numberOfInputRates = 60;
+	const int dateTimeSize = 6;
+	const int intervalBetweenTwoTrade = 5;
+
+	int getNumberOfGaps() const { return numberOfGap; }
+	int getNumbrOfLines() const { return dateTimes.size(); }
+
+	std::string path[1] = {"../Data/EURUSD/DAT_ASCII_EURUSD_M1_2016.csv"};
 
 	CurrencyRatesEurToUsd();
 	~CurrencyRatesEurToUsd();
@@ -38,9 +52,6 @@ public:
 	void loadData() override;
 	void loadCSV(int year);
 
-	std::vector<float>& getTrainingData(int index) override;
-	std::vector<float>& getTestingData(int index) override;
-
-	std::vector<float>& getTestingOutputs(const int index) override;
-	std::vector<float>& getTrainingOutputs(const int index) override;
+	void createTrainingData(const int index);
+	void createTrainingOutputs(const int index);
 };

@@ -5,7 +5,7 @@ class Iris : public DataForClassification
 {
 public:
 	Iris();
-	~Iris();
+	~Iris() = default;
 
 	void loadData() override;
 };

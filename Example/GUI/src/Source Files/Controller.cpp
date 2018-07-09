@@ -48,8 +48,8 @@ void Controller::compute(bool* stop)
 			}
 			else
 			{
-				neuralNetwork->calculateClusteringRateForRegressionProblem(data->getTestingData(outputs.currentIndex),
-				                                                           data->getTestingOutputs(outputs.currentIndex));
+				neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(data->getTestingData(outputs.currentIndex),
+																					      data->getTestingOutputs(outputs.currentIndex), 0.0f);
 			}
 		}
 		outputs.clusteringRate = neuralNetwork->getClusteringRate();

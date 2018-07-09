@@ -33,8 +33,7 @@ MainWindow::~MainWindow()
 
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
-	return (unsigned char)((this->manager.getController(indexMNIST)->getData().sets[displayedSet].data[number][y * 28 + x]
-		+ 1.0) * 127.4);
+	return (unsigned char)((this->manager.getController(indexMNIST)->getData().getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
 }
 
 void MainWindow::write(const string text, bool onlyConsole)
@@ -58,11 +57,10 @@ void MainWindow::displayImage(int value)
 			                            getImages(value, x, y)));
 		}
 	}
-	QImage scalePicture = picture.scaled(size * multiple, size * multiple, Qt::KeepAspectRatio);
+	const QImage scalePicture = picture.scaled(size * multiple, size * multiple, Qt::KeepAspectRatio);
 	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
-	string label = (string)"Label : " + to_string(
-		manager.getController(indexMNIST)->getData().getLabel(value, this->displayedSet));
+	const string label = static_cast<string>("Label : ") + to_string(manager.getController(indexMNIST)->getData().getLabel(displayedSet, value));
 	ui->labelImage->setText(QString::fromStdString(label));
 }
 
@@ -124,7 +122,7 @@ void MainWindow::ResetComboBoxlayer()
 	ui->comboBoxLayer->addItem("Ouput");
 };
 
-void MainWindow::InitializeLayerButtons(int layer)
+void MainWindow::InitializeLayerButtons(const int layer)
 {
 	const int neuronsNumber = this->currentController->inputs.structure[layer];
 	ui->spinBoxNeurons->setValue(neuronsNumber);
@@ -196,7 +194,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 		this->resetGraphOfClusteringRate();
 		computeIsStop = false;
 		this->startLoadingLogo();
-		auto future = QtConcurrent::run([=]()
+		const auto future = QtConcurrent::run([=]()
 		{
 			currentController->compute(&computeIsStop);
 		});
@@ -254,18 +252,18 @@ void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
 		return;
 	if (index == training)
 	{
-		this->displayedSet = testing;
+		this->displayedSet = training;
 		ui->spinBoxImageId->setMaximum(9999);
 		ui->labelImage->setText("Label : " + QString::number(
 			manager.getController(indexMNIST)->getData().getTrainingLabel(ui->spinBoxImageId->value())));
 	}
 	if (index == testing)
 	{
-		this->displayedSet = training;
+		this->displayedSet = testing;
 		ui->spinBoxImageId->setMaximum(59999);
 		ui->labelImage->setText(
 			QString::fromStdString(
-				(string)"Label : " + to_string(
+				static_cast<string>("Label : ") + to_string(
 					manager.getController(indexMNIST)->getData().getTestingLabel(ui->spinBoxImageId->value()))));
 	}
 	displayImage(ui->spinBoxImageId->value());

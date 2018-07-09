@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "neuralNetwork", "..\..\neuralNetwork.vcxproj", "{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeuralNetwork", "..\..\neuralNetwork.vcxproj", "{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{F56D5306-3100-491D-A533-0C4F7D352256}"
 EndProject
@@ -11,7 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Data", "..\..\..\Example\Da
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "..\..\..\Example\GUI\GUI.vcxproj", "{5BCF4C3A-032D-351D-B946-8B941E3721D9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Test", "Unit Test", "{2573502A-FD5B-482C-8624-846B62919F52}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{2573502A-FD5B-482C-8624-846B62919F52}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "..\..\..\UnitTest\UnitTest.vcxproj", "{2C19E499-A091-474F-A19E-A52AADA7C039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,21 +28,29 @@ Global
 		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Debug|x86.ActiveCfg = Debug|x64
 		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x64.ActiveCfg = Release|x64
 		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x64.Build.0 = Release|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x86.ActiveCfg = Release|x64
+		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x86.ActiveCfg = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.ActiveCfg = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.Build.0 = Debug|x64
-		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.ActiveCfg = Debug|Win32
-		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.Build.0 = Debug|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.ActiveCfg = Debug|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.Build.0 = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x64.ActiveCfg = Release|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x64.Build.0 = Release|x64
-		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.ActiveCfg = Release|Win32
-		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.Build.0 = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.ActiveCfg = Debug|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.Build.0 = Debug|x64
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x64.ActiveCfg = Debug|x64
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x64.Build.0 = Debug|x64
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Debug|x86.ActiveCfg = Debug|x64
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x64.ActiveCfg = Release|x64
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x64.Build.0 = Release|x64
-		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x86.ActiveCfg = Release|x64
+		{5BCF4C3A-032D-351D-B946-8B941E3721D9}.Release|x86.ActiveCfg = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Debug|x64.ActiveCfg = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Debug|x64.Build.0 = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Debug|x86.ActiveCfg = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Debug|x86.Build.0 = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x64.ActiveCfg = Release|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x64.Build.0 = Release|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x86.ActiveCfg = Debug|x64
+		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x86.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +58,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90} = {F56D5306-3100-491D-A533-0C4F7D352256}
 		{5BCF4C3A-032D-351D-B946-8B941E3721D9} = {F56D5306-3100-491D-A533-0C4F7D352256}
+		{2C19E499-A091-474F-A19E-A52AADA7C039} = {2573502A-FD5B-482C-8624-846B62919F52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACAE48EA-C349-45F2-BC2A-6C0BDE6239CC}

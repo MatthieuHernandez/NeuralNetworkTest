@@ -4,6 +4,8 @@
 #include "Wine.h"
 #include "CurrencyRatesEurToUsd.h"
 
+using namespace std;
+
 ControllersManager::ControllersManager()
 {
 	controllers.resize(End, nullptr);
@@ -27,7 +29,7 @@ void ControllersManager::initializeInputsNNs(int index)
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.5f;
+		controllers[index]->inputs.learningRate = 0.1f;
 		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
@@ -69,16 +71,18 @@ void ControllersManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
 			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
-			12,
+			250,
+			60,
 			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
 			sigmoid,
-			sigmoid
+			sigmoid,
+			tanH
 		};
-		controllers[index]->inputs.learningRate = 0.001f;
-		controllers[index]->inputs.momentum = 0.01f;
+		controllers[index]->inputs.learningRate = 0.003f;
+		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
 	default:
@@ -104,7 +108,7 @@ Controller* ControllersManager::getController(int index)
 			controllers[index] = new Controller(*new Wine());
 			break;
 
-		case indexCurrencyRates :
+		case indexCurrencyRates:
 			controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
 			break;
 

@@ -68,13 +68,33 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 	return outputs;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblem(const vector<float>& inputs, const vector<float>& desired)
+void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(const vector<float>& inputs, const vector<float>& desired, float precision)
 {
 	this->outputs = this->output(inputs);
+	classifiedWell = true;
 	for (uint n = 0; n < numberOfOutputs; ++n)
 	{
-		classifiedWell = true;
-		if (round(this->outputs[n]) == round(desired[n]) && desired[n] != -1.0)
+		if (this->outputs[n] > desired[n] + precision
+	     && this->outputs[n] < desired[n] - precision)
+		{
+			classifiedWell = false;
+			break;
+		}
+	}
+	if (classifiedWell)
+		numberOfResultsClassifiedWell++;
+	else
+		numberOfResultsMisclassefied++;
+}
+
+void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(const vector<float>& inputs, const vector<float>& desired, float separator)
+{
+	this->outputs = this->output(inputs);
+	classifiedWell = true;
+	for (uint n = 0; n < numberOfOutputs; ++n)
+	{
+		if ((this->outputs[n] >= separator && desired[n] < separator
+		 || this->outputs[n] <= separator && desired[n] > separator))
 		{
 			classifiedWell = false;
 			break;
@@ -128,7 +148,7 @@ inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs,
 		if (desired[n] != -1.0f)
 		{
 			float e = desired[n] - outputs[n];
-			this->errors[n] = e * abs(e); // pow 2
+			this->errors[n] = e * abs(e);
 		}
 		else
 			this->errors[n] = 0;

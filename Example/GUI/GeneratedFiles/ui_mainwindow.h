@@ -290,7 +290,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidgetData->setCurrentIndex(0);
+        tabWidgetData->setCurrentIndex(1);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(1);
 
