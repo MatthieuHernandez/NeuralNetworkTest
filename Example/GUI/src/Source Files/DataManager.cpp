@@ -1,4 +1,4 @@
-#include "ControllersManager.h"
+#include "DataManager.h"
 #include "MNIST.h"
 #include "Iris.h"
 #include "Wine.h"
@@ -6,12 +6,12 @@
 
 using namespace std;
 
-ControllersManager::ControllersManager()
+DataManager::DataManager()
 {
 	controllers.resize(End, nullptr);
 }
 
-void ControllersManager::initializeInputsNNs(int index)
+void DataManager::initializeInputsNNs(int index)
 {
 	switch (index)
 	{
@@ -90,7 +90,7 @@ void ControllersManager::initializeInputsNNs(int index)
 	}
 }
 
-Controller* ControllersManager::getController(int index)
+Controller* DataManager::getController(int index)
 {
 	if (controllers[index] == nullptr)
 	{

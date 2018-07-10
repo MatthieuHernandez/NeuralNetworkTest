@@ -20,6 +20,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMdiArea>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
@@ -42,6 +43,8 @@ public:
     QComboBox *comboBoxSet;
     QSpinBox *spinBoxImageId;
     QLabel *labelImage;
+    QWidget *tab_5;
+    QMdiArea *mdiArea;
     QLineEdit *lineEditInformation;
     QLabel *label_5;
     QPushButton *pushButtonConsole;
@@ -116,6 +119,12 @@ public:
         labelImage->setObjectName(QStringLiteral("labelImage"));
         labelImage->setGeometry(QRect(10, 330, 81, 16));
         tabWidgetData->addTab(tab_2, QString());
+        tab_5 = new QWidget();
+        tab_5->setObjectName(QStringLiteral("tab_5"));
+        mdiArea = new QMdiArea(tab_5);
+        mdiArea->setObjectName(QStringLiteral("mdiArea"));
+        mdiArea->setGeometry(QRect(190, 60, 361, 271));
+        tabWidgetData->addTab(tab_5, QString());
         lineEditInformation = new QLineEdit(centralWidget);
         lineEditInformation->setObjectName(QStringLiteral("lineEditInformation"));
         lineEditInformation->setGeometry(QRect(410, 460, 120, 22));
@@ -290,7 +299,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidgetData->setCurrentIndex(1);
+        tabWidgetData->setCurrentIndex(2);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(1);
 
@@ -309,6 +318,7 @@ public:
 
         labelImage->setText(QApplication::translate("MainWindow", "Label :", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
+        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_5), QApplication::translate("MainWindow", "Page", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
         pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
         labelLoading->setText(QString());

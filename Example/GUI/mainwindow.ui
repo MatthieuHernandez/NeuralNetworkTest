@@ -64,65 +64,6 @@
      <attribute name="title">
       <string>Data visualization</string>
      </attribute>
-     <widget class="QLabel" name="Image">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>300</width>
-        <height>300</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBoxSet">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>380</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>Testing</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Training</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QSpinBox" name="spinBoxImageId">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>350</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximum">
-       <number>9999</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelImage">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>330</y>
-        <width>81</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Label :</string>
-      </property>
-     </widget>
     </widget>
    </widget>
    <widget class="QLineEdit" name="lineEditInformation">

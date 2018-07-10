@@ -5,8 +5,9 @@
 #include <qfuturewatcher.h>
 #include "Controller.h"
 #include "Console.h"
-#include "ControllersManager.h"
+#include "DataManager.h"
 #include <qelapsedtimer.h>
+#include "DataVisualisation.h"
 
 namespace Ui
 {
@@ -27,9 +28,12 @@ public:
 private:
 
 	Ui::MainWindow* ui;
+
 	Console* console;
+	DataVisualisation* dataVisualization;
+
 	Controller* currentController;
-	ControllersManager manager;
+	DataManager manager;
 
 	int indexController = 0;
 

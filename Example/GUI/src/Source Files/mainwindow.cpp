@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
-#include "ControllersManager.h"
+#include "DataManager.h"
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget* parent) :
-	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent)
+	: QMainWindow(parent),
+	  ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
 	this->console = new Console();
@@ -33,7 +33,8 @@ MainWindow::~MainWindow()
 
 unsigned char MainWindow::getImages(int number, int x, int y)
 {
-	return (unsigned char)((this->manager.getController(indexMNIST)->getData().getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
+	return static_cast<unsigned char>((this->manager.getController(indexMNIST)->getData().getData(displayedSet, number)[y * 28
+		+ x] + 1.0) * 127.4);
 }
 
 void MainWindow::write(const string text, bool onlyConsole)

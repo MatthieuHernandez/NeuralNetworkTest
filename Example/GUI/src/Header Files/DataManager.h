@@ -1,5 +1,6 @@
 #pragma once
 #include "Controller.h"
+#include <ui_DataVisualisation.h>
 
 enum indexData
 {
@@ -10,12 +11,12 @@ enum indexData
 	End
 };
 
-class ControllersManager
+class DataManager
 {
 public:
 
-	ControllersManager();
-	virtual ~ControllersManager() = default;
+	DataManager();
+	virtual ~DataManager() = default;
 
 	void initializeInputsNNs(int index);
 
@@ -24,4 +25,5 @@ public:
 private:
 
 	std::vector<Controller*> controllers;
+	std::vector<Ui::DataVisualisation> visualizations;
 };
