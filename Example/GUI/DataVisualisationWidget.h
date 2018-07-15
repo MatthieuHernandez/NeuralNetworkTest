@@ -6,9 +6,8 @@ class DataVisualisationWidget : public QWidget
 Q_OBJECT
 
 public:
-	DataVisualisationWidget(QWidget *parent = Q_NULLPTR);
+	DataVisualisationWidget(QWidget *parent = nullptr);
 	~DataVisualisationWidget();
 
 private:
-	DataVisualisationWidget* ui;
 };

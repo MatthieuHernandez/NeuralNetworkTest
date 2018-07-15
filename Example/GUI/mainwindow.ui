@@ -38,12 +38,12 @@
      <rect>
       <x>180</x>
       <y>1</y>
-      <width>661</width>
-      <height>441</height>
+      <width>660</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -52,10 +52,10 @@
      <widget class="QCustomPlot" name="customPlot" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>14</y>
-        <width>641</width>
-        <height>391</height>
+        <x>0</x>
+        <y>0</y>
+        <width>655</width>
+        <height>415</height>
        </rect>
       </property>
      </widget>
@@ -64,6 +64,32 @@
      <attribute name="title">
       <string>Data visualization</string>
      </attribute>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>420</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="layout"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Test</string>
+     </attribute>
+     <widget class="QWidget" name="widgetTest" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>420</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLineEdit" name="lineEditInformation">
@@ -145,6 +171,9 @@
       <width>45</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
     <property name="buttonSymbols">
      <enum>QAbstractSpinBox::NoButtons</enum>
@@ -703,7 +732,4 @@ function :</string>
  </customwidgets>
  <resources/>
  <connections/>
- <slots>
-  <slot>on_pushButtonConsole_clicked()</slot>
- </slots>
 </ui>

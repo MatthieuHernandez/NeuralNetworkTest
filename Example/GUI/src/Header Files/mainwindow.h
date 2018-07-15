@@ -7,7 +7,7 @@
 #include "Console.h"
 #include "DataManager.h"
 #include <qelapsedtimer.h>
-#include "DataVisualisation.h"
+#include "MnistVisualization.h"
 
 namespace Ui
 {
@@ -21,8 +21,9 @@ Q_OBJECT
 public:
 
 	explicit MainWindow(QWidget* parent = nullptr);
-	void write(std::string text, bool onlyConsole = true);
 	~MainWindow();
+
+	void write(std::string text, bool onlyConsole = true);
 
 
 private:
@@ -30,17 +31,16 @@ private:
 	Ui::MainWindow* ui;
 
 	Console* console;
-	DataVisualisation* dataVisualization;
 
 	Controller* currentController;
 	DataManager manager;
+
+	MnistVisualization* visu = nullptr;
 
 	int indexController = 0;
 
 	std::vector<float> input;
 	std::vector<float> desired;
-
-	set displayedSet = testing;
 
 	QMovie* loadingLogo = nullptr;
 	QTimer* timerForCount; // TO RENAME
@@ -51,8 +51,6 @@ private:
 	QFutureWatcher<void> watcherLoadingData;
 	bool firstLoading = true;
 
-	void displayImage(int value);
-
 	void startLoadingLogo();
 	void InitializeButtons();
 	void ResetComboBoxlayer();
@@ -61,13 +59,12 @@ private:
 	void initializeGraphOfClusteringRate();
 	void resetGraphOfClusteringRate();
 
-	unsigned char getImages(int number, int x, int y);
-
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
 
 	QVector<double> x;
 	QVector<double> y;
+
 
 private slots:
 
@@ -76,15 +73,14 @@ private slots:
 	void updateNumberOfIteration();
 	void updateCount();
 
+	/*Inferface slots*/
 	void on_spinBoxNeurons_valueChanged(int value);
-	void on_spinBoxImageId_valueChanged(int value);
 	void on_spinBoxLearningRate_valueChanged(double value);
 	void on_spinBoxMomentum_valueChanged(double value);
 	void on_spinBoxTrainingRating_valueChanged(int value);
 
 	void on_pushButtonRemoveLayer_clicked();
 
-	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_comboBoxLayer_currentIndexChanged(int index);
 
 	void on_pushButtonCompute_clicked();

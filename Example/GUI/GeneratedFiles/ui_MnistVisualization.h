@@ -13,8 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,16 +24,31 @@ QT_BEGIN_NAMESPACE
 class Ui_MnistVisualization
 {
 public:
-    QTextEdit *textEdit;
+    QLabel *labelImage;
+    QSpinBox *spinBoxImageId;
+    QLabel *Image;
+    QComboBox *comboBoxSet;
 
     void setupUi(QWidget *MnistVisualization)
     {
         if (MnistVisualization->objectName().isEmpty())
             MnistVisualization->setObjectName(QStringLiteral("MnistVisualization"));
-        MnistVisualization->resize(400, 300);
-        textEdit = new QTextEdit(MnistVisualization);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(-7, 0, 411, 301));
+        MnistVisualization->resize(660, 420);
+        labelImage = new QLabel(MnistVisualization);
+        labelImage->setObjectName(QStringLiteral("labelImage"));
+        labelImage->setGeometry(QRect(10, 330, 80, 16));
+        spinBoxImageId = new QSpinBox(MnistVisualization);
+        spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
+        spinBoxImageId->setGeometry(QRect(10, 350, 80, 22));
+        spinBoxImageId->setMaximum(9999);
+        Image = new QLabel(MnistVisualization);
+        Image->setObjectName(QStringLiteral("Image"));
+        Image->setGeometry(QRect(10, 10, 300, 300));
+        comboBoxSet = new QComboBox(MnistVisualization);
+        comboBoxSet->addItem(QString());
+        comboBoxSet->addItem(QString());
+        comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
+        comboBoxSet->setGeometry(QRect(10, 380, 80, 22));
 
         retranslateUi(MnistVisualization);
 
@@ -41,17 +58,11 @@ public:
     void retranslateUi(QWidget *MnistVisualization)
     {
         MnistVisualization->setWindowTitle(QApplication::translate("MnistVisualization", "MnistVisualization", nullptr));
-        textEdit->setHtml(QApplication::translate("MnistVisualization", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600; color:#5500ff;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600; color:#5500ff;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empt"
-                        "y; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600; color:#5500ff;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600; color:#5500ff;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt; font-weight:600; color:#5500ff;\">VICTORY</span></p></body></html>", nullptr));
+        labelImage->setText(QApplication::translate("MnistVisualization", "Label :", nullptr));
+        Image->setText(QString());
+        comboBoxSet->setItemText(0, QApplication::translate("MnistVisualization", "Testing", nullptr));
+        comboBoxSet->setItemText(1, QApplication::translate("MnistVisualization", "Training", nullptr));
+
     } // retranslateUi
 
 };

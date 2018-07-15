@@ -44,7 +44,10 @@
     <QtMoc Include="src\Header Files\Controller.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DataVisualisation.h">
+    <QtMoc Include="DataVisualisationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MnistVisualization.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -83,21 +86,18 @@
     <ClCompile Include="src\Source Files\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataVisualisation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MnistVisualization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataVisualisationWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MnistVisualization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

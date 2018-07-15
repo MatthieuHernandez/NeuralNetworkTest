@@ -1,6 +1,6 @@
 #pragma once
 #include "Controller.h"
-#include <ui_DataVisualisation.h>
+#include "DataVisualisationWidget.h"
 
 enum indexData
 {
@@ -21,9 +21,10 @@ public:
 	void initializeInputsNNs(int index);
 
 	Controller* getController(int index);
+	DataVisualisationWidget* getDataVisualization(int index);
 
 private:
 
 	std::vector<Controller*> controllers;
-	std::vector<Ui::DataVisualisation> visualizations;
+	std::vector<DataVisualisationWidget*> visualizations;
 };
