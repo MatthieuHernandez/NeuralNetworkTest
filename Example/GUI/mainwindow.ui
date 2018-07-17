@@ -38,12 +38,12 @@
      <rect>
       <x>180</x>
       <y>1</y>
-      <width>660</width>
+      <width>670</width>
       <height>440</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -69,26 +69,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>650</width>
+        <width>661</width>
         <height>420</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="layout"/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_5">
-     <attribute name="title">
-      <string>Test</string>
-     </attribute>
-     <widget class="QWidget" name="widgetTest" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>650</width>
-        <height>420</height>
-       </rect>
-      </property>
      </widget>
     </widget>
    </widget>
@@ -193,8 +178,8 @@
      <rect>
       <x>1</x>
       <y>1</y>
-      <width>181</width>
-      <height>441</height>
+      <width>180</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="currentIndex">

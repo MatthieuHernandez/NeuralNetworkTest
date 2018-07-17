@@ -218,7 +218,9 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="Cifar10Visualization.ui" />
     <QtUic Include="Console.ui" />
+    <QtUic Include="ImageVisualisationWidget.ui" />
     <QtUic Include="mainwindow.ui">
     </QtUic>
     <QtUic Include="MnistVisualization.ui" />
@@ -232,8 +234,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cifar10Visualization.cpp" />
     <ClCompile Include="DataVisualisationWidget.cpp" />
     <ClCompile Include="External Library\qcustomplot.cpp" />
+    <ClCompile Include="ImageVisualisationWidget.cpp" />
     <ClCompile Include="MnistVisualization.cpp" />
     <ClCompile Include="src\Source Files\Console.cpp" />
     <ClCompile Include="src\Source Files\Controller.cpp" />
@@ -248,13 +252,25 @@
     <QtMoc Include="External Library\qcustomplot.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="DataVisualisationWidget.h">
+    <ClInclude Include="DataVisualisationWidget.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG</Define>
-    </QtMoc>
+    </ClInclude>
     <QtMoc Include="MnistVisualization.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;QT_UITOOLS_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="Cifar10Visualization.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;QT_UITOOLS_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="ImageVisualisationWidget.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>

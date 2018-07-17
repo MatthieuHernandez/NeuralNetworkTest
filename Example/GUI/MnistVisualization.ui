@@ -13,64 +13,30 @@
   <property name="windowTitle">
    <string>MnistVisualization</string>
   </property>
-  <widget class="QLabel" name="labelImage">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>330</y>
-     <width>80</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Label :</string>
-   </property>
-  </widget>
-  <widget class="QSpinBox" name="spinBoxImageId">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>350</y>
-     <width>80</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="maximum">
-    <number>9999</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Image">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
+     <x>300</x>
      <y>10</y>
-     <width>300</width>
-     <height>300</height>
+     <width>345</width>
+     <height>111</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>&lt;html&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;The MNIST database of handwritten digits, available from this page, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;It is a good database for people who want to try learning techniques and pattern recognition methods on real-world data while spending minimal efforts on preprocessing and formatting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
-  </widget>
-  <widget class="QComboBox" name="comboBoxSet">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>380</y>
-     <width>80</width>
-     <height>22</height>
-    </rect>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
    </property>
-   <item>
-    <property name="text">
-     <string>Testing</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Training</string>
-    </property>
-   </item>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>false</bool>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

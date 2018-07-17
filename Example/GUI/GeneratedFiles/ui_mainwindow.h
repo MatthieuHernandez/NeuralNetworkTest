@@ -41,8 +41,6 @@ public:
     QWidget *tab_2;
     QWidget *gridLayoutWidget;
     QGridLayout *layout;
-    QWidget *tab_5;
-    QWidget *widgetTest;
     QLineEdit *lineEditInformation;
     QLabel *label_5;
     QPushButton *pushButtonConsole;
@@ -92,7 +90,7 @@ public:
         pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
         tabWidgetData = new QTabWidget(centralWidget);
         tabWidgetData->setObjectName(QStringLiteral("tabWidgetData"));
-        tabWidgetData->setGeometry(QRect(180, 1, 660, 440));
+        tabWidgetData->setGeometry(QRect(180, 1, 670, 440));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
@@ -103,19 +101,13 @@ public:
         tab_2->setObjectName(QStringLiteral("tab_2"));
         gridLayoutWidget = new QWidget(tab_2);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(0, 0, 650, 420));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 661, 420));
         layout = new QGridLayout(gridLayoutWidget);
         layout->setSpacing(6);
         layout->setContentsMargins(11, 11, 11, 11);
         layout->setObjectName(QStringLiteral("layout"));
         layout->setContentsMargins(0, 0, 0, 0);
         tabWidgetData->addTab(tab_2, QString());
-        tab_5 = new QWidget();
-        tab_5->setObjectName(QStringLiteral("tab_5"));
-        widgetTest = new QWidget(tab_5);
-        widgetTest->setObjectName(QStringLiteral("widgetTest"));
-        widgetTest->setGeometry(QRect(0, 0, 650, 420));
-        tabWidgetData->addTab(tab_5, QString());
         lineEditInformation = new QLineEdit(centralWidget);
         lineEditInformation->setObjectName(QStringLiteral("lineEditInformation"));
         lineEditInformation->setGeometry(QRect(410, 460, 120, 22));
@@ -143,7 +135,7 @@ public:
         spinBoxIteration->setMaximum(999999);
         tabWidgetNeuralNetwork = new QTabWidget(centralWidget);
         tabWidgetNeuralNetwork->setObjectName(QStringLiteral("tabWidgetNeuralNetwork"));
-        tabWidgetNeuralNetwork->setGeometry(QRect(1, 1, 181, 441));
+        tabWidgetNeuralNetwork->setGeometry(QRect(1, 1, 180, 440));
         tabWidgetNeuralNetwork->setTabBarAutoHide(false);
         tab_3 = new QWidget();
         tab_3->setObjectName(QStringLiteral("tab_3"));
@@ -291,7 +283,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidgetData->setCurrentIndex(2);
+        tabWidgetData->setCurrentIndex(0);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(1);
 
@@ -305,7 +297,6 @@ public:
         pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
-        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_5), QApplication::translate("MainWindow", "Test", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
         pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
         labelLoading->setText(QString());

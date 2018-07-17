@@ -1,14 +1,14 @@
 #pragma once
-#include <DataVisualisationWidget.h>
-#include "Data.h"
 #include "Controller.h"
+#include "ImageVisualisationWidget.h"
+#include <qaccessiblebridge.h>
 
 namespace Ui
 {
 	class MnistVisualization;
 };
 
-class MnistVisualization : public DataVisualisationWidget
+class MnistVisualization : public ImageVisualisationWidget
 {
 Q_OBJECT
 
@@ -20,19 +20,20 @@ public:
 
 private:
 
-	Ui::MnistVisualization *ui;
+	Ui::MnistVisualization* ui;
 
-	Controller* controller;
-	
-	set displayedSet = testing;
-
-	
-	unsigned char getImages(int number, int x, int y);
-	void displayImage(int value);
+	unsigned char getImages(int number, int x, int y) override;
 
 
 private slots:
 
-	void on_comboBoxSet_currentIndexChanged(int index);
-	void on_spinBoxImageId_valueChanged(int value);
+	void on_comboBoxSet_currentIndexChanged(int index)
+	{
+		ImageVisualisationWidget::on_comboBoxSet_currentIndexChanged(index);
+	}
+
+	void on_spinBoxImageId_valueChanged(int value)
+	{
+	 	ImageVisualisationWidget::on_spinBoxImageId_valueChanged(value);
+	}
 };

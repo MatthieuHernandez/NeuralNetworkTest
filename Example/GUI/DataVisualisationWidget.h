@@ -3,7 +3,6 @@
 
 class DataVisualisationWidget : public QWidget
 {
-Q_OBJECT
 
 public:
 	DataVisualisationWidget(QWidget *parent = nullptr);

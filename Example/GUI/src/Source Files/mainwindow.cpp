@@ -70,19 +70,11 @@ void MainWindow::endOfLoadingData()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
-	//auto* widget = this->manager.getDataVisualization(ui->comboBoxData->currentIndex());
-
-	/*if(widget != nullptr)
+	if (ui->comboBoxData->currentIndex() == indexMNIST)
 	{
-		//widget->show();
-		//ui->layout->addWidget(widget);
-		//write("prout");
-	}*/
-		if(ui->comboBoxData->currentIndex() == indexMNIST)
-		{
-			//visu = new MnistVisualization(ui->widgetTest, currentController);
-			ui->layout->addWidget(new MnistVisualization(new QWidget(), currentController));
-		}
+		const auto widget = new MnistVisualization(new QWidget(), currentController);
+		ui->layout->addWidget(widget);
+	}
 
 	this->InitializeButtons();
 	this->ui->pushButtonCompute->setEnabled(true);

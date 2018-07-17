@@ -13,10 +13,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,31 +22,20 @@ QT_BEGIN_NAMESPACE
 class Ui_MnistVisualization
 {
 public:
-    QLabel *labelImage;
-    QSpinBox *spinBoxImageId;
-    QLabel *Image;
-    QComboBox *comboBoxSet;
+    QLabel *label;
 
     void setupUi(QWidget *MnistVisualization)
     {
         if (MnistVisualization->objectName().isEmpty())
             MnistVisualization->setObjectName(QStringLiteral("MnistVisualization"));
         MnistVisualization->resize(660, 420);
-        labelImage = new QLabel(MnistVisualization);
-        labelImage->setObjectName(QStringLiteral("labelImage"));
-        labelImage->setGeometry(QRect(10, 330, 80, 16));
-        spinBoxImageId = new QSpinBox(MnistVisualization);
-        spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
-        spinBoxImageId->setGeometry(QRect(10, 350, 80, 22));
-        spinBoxImageId->setMaximum(9999);
-        Image = new QLabel(MnistVisualization);
-        Image->setObjectName(QStringLiteral("Image"));
-        Image->setGeometry(QRect(10, 10, 300, 300));
-        comboBoxSet = new QComboBox(MnistVisualization);
-        comboBoxSet->addItem(QString());
-        comboBoxSet->addItem(QString());
-        comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
-        comboBoxSet->setGeometry(QRect(10, 380, 80, 22));
+        label = new QLabel(MnistVisualization);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(300, 10, 345, 111));
+        label->setTextFormat(Qt::AutoText);
+        label->setScaledContents(false);
+        label->setWordWrap(true);
+        label->setOpenExternalLinks(false);
 
         retranslateUi(MnistVisualization);
 
@@ -58,11 +45,7 @@ public:
     void retranslateUi(QWidget *MnistVisualization)
     {
         MnistVisualization->setWindowTitle(QApplication::translate("MnistVisualization", "MnistVisualization", nullptr));
-        labelImage->setText(QApplication::translate("MnistVisualization", "Label :", nullptr));
-        Image->setText(QString());
-        comboBoxSet->setItemText(0, QApplication::translate("MnistVisualization", "Testing", nullptr));
-        comboBoxSet->setItemText(1, QApplication::translate("MnistVisualization", "Training", nullptr));
-
+        label->setText(QApplication::translate("MnistVisualization", "<html><body><p align=\"justify\">The MNIST database of handwritten digits, available from this page, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image.</p><p align=\"justify\">It is a good database for people who want to try learning techniques and pattern recognition methods on real-world data while spending minimal efforts on preprocessing and formatting.</p></body></html>", nullptr));
     } // retranslateUi
 
 };
