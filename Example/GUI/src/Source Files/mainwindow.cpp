@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
-#include "ControllersManager.h"
+#include "DataManager.h"
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget* parent) :
-	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent)
+	: QMainWindow(parent),
+	  ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
 	this->console = new Console();
@@ -31,37 +31,11 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-unsigned char MainWindow::getImages(int number, int x, int y)
-{
-	return (unsigned char)((this->manager.getController(indexMNIST)->getData().getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
-}
-
 void MainWindow::write(const string text, bool onlyConsole)
 {
 	if (onlyConsole)
 		ui->lineEditInformation->setText(QString::fromStdString(text));
 	console->write(text);
-}
-
-void MainWindow::displayImage(int value)
-{
-	const int size = 28;
-	const int multiple = 10;
-	QImage picture(size, size, QImage::Format_RGB32);
-	for (int x = 0; x < size; x++)
-	{
-		for (int y = 0; y < size; y++)
-		{
-			picture.setPixel(x, y, qRgb(getImages(value, x, y),
-			                            getImages(value, x, y),
-			                            getImages(value, x, y)));
-		}
-	}
-	const QImage scalePicture = picture.scaled(size * multiple, size * multiple, Qt::KeepAspectRatio);
-	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
-
-	const string label = static_cast<string>("Label : ") + to_string(manager.getController(indexMNIST)->getData().getLabel(displayedSet, value));
-	ui->labelImage->setText(QString::fromStdString(label));
 }
 
 void MainWindow::startLoadingLogo()
@@ -96,12 +70,16 @@ void MainWindow::endOfLoadingData()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
+	if (ui->comboBoxData->currentIndex() == indexMNIST)
+	{
+		const auto widget = new MnistVisualization(new QWidget(), currentController);
+		ui->layout->addWidget(widget);
+	}
+
 	this->InitializeButtons();
 	this->ui->pushButtonCompute->setEnabled(true);
 	ui->comboBoxData->setEnabled(true);
 	this->write("data loaded");
-	if (ui->comboBoxData->currentIndex() == indexMNIST)
-		displayImage(ui->spinBoxImageId->value());
 }
 
 void MainWindow::InitializeButtons()
@@ -246,29 +224,6 @@ void MainWindow::on_pushButtonRemoveLayer_clicked()
 	}
 }
 
-void MainWindow::on_comboBoxSet_currentIndexChanged(int index)
-{
-	if (ui->comboBoxData->currentIndex() != indexMNIST)
-		return;
-	if (index == training)
-	{
-		this->displayedSet = training;
-		ui->spinBoxImageId->setMaximum(9999);
-		ui->labelImage->setText("Label : " + QString::number(
-			manager.getController(indexMNIST)->getData().getTrainingLabel(ui->spinBoxImageId->value())));
-	}
-	if (index == testing)
-	{
-		this->displayedSet = testing;
-		ui->spinBoxImageId->setMaximum(59999);
-		ui->labelImage->setText(
-			QString::fromStdString(
-				static_cast<string>("Label : ") + to_string(
-					manager.getController(indexMNIST)->getData().getTestingLabel(ui->spinBoxImageId->value()))));
-	}
-	displayImage(ui->spinBoxImageId->value());
-}
-
 void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 {
 	if (index >= 0)
@@ -279,11 +234,6 @@ void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 {
 	int index = ui->comboBoxLayer->currentIndex();
 	this->currentController->inputs.structure[index] = value;
-}
-
-void MainWindow::on_spinBoxImageId_valueChanged(int value)
-{
-	displayImage(value);
 }
 
 void MainWindow::on_spinBoxLearningRate_valueChanged(double value)

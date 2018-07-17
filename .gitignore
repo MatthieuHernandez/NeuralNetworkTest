@@ -18,6 +18,7 @@ MNIST/
 EURUSD/
 Iris/
 Wine/
+CIFAR-10/
 numerai/
 moc*
 .vs/

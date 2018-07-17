@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Cifar10Visualization</class>
+ <widget class="QWidget" name="Cifar10Visualization">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>660</width>
+    <height>420</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Cifar10Visualization</string>
+  </property>
+  <widget class="QLabel" name="labelImage_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>330</y>
+     <width>80</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Label :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Image_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>320</width>
+     <height>320</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxImageId_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>350</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>9999</number>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxSet_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Testing</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Training</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+
+ <resources/>
+ <connections/>
+</ui>

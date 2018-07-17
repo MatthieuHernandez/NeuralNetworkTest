@@ -44,6 +44,15 @@
     <QtMoc Include="src\Header Files\Controller.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Cifar10Visualization.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MnistVisualization.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ImageVisualisationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -58,6 +67,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="Console.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="MnistVisualization.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Cifar10Visualization.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ImageVisualisationWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -77,12 +95,27 @@
     <ClCompile Include="src\Source Files\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\ControllersManager.cpp">
+    <ClCompile Include="src\Source Files\DataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MnistVisualization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataVisualisationWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cifar10Visualization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageVisualisationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Header Files\ControllersManager.h">
+    <ClInclude Include="src\Header Files\DataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataVisualisationWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

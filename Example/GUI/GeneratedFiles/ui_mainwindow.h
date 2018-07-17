@@ -16,6 +16,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -38,10 +39,8 @@ public:
     QWidget *tab;
     QCustomPlot *customPlot;
     QWidget *tab_2;
-    QLabel *Image;
-    QComboBox *comboBoxSet;
-    QSpinBox *spinBoxImageId;
-    QLabel *labelImage;
+    QWidget *gridLayoutWidget;
+    QGridLayout *layout;
     QLineEdit *lineEditInformation;
     QLabel *label_5;
     QPushButton *pushButtonConsole;
@@ -91,30 +90,23 @@ public:
         pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
         tabWidgetData = new QTabWidget(centralWidget);
         tabWidgetData->setObjectName(QStringLiteral("tabWidgetData"));
-        tabWidgetData->setGeometry(QRect(180, 1, 661, 441));
+        tabWidgetData->setGeometry(QRect(180, 1, 670, 440));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(10, 14, 641, 391));
+        customPlot->setGeometry(QRect(0, 0, 655, 415));
         tabWidgetData->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
-        Image = new QLabel(tab_2);
-        Image->setObjectName(QStringLiteral("Image"));
-        Image->setGeometry(QRect(20, 10, 300, 300));
-        comboBoxSet = new QComboBox(tab_2);
-        comboBoxSet->addItem(QString());
-        comboBoxSet->addItem(QString());
-        comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
-        comboBoxSet->setGeometry(QRect(10, 380, 81, 22));
-        spinBoxImageId = new QSpinBox(tab_2);
-        spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
-        spinBoxImageId->setGeometry(QRect(10, 350, 81, 22));
-        spinBoxImageId->setMaximum(9999);
-        labelImage = new QLabel(tab_2);
-        labelImage->setObjectName(QStringLiteral("labelImage"));
-        labelImage->setGeometry(QRect(10, 330, 81, 16));
+        gridLayoutWidget = new QWidget(tab_2);
+        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 661, 420));
+        layout = new QGridLayout(gridLayoutWidget);
+        layout->setSpacing(6);
+        layout->setContentsMargins(11, 11, 11, 11);
+        layout->setObjectName(QStringLiteral("layout"));
+        layout->setContentsMargins(0, 0, 0, 0);
         tabWidgetData->addTab(tab_2, QString());
         lineEditInformation = new QLineEdit(centralWidget);
         lineEditInformation->setObjectName(QStringLiteral("lineEditInformation"));
@@ -137,12 +129,13 @@ public:
         spinBoxIteration = new QSpinBox(centralWidget);
         spinBoxIteration->setObjectName(QStringLiteral("spinBoxIteration"));
         spinBoxIteration->setGeometry(QRect(230, 450, 45, 22));
+        spinBoxIteration->setReadOnly(true);
         spinBoxIteration->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxIteration->setProperty("showGroupSeparator", QVariant(true));
         spinBoxIteration->setMaximum(999999);
         tabWidgetNeuralNetwork = new QTabWidget(centralWidget);
         tabWidgetNeuralNetwork->setObjectName(QStringLiteral("tabWidgetNeuralNetwork"));
-        tabWidgetNeuralNetwork->setGeometry(QRect(1, 1, 181, 441));
+        tabWidgetNeuralNetwork->setGeometry(QRect(1, 1, 180, 440));
         tabWidgetNeuralNetwork->setTabBarAutoHide(false);
         tab_3 = new QWidget();
         tab_3->setObjectName(QStringLiteral("tab_3"));
@@ -290,7 +283,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidgetData->setCurrentIndex(1);
+        tabWidgetData->setCurrentIndex(0);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(1);
 
@@ -303,11 +296,6 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
-        Image->setText(QString());
-        comboBoxSet->setItemText(0, QApplication::translate("MainWindow", "Testing", nullptr));
-        comboBoxSet->setItemText(1, QApplication::translate("MainWindow", "Training", nullptr));
-
-        labelImage->setText(QApplication::translate("MainWindow", "Label :", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
         pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));

@@ -1,17 +1,19 @@
-#include "ControllersManager.h"
+#include "DataManager.h"
 #include "MNIST.h"
 #include "Iris.h"
 #include "Wine.h"
 #include "CurrencyRatesEurToUsd.h"
+#include "MnistVisualization.h"
 
 using namespace std;
 
-ControllersManager::ControllersManager()
+DataManager::DataManager()
 {
 	controllers.resize(End, nullptr);
+	visualizations.resize(End, nullptr);
 }
 
-void ControllersManager::initializeInputsNNs(int index)
+void DataManager::initializeInputsNNs(int index)
 {
 	switch (index)
 	{
@@ -90,7 +92,7 @@ void ControllersManager::initializeInputsNNs(int index)
 	}
 }
 
-Controller* ControllersManager::getController(int index)
+Controller* DataManager::getController(int index)
 {
 	if (controllers[index] == nullptr)
 	{
@@ -118,4 +120,33 @@ Controller* ControllersManager::getController(int index)
 		this->initializeInputsNNs(index);
 	}
 	return controllers[index];
+}
+
+DataVisualisationWidget* DataManager::getDataVisualization(int index)
+{
+	if (controllers[index] == nullptr)
+	{
+		switch (index)
+		{
+		case indexMNIST:
+			//visualizations[index] = new MnistVisualization(/*controllers[index]*/);// passing widget or new and add to layout
+			break;
+
+		case indexIris:
+			controllers[index] = nullptr;
+			break;
+
+		case indexWine:
+			controllers[index] = nullptr;
+			break;
+
+		case indexCurrencyRates:
+			controllers[index] = nullptr;
+			break;
+
+		default:
+			throw exception("The data doesn't exist !");
+		}
+	}
+	return visualizations[index];
 }

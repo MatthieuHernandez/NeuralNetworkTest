@@ -38,12 +38,12 @@
      <rect>
       <x>180</x>
       <y>1</y>
-      <width>661</width>
-      <height>441</height>
+      <width>670</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -52,10 +52,10 @@
      <widget class="QCustomPlot" name="customPlot" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>14</y>
-        <width>641</width>
-        <height>391</height>
+        <x>0</x>
+        <y>0</y>
+        <width>655</width>
+        <height>415</height>
        </rect>
       </property>
      </widget>
@@ -64,64 +64,16 @@
      <attribute name="title">
       <string>Data visualization</string>
      </attribute>
-     <widget class="QLabel" name="Image">
+     <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>300</width>
-        <height>300</height>
+        <x>0</x>
+        <y>0</y>
+        <width>661</width>
+        <height>420</height>
        </rect>
       </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBoxSet">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>380</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>Testing</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Training</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QSpinBox" name="spinBoxImageId">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>350</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximum">
-       <number>9999</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelImage">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>330</y>
-        <width>81</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Label :</string>
-      </property>
+      <layout class="QGridLayout" name="layout"/>
      </widget>
     </widget>
    </widget>
@@ -205,6 +157,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
     <property name="buttonSymbols">
      <enum>QAbstractSpinBox::NoButtons</enum>
     </property>
@@ -223,8 +178,8 @@
      <rect>
       <x>1</x>
       <y>1</y>
-      <width>181</width>
-      <height>441</height>
+      <width>180</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -762,7 +717,4 @@ function :</string>
  </customwidgets>
  <resources/>
  <connections/>
- <slots>
-  <slot>on_pushButtonConsole_clicked()</slot>
- </slots>
 </ui>
