@@ -12,8 +12,9 @@ MainWindow::MainWindow(QWidget* parent)
 	ui->setupUi(this);
 	this->console = new Console();
 	ui->comboBoxData->setCurrentIndex(0);
+	ui->layout->addWidget(new QWidget);
 
-	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingData()));
+	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingDataSet()));
 
 	timerForCount = new QTimer(this);
 	timerForTimeEdit = new QElapsedTimer();
@@ -60,7 +61,7 @@ void MainWindow::stopCompute()
 	ui->pushButtonCompute->setText("Compute");
 }
 
-void MainWindow::endOfLoadingData()
+void MainWindow::endOfLoadingDataSet()
 {
 	if (firstLoading)
 	{
@@ -70,14 +71,14 @@ void MainWindow::endOfLoadingData()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
-	if (ui->comboBoxData->currentIndex() == indexMNIST)
-	{
-		const auto widget = new MnistVisualization(new QWidget(), currentController);
-		ui->layout->addWidget(widget);
-	}
-
 	this->InitializeButtons();
 	this->ui->pushButtonCompute->setEnabled(true);
+
+	const auto widget = this->manager.getWidget(indexController);
+	ui->layout->itemAt(0)->widget()->hide();
+	ui->layout->replaceWidget(ui->layout->itemAt(0)->widget(), widget);
+	widget->show();
+
 	ui->comboBoxData->setEnabled(true);
 	this->write("data loaded");
 }
@@ -147,7 +148,7 @@ void MainWindow::initializeGraphOfClusteringRate()
 	ui->customPlot->addGraph();
 	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
 	ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-	ui->customPlot->yAxis->setRange(0, 100); // (0, 100)
+	ui->customPlot->yAxis->setRange(0, 100);
 	ui->customPlot->replot();
 	updateGraphOfClusteringRate();
 }
@@ -259,13 +260,13 @@ void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
 	this->write("loading ...");
-
+	indexController = index;
 	ui->pushButtonCompute->setEnabled(false);
 	ui->comboBoxData->setEnabled(false);
 
 	const QFuture<void> futureLoadingData = QtConcurrent::run([=]()
 	{
-		currentController = this->manager.getController(index);
+		currentController = this->manager.getController(indexController);
 	});
 
 	watcherLoadingData.setFuture(futureLoadingData);

@@ -12,7 +12,7 @@ Q_OBJECT
 private :
 
 	std::unique_ptr<Data> data;
-	NeuralNetwork* neuralNetwork;
+	std::unique_ptr<NeuralNetwork> neuralNetwork;
 
 	void initializeData();
 
@@ -20,6 +20,8 @@ public:
 
 	Controller(Data& data);
 	virtual ~Controller() = default;
+
+	
 
 	void initializeNeuralNetwork();
 

@@ -32,6 +32,9 @@
     <ClCompile Include="src\Source Files\Wine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Source FIles\CIFAR_10.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\MNIST.h">
@@ -53,6 +56,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\Wine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\CIFAR_10.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

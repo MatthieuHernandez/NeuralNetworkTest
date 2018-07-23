@@ -1,13 +1,13 @@
 #pragma once
 #include "Controller.h"
-#include "ImageVisualisationWidget.h"
+#include "ImageVisualizationWidget.h"
 
 namespace Ui
 {
 	class Cifar10Visualization;
 };
 
-class Cifar10Visualization : public ImageVisualisationWidget
+class Cifar10Visualization : public ImageVisualizationWidget
 {
 Q_OBJECT
 

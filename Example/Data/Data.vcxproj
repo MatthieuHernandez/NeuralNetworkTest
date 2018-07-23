@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Source FIles\CIFAR_10.cpp" />
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp" />
     <ClCompile Include="src\Source FIles\Data.cpp" />
     <ClCompile Include="src\Source Files\DataForClassification.cpp" />
@@ -147,6 +148,8 @@
     <ClCompile Include="src\Source Files\Wine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataException.h" />
+    <ClInclude Include="src\Header Files\CIFAR_10.h" />
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h" />
     <ClInclude Include="src\Header Files\Data.h" />
     <ClInclude Include="src\Header Files\DataForClassification.h" />

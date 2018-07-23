@@ -1,25 +1,23 @@
 #pragma once
-#include <QWidget>
-#include "Controller.h"
+#include "DataVisualizationWidget.h"
 
 namespace Ui
 {
-	class ImageVisualisationWidget;
+	class ImageVisualizationWidget;
 };
 
-class ImageVisualisationWidget : public QWidget
+class ImageVisualizationWidget : public DataVisualizationWidget
 {
 Q_OBJECT
 
 public:
-	ImageVisualisationWidget(QWidget* parent);
-	~ImageVisualisationWidget() = default;
+	ImageVisualizationWidget(QWidget* parent, Controller *controller);
+	~ImageVisualizationWidget() = default;
 
 protected :
 
-	Ui::ImageVisualisationWidget* ui;
+	Ui::ImageVisualizationWidget* ui;
 
-	Controller* controller;
 	set displayedSet = testing;
 
 	virtual unsigned char getImages(int number, int x, int y) = 0;

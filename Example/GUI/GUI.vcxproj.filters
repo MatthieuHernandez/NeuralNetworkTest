@@ -44,13 +44,16 @@
     <QtMoc Include="src\Header Files\Controller.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Cifar10Visualization.h">
+    <QtMoc Include="src\Header Files\Cifar10Visualization.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MnistVisualization.h">
+    <QtMoc Include="DataVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ImageVisualisationWidget.h">
+    <QtMoc Include="src\Header Files\ImageVisualizationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\Header Files\MnistVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -75,7 +78,10 @@
     <QtUic Include="Cifar10Visualization.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ImageVisualisationWidget.ui">
+    <QtUic Include="DataVisualizationWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ImageVisualizationWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -98,24 +104,21 @@
     <ClCompile Include="src\Source Files\DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MnistVisualization.cpp">
+    <ClCompile Include="src\Source Files\Cifar10Visualization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataVisualisationWidget.cpp">
+    <ClCompile Include="DataVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cifar10Visualization.cpp">
+    <ClCompile Include="src\Source Files\ImageVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImageVisualisationWidget.cpp">
+    <ClCompile Include="src\Source Files\MnistVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataVisualisationWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

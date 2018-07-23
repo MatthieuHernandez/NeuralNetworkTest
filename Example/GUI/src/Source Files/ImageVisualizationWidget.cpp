@@ -1,15 +1,15 @@
-#include "ImageVisualisationWidget.h"
-#include "ui_ImageVisualisationWidget.h"
+#include "ImageVisualizationWidget.h"
+#include "ui_ImageVisualizationWidget.h"
 
 using namespace std;
 
-ImageVisualisationWidget::ImageVisualisationWidget(QWidget *parent)
-	: QWidget(parent), ui(new Ui::ImageVisualisationWidget)
+ImageVisualizationWidget::ImageVisualizationWidget(QWidget *parent, Controller *controller)
+	: DataVisualizationWidget(parent, controller), ui(new Ui::ImageVisualizationWidget)
 {
 	ui->setupUi(this);
 }
 
-void ImageVisualisationWidget::displayImage(int value)
+void ImageVisualizationWidget::displayImage(int value)
 {
 	const int size = 28;
 	const int multiple = 10;
@@ -30,7 +30,7 @@ void ImageVisualisationWidget::displayImage(int value)
 	ui->labelImage->setText(QString::fromStdString(label));
 }
 
-void ImageVisualisationWidget::on_comboBoxSet_currentIndexChanged(int index)
+void ImageVisualizationWidget::on_comboBoxSet_currentIndexChanged(int index)
 {
 	if (index == training)
 	{
@@ -51,7 +51,7 @@ void ImageVisualisationWidget::on_comboBoxSet_currentIndexChanged(int index)
 	this->displayImage(ui->spinBoxImageId->value());
 }
 
-void ImageVisualisationWidget::on_spinBoxImageId_valueChanged(int value)
+void ImageVisualizationWidget::on_spinBoxImageId_valueChanged(int value)
 {
 	this->displayImage(value);
 }

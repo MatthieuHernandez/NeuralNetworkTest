@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'ImageVisualisationWidget.ui'
+** Form generated from reading UI file 'ImageVisualizationWidget.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.10.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_IMAGEVISUALISATIONWIDGET_H
-#define UI_IMAGEVISUALISATIONWIDGET_H
+#ifndef UI_IMAGEVISUALIZATIONWIDGET_H
+#define UI_IMAGEVISUALIZATIONWIDGET_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_ImageVisualisationWidget
+class Ui_ImageVisualizationWidget
 {
 public:
     QSpinBox *spinBoxImageId;
@@ -29,24 +29,24 @@ public:
     QComboBox *comboBoxSet;
     QLabel *Image;
 
-    void setupUi(QWidget *ImageVisualisationWidget)
+    void setupUi(QWidget *ImageVisualizationWidget)
     {
-        if (ImageVisualisationWidget->objectName().isEmpty())
-            ImageVisualisationWidget->setObjectName(QStringLiteral("ImageVisualisationWidget"));
-        ImageVisualisationWidget->resize(660, 420);
-        spinBoxImageId = new QSpinBox(ImageVisualisationWidget);
+        if (ImageVisualizationWidget->objectName().isEmpty())
+            ImageVisualizationWidget->setObjectName(QStringLiteral("ImageVisualizationWidget"));
+        ImageVisualizationWidget->resize(660, 420);
+        spinBoxImageId = new QSpinBox(ImageVisualizationWidget);
         spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
         spinBoxImageId->setGeometry(QRect(10, 360, 80, 22));
         spinBoxImageId->setMaximum(9999);
-        labelImage = new QLabel(ImageVisualisationWidget);
+        labelImage = new QLabel(ImageVisualizationWidget);
         labelImage->setObjectName(QStringLiteral("labelImage"));
         labelImage->setGeometry(QRect(10, 340, 80, 16));
-        comboBoxSet = new QComboBox(ImageVisualisationWidget);
+        comboBoxSet = new QComboBox(ImageVisualizationWidget);
         comboBoxSet->addItem(QString());
         comboBoxSet->addItem(QString());
         comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
         comboBoxSet->setGeometry(QRect(10, 390, 80, 22));
-        Image = new QLabel(ImageVisualisationWidget);
+        Image = new QLabel(ImageVisualizationWidget);
         Image->setObjectName(QStringLiteral("Image"));
         Image->setGeometry(QRect(10, 10, 50, 50));
         comboBoxSet->raise();
@@ -54,17 +54,17 @@ public:
         labelImage->raise();
         Image->raise();
 
-        retranslateUi(ImageVisualisationWidget);
+        retranslateUi(ImageVisualizationWidget);
 
-        QMetaObject::connectSlotsByName(ImageVisualisationWidget);
+        QMetaObject::connectSlotsByName(ImageVisualizationWidget);
     } // setupUi
 
-    void retranslateUi(QWidget *ImageVisualisationWidget)
+    void retranslateUi(QWidget *ImageVisualizationWidget)
     {
-        ImageVisualisationWidget->setWindowTitle(QApplication::translate("ImageVisualisationWidget", "ImageVisualisationWidget", nullptr));
-        labelImage->setText(QApplication::translate("ImageVisualisationWidget", "Label :", nullptr));
-        comboBoxSet->setItemText(0, QApplication::translate("ImageVisualisationWidget", "Testing", nullptr));
-        comboBoxSet->setItemText(1, QApplication::translate("ImageVisualisationWidget", "Training", nullptr));
+        ImageVisualizationWidget->setWindowTitle(QApplication::translate("ImageVisualizationWidget", "ImageVisualizationWidget", nullptr));
+        labelImage->setText(QApplication::translate("ImageVisualizationWidget", "Label :", nullptr));
+        comboBoxSet->setItemText(0, QApplication::translate("ImageVisualizationWidget", "Testing", nullptr));
+        comboBoxSet->setItemText(1, QApplication::translate("ImageVisualizationWidget", "Training", nullptr));
 
         Image->setText(QString());
     } // retranslateUi
@@ -72,9 +72,9 @@ public:
 };
 
 namespace Ui {
-    class ImageVisualisationWidget: public Ui_ImageVisualisationWidget {};
+    class ImageVisualizationWidget: public Ui_ImageVisualizationWidget {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_IMAGEVISUALISATIONWIDGET_H
+#endif // UI_IMAGEVISUALIZATIONWIDGET_H

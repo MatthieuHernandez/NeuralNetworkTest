@@ -6,10 +6,9 @@
 using namespace std;
 
 Cifar10Visualization::Cifar10Visualization(QWidget *parent, Controller *controller)
-	: ui(new Ui::Cifar10Visualization), ImageVisualisationWidget(parent)
+	: ui(new Ui::Cifar10Visualization), ImageVisualizationWidget(parent, controller)
 {
 	ui->setupUi(this);
-	this->controller = controller;
 }
 
 unsigned char Cifar10Visualization::getImages(int number, int x, int y)

@@ -9,7 +9,7 @@
 class MNIST : public DataForClassification
 {
 private :
-    void readImages(const std::string path_MNIST[]);
+	void readImages(const std::string path_MNIST[]);
 	void readSet(const set set, std::ifstream& images, std::ifstream& labels);
 	void loadData() override;
 
@@ -24,9 +24,5 @@ std::string to_string_with_precision(const T value, const int n = 3)
 	out << fixed << std::setprecision(n) << value;
 	return out.str();
 }
-
-class OpenFailFailedException : public std::exception
-{
-};
 
 #endif // MNIST_H

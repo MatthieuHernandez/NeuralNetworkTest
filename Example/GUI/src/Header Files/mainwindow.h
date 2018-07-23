@@ -7,7 +7,7 @@
 #include "Console.h"
 #include "DataManager.h"
 #include <qelapsedtimer.h>
-#include "MnistVisualization.h"
+#include "MnistVisualizationWidget.h"
 
 namespace Ui
 {
@@ -33,9 +33,10 @@ private:
 	Console* console;
 
 	Controller* currentController;
+	DataVisualizationWidget* currentWidget;
 	DataManager manager;
 
-	MnistVisualization* visu = nullptr;
+	MnistVisualizationWidget* visu = nullptr;
 
 	int indexController = 0;
 
@@ -59,6 +60,8 @@ private:
 	void initializeGraphOfClusteringRate();
 	void resetGraphOfClusteringRate();
 
+	void clearLayout(QLayout *layout);
+
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
 
@@ -68,12 +71,12 @@ private:
 
 private slots:
 
-	/* Controller slots*/
+	/* Controller slots */
 	void updateGraphOfClusteringRate();
 	void updateNumberOfIteration();
 	void updateCount();
 
-	/*Inferface slots*/
+	/* Inferface slots */
 	void on_spinBoxNeurons_valueChanged(int value);
 	void on_spinBoxLearningRate_valueChanged(double value);
 	void on_spinBoxMomentum_valueChanged(double value);
@@ -89,29 +92,8 @@ private slots:
 	void on_pushButtonAddLayer_clicked();
 
 	void stopCompute();
-	void endOfLoadingData();
+	void endOfLoadingDataSet();
 
 	/* Data */
 	void on_comboBoxData_currentIndexChanged(int index);
 };
-
-
-/*cout << "clustering rate : " << clusteringRate << " epoch : " << count << " time : " << (float)(clock() - numberOfClockCycles) /
-CLOCKS_PER_SEC << " secondes" << endl;
-numberOfClockCycles = clock();
-
-cout << "clustering rate max : " << clusteringRateMax << " epoch : " << epochMax << endl;
-clusteringRateVector.push_back(clusteringRate * 100);
-updateGraphOfClusteringRate();
-ui->labelClusteringRateMax->setText(
-QString::fromStdString(
-(string)"Clustering max : " + data::to_string_with_precision(clusteringRateMax * 100, 2) + "%"));
-QApplication::processEvents();
-if (index % 1000 == 0)
-{
-ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index)));
-}
-ui->labelCount->setText(QString::fromStdString((string)"Count : " + to_string(index_max)));
-
-const int index_max = data->sets[training].size;
-epochMax = count;*/

@@ -1,5 +1,6 @@
 #include "MNIST.h"
 #include <fstream>
+#include "../../DataException.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
 	if (!images.is_open()
 		&& !labels.is_open())
 	{
-		throw OpenFailFailedException();
+		throw FileOpeningFailed();
 	}
 	int i;
 	unsigned char c;
@@ -54,21 +55,21 @@ void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
 	{
 		c = labels.get();
 
-		vector<float> v;
-		v.resize(10, 0.0);
-		sets[set].labels.push_back(v);
+		const vector<float> labelsTemp(10, 0);
+		sets[set].labels.push_back(labelsTemp);
 
 		if (!labels.eof())
 			sets[set].labels.back()[c] = 1.0;
 		else
 			sets[set].labels.resize(sets[set].labels.size() - 1);
 	}
-	auto shift = 0;
+	int shift = 0;
+
 	for (i = 0; !images.eof(); i++)
 	{
-		const vector<float> v;
-		sets[set].data.push_back(v);
-
+		const vector<float> imageTemp;
+		sets[set].data.push_back(imageTemp);
+		sets[set].data.back().reserve(this->sizeOfData);
 		if (!images.eof())
 			for (int j = 0; !images.eof() && j < 784;)
 			{

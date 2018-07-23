@@ -1,6 +1,4 @@
 #include "Controller.h"
-#include <ctime>
-#include <windows.h>
 #include "MNIST.h"
 
 using namespace std;
@@ -8,7 +6,6 @@ using namespace std;
 Controller::Controller(Data& data)
 {
 	this->data = unique_ptr<Data>(&data);
-	this->neuralNetwork = nullptr;
 	this->initializeData();
 	this->inputs.numberOfTrainbyRating = this->data->sets[training].size;
 }
@@ -28,10 +25,10 @@ void Controller::initializeData()
 
 void Controller::initializeNeuralNetwork()
 {
-	this->neuralNetwork = new NeuralNetwork(this->inputs.structure,
-	                                        this->inputs.activationFunction,
-	                                        this->inputs.learningRate,
-	                                        this->inputs.momentum);
+	this->neuralNetwork = make_unique<NeuralNetwork>(this->inputs.structure,
+	                                                 this->inputs.activationFunction,
+	                                                 this->inputs.learningRate,
+	                                                 this->inputs.momentum);
 }
 
 void Controller::compute(bool* stop)
@@ -39,17 +36,20 @@ void Controller::compute(bool* stop)
 	outputs.clusteringRateMax = 0.0f;
 	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
-		for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size && !(*stop); outputs.currentIndex++)
+		for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size && !(*stop); outputs.currentIndex
+		     ++)
 		{
 			if (data->problem == classification)
 			{
-				neuralNetwork->calculateClusteringRateForClassificationProblem(data->getTestingData(outputs.currentIndex),
-				                                                               data->getTestingLabel(outputs.currentIndex));
+				neuralNetwork->calculateClusteringRateForClassificationProblem(
+					data->getTestingData(outputs.currentIndex),
+					data->getTestingLabel(outputs.currentIndex));
 			}
 			else
 			{
-				neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(data->getTestingData(outputs.currentIndex),
-																					      data->getTestingOutputs(outputs.currentIndex), 0.0f);
+				neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(
+					data->getTestingData(outputs.currentIndex),
+					data->getTestingOutputs(outputs.currentIndex), 0.0f);
 			}
 		}
 		outputs.clusteringRate = neuralNetwork->getClusteringRate();

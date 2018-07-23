@@ -26,4 +26,3 @@ int DataForClassification::getTestingLabel(const int index)
 	}
 	throw exception("wrong label");
 }
-// 5 0 4 1 9 2

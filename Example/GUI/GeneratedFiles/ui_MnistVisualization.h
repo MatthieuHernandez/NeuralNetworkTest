@@ -31,7 +31,7 @@ public:
         MnistVisualization->resize(660, 420);
         label = new QLabel(MnistVisualization);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(300, 10, 345, 111));
+        label->setGeometry(QRect(340, 10, 310, 130));
         label->setTextFormat(Qt::AutoText);
         label->setScaledContents(false);
         label->setWordWrap(true);
