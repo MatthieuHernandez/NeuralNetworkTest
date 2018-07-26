@@ -8,7 +8,7 @@ CIFAR_10::CIFAR_10()
 {
 	this->sizeOfData = 3072; // 32*32*3
 	this->numberOfLabel = 10;
-	this->sets[training].size = 60000;
+	this->sets[training].size = 50000;
 	this->sets[testing].size = 10000;
 }
 
@@ -37,11 +37,11 @@ void CIFAR_10::readImages(const string path_CIFAR_10[])
 	for (int i = 0; i < 5; i++)
 	{
 		lerningFiles[i].open(path_CIFAR_10[i], ios::in | ios::binary);
-		this->readSet(testing, lerningFiles[i]);
+		this->readSet(training, lerningFiles[i]);
 	}
 
 	testingFile.open(path_CIFAR_10[5], ios::in | ios::binary);
-	this->readSet(training, testingFile);
+	this->readSet(testing, testingFile);
 }
 
 void CIFAR_10::readSet(const set set, std::ifstream& file)
@@ -51,16 +51,14 @@ void CIFAR_10::readSet(const set set, std::ifstream& file)
 	{
 		throw FileOpeningFailed();
 	}
-
 	unsigned char c;
-	vector<float> v(10);
 
 	for (int i = 0; !file.eof(); i++)
 	{
 		c = file.get();
 
-		v = {0};
-		sets[set].labels.push_back(v);
+		const vector<float> labelsTemp(10, 0);
+		sets[set].labels.push_back(labelsTemp);
 
 		if (!file.eof())
 			sets[set].labels.back()[c] = 1.0;
@@ -71,7 +69,7 @@ void CIFAR_10::readSet(const set set, std::ifstream& file)
 		sets[set].data.push_back(imageTemp);
 		sets[set].data.back().reserve(this->sizeOfData);
 
-		for (i = 0; this->sizeOfData; i++)
+		for (int j = 0; !file.eof()  && j < this->sizeOfData; j++)
 		{
 			c = file.get();
 

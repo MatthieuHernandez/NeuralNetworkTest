@@ -71,7 +71,7 @@ void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
 		sets[set].data.push_back(imageTemp);
 		sets[set].data.back().reserve(this->sizeOfData);
 		if (!images.eof())
-			for (int j = 0; !images.eof() && j < 784;)
+			for (int j = 0; !images.eof() && j < this->sizeOfData;)
 			{
 				c = images.get();
 

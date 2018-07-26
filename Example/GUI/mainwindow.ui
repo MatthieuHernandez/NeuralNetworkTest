@@ -54,8 +54,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>655</width>
-        <height>415</height>
+        <width>660</width>
+        <height>420</height>
        </rect>
       </property>
      </widget>
@@ -228,11 +228,16 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <item>
        <property name="text">
         <string>Iris</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Wine</string>
        </property>
       </item>
       <item>
@@ -242,7 +247,7 @@
       </item>
       <item>
        <property name="text">
-        <string>Wine</string>
+        <string>CIFAR-10</string>
        </property>
       </item>
       <item>

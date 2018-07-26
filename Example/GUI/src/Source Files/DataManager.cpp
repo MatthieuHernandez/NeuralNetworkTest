@@ -4,6 +4,8 @@
 #include "Wine.h"
 #include "CurrencyRatesEurToUsd.h"
 #include "MnistVisualizationWidget.h"
+#include "CIFAR_10.h"
+#include "Cifar10VisualizationWidget.h"
 
 using namespace std;
 
@@ -17,24 +19,6 @@ void DataManager::initializeInputsNNs(int index)
 {
 	switch (index)
 	{
-	case indexMNIST:
-		controllers[index]->inputs.structure = vector<unsigned int>
-		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
-			150,
-			80,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
-		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
-		{
-			sigmoid,
-			sigmoid,
-			sigmoid
-		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0f;
-		break;
-
 	case indexIris:
 		controllers[index]->inputs.structure = vector<unsigned int>
 		{
@@ -67,6 +51,42 @@ void DataManager::initializeInputsNNs(int index)
 		};
 		controllers[index]->inputs.learningRate = 0.01f;
 		controllers[index]->inputs.momentum = 0.0f;
+		break;
+
+	case indexMNIST:
+		controllers[index]->inputs.structure = vector<unsigned int>
+		{
+			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			150,
+			80,
+			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+		};
+		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		{
+			sigmoid,
+			sigmoid,
+			sigmoid
+		};
+		controllers[index]->inputs.learningRate = 0.1f;
+		controllers[index]->inputs.momentum = 0.0f;
+		break;
+
+	case indexCIFAR_10:
+		controllers[index]->inputs.structure = vector<unsigned int>
+		{
+			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			150,
+			80,
+			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+		};
+		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		{
+			sigmoid,
+			sigmoid,
+			sigmoid
+		};
+		controllers[index]->inputs.learningRate = 0.01f;
+		controllers[index]->inputs.momentum = 0.85f;
 		break;
 
 	case indexCurrencyRates:
@@ -114,6 +134,10 @@ Controller* DataManager::getController(int index)
 			controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
 			break;
 
+		case indexCIFAR_10:
+			controllers[index] = new Controller(*new CIFAR_10());
+			break;
+
 		default:
 			throw exception("The data doesn't exist !");
 		}
@@ -145,10 +169,13 @@ DataVisualizationWidget* DataManager::getWidget(int index)
 			widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
 			break;
 
+		case indexCIFAR_10:
+			widgets[index] = new Cifar10VisualizationWidget(nullptr, this->getController(index));
+			break;
+
 		default:
 			throw exception("The widget doesn't exist !");
 		}
-
 	}
 	return widgets[index];
 }

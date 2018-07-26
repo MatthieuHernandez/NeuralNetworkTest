@@ -4,8 +4,9 @@
 enum indexData
 {
 	indexIris = 0,
-	indexMNIST,
 	indexWine,
+	indexMNIST,
+	indexCIFAR_10,
 	indexCurrencyRates,
 	End
 };

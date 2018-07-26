@@ -95,7 +95,7 @@ public:
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(0, 0, 655, 415));
+        customPlot->setGeometry(QRect(0, 0, 660, 420));
         tabWidgetData->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -148,6 +148,7 @@ public:
         labelProject->setObjectName(QStringLiteral("labelProject"));
         labelProject->setGeometry(QRect(10, 1, 60, 21));
         comboBoxData = new QComboBox(tab_3);
+        comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
@@ -285,7 +286,7 @@ public:
 
         tabWidgetData->setCurrentIndex(0);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
-        comboBoxData->setCurrentIndex(1);
+        comboBoxData->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -304,9 +305,10 @@ public:
         spinBoxIteration->setSpecialValueText(QString());
         labelProject->setText(QApplication::translate("MainWindow", "Project :", nullptr));
         comboBoxData->setItemText(0, QApplication::translate("MainWindow", "Iris", nullptr));
-        comboBoxData->setItemText(1, QApplication::translate("MainWindow", "MNIST", nullptr));
-        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "Wine", nullptr));
-        comboBoxData->setItemText(3, QApplication::translate("MainWindow", "CurrencyRates", nullptr));
+        comboBoxData->setItemText(1, QApplication::translate("MainWindow", "Wine", nullptr));
+        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "MNIST", nullptr));
+        comboBoxData->setItemText(3, QApplication::translate("MainWindow", "CIFAR-10", nullptr));
+        comboBoxData->setItemText(4, QApplication::translate("MainWindow", "CurrencyRates", nullptr));
 
         label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
         labelMax->setText(QApplication::translate("MainWindow", "Max", nullptr));

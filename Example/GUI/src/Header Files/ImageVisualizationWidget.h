@@ -6,6 +6,13 @@ namespace Ui
 	class ImageVisualizationWidget;
 };
 
+enum color
+{
+	red,
+	green,
+	blue
+};
+
 class ImageVisualizationWidget : public DataVisualizationWidget
 {
 Q_OBJECT
@@ -20,7 +27,7 @@ protected :
 
 	set displayedSet = testing;
 
-	virtual unsigned char getImages(int number, int x, int y) = 0;
+	virtual unsigned char getPixel(int number, int x, int y, color color) const = 0;
 	void displayImage(int value);
 
 	void on_comboBoxSet_currentIndexChanged(int index);

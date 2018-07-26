@@ -4,19 +4,19 @@
 
 namespace Ui
 {
-	class MnistVisualization;
+	class Cifar10Visualization;
 };
 
-class MnistVisualizationWidget : public ImageVisualizationWidget
+class Cifar10VisualizationWidget : public ImageVisualizationWidget
 {
 Q_OBJECT
 
 public:
-	MnistVisualizationWidget(QWidget* parent, Controller* controller);
-	~MnistVisualizationWidget() = default;
+	Cifar10VisualizationWidget(QWidget* parent, Controller* controller);
+	~Cifar10VisualizationWidget() = default;
 
 private:
-	Ui::MnistVisualization* ui;
+	Ui::Cifar10Visualization* ui;
 
 	unsigned char getPixel(int number, int x, int y, color color) const override;
 

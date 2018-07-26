@@ -3,7 +3,7 @@
 
 using namespace std;
 
-ImageVisualizationWidget::ImageVisualizationWidget(QWidget *parent, Controller *controller)
+ImageVisualizationWidget::ImageVisualizationWidget(QWidget* parent, Controller* controller)
 	: DataVisualizationWidget(parent, controller), ui(new Ui::ImageVisualizationWidget)
 {
 	ui->setupUi(this);
@@ -18,36 +18,25 @@ void ImageVisualizationWidget::displayImage(int value)
 	{
 		for (int y = 0; y < size; y++)
 		{
-			picture.setPixel(x, y, qRgb(getImages(value, x, y),
-			                            getImages(value, x, y),
-			                            getImages(value, x, y)));
+			picture.setPixel(x, y, qRgb(getPixel(value, x, y, red),
+			                            getPixel(value, x, y, green),
+			                            getPixel(value, x, y, blue)));
 		}
 	}
 	const QImage scalePicture = picture.scaled(size * multiple, size * multiple, Qt::KeepAspectRatio);
 	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
-	const string label = static_cast<string>("Label : ") + to_string(this->controller->getData().getLabel(displayedSet, value));
+	const string label = static_cast<string>("Label : ") + to_string(
+		this->controller->getData().getLabel(displayedSet, value));
 	ui->labelImage->setText(QString::fromStdString(label));
 }
 
 void ImageVisualizationWidget::on_comboBoxSet_currentIndexChanged(int index)
 {
-	if (index == training)
-	{
-		this->displayedSet = training;
-		ui->spinBoxImageId->setMaximum(9999);
-		ui->labelImage->setText("Label : " + QString::number(
-			this->controller->getData().getTrainingLabel(ui->spinBoxImageId->value())));
-	}
-	if (index == testing)
-	{
-		this->displayedSet = testing;
-		ui->spinBoxImageId->setMaximum(59999);
-		ui->labelImage->setText(
-			QString::fromStdString(
-				static_cast<string>("Label : ") + to_string(
-					this->controller->getData().getTestingLabel(ui->spinBoxImageId->value()))));
-	}
+	this->displayedSet = static_cast<set>(index);
+	ui->spinBoxImageId->setMaximum(this->controller->getData().sets[this->displayedSet].size - 1);
+	ui->labelImage->setText("Label : " + QString::number(
+		this->controller->getData().getTrainingLabel(ui->spinBoxImageId->value())));
 	this->displayImage(ui->spinBoxImageId->value());
 }
 
