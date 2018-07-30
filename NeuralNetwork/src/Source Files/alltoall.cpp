@@ -6,40 +6,44 @@ using namespace std;
 
 AllToAll::AllToAll(const uint numberOfInputs,
                    const uint numberOfNeurons,
-                   ActivationFunction *function,
+                   ActivationFunction* function,
                    float learningRate,
                    float momentum)
 {
-    this->numberOfInputs = numberOfInputs;
-    this->numberOfNeurons = numberOfNeurons;
-    this->learningRate = learningRate;
-    this->momentum = momentum;
-    this->neurons.reserve(numberOfNeurons);
+	this->numberOfInputs = numberOfInputs;
+	this->numberOfNeurons = numberOfNeurons;
+	this->learningRate = learningRate;
+	this->momentum = momentum;
+	this->neurons.reserve(numberOfNeurons);
 	this->outputs.resize(numberOfNeurons);
-    this->errors.resize(numberOfInputs);
+	this->errors.resize(numberOfInputs);
 
-    for(uint n = 0; n < numberOfNeurons; ++n)
-    {
-        this->neurons.emplace_back(numberOfInputs, function, learningRate, momentum);
-    }
+	for (uint n = 0; n < numberOfNeurons; ++n)
+	{
+		this->neurons.emplace_back(numberOfInputs, function, learningRate, momentum);
+	}
 }
 
-vector<float>& AllToAll::output(const vector<float> &inputs)
+vector<float>& AllToAll::output(const vector<float>& inputs)
 {
-    for(uint n = 0; n < numberOfNeurons; ++n)
-    {
-        outputs[n] = neurons[n].output(inputs);
-    }
-    return outputs;
+#pragma omp parallel
+	for (uint n = 0; n < numberOfNeurons; ++n)
+	{
+		outputs[n] = neurons[n].output(inputs);
+	}
+	return outputs;
 }
 
-vector<float>& AllToAll::backOutput(vector<float> &inputsError)
+vector<float>& AllToAll::backOutput(vector<float>& inputsError)
 {
+	//omp_get_num_threads(void);
+#pragma omp for
 	for (uint n = 0; n < numberOfInputs; ++n)
 	{
 		errors[n] = 0;
 	}
 
+#pragma omp for
 	for (uint n = 0; n < numberOfNeurons; ++n)
 	{
 		auto result = neurons[n].backOutput(inputsError[n]);
@@ -61,7 +65,7 @@ vector<float>& AllToAll::backOutput(vector<float> &inputsError)
 	return errors;
 }*/
 
-void AllToAll::train(vector<float> &inputsError)
+void AllToAll::train(vector<float>& inputsError)
 {
 	for (uint n = 0; n < numberOfNeurons; ++n)
 	{

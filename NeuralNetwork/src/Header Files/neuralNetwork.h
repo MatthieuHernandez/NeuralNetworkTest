@@ -1,6 +1,8 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
 
+#pragma omp
+
 #include "activationfunction.h"
 #include "alltoall.h"
 #include <memory>

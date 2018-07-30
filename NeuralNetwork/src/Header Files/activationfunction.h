@@ -7,6 +7,7 @@
 enum activationFunction
 {
 	sigmoid = 0,
+	iSigmoid,
 	tanH,
 	reLU,
 	gaussian
@@ -25,11 +26,25 @@ public :
 	virtual float derivate(const float) const { throw std::exception(); }
 };
 
-class Sigmoid : public ActivationFunction
+/*class Sigmoid : public ActivationFunction
 {
 public:
 	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
 	float derivate(const float x) const override { return x * (1.0f - x); }
+};*/
+
+class Sigmoid : public ActivationFunction
+{
+public:
+	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
+	float derivate(const float x) const override { return exp(-x) / pow((exp(-x) + 1.0f), 2); }
+};
+
+class ImprovedSigmoid : public ActivationFunction
+{
+public:
+	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)) + 0.05 * x; }
+	float derivate(const float x) const override { return exp(-x) / pow((exp(-x) + 1.0f), 2) + 0.05; }
 	// * x stdp // x*exp(-x) / pow((1.0f + exp(-x)), 2);
 };
 

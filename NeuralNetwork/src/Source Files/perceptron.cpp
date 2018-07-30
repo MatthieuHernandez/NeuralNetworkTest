@@ -17,6 +17,7 @@ Perceptron::Perceptron(const uint numberOfInputs,
 	this->lastInputs.resize(numberOfInputs, 0);
 	this->errors.resize(numberOfInputs, 0);
 	lastOutput = 0;
+	lastSum = 0;
 
 	this->weights.resize(numberOfInputs);
 	for(auto &&w : weights)
@@ -41,14 +42,16 @@ float Perceptron::output(const vector<float>& inputs)
 		sum += inputs[w] * weights[w];
 	}
 	sum += bias;
+	lastSum = sum;
 	sum = activationFunction->function(sum);
-	lastOutput = sum;
+	//lastOutput = sum;
 	return sum;
 }
 
 std::vector<float>& Perceptron::backOutput(float error)
 {
-	error = error * activationFunction->derivate(lastOutput);
+	//error = error * activationFunction->derivate(lastOutput);
+	error = error * activationFunction->derivate(lastSum);
 	this->train(lastInputs, error);
 
 	for (uint w = 0; w < numberOfInputs; ++w)
@@ -62,15 +65,15 @@ void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
 	for (uint w = 0; w < numberOfInputs; ++w)
 	{
-		//if (abs(weights[w]) < abs(100000))
-		//{
+		if (abs(weights[w]) < abs(1000))
+		{
 			auto deltaWeights = learningRate * error * inputs[w];
 			deltaWeights += momentum * previousDeltaWeights[w];
 			weights[w] += deltaWeights;
 			previousDeltaWeights[w] = deltaWeights;
-		//}
-		//else
-		//	throw std::exception();
+		}
+		else
+			throw std::exception();
 	}
 }
 

@@ -280,8 +280,8 @@ int NeuralNetwork::isValid()
 	          return lastError;
 	        }
 	    }
-	}*/
-	return 0;
+	}
+	return 0;*/
 }
 
 int NeuralNetwork::getLastError() const
