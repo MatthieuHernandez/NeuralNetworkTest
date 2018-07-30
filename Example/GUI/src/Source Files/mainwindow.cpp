@@ -72,13 +72,14 @@ void MainWindow::endOfLoadingDataSet()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
 	this->InitializeButtons();
-	this->ui->pushButtonCompute->setEnabled(true);
+	ui->pushButtonCompute->setEnabled(true);
 
 	const auto widget = this->manager.getWidget(indexController);
 	ui->layout->itemAt(0)->widget()->hide();
 	ui->layout->replaceWidget(ui->layout->itemAt(0)->widget(), widget);
 	widget->show();
 
+	ui->tabWidgetNeuralNetwork->setEnabled(true);
 	ui->comboBoxData->setEnabled(true);
 	this->write("data loaded");
 }
@@ -93,12 +94,15 @@ void MainWindow::InitializeButtons()
 
 void MainWindow::ResetComboBoxlayer()
 {
-	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
+	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
 	ui->comboBoxLayer->addItem("Input");
+	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
 	for (int i = 0; i < numberOfLayer - 1; i++)
 		ui->comboBoxLayer->addItem(QString::number(i));
 	ui->comboBoxLayer->addItem("Ouput");
+	ui->comboBoxLayer->blockSignals(false);
+	ui->comboBoxLayer->setCurrentIndex(0);
 };
 
 void MainWindow::InitializeLayerButtons(const int layer)
@@ -106,11 +110,14 @@ void MainWindow::InitializeLayerButtons(const int layer)
 	const int neuronsNumber = this->currentController->inputs.structure[layer];
 	ui->spinBoxNeurons->setValue(neuronsNumber);
 
-	int function = 0;
+
 	if (layer > 0)
 	{
-		function = this->currentController->inputs.activationFunction[layer - 1];
-		ui->comboBoxActivationfunction->show();
+		auto function = static_cast<int>(this->currentController->inputs.activationFunction[layer - 1]);
+		ui->comboBoxActivationFunction->blockSignals(true);
+		ui->comboBoxActivationFunction->setCurrentIndex(function);
+		ui->comboBoxActivationFunction->blockSignals(false);
+		ui->comboBoxActivationFunction->show();
 		if (this->currentController->inputs.structure.size() - 1 == layer)
 			ui->spinBoxNeurons->setEnabled(false);
 		else
@@ -119,12 +126,11 @@ void MainWindow::InitializeLayerButtons(const int layer)
 	}
 	else
 	{
-		ui->comboBoxActivationfunction->hide();
+		ui->comboBoxActivationFunction->hide();
 		ui->spinBoxNeurons->setEnabled(false);
 		ui->labelNeurons->setText("Inputs :");
 	}
 
-	ui->comboBoxActivationfunction->setCurrentIndex(function);
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
 	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
 }
@@ -227,8 +233,14 @@ void MainWindow::on_pushButtonRemoveLayer_clicked()
 
 void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 {
-	if (index >= 0)
-		this->InitializeLayerButtons(index);
+	this->InitializeLayerButtons(index);
+}
+
+void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
+{
+	auto layer = ui->comboBoxLayer->currentIndex();
+	auto function = static_cast<activationFunction>(index);
+	this->currentController->inputs.activationFunction[layer - 1] = function;
 }
 
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)
@@ -263,6 +275,7 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 	indexController = index;
 	ui->pushButtonCompute->setEnabled(false);
 	ui->comboBoxData->setEnabled(false);
+	ui->tabWidgetNeuralNetwork->setEnabled(false);
 
 	const QFuture<void> futureLoadingData = QtConcurrent::run([=]()
 	{
@@ -270,8 +283,6 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 	});
 
 	watcherLoadingData.setFuture(futureLoadingData);
-
-	ui->comboBoxLayer->setCurrentIndex(0);
 	ui->spinBoxTrainingRating->setEnabled(true);
 }
 

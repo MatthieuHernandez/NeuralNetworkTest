@@ -183,7 +183,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -568,6 +568,14 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Loading</string>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="labelNeurons">
       <property name="geometry">
@@ -582,7 +590,7 @@
        <string>Neurons :</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBoxActivationfunction">
+     <widget class="QComboBox" name="comboBoxActivationFunction">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -594,6 +602,11 @@
       <item>
        <property name="text">
         <string>Sigmoid</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Improved Sigmoid</string>
        </property>
       </item>
       <item>

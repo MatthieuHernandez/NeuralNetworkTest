@@ -69,7 +69,7 @@ public:
     QSpinBox *spinBoxNeurons;
     QComboBox *comboBoxLayer;
     QLabel *labelNeurons;
-    QComboBox *comboBoxActivationfunction;
+    QComboBox *comboBoxActivationFunction;
     QPushButton *pushButtonAddLayer;
     QLabel *label_4;
     QDoubleSpinBox *spinBoxLearningRate;
@@ -240,18 +240,20 @@ public:
         spinBoxNeurons->setValue(0);
         spinBoxNeurons->setDisplayIntegerBase(10);
         comboBoxLayer = new QComboBox(tab_4);
+        comboBoxLayer->addItem(QString());
         comboBoxLayer->setObjectName(QStringLiteral("comboBoxLayer"));
         comboBoxLayer->setGeometry(QRect(60, 10, 61, 22));
         labelNeurons = new QLabel(tab_4);
         labelNeurons->setObjectName(QStringLiteral("labelNeurons"));
         labelNeurons->setGeometry(QRect(10, 50, 47, 21));
-        comboBoxActivationfunction = new QComboBox(tab_4);
-        comboBoxActivationfunction->addItem(QString());
-        comboBoxActivationfunction->addItem(QString());
-        comboBoxActivationfunction->addItem(QString());
-        comboBoxActivationfunction->addItem(QString());
-        comboBoxActivationfunction->setObjectName(QStringLiteral("comboBoxActivationfunction"));
-        comboBoxActivationfunction->setGeometry(QRect(70, 90, 101, 22));
+        comboBoxActivationFunction = new QComboBox(tab_4);
+        comboBoxActivationFunction->addItem(QString());
+        comboBoxActivationFunction->addItem(QString());
+        comboBoxActivationFunction->addItem(QString());
+        comboBoxActivationFunction->addItem(QString());
+        comboBoxActivationFunction->addItem(QString());
+        comboBoxActivationFunction->setObjectName(QStringLiteral("comboBoxActivationFunction"));
+        comboBoxActivationFunction->setGeometry(QRect(70, 90, 101, 22));
         pushButtonAddLayer = new QPushButton(tab_4);
         pushButtonAddLayer->setObjectName(QStringLiteral("pushButtonAddLayer"));
         pushButtonAddLayer->setGeometry(QRect(125, 10, 22, 22));
@@ -285,8 +287,9 @@ public:
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(0);
+        tabWidgetNeuralNetwork->setCurrentIndex(1);
         comboBoxData->setCurrentIndex(2);
+        comboBoxLayer->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -325,11 +328,14 @@ public:
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
+        comboBoxLayer->setItemText(0, QApplication::translate("MainWindow", "Loading", nullptr));
+
         labelNeurons->setText(QApplication::translate("MainWindow", "Neurons :", nullptr));
-        comboBoxActivationfunction->setItemText(0, QApplication::translate("MainWindow", "Sigmoid", nullptr));
-        comboBoxActivationfunction->setItemText(1, QApplication::translate("MainWindow", "TanH", nullptr));
-        comboBoxActivationfunction->setItemText(2, QApplication::translate("MainWindow", "ReLU", nullptr));
-        comboBoxActivationfunction->setItemText(3, QApplication::translate("MainWindow", "Gaussian", nullptr));
+        comboBoxActivationFunction->setItemText(0, QApplication::translate("MainWindow", "Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(1, QApplication::translate("MainWindow", "Improved Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(2, QApplication::translate("MainWindow", "TanH", nullptr));
+        comboBoxActivationFunction->setItemText(3, QApplication::translate("MainWindow", "ReLU", nullptr));
+        comboBoxActivationFunction->setItemText(4, QApplication::translate("MainWindow", "Gaussian", nullptr));
 
         pushButtonAddLayer->setText(QString());
         label_4->setText(QApplication::translate("MainWindow", "Activation\n"

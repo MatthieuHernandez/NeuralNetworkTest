@@ -85,6 +85,7 @@ private slots:
 	void on_pushButtonRemoveLayer_clicked();
 
 	void on_comboBoxLayer_currentIndexChanged(int index);
+	void on_comboBoxActivationFunction_currentIndexChanged(int index);
 
 	void on_pushButtonCompute_clicked();
 	void on_pushButtonConsole_clicked();
