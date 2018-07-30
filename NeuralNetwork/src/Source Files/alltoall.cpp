@@ -1,6 +1,6 @@
 #include "alltoall.h"
-#include <algorithm>
 #include <functional>
+#include <omp.h>
 
 using namespace std;
 
@@ -26,31 +26,36 @@ AllToAll::AllToAll(const uint numberOfInputs,
 
 vector<float>& AllToAll::output(const vector<float>& inputs)
 {
-#pragma omp parallel
-	for (uint n = 0; n < numberOfNeurons; ++n)
-	{
-		outputs[n] = neurons[n].output(inputs);
-	}
-	return outputs;
+//#pragma omp parallel num_threads(2) default(shared) 
+//	{
+//#pragma omp parallel for num_threads(7)
+		for (int n = 0; n < numberOfNeurons; ++n)
+		{
+			outputs[n] = neurons[n].output(inputs);
+		}
+		return outputs;
+//	}
 }
 
 vector<float>& AllToAll::backOutput(vector<float>& inputsError)
 {
-	//omp_get_num_threads(void);
-#pragma omp for
-	for (uint n = 0; n < numberOfInputs; ++n)
-	{
-		errors[n] = 0;
-	}
+//#pragma omp parallel num_threads(2) default(shared) 
+//	{
+//#pragma omp parallel for num_threads(7)
+		for (int n = 0; n < numberOfInputs; ++n)
+		{
+			errors[n] = 0;
+		}
 
-#pragma omp for
-	for (uint n = 0; n < numberOfNeurons; ++n)
-	{
-		auto result = neurons[n].backOutput(inputsError[n]);
-		for (uint r = 0; r < numberOfInputs; ++r)
-			errors[r] += result[r];
-	}
-	return errors;
+//
+		for (int n = 0; n < numberOfNeurons; ++n)
+		{
+			auto result = neurons[n].backOutput(inputsError[n]);
+			for (uint r = 0; r < numberOfInputs; ++r)
+				errors[r] += result[r];
+		}
+		return errors;
+//	}
 }
 
 /*vector<float> AllToAll::backOutput(vector<float> &inputsError)
