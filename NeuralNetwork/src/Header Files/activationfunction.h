@@ -19,8 +19,9 @@ public :
 
 	static std::vector<ActivationFunction*> listOfActivationFunction;
 
-	static void initialize();
+	ActivationFunction() = default;
 	virtual ~ActivationFunction() = default;
+	static void initialize();
 
 	virtual float function(const float) const { throw std::exception(); }
 	virtual float derivate(const float) const { throw std::exception(); }
@@ -43,8 +44,8 @@ public:
 class ImprovedSigmoid : public ActivationFunction
 {
 public:
-	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)) + 0.05 * x; }
-	float derivate(const float x) const override { return exp(-x) / pow((exp(-x) + 1.0f), 2) + 0.05; }
+	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)) + 0.05f * x; }
+	float derivate(const float x) const override { return exp(-x) / pow((exp(-x) + 1.0f), 2) + 0.05f; }
 	// * x stdp // x*exp(-x) / pow((1.0f + exp(-x)), 2);
 };
 

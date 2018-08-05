@@ -59,6 +59,7 @@ private:
 	void initializeInputs();
 	void initializeGraphOfClusteringRate();
 	void resetGraphOfClusteringRate();
+	void refreshGraphOfClusteringRate();
 
 	void clearLayout(QLayout *layout);
 

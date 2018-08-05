@@ -8,8 +8,8 @@ class Layer
 
 protected:
 
-	uint numberOfInputs = 0;
-	uint numberOfNeurons = 0;
+	int numberOfInputs = 0;
+	int numberOfNeurons = 0;
 	std::vector<float> errors;
 	std::vector<float> outputs;
 	std::vector<Perceptron> neurons;

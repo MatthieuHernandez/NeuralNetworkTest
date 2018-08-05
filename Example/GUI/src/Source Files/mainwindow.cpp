@@ -163,7 +163,14 @@ void MainWindow::resetGraphOfClusteringRate()
 {
 	x.clear();
 	y.clear();
-	updateGraphOfClusteringRate();
+	this->refreshGraphOfClusteringRate();
+}
+
+void MainWindow::refreshGraphOfClusteringRate()
+{
+	ui->customPlot->graph(0)->setData(x, y);
+	ui->customPlot->xAxis->setRange(0, currentController->outputs.numberOfIteration);
+	ui->customPlot->replot();
 }
 
 /**************************************************
@@ -293,13 +300,9 @@ void MainWindow::updateGraphOfClusteringRate()
 	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
 	ui->doubleSpinBoxCR->setValue(CR);
 	ui->doubleSpinBoxCRM->setValue(CRM);
-
 	x.push_back(currentController->outputs.numberOfIteration);
 	y.push_back(CR);
-
-	ui->customPlot->graph(0)->setData(x, y);
-	ui->customPlot->xAxis->setRange(0, currentController->outputs.numberOfIteration);
-	ui->customPlot->replot();
+	this->refreshGraphOfClusteringRate();
 	this->currentController->blockSignals(false);
 }
 

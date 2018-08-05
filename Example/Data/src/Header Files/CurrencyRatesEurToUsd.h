@@ -42,7 +42,7 @@ public:
 	const int intervalBetweenTwoTrade = 5;
 
 	int getNumberOfGaps() const { return numberOfGap; }
-	int getNumbrOfLines() const { return dateTimes.size(); }
+	int getNumbrOfLines() const { return static_cast<int>(dateTimes.size()); }
 
 	std::string path[1] = {"../Data/EURUSD/DAT_ASCII_EURUSD_M1_2016.csv"};
 
