@@ -74,7 +74,7 @@ void CurrencyRatesEurToUsd::createData()
 		this->createTrainingData(i - this->sets[training].size);
 		this->createTrainingOutputs(i);
 	}
-	this->sets[training].size = this->sets[training].labels.size();
+	this->sets[training].size = static_cast<int>(this->sets[training].labels.size());
 	this->sets[testing] = this->sets[training];
 }
 

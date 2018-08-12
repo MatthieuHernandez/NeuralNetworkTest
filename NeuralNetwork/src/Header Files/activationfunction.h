@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 
-enum activationFunction
+enum activationFunctionType
 {
 	sigmoid = 0,
 	iSigmoid,
@@ -22,6 +22,7 @@ public :
 	ActivationFunction() = default;
 	virtual ~ActivationFunction() = default;
 	static void initialize();
+	static ActivationFunction* getActivationFunction(activationFunctionType type);
 
 	virtual float function(const float) const { throw std::exception(); }
 	virtual float derivate(const float) const { throw std::exception(); }

@@ -1,6 +1,8 @@
-#include "activationfunction.h"
+#include "activationFunction.h"
 
-std::vector<ActivationFunction*> ActivationFunction::listOfActivationFunction;
+using namespace std;
+
+vector<ActivationFunction*> ActivationFunction::listOfActivationFunction;
 
 void ActivationFunction::initialize()
 {
@@ -11,4 +13,23 @@ void ActivationFunction::initialize()
 	listOfActivationFunction.push_back(new TanH());
 	listOfActivationFunction.push_back(new ReLU());
 	listOfActivationFunction.push_back(new Gaussian());
+}
+
+ActivationFunction* ActivationFunction::getActivationFunction(activationFunctionType type)
+{
+	switch (type)
+	{
+		case sigmoid:
+			return new Sigmoid();
+		case iSigmoid:
+			return new ImprovedSigmoid();
+		case tanH:
+			return new TanH();
+		case reLU:
+			return new ReLU();
+		case gaussian:
+			return new Gaussian();
+		default:
+			throw std::exception();
+	}
 }

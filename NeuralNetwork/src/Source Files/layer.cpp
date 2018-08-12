@@ -4,7 +4,7 @@ using namespace std;
 
 bool Layer::operator==(const Layer &layer)
 {
-    for(uint n = 0; n > numberOfNeurons; ++n)
+    for(int n = 0; n > numberOfNeurons; ++n)
     {
         if(neurons[n] != layer.neurons[n])
             return false;

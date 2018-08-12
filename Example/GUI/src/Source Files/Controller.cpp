@@ -26,9 +26,9 @@ void Controller::initializeData()
 void Controller::initializeNeuralNetwork()
 {
 	this->neuralNetwork = make_unique<NeuralNetwork>(this->inputs.structure,
-	                                                 this->inputs.activationFunction,
-	                                                 this->inputs.learningRate,
-	                                                 this->inputs.momentum);
+									                 this->inputs.activationFunction,
+									                 this->inputs.learningRate,
+									                 this->inputs.momentum);
 }
 
 void Controller::compute(bool* stop)

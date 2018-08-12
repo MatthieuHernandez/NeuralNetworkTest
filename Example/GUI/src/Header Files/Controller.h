@@ -32,17 +32,17 @@ public:
 
 	struct Inputs
 	{
-		std::vector<unsigned int> structure;
-		std::vector<activationFunction> activationFunction;
+		std::vector<int> structure;
+		std::vector<activationFunctionType> activationFunction;
 		float learningRate;
 		float momentum;
-		uint numberOfTrainbyRating;
+		int numberOfTrainbyRating;
 
 	} inputs;
 
 	struct Ouputs
 	{
-		uint currentIndex = 0;
+		int currentIndex = 0;
 		int numberOfIteration = 0;
 		float clusteringRate = -1.0f;
 		float clusteringRateMax = -1.0f;

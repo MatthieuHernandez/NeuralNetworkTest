@@ -97,7 +97,7 @@ void MainWindow::ResetComboBoxlayer()
 	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
 	ui->comboBoxLayer->addItem("Input");
-	const int numberOfLayer = this->currentController->inputs.structure.size() - 1;
+	const int numberOfLayer = static_cast<int>(this->currentController->inputs.structure.size()) - 1;
 	for (int i = 0; i < numberOfLayer - 1; i++)
 		ui->comboBoxLayer->addItem(QString::number(i));
 	ui->comboBoxLayer->addItem("Ouput");
@@ -246,7 +246,7 @@ void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
 {
 	auto layer = ui->comboBoxLayer->currentIndex();
-	auto function = static_cast<activationFunction>(index);
+	auto function = static_cast<activationFunctionType>(index);
 	this->currentController->inputs.activationFunction[layer - 1] = function;
 }
 
@@ -258,17 +258,17 @@ void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 
 void MainWindow::on_spinBoxLearningRate_valueChanged(double value)
 {
-	currentController->inputs.learningRate = ui->spinBoxLearningRate->value();
+	currentController->inputs.learningRate = value;
 }
 
 void MainWindow::on_spinBoxMomentum_valueChanged(double value)
 {
-	currentController->inputs.momentum = ui->spinBoxMomentum->value();
+	currentController->inputs.momentum = value;
 }
 
 void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 {
-	currentController->inputs.numberOfTrainbyRating = ui->spinBoxTrainingRating->value();
+	currentController->inputs.numberOfTrainbyRating = value;
 
 	if (ui->spinBoxTrainingRating->value() == currentController->getData().sets[training].size)
 		ui->labelMax->show();

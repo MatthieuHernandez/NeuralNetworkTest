@@ -35,8 +35,8 @@ namespace data
 
 		struct Set
 		{
-			unsigned int index{0};
-			unsigned int size{0}; // number of data inside set
+			int index{0};
+			int size{0}; // number of data inside set
 			std::vector<std::vector<float>> data{};
 			std::vector<std::vector<float>> labels{};
 		} sets[2];

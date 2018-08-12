@@ -55,7 +55,7 @@ int NeuralNetwork::getNumberOfNeuronsInLayer(const int layerNumber) const
     return structureOfNetwork[layerNumber+1];
 }
 
-activationFunction NeuralNetwork::getActivationFunctionInLayer(int layerNumber) const
+activationFunctionType NeuralNetwork::getActivationFunctionInLayer(int layerNumber) const
 {
 	return activationFunctionByLayer[layerNumber];
 }
