@@ -21,7 +21,6 @@ class Perceptron
         std::vector<float> errors;
 
 		float lastOutput;
-		float lastSum;
 
         int numberOfInputs;
 

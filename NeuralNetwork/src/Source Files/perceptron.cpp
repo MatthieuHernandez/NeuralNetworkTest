@@ -3,10 +3,10 @@
 
 using namespace std;
 
-Perceptron::Perceptron(const int numberOfInputs, 
-					   activationFunctionType activationFunction, 
-					   const float learningRate, 
-					   const float momentum)
+Perceptron::Perceptron(const int numberOfInputs,
+                       activationFunctionType activationFunction,
+                       const float learningRate,
+                       const float momentum)
 {
 	this->numberOfInputs = numberOfInputs;
 	this->learningRate = learningRate;
@@ -16,12 +16,12 @@ Perceptron::Perceptron(const int numberOfInputs,
 	this->lastInputs.resize(numberOfInputs, 0);
 	this->errors.resize(numberOfInputs, 0);
 	lastOutput = 0;
-	lastSum = 0;
 
-	this->activationFunction = std::unique_ptr<ActivationFunction>(ActivationFunction::getActivationFunction(activationFunction));
+	this->activationFunction = std::unique_ptr<ActivationFunction>(
+		ActivationFunction::getActivationFunction(activationFunction));
 
 	this->weights.resize(numberOfInputs);
-	for(auto &&w : weights)
+	for (auto&& w : weights)
 	{
 		w = randomInitializeWeight();
 	}
@@ -43,16 +43,14 @@ float Perceptron::output(const vector<float>& inputs)
 		sum += inputs[w] * weights[w];
 	}
 	sum += bias;
-	lastSum = sum;
 	sum = activationFunction->function(sum);
-	//lastOutput = sum;
+	lastOutput = sum;²
 	return sum;
 }
 
 std::vector<float>& Perceptron::backOutput(float error)
 {
 	error = error * activationFunction->derivate(lastOutput);
-	//error = error * activationFunction->derivate(lastSum);
 	this->train(lastInputs, error);
 
 	for (int w = 0; w < numberOfInputs; ++w)
