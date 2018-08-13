@@ -12,13 +12,13 @@ class NeuralNetwork
         static bool isTheFirst;
         static void initialize();
 
-        float maxOutputValue;
-        int maxOutputIndex;
+        float maxOutputValue{};
+        int maxOutputIndex{};
 
         int lastError;
         float learningRate;
         float clusteringRate;
-        float previousClusteringRate;
+        float previousClusteringRate{};
         float error;
         float momentum;
 
@@ -37,7 +37,7 @@ class NeuralNetwork
 
         std::vector<std::unique_ptr<Layer>> layers;
 
-        bool classifiedWell;
+        bool classifiedWell{};
 
         std::vector<float> errors;
 		std::vector<float> outputs;
@@ -50,8 +50,8 @@ class NeuralNetwork
 
     public :
 
-        NeuralNetwork(std::vector<int> structureOfNetwork,
-                      std::vector<activationFunctionType> activationFunctionByLayer,
+        NeuralNetwork(const std::vector<int> structureOfNetwork,
+                      const std::vector<activationFunctionType> activationFunctionByLayer,
                       const float learningRate = 0.05f,
                       const float momentum = 0.0f);
 

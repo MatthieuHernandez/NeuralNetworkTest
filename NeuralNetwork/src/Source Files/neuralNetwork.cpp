@@ -20,8 +20,8 @@ void NeuralNetwork::initialize()
 	isTheFirst = false;
 }
 
-NeuralNetwork::NeuralNetwork(std::vector<int> structureOfNetwork,
-                             std::vector<activationFunctionType> activationFunctionByLayer,
+NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
+                             const std::vector<activationFunctionType> activationFunctionByLayer,
                              const float learningRate,
                              const float momentum)
 {

@@ -21,7 +21,7 @@ public:
 	CurrencyRatesEurToUsd* data;
 };
 
-TEST_F(CurrencyTest, OutputTest)
+TEST_F(CurrencyTest, DISABLED_OutputTest)
 {
 	// Arrange
 	int positifRates = 0;
@@ -68,7 +68,7 @@ TEST_F(CurrencyTest, OutputTest)
 	EXPECT_ABOUT_EQ(100, error[2], 10000, "Number of rates to 0");
 }
 
-TEST_F(CurrencyTest, InputTest)
+TEST_F(CurrencyTest, DISABLED_InputTest)
 {
 	// Arrange
 	const int errorSize = 3;

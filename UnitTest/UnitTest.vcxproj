@@ -56,6 +56,7 @@
   <ItemGroup>
     <ClCompile Include="CurrencyRatesEurToUsdTests.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SaveNeuralNetworkTest.cpp" />
     <ClCompile Include="UnitTestTests.cpp" />
   </ItemGroup>
   <ItemGroup>
