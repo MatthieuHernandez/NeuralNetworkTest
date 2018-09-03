@@ -56,7 +56,8 @@ class Perceptron
 
         int getNumberOfInputs() const;
 
-        bool operator==(const Perceptron &perceptron);
-        bool operator!=(const Perceptron &perceptron);
+		void operator=(const Perceptron &perceptron);
+        bool operator==(const Perceptron &perceptron) const;
+        bool operator!=(const Perceptron &perceptron) const;
 };
 #endif // PERCEPTRON_H

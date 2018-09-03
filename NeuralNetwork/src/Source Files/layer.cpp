@@ -2,17 +2,29 @@
 
 using namespace std;
 
-bool Layer::operator==(const Layer &layer)
+void Layer::operator=(const Layer& layer)
 {
-    for(int n = 0; n > numberOfNeurons; ++n)
-    {
-        if(neurons[n] != layer.neurons[n])
-            return false;
-    }
-    return true;
+	this->numberOfInputs = layer.numberOfInputs;
+	this->numberOfNeurons = layer.numberOfNeurons;
+	this->errors = layer.errors;
+	this->outputs = layer.outputs;
+	this->neurons = layer.neurons;
+	this->learningRate = layer.learningRate;
+	this->momentum = layer.momentum;
 }
 
-bool Layer::operator!=(const Layer &layer)
+bool Layer::operator==(const Layer& layer) const
 {
-    return !this->operator==(layer);
+	return this->numberOfInputs == layer.numberOfInputs
+		&& this->numberOfNeurons == layer.numberOfNeurons
+		&& this->errors == layer.errors
+		&& this->outputs == layer.outputs
+		&& this->neurons == layer.neurons
+		&& this->learningRate == layer.learningRate
+		&& this->momentum == layer.momentum;
+}
+
+bool Layer::operator!=(const Layer& layer) const
+{
+	return !this->operator==(layer);
 }

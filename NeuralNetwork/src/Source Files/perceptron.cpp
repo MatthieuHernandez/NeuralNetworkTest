@@ -137,19 +137,21 @@ int Perceptron::getNumberOfInputs() const
 	return numberOfInputs;
 }
 
-bool Perceptron::operator==(const Perceptron& perceptron)
+bool Perceptron::operator==(const Perceptron& perceptron) const
 {
-	if (this->bias != perceptron.bias
-		|| this->numberOfInputs != perceptron.numberOfInputs
-		|| this->weights.size() != perceptron.weights.size())
-		return false;
-	for (int w = 0; w < numberOfInputs; ++w)
-		if (this->weights[w] != perceptron.weights[w])
-			return false;
-	return true;
+	return this->weights == perceptron.weights
+		&& this->previousDeltaWeights == perceptron.previousDeltaWeights
+		&& this->lastInputs == perceptron.lastInputs
+		&& this->errors == perceptron.errors
+		&& this->lastOutput == perceptron.lastOutput
+		&& this->numberOfInputs == perceptron.numberOfInputs
+		&& this->learningRate == perceptron.learningRate
+		&& this->momentum == perceptron.momentum
+		&& this->bias == perceptron.bias
+		&& this->activationFunction == perceptron.activationFunction;
 }
 
-bool Perceptron::operator!=(const Perceptron& perceptron)
+bool Perceptron::operator!=(const Perceptron& perceptron) const
 {
 	return !this->operator==(perceptron);
 }

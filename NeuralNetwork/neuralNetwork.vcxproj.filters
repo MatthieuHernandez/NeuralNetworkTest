@@ -21,6 +21,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\Activation Functions">
+      <UniqueIdentifier>{6addac00-dbc2-45c9-a278-447728f1211e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\alltoall.h">
@@ -37,6 +40,24 @@
     </ClInclude>
     <ClInclude Include="src\Header Files\activationFunction.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Source Files\sigmoid.h">
+      <Filter>Source Files\Activation Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Source Files\improvedSigmoid.h">
+      <Filter>Source Files\Activation Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Source Files\tanh.h">
+      <Filter>Source Files\Activation Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Source Files\ReLU.h">
+      <Filter>Source Files\Activation Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Source Files\gaussian.h">
+      <Filter>Source Files\Activation Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,5 +79,8 @@
     <ClCompile Include="src\Source Files\activationFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NeuralNetwork.rc" />
   </ItemGroup>
 </Project>

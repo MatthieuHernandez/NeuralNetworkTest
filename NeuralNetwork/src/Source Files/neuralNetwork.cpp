@@ -53,7 +53,7 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 	{
 		unique_ptr<Layer> layer(new AllToAll(structureOfNetwork[l - 1],
 		                                     structureOfNetwork[l],
-		                                     this->activationFunctionByLayer[l-1],
+		                                     this->activationFunctionByLayer[l - 1],
 		                                     learningRate,
 		                                     momentum));
 		layers.push_back(move(layer));
@@ -71,14 +71,15 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 	return outputs;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(const vector<float>& inputs, const vector<float>& desired, float precision)
+void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(
+	const vector<float>& inputs, const vector<float>& desired, float precision)
 {
 	this->outputs = this->output(inputs);
-	classifiedWell = true;
+	bool classifiedWell = true;
 	for (int n = 0; n < numberOfOutputs; ++n)
 	{
 		if (this->outputs[n] > desired[n] + precision
-	     && this->outputs[n] < desired[n] - precision)
+			&& this->outputs[n] < desired[n] - precision)
 		{
 			classifiedWell = false;
 			break;
@@ -90,14 +91,15 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(con
 		numberOfResultsMisclassefied++;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(const vector<float>& inputs, const vector<float>& desired, float separator)
+void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(
+	const vector<float>& inputs, const vector<float>& desired, float separator)
 {
 	this->outputs = this->output(inputs);
-	classifiedWell = true;
+	bool classifiedWell = true;
 	for (int n = 0; n < numberOfOutputs; ++n)
 	{
 		if ((this->outputs[n] >= separator && desired[n] < separator
-		 || this->outputs[n] <= separator && desired[n] > separator))
+			|| this->outputs[n] <= separator && desired[n] > separator))
 		{
 			classifiedWell = false;
 			break;
@@ -292,18 +294,48 @@ int NeuralNetwork::getLastError() const
 	return lastError;
 }
 
+void NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
+{
+	this->maxOutputIndex = neuralNetwork.maxOutputIndex;
+	this->lastError = neuralNetwork.lastError;
+	this->learningRate = neuralNetwork.learningRate;
+	this->clusteringRate = neuralNetwork.clusteringRate;
+	this->previousClusteringRate = neuralNetwork.previousClusteringRate;
+	this->error = neuralNetwork.error;
+	this->momentum = neuralNetwork.momentum;
+	this->numberOfResultsClassifiedWell = neuralNetwork.numberOfResultsClassifiedWell;
+	this->numberOfResultsMisclassefied = neuralNetwork.numberOfResultsMisclassefied;
+	this->numberOfHiddenLayers = neuralNetwork.numberOfHiddenLayers;
+	this->numberOfLayers = neuralNetwork.numberOfLayers;
+	this->numberOfInput = neuralNetwork.numberOfInput;
+	this->numberOfOutputs = neuralNetwork.numberOfOutputs;
+	this->structureOfNetwork = neuralNetwork.structureOfNetwork;
+	this->activationFunctionByLayer = neuralNetwork.activationFunctionByLayer;
+	this->layers = neuralNetwork.layers;
+	this->errors = neuralNetwork.errors;
+	this->outputs = neuralNetwork.outputs;
+}
+
 bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork)
 {
-	if (this->numberOfInput != neuralNetwork.numberOfInput
-		|| this->numberOfHiddenLayers != neuralNetwork.numberOfHiddenLayers
-		|| this->structureOfNetwork != neuralNetwork.structureOfNetwork
-		|| this->layers.size() != neuralNetwork.layers.size())
-		return false;
-	else
-		for (int l = 0; l < numberOfLayers; ++l)
-			if (this->layers[l] != neuralNetwork.layers[l])
-				return false;
-	return true;
+	return (this->maxOutputIndex == neuralNetwork.maxOutputIndex
+		&& this->lastError == neuralNetwork.lastError
+		&& this->learningRate == neuralNetwork.learningRate
+		&& this->clusteringRate == neuralNetwork.clusteringRate
+		&& this->previousClusteringRate == neuralNetwork.previousClusteringRate
+		&& this->error == neuralNetwork.error
+		&& this->momentum == neuralNetwork.momentum
+		&& this->numberOfResultsClassifiedWell == neuralNetwork.numberOfResultsClassifiedWell
+		&& this->numberOfResultsMisclassefied == neuralNetwork.numberOfResultsMisclassefied
+		&& this->numberOfHiddenLayers == neuralNetwork.numberOfHiddenLayers
+		&& this->numberOfLayers == neuralNetwork.numberOfLayers
+		&& this->numberOfInput == neuralNetwork.numberOfInput
+		&& this->numberOfOutputs == neuralNetwork.numberOfOutputs
+		&& this->structureOfNetwork == neuralNetwork.structureOfNetwork
+		&& this->activationFunctionByLayer == neuralNetwork.activationFunctionByLayer
+		&& this->layers == neuralNetwork.layers
+		&& this->errors == neuralNetwork.errors
+		&& this->outputs == neuralNetwork.outputs);
 }
 
 bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork)
