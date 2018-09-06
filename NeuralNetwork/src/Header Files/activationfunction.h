@@ -13,26 +13,23 @@ enum activationFunctionType
 
 class ActivationFunction
 {
-private :
-
-	virtual activationFunctionType getType() const { throw std::exception(); }
-
-
 public :
 
-	static std::vector<ActivationFunction*> listOfActivationFunction;
+	//static std::vector<ActivationFunction*> listOfActivationFunction;
 
 	ActivationFunction() = default;
+	ActivationFunction(const ActivationFunction& activationFunction);
 	virtual ~ActivationFunction() = default;
 	static void initialize();
-	static ActivationFunction* getActivationFunction(activationFunctionType type);
+	static ActivationFunction* create(activationFunctionType type);
 
-	virtual float function(const float) const { throw std::exception(); }
-	virtual float derivate(const float) const { throw std::exception(); }
+	virtual float function(const float) const = 0;
+	virtual float derivate(const float) const = 0;
 
-	void operator=(const ActivationFunction& activationFunction);
-	bool operator==(const ActivationFunction& activationFunction) const;
-	bool operator!=(const ActivationFunction& activationFunction) const;
+	virtual activationFunctionType getType() const = 0;
+
+	virtual bool operator==(const ActivationFunction& activationFunction) const;
+	virtual bool operator!=(const ActivationFunction& activationFunction) const;
 };
 
 #endif // ACTIVATIONFUNCTIONS_H

@@ -10,11 +10,12 @@ private :
 public :
 
 	float function(const float x) const override
-{
-	return exp(-pow(x, 2));
-}
+	{
+		return exp(-pow(x, 2));
+	}
+
 	float derivate(const float x) const override
-{
-	return -2 * x * exp(-pow(x, 2));
-}
+	{
+		return -2 * x * exp(-pow(x, 2));
+	}
 };

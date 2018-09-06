@@ -80,7 +80,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="NeuralNetwork.rc" />
-  </ItemGroup>
 </Project>

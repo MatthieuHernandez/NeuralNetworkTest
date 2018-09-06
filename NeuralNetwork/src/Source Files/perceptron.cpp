@@ -17,8 +17,7 @@ Perceptron::Perceptron(const int numberOfInputs,
 	this->errors.resize(numberOfInputs, 0);
 	lastOutput = 0;
 
-	this->activationFunction = std::unique_ptr<ActivationFunction>(
-		ActivationFunction::getActivationFunction(activationFunction));
+	this->activationFunction = ActivationFunction::create(activationFunction);
 
 	this->weights.resize(numberOfInputs);
 	for (auto&& w : weights)
@@ -26,6 +25,11 @@ Perceptron::Perceptron(const int numberOfInputs,
 		w = randomInitializeWeight();
 	}
 	this->bias = 1.0f;
+}
+
+Perceptron::Perceptron(const Perceptron& perceptron)
+{
+	this->operator=(perceptron);
 }
 
 float Perceptron::randomInitializeWeight() const
@@ -84,7 +88,7 @@ int Perceptron::isValid()
 		cout << bias << endl;
 		return 4;
 	}
-	if (numberOfInputs < 1 || numberOfInputs != weights.size())
+	if (numberOfInputs < 1 || numberOfInputs != static_cast<int>(weights.size()))
 	{
 		cout << numberOfInputs << endl;
 		cout << weights.size() << endl;
@@ -112,6 +116,11 @@ void Perceptron::setWeights(const vector<float>& weights)
 	this->weights = weights;
 }
 
+ActivationFunction* Perceptron::getActivationFunction()
+{
+	return this->activationFunction;
+}
+
 float Perceptron::getWeight(const int w) const
 {
 	return weights[w];
@@ -137,6 +146,21 @@ int Perceptron::getNumberOfInputs() const
 	return numberOfInputs;
 }
 
+Perceptron& Perceptron::operator=(const Perceptron& perceptron)
+{
+	this->weights = perceptron.weights;
+	this->previousDeltaWeights = perceptron.previousDeltaWeights;
+	this->lastInputs = perceptron.lastInputs;
+	this->errors = perceptron.errors;
+	this->lastOutput = perceptron.lastOutput;
+	this->numberOfInputs = perceptron.numberOfInputs;
+	this->learningRate = perceptron.learningRate;
+	this->momentum = perceptron.momentum;
+	this->bias = perceptron.bias;
+	this->activationFunction = ActivationFunction::create(perceptron.activationFunction->getType());
+	return *this;
+}
+
 bool Perceptron::operator==(const Perceptron& perceptron) const
 {
 	return this->weights == perceptron.weights
@@ -148,7 +172,7 @@ bool Perceptron::operator==(const Perceptron& perceptron) const
 		&& this->learningRate == perceptron.learningRate
 		&& this->momentum == perceptron.momentum
 		&& this->bias == perceptron.bias
-		&& this->activationFunction == perceptron.activationFunction;
+		&& *this->activationFunction == *perceptron.activationFunction;
 }
 
 bool Perceptron::operator!=(const Perceptron& perceptron) const

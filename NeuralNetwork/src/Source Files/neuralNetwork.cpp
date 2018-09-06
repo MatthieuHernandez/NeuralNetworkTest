@@ -1,4 +1,4 @@
-#include "NeuralNetwork.h"
+#include "neuralNetwork.h"
 #include <ctime>
 #include <algorithm>
 #include <omp.h>
@@ -31,7 +31,6 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 	this->structureOfNetwork = structureOfNetwork;
 	this->activationFunctionByLayer = activationFunctionByLayer;
 	this->learningRate = learningRate;
-	this->shortRunCounter = 0;
 	this->numberOfResultsClassifiedWell = 0;
 	this->numberOfResultsMisclassefied = 0;
 	this->clusteringRate = -1;
@@ -49,15 +48,20 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 	outputs.resize(numberOfOutputs);
 
 	layers.reserve(numberOfLayers);
-	for (int l = 1; l < structureOfNetwork.size(); ++l)
+	for (unsigned int l = 1; l < structureOfNetwork.size(); ++l)
 	{
-		unique_ptr<Layer> layer(new AllToAll(structureOfNetwork[l - 1],
-		                                     structureOfNetwork[l],
-		                                     this->activationFunctionByLayer[l - 1],
-		                                     learningRate,
-		                                     momentum));
-		layers.push_back(move(layer));
+		Layer* layer(new AllToAll(structureOfNetwork[l - 1],
+		                          structureOfNetwork[l],
+		                          this->activationFunctionByLayer[l - 1],
+		                          learningRate,
+		                          momentum));
+		layers.push_back(layer);
 	}
+}
+
+NeuralNetwork::NeuralNetwork(const NeuralNetwork& neuralNetwork)
+{
+	this->operator=(neuralNetwork);
 }
 
 vector<float> NeuralNetwork::output(const vector<float>& inputs)
@@ -115,7 +119,7 @@ void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector
 {
 	maxOutputValue = -1;
 	this->outputs = this->output(inputs);
-	for (int n = 0; n < this->outputs.size(); ++n)
+	for (unsigned int n = 0; n < this->outputs.size(); ++n)
 	{
 		if (maxOutputValue < this->outputs[n])
 		{
@@ -294,7 +298,7 @@ int NeuralNetwork::getLastError() const
 	return lastError;
 }
 
-void NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
+NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 {
 	this->maxOutputIndex = neuralNetwork.maxOutputIndex;
 	this->lastError = neuralNetwork.lastError;
@@ -311,14 +315,29 @@ void NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 	this->numberOfOutputs = neuralNetwork.numberOfOutputs;
 	this->structureOfNetwork = neuralNetwork.structureOfNetwork;
 	this->activationFunctionByLayer = neuralNetwork.activationFunctionByLayer;
-	this->layers = neuralNetwork.layers;
 	this->errors = neuralNetwork.errors;
 	this->outputs = neuralNetwork.outputs;
+
+	this->layers.clear();
+	this->layers.reserve(neuralNetwork.layers.size());
+	for (const auto& layer : neuralNetwork.layers)
+	{
+		if (layer->getType() == allToAll)
+		{
+			AllToAll* newlayer = new AllToAll();
+			newlayer->equal(*layer);
+			this->layers.push_back(newlayer);
+		}
+		else
+			throw new exception();
+	}
+
+	return *this;
 }
 
-bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork)
+bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 {
-	return (this->maxOutputIndex == neuralNetwork.maxOutputIndex
+	bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
 		&& this->lastError == neuralNetwork.lastError
 		&& this->learningRate == neuralNetwork.learningRate
 		&& this->clusteringRate == neuralNetwork.clusteringRate
@@ -333,12 +352,20 @@ bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork)
 		&& this->numberOfOutputs == neuralNetwork.numberOfOutputs
 		&& this->structureOfNetwork == neuralNetwork.structureOfNetwork
 		&& this->activationFunctionByLayer == neuralNetwork.activationFunctionByLayer
-		&& this->layers == neuralNetwork.layers
+		&& this->layers.size() == neuralNetwork.layers.size()
 		&& this->errors == neuralNetwork.errors
 		&& this->outputs == neuralNetwork.outputs);
+
+	if (equal)
+		for (int l =  0; l < numberOfLayers; l++)
+		{
+			if(*this->layers[l] != *neuralNetwork.layers[l])
+				equal = false;
+		}
+	return equal;
 }
 
-bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork)
+bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork) const
 {
 	return !this->operator==(neuralNetwork);
 }

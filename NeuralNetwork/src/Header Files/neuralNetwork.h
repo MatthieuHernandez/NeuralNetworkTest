@@ -29,26 +29,27 @@ class NeuralNetwork
         int numberOfInput{};
         int numberOfOutputs{};
 
-        std::vector<int> structureOfNetwork;
-		std::vector<activationFunctionType> activationFunctionByLayer;
+        std::vector<int> structureOfNetwork{};
+		std::vector<activationFunctionType> activationFunctionByLayer{};
 
-        std::vector<std::unique_ptr<Layer>> layers;
+        std::vector<Layer*> layers{};
 
-        std::vector<float> errors;
-		std::vector<float> outputs;
+        std::vector<float> errors{};
+		std::vector<float> outputs{};
 
         void backpropagationAlgorithm(const std::vector<float> &inputs, const std::vector<float> &desired);
-		std::vector<float> calculateError(const std::vector<float> &inputs, const std::vector<float> &desired);
+		std::vector<float> calculateError(const std::vector<float> & outputs, const std::vector<float> &desired);
 
         void resetAllNeurons();
 
 
     public :
 
-        NeuralNetwork(const std::vector<int> structureOfNetwork,
-                      const std::vector<activationFunctionType> activationFunctionByLayer,
-                      const float learningRate = 0.05f,
-                      const float momentum = 0.0f);
+        NeuralNetwork(std::vector<int> structureOfNetwork,
+                      std::vector<activationFunctionType> activationFunctionByLayer,
+                      float learningRate = 0.05f,
+                      float momentum = 0.0f);
+		NeuralNetwork(const NeuralNetwork& neuralNetwork);
 
 		~NeuralNetwork() = default;
 
@@ -69,7 +70,7 @@ class NeuralNetwork
         void setMomentum(float value);
         float getMomentum() const;
 
-        int getShortRunCounter() const;
+		Layer* getLayer(int layerNumber);
         int getNumberOfInputs() const;
         int getNumberOfHiddenLayers() const;
         int getNumberOfNeuronsInLayer(int layerNumber) const;
@@ -79,9 +80,9 @@ class NeuralNetwork
         int getNumberOfOutputs() const;
         float getClusteringRate();
 
-        void operator=(const NeuralNetwork &neuralNetwork);
-        bool operator==(const NeuralNetwork &neuralNetwork);
-        bool operator!=(const NeuralNetwork &neuralNetwork);
+        NeuralNetwork& operator=(const NeuralNetwork &neuralNetwork);
+        bool operator==(const NeuralNetwork &neuralNetwork) const;
+        bool operator!=(const NeuralNetwork &neuralNetwork) const;
 };
 
 class notImplementedException : public std::exception

@@ -20,7 +20,7 @@ void ActivationFunction::initialize()
 	listOfActivationFunction.push_back(new Gaussian());*/
 }
 
-ActivationFunction* ActivationFunction::getActivationFunction(activationFunctionType type)
+ActivationFunction* ActivationFunction::create(activationFunctionType type)
 {
 	switch (type)
 	{
@@ -37,11 +37,6 @@ ActivationFunction* ActivationFunction::getActivationFunction(activationFunction
 		default:
 			throw std::exception();
 	}
-}
-
-void ActivationFunction::operator=(const ActivationFunction& activationFunction)
-{
-	throw std::exception();
 }
 
 bool ActivationFunction::operator==(const ActivationFunction& activationFunction) const

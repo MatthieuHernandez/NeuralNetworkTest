@@ -3,6 +3,10 @@
 
 using namespace std;
 
+AllToAll::AllToAll()
+{
+}
+
 AllToAll::AllToAll(const int numberOfInputs,
                    const int numberOfNeurons,
                    activationFunctionType function,
@@ -58,4 +62,24 @@ void AllToAll::train(vector<float>& inputsError)
 	{
 		neurons[n].backOutput(inputsError[n]);
 	}
+}
+
+LayerType AllToAll::getType() const
+{
+	return allToAll;
+}
+
+Layer& AllToAll::equal(const Layer& layer)
+{
+	return this->Layer::equal(layer);
+}
+
+bool AllToAll::operator==(const AllToAll& layer) const
+{
+	return this->Layer::operator==(layer);
+}
+
+bool AllToAll::operator!=(const AllToAll& layer) const
+{
+	return this->Layer::operator!=(layer);
 }
