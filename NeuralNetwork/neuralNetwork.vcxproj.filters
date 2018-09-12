@@ -59,6 +59,9 @@
     <ClInclude Include="src\Source Files\gaussian.h">
       <Filter>Source Files\Activation Functions</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header Files\test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source Files\alltoall.cpp">
@@ -77,6 +80,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\activationFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\neuralNetworkLearning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

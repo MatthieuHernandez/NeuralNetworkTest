@@ -1,11 +1,12 @@
 #include "alltoall.h"
 #include <omp.h>
+#pragma warning(push, 0) 
+#include <boost/serialization/export.hpp>
+#pragma warning(pop)
+
+BOOST_CLASS_EXPORT(AllToAll);
 
 using namespace std;
-
-AllToAll::AllToAll()
-{
-}
 
 AllToAll::AllToAll(const int numberOfInputs,
                    const int numberOfNeurons,
@@ -67,6 +68,12 @@ void AllToAll::train(vector<float>& inputsError)
 LayerType AllToAll::getType() const
 {
 	return allToAll;
+}
+
+template<class Archive>
+void AllToAll::serialize(Archive & ar, const unsigned int version)
+{
+    ;//ar & boost::serialization::base_object<Layer>(*this);
 }
 
 Layer& AllToAll::equal(const Layer& layer)

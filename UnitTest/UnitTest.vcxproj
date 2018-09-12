@@ -104,20 +104,22 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\GUI\src\Header Files;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtPrintSupport</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtPrintSupport</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <OpenMPSupport>true</OpenMPSupport>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib\libboost_serialization-vc141-mt-x64-1_68.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)UnitTest.exe</OutputFile>
       <LinkStatus>false</LinkStatus>
     </Link>
@@ -147,7 +149,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\GUI\src\Header Files;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtConcurrent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtConcurrent;</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -158,7 +160,7 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupport.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkStatus>false</LinkStatus>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>

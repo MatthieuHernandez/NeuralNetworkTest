@@ -3,92 +3,109 @@
 
 #include "activationFunction.h"
 #include "alltoall.h"
+#include <boost/serialization/access.hpp>
+#include "test.h"
 
 
 class NeuralNetwork
 {
-    private :
+private :
 
-        static bool isTheFirst;
-        static void initialize();
+	Test* toto;
 
-        float maxOutputValue{};
-        int maxOutputIndex{};
-        int lastError{};
-        float learningRate{};
-        float clusteringRate{};
-        float previousClusteringRate{};
-        float error{};
-        float momentum{};
+	static bool isTheFirst;
+	static void initialize();
 
-        int numberOfResultsClassifiedWell{};
-        int numberOfResultsMisclassefied{};
+	float maxOutputValue{};
+	int maxOutputIndex{};
+	int lastError{};
+	float learningRate{};
+	float clusteringRate{};
+	float previousClusteringRate{};
+	float error{};
+	float momentum{};
 
-        int numberOfHiddenLayers{};
-        int numberOfLayers{};
-        int numberOfInput{};
-        int numberOfOutputs{};
+	int numberOfResultsClassifiedWell{};
+	int numberOfResultsMisclassefied{};
 
-        std::vector<int> structureOfNetwork{};
-		std::vector<activationFunctionType> activationFunctionByLayer{};
+	int numberOfHiddenLayers{};
+	int numberOfLayers{};
+	int numberOfInput{};
+	int numberOfOutputs{};
 
-        std::vector<Layer*> layers{};
+	std::vector<int> structureOfNetwork{};
+	std::vector<activationFunctionType> activationFunctionByLayer{};
 
-        std::vector<float> errors{};
-		std::vector<float> outputs{};
+	std::vector<Layer*> layers{};
 
-        void backpropagationAlgorithm(const std::vector<float> &inputs, const std::vector<float> &desired);
-		std::vector<float> calculateError(const std::vector<float> & outputs, const std::vector<float> &desired);
+	std::vector<float> errors{};
+	std::vector<float> outputs{};
 
-        void resetAllNeurons();
+	void backpropagationAlgorithm(const std::vector<float>& inputs, const std::vector<float>& desired);
+	std::vector<float> calculateError(const std::vector<float>& outputs, const std::vector<float>& desired);
 
+	void resetAllNeurons();
 
-    public :
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, unsigned version);
 
-        NeuralNetwork(std::vector<int> structureOfNetwork,
-                      std::vector<activationFunctionType> activationFunctionByLayer,
-                      float learningRate = 0.05f,
-                      float momentum = 0.0f);
-		NeuralNetwork(const NeuralNetwork& neuralNetwork);
+public :
 
-		~NeuralNetwork() = default;
+	NeuralNetwork(std::vector<int> structureOfNetwork,
+	              std::vector<activationFunctionType> activationFunctionByLayer,
+	              float learningRate = 0.05f,
+	              float momentum = 0.0f);
+	NeuralNetwork(const NeuralNetwork& neuralNetwork);
 
-        void train(const std::vector<float> &inputs, const std::vector<float> &desired);
-        std::vector<float> output(const std::vector<float>& inputs);
+	NeuralNetwork() = default;
+	~NeuralNetwork() = default;
 
-        void calculateClusteringRateForRegressionProblemWithPrecision(const std::vector<float>& inputs, const std::vector<float>& desired, float precision = 0.5f);
-        void calculateClusteringRateForRegressionProblemSeparateByValue(const std::vector<float>& inputs, const std::vector<float>& desired, float separator = 0.0f);
-        void calculateClusteringRateForClassificationProblem(const std::vector<float> &inputs, int classNumber);
+	void train(const std::vector<float>& inputs, const std::vector<float>& desired);
+	std::vector<float> output(const std::vector<float>& inputs);
 
-        void addANeuron(int layerNumber);
+	void calculateClusteringRateForRegressionProblemWithPrecision(const std::vector<float>& inputs,
+	                                                              const std::vector<float>& desired,
+	                                                              float precision = 0.5f);
+	void calculateClusteringRateForRegressionProblemSeparateByValue(const std::vector<float>& inputs,
+	                                                                const std::vector<float>& desired,
+	                                                                float separator = 0.0f);
+	void calculateClusteringRateForClassificationProblem(const std::vector<float>& inputs, int classNumber);
 
-        int isValid();
-        int getLastError() const;
+	void addANeuron(int layerNumber);
 
-        void setLearningRate(float learningRate);
-        float getLearningRate() const;
-        void setMomentum(float value);
-        float getMomentum() const;
+	void saveAs(std::string filePath);
+	static NeuralNetwork& loadFrom(std::string filePath);
 
-		Layer* getLayer(int layerNumber);
-        int getNumberOfInputs() const;
-        int getNumberOfHiddenLayers() const;
-        int getNumberOfNeuronsInLayer(int layerNumber) const;
-		activationFunctionType getActivationFunctionInLayer(int layerNumber) const;
-        int getNumberOfResultsClassifiedWell() const;
-        int getNumberOfNegativeResultsMisclassefied() const;
-        int getNumberOfOutputs() const;
-        float getClusteringRate();
+	int isValid();
+	int getLastError() const;
 
-        NeuralNetwork& operator=(const NeuralNetwork &neuralNetwork);
-        bool operator==(const NeuralNetwork &neuralNetwork) const;
-        bool operator!=(const NeuralNetwork &neuralNetwork) const;
+	void setLearningRate(float learningRate);
+	float getLearningRate() const;
+	void setMomentum(float value);
+	float getMomentum() const;
+
+	Layer* getLayer(int layerNumber);
+	int getNumberOfInputs() const;
+	int getNumberOfHiddenLayers() const;
+	int getNumberOfNeuronsInLayer(int layerNumber) const;
+	activationFunctionType getActivationFunctionInLayer(int layerNumber) const;
+	int getNumberOfResultsClassifiedWell() const;
+	int getNumberOfNegativeResultsMisclassefied() const;
+	int getNumberOfOutputs() const;
+	float getClusteringRate();
+
+	NeuralNetwork& operator=(const NeuralNetwork& neuralNetwork);
+	bool operator==(const NeuralNetwork& neuralNetwork) const;
+	bool operator!=(const NeuralNetwork& neuralNetwork) const;
 };
 
 class notImplementedException : public std::exception
 {
 public:
-	notImplementedException() : std::exception("Function not yet implemented") { };
+	notImplementedException() : std::exception("Function not yet implemented")
+	{
+	};
 };
 
 #endif // NEURAL_NETWORK_H

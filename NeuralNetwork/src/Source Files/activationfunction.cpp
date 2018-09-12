@@ -1,9 +1,11 @@
+#include <cmath>
 #include "activationFunction.h"
 #include "sigmoid.h"
 #include "improvedSigmoid.h"
 #include "tanh.h"
 #include "ReLU.h"
 #include "gaussian.h"
+#include <exception>
 
 using namespace std;
 

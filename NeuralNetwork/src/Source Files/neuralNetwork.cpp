@@ -1,7 +1,14 @@
 #include "neuralNetwork.h"
 #include <ctime>
-#include <algorithm>
 #include <omp.h>
+#include <fstream>
+#pragma warning(push, 0)
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/assume_abstract.hpp>
+#pragma warning(pop)
+#include "test.h"
 
 using namespace std;
 
@@ -25,6 +32,7 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
                              const float learningRate,
                              const float momentum)
 {
+	this->toto = new Test2(8, 15);
 	if (isTheFirst)
 		this->initialize();
 
@@ -62,107 +70,6 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 NeuralNetwork::NeuralNetwork(const NeuralNetwork& neuralNetwork)
 {
 	this->operator=(neuralNetwork);
-}
-
-vector<float> NeuralNetwork::output(const vector<float>& inputs)
-{
-	this->outputs = layers[0]->output(inputs);
-
-	for (int l = 1; l < numberOfLayers; ++l)
-	{
-		outputs = layers[l]->output(outputs);
-	}
-	return outputs;
-}
-
-void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(
-	const vector<float>& inputs, const vector<float>& desired, float precision)
-{
-	this->outputs = this->output(inputs);
-	bool classifiedWell = true;
-	for (int n = 0; n < numberOfOutputs; ++n)
-	{
-		if (this->outputs[n] > desired[n] + precision
-			&& this->outputs[n] < desired[n] - precision)
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(
-	const vector<float>& inputs, const vector<float>& desired, float separator)
-{
-	this->outputs = this->output(inputs);
-	bool classifiedWell = true;
-	for (int n = 0; n < numberOfOutputs; ++n)
-	{
-		if ((this->outputs[n] >= separator && desired[n] < separator
-			|| this->outputs[n] <= separator && desired[n] > separator))
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const int classNumber)
-{
-	maxOutputValue = -1;
-	this->outputs = this->output(inputs);
-	for (unsigned int n = 0; n < this->outputs.size(); ++n)
-	{
-		if (maxOutputValue < this->outputs[n])
-		{
-			maxOutputValue = this->outputs[n];
-			maxOutputIndex = n;
-		}
-	}
-	if (maxOutputIndex == classNumber)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desired)
-{
-	backpropagationAlgorithm(inputs, desired);
-}
-
-void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const vector<float>& desired)
-{
-	this->outputs = this->output(inputs);
-	auto errors = calculateError(this->outputs, desired);
-
-	for (int l = numberOfLayers - 1; l > 0; --l)
-	{
-		errors = layers[l]->backOutput(errors);
-	}
-	layers[0]->train(errors);
-}
-
-inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs, const vector<float>& desired)
-{
-	for (int n = 0; n < numberOfOutputs; ++n)
-	{
-		if (desired[n] != -1.0f)
-		{
-			float e = desired[n] - outputs[n];
-			this->errors[n] = e * abs(e);
-		}
-		else
-			this->errors[n] = 0;
-	}
-	return this->errors;
 }
 
 void NeuralNetwork::resetAllNeurons()
@@ -220,6 +127,51 @@ void NeuralNetwork::addANeuron(int)
 	{
 	    lastError = 8;
 	}*/
+}
+
+void NeuralNetwork::saveAs(std::string filePath)
+{
+	ofstream file(filePath);
+	boost::archive::text_oarchive binaryFile(file);
+	binaryFile << this;
+	std::ofstream ofs("filename");
+	boost::archive::text_oarchive oa(ofs);
+}
+
+NeuralNetwork& NeuralNetwork::loadFrom(std::string filePath)
+{
+	NeuralNetwork* neuralNetwork{};
+	ifstream file(filePath, ios::binary);
+	boost::archive::text_iarchive binaryFile(file);
+	binaryFile >> neuralNetwork;
+	return *neuralNetwork;
+}
+
+template<class Archive>
+void NeuralNetwork::serialize(Archive & ar, const unsigned int version)
+{
+    ar & maxOutputIndex;
+    ar & lastError;
+    ar & learningRate;
+    ar & clusteringRate;
+    ar & previousClusteringRate;
+    ar & error;
+    ar & momentum;
+    ar & numberOfResultsClassifiedWell;
+    ar & numberOfResultsMisclassefied;
+    ar & numberOfHiddenLayers;
+    ar & numberOfLayers;
+    ar & numberOfInput;
+    ar & numberOfOutputs;
+    ar & structureOfNetwork;
+    ar & activationFunctionByLayer;
+    ar & errors;
+    ar & outputs;
+    ar & numberOfInput;
+	ar.template register_type<Test2>();
+	ar & toto;
+	((Test2*)toto)->serialize(ar, version);
+	//ar & layers[0];
 }
 
 int NeuralNetwork::isValid()
@@ -329,7 +281,7 @@ NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 			this->layers.push_back(newlayer);
 		}
 		else
-			throw new exception();
+			throw exception();
 	}
 
 	return *this;
@@ -337,7 +289,8 @@ NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 
 bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 {
-	bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
+	return this->toto->x == neuralNetwork.toto->x;
+	/*bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
 		&& this->lastError == neuralNetwork.lastError
 		&& this->learningRate == neuralNetwork.learningRate
 		&& this->clusteringRate == neuralNetwork.clusteringRate
@@ -357,12 +310,12 @@ bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 		&& this->outputs == neuralNetwork.outputs);
 
 	if (equal)
-		for (int l =  0; l < numberOfLayers; l++)
+		for (int l = 0; l < numberOfLayers; l++)
 		{
-			if(*this->layers[l] != *neuralNetwork.layers[l])
+			if (*this->layers[l] != *neuralNetwork.layers[l])
 				equal = false;
 		}
-	return equal;
+	return equal;*/
 }
 
 bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork) const

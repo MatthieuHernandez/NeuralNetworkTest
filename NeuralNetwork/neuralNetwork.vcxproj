@@ -77,7 +77,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;release;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library\Boost_1_68_0</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -127,12 +127,12 @@
       <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <QtMoc>
-      <IncludePath>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library;$(QTDIR)\include;release;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library\Boost_1_68_0</IncludePath>
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library;$(QTDIR)\include;debug;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library\Boost_1_68_0</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -150,6 +150,7 @@
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -172,7 +173,7 @@
       <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <QtMoc>
-      <IncludePath>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library;$(QTDIR)\include;debug;\include;$(QTDIR)\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>$(ProjectDir)src\Source Files;$(ProjectDir)src\Header Files;$(ProjectDir)External Library\Boost_1_68_0</IncludePath>
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="src\Header Files\layer.h" />
     <ClInclude Include="src\Header Files\neuralNetwork.h" />
     <ClInclude Include="src\Header Files\perceptron.h" />
+    <ClInclude Include="src\Header Files\test.h" />
     <ClInclude Include="src\Source Files\gaussian.h" />
     <ClInclude Include="src\Source Files\improvedSigmoid.h" />
     <ClInclude Include="src\Source Files\ReLU.h" />
@@ -193,6 +195,7 @@
     <ClCompile Include="src\Source Files\alltoall.cpp" />
     <ClCompile Include="src\Source Files\layer.cpp" />
     <ClCompile Include="src\Source Files\neuralNetwork.cpp" />
+    <ClCompile Include="src\Source Files\neuralNetworkLearning.cpp" />
     <ClCompile Include="src\Source Files\neuralNetworkGettersAndSetters.cpp" />
     <ClCompile Include="src\Source Files\perceptron.cpp" />
   </ItemGroup>

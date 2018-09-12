@@ -6,9 +6,17 @@
 
 class AllToAll : public Layer
 {
+private :
+
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, unsigned version);
+
+
 public :
 
-	AllToAll();
+	AllToAll() = default;
+	~AllToAll() = default;
 	AllToAll(int numberOfInputs, int numberOfNeurons, activationFunctionType function, float learningRate,
 	         float momentum);
 	std::vector<float>& output(const std::vector<float>& inputs) override;

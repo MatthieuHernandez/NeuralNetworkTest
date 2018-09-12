@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "GTestTools.h"
 #include "neuralNetwork.h"
-#include <valarray>
 
 using namespace std;
 
-TEST(SaveNeuralNetwork, EqualTest)
+// ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
+
+TEST(SaveNeuralNetwork, DISABLED_EqualTest)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
@@ -41,5 +42,13 @@ TEST(SaveNeuralNetwork, EqualTest)
 
 TEST(SaveNeuralNetwork, Save)
 {
-	//EXPECT_TRUE(false);
+	const vector<int> structureOfNetwork {5, 20, 10, 3};
+	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
+	NeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
+
+	A.saveAs("./testSave.bin");
+
+	NeuralNetwork B = NeuralNetwork::loadFrom("./testSave.bin");
+
+	EXPECT_TRUE(A == B) << "A == B";
 }

@@ -1,6 +1,4 @@
-#ifndef ACTIVATIONFUNCTIONS_H
-#define ACTIVATIONFUNCTIONS_H
-#include <vector>
+#pragma once
 
 enum activationFunctionType
 {
@@ -31,5 +29,3 @@ public :
 	virtual bool operator==(const ActivationFunction& activationFunction) const;
 	virtual bool operator!=(const ActivationFunction& activationFunction) const;
 };
-
-#endif // ACTIVATIONFUNCTIONS_H

@@ -1,6 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 #include "perceptron.h"
+#include <boost/serialization/access.hpp>
+
 
 enum LayerType
 {
@@ -9,6 +11,13 @@ enum LayerType
 
 class Layer
 {
+private :
+
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, unsigned version);
+
+
 protected:
 
 	int numberOfInputs = 0;
@@ -32,8 +41,8 @@ public:
 	virtual LayerType getType() const = 0;
 
 	virtual Layer& equal(const Layer& layer) = 0;
-	virtual bool operator==(const Layer& layer) const ;
-	virtual bool operator!=(const Layer& layer) const ;
+	virtual bool operator==(const Layer& layer) const;
+	virtual bool operator!=(const Layer& layer) const;
 };
 
 #endif // LAYER_H
