@@ -181,9 +181,8 @@ void MainWindow::on_pushButtonCompute_clicked()
 {
 	if (computeIsStop)
 	{
-		this->initializeInputs();
-		this->currentController->initializeNeuralNetwork();
-		this->resetGraphOfClusteringRate();
+		if(&currentController->getNeuralNetwork() == nullptr)
+			on_pushButtonReset_clicked();
 		computeIsStop = false;
 		this->startLoadingLogo();
 		const auto future = QtConcurrent::run([=]()
@@ -200,6 +199,21 @@ void MainWindow::on_pushButtonCompute_clicked()
 	{
 		stopCompute();
 	}
+}
+
+void MainWindow::on_pushButtonEvaluate_clicked()
+{
+	on_pushButtonReset_clicked();
+	this->startLoadingLogo();
+	const auto future = QtConcurrent::run([=]()
+	{
+		currentController->compute(&computeIsStop);
+	});
+	watcherCompute.setFuture(future);
+	timerForCount->start(250);
+	timerForTimeEdit->start();
+	ui->pushButtonCompute->setText("Stop");
+	ui->timeEdit->setTime(QTime(0, 0));
 }
 
 void MainWindow::on_pushButtonConsole_clicked()
@@ -291,6 +305,37 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 
 	watcherLoadingData.setFuture(futureLoadingData);
 	ui->spinBoxTrainingRating->setEnabled(true);
+}
+
+void MainWindow::on_pushButtonReset_clicked()
+{
+	this->initializeInputs();
+	this->currentController->initializeNeuralNetwork();
+	this->resetGraphOfClusteringRate();
+}
+void MainWindow::on_pushButtonSave_clicked()
+{
+	if(currentController->outputs.clusteringRate <= 0)
+	{
+		QMessageBox::warning(this, tr("Save Neural Network"), tr("Cannot save a neural network having never learned"), QMessageBox::Ok);
+		return;
+	}
+
+	QString data = ui->comboBoxData->currentText();
+	QString clustering_rate = QString::number(currentController->outputs.clusteringRate);
+	QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+	QString fileName = "./Save/" + data + "_" + clustering_rate + "_" + date;
+	fileName = QFileDialog::getSaveFileName(this,
+	                                        tr("Save Neural Network"), fileName,
+	                                        tr("Binary (*.bin);;All Files (*)"));
+}
+
+void MainWindow::on_pushButtonLoad_clicked()
+{
+	QString fileName = "./Save/";
+	fileName = QFileDialog::getSaveFileName(this,
+	                                        tr("Save Neural Network"), fileName,
+	                                        tr("Binary (*.bin);;All Files (*)"));
 }
 
 void MainWindow::updateGraphOfClusteringRate()

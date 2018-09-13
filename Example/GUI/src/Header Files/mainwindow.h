@@ -89,9 +89,15 @@ private slots:
 	void on_comboBoxActivationFunction_currentIndexChanged(int index);
 
 	void on_pushButtonCompute_clicked();
+	void on_pushButtonEvaluate_clicked();
+
 	void on_pushButtonConsole_clicked();
 
 	void on_pushButtonAddLayer_clicked();
+
+	void on_pushButtonReset_clicked();
+	void on_pushButtonSave_clicked();
+	void on_pushButtonLoad_clicked();
 
 	void stopCompute();
 	void endOfLoadingDataSet();

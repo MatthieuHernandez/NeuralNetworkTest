@@ -11,8 +11,8 @@ Q_OBJECT
 
 private :
 
-	std::unique_ptr<Data> data;
-	std::unique_ptr<NeuralNetwork> neuralNetwork;
+	std::unique_ptr<Data> data = nullptr;
+	std::unique_ptr<NeuralNetwork> neuralNetwork = nullptr;
 
 	void initializeData();
 
@@ -26,6 +26,9 @@ public:
 	void initializeNeuralNetwork();
 
 	void compute(bool* stop);
+	void save(QString fileName);
+	void load(QString fileName);
+	void evaluate();
 
 	NeuralNetwork& getNeuralNetwork() const;
 	Data& getData() const;

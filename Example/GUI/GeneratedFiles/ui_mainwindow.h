@@ -76,6 +76,8 @@ public:
     QLabel *label_3;
     QLabel *label_10;
     QDoubleSpinBox *spinBoxMomentum;
+    QPushButton *pushButtonSave;
+    QPushButton *pushButtonLoad;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -281,6 +283,12 @@ public:
         spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxMomentum->setDecimals(6);
         spinBoxMomentum->setMaximum(100);
+        pushButtonSave = new QPushButton(tab_4);
+        pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
+        pushButtonSave->setGeometry(QRect(100, 390, 70, 22));
+        pushButtonLoad = new QPushButton(tab_4);
+        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setGeometry(QRect(100, 360, 70, 22));
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
@@ -342,6 +350,8 @@ public:
 "function :", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
         label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
+        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
+        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 
