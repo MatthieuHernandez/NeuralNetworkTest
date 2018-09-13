@@ -63,6 +63,10 @@ public:
     QLabel *label_8;
     QDoubleSpinBox *doubleSpinBoxCR;
     QDoubleSpinBox *doubleSpinBoxCRM;
+    QPushButton *pushButtonEvaluate;
+    QPushButton *pushButtonLoad;
+    QPushButton *pushButtonSave;
+    QPushButton *pushButtonReset;
     QWidget *tab_4;
     QPushButton *pushButtonRemoveLayer;
     QLabel *label_2;
@@ -76,8 +80,6 @@ public:
     QLabel *label_3;
     QLabel *label_10;
     QDoubleSpinBox *spinBoxMomentum;
-    QPushButton *pushButtonSave;
-    QPushButton *pushButtonLoad;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -89,7 +91,7 @@ public:
         centralWidget->setMinimumSize(QSize(0, 0));
         pushButtonCompute = new QPushButton(centralWidget);
         pushButtonCompute->setObjectName(QStringLiteral("pushButtonCompute"));
-        pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
+        pushButtonCompute->setGeometry(QRect(720, 460, 70, 22));
         tabWidgetData = new QTabWidget(centralWidget);
         tabWidgetData->setObjectName(QStringLiteral("tabWidgetData"));
         tabWidgetData->setGeometry(QRect(180, 1, 670, 440));
@@ -119,7 +121,7 @@ public:
         label_5->setGeometry(QRect(340, 460, 71, 21));
         pushButtonConsole = new QPushButton(centralWidget);
         pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
-        pushButtonConsole->setGeometry(QRect(20, 460, 80, 22));
+        pushButtonConsole->setGeometry(QRect(20, 460, 70, 22));
         labelLoading = new QLabel(centralWidget);
         labelLoading->setObjectName(QStringLiteral("labelLoading"));
         labelLoading->setEnabled(true);
@@ -222,6 +224,18 @@ public:
         doubleSpinBoxCRM->setDecimals(3);
         doubleSpinBoxCRM->setMaximum(100);
         doubleSpinBoxCRM->setValue(0);
+        pushButtonEvaluate = new QPushButton(tab_3);
+        pushButtonEvaluate->setObjectName(QStringLiteral("pushButtonEvaluate"));
+        pushButtonEvaluate->setGeometry(QRect(0, 390, 70, 22));
+        pushButtonLoad = new QPushButton(tab_3);
+        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setGeometry(QRect(100, 360, 70, 22));
+        pushButtonSave = new QPushButton(tab_3);
+        pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
+        pushButtonSave->setGeometry(QRect(100, 390, 70, 22));
+        pushButtonReset = new QPushButton(tab_3);
+        pushButtonReset->setObjectName(QStringLiteral("pushButtonReset"));
+        pushButtonReset->setGeometry(QRect(100, 330, 70, 22));
         tabWidgetNeuralNetwork->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
@@ -283,19 +297,13 @@ public:
         spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxMomentum->setDecimals(6);
         spinBoxMomentum->setMaximum(100);
-        pushButtonSave = new QPushButton(tab_4);
-        pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
-        pushButtonSave->setGeometry(QRect(100, 390, 70, 22));
-        pushButtonLoad = new QPushButton(tab_4);
-        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
-        pushButtonLoad->setGeometry(QRect(100, 360, 70, 22));
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(1);
+        tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(2);
         comboBoxLayer->setCurrentIndex(0);
 
@@ -333,6 +341,10 @@ public:
         doubleSpinBoxCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxCRM->setSpecialValueText(QString());
         doubleSpinBoxCRM->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        pushButtonEvaluate->setText(QApplication::translate("MainWindow", "Evaluate", nullptr));
+        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
+        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
+        pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
@@ -350,8 +362,6 @@ public:
 "function :", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
         label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
-        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
-        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 

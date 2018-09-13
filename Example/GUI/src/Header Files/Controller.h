@@ -25,10 +25,10 @@ public:
 
 	void initializeNeuralNetwork();
 
-	void compute(bool* stop);
-	void save(QString fileName);
-	void load(QString fileName);
-	void evaluate();
+	void compute(const bool* stop);
+	void evaluate(const bool* stop);
+	void save(const QString& fileName);
+	void load(const QString& fileName);
 
 	NeuralNetwork& getNeuralNetwork() const;
 	Data& getData() const;
@@ -37,9 +37,9 @@ public:
 	{
 		std::vector<int> structure;
 		std::vector<activationFunctionType> activationFunction;
-		float learningRate;
-		float momentum;
-		int numberOfTrainbyRating;
+		float learningRate{};
+		float momentum{};
+		int numberOfTrainbyRating{};
 
 	} inputs;
 

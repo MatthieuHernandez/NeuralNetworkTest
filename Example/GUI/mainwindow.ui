@@ -183,7 +183,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -502,7 +502,33 @@
        <double>0.000000000000000</double>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonSave_2">
+     <widget class="QPushButton" name="pushButtonEvaluate">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>390</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Evaluate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonLoad">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>360</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Load...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonSave">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -512,7 +538,20 @@
        </rect>
       </property>
       <property name="text">
-       <string>Evaluate</string>
+       <string>Save...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonReset">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>330</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
       </property>
      </widget>
     </widget>
@@ -731,45 +770,6 @@ function :</string>
       </property>
       <property name="maximum">
        <double>100.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonSave">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>390</y>
-        <width>70</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Save...</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonLoad">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>360</y>
-        <width>70</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Load...</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonReset">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>330</y>
-        <width>70</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Reset</string>
       </property>
      </widget>
     </widget>

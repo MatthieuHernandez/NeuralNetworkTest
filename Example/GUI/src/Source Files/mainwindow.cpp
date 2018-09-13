@@ -71,7 +71,7 @@ void MainWindow::endOfLoadingDataSet()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
-	this->InitializeButtons();
+	this->initializeButtons();
 	ui->pushButtonCompute->setEnabled(true);
 
 	const auto widget = this->manager.getWidget(indexController);
@@ -84,15 +84,15 @@ void MainWindow::endOfLoadingDataSet()
 	this->write("data loaded");
 }
 
-void MainWindow::InitializeButtons()
+void MainWindow::initializeButtons()
 {
-	this->ResetComboBoxlayer();
-	this->InitializeLayerButtons(0);
+	this->resetComboBoxlayer();
+	this->initializeLayerButtons(0);
 	ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainbyRating);
 	ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainbyRating);
 };
 
-void MainWindow::ResetComboBoxlayer()
+void MainWindow::resetComboBoxlayer()
 {
 	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
@@ -105,7 +105,7 @@ void MainWindow::ResetComboBoxlayer()
 	ui->comboBoxLayer->setCurrentIndex(0);
 };
 
-void MainWindow::InitializeLayerButtons(const int layer)
+void MainWindow::initializeLayerButtons(const int layer)
 {
 	const int neuronsNumber = this->currentController->inputs.structure[layer];
 	ui->spinBoxNeurons->setValue(neuronsNumber);
@@ -133,17 +133,6 @@ void MainWindow::InitializeLayerButtons(const int layer)
 
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
 	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
-}
-
-void MainWindow::initializeInputs()
-{
-	const float learningRate = ui->spinBoxLearningRate->value();
-	const float momentum = ui->spinBoxMomentum->value();
-	const int numberOfTrainbyRating = ui->spinBoxTrainingRating->value();
-
-	this->currentController->inputs.learningRate = learningRate;
-	this->currentController->inputs.momentum = momentum;
-	this->currentController->inputs.numberOfTrainbyRating = numberOfTrainbyRating;
 }
 
 void MainWindow::initializeGraphOfClusteringRate()
@@ -181,9 +170,9 @@ void MainWindow::on_pushButtonCompute_clicked()
 {
 	if (computeIsStop)
 	{
+		computeIsStop = false;
 		if(&currentController->getNeuralNetwork() == nullptr)
 			on_pushButtonReset_clicked();
-		computeIsStop = false;
 		this->startLoadingLogo();
 		const auto future = QtConcurrent::run([=]()
 		{
@@ -203,11 +192,12 @@ void MainWindow::on_pushButtonCompute_clicked()
 
 void MainWindow::on_pushButtonEvaluate_clicked()
 {
-	on_pushButtonReset_clicked();
+	if(&currentController->getNeuralNetwork() == nullptr)
+			on_pushButtonReset_clicked();
 	this->startLoadingLogo();
 	const auto future = QtConcurrent::run([=]()
 	{
-		currentController->compute(&computeIsStop);
+		currentController->evaluate(&computeIsStop);
 	});
 	watcherCompute.setFuture(future);
 	timerForCount->start(250);
@@ -231,8 +221,8 @@ void MainWindow::on_pushButtonAddLayer_clicked()
 	this->currentController->inputs.structure.insert(it1 + index, value);
 	const auto fuction = this->currentController->inputs.activationFunction[index];
 	this->currentController->inputs.activationFunction.insert(it2 + index, fuction);
-	this->ResetComboBoxlayer();
-	this->InitializeLayerButtons(index + 1);
+	this->resetComboBoxlayer();
+	this->initializeLayerButtons(index + 1);
 }
 
 void MainWindow::on_pushButtonRemoveLayer_clicked()
@@ -246,15 +236,15 @@ void MainWindow::on_pushButtonRemoveLayer_clicked()
 		this->currentController->inputs.structure.erase(it1 + index);
 		this->currentController->inputs.activationFunction.erase(it2 + index);
 		index = ui->comboBoxLayer->currentIndex();
-		this->InitializeLayerButtons(index);
-		this->ResetComboBoxlayer();
-		this->InitializeLayerButtons(index);
+		this->initializeLayerButtons(index);
+		this->resetComboBoxlayer();
+		this->initializeLayerButtons(index);
 	}
 }
 
 void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 {
-	this->InitializeLayerButtons(index);
+	this->initializeLayerButtons(index);
 }
 
 void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
@@ -309,10 +299,10 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 
 void MainWindow::on_pushButtonReset_clicked()
 {
-	this->initializeInputs();
 	this->currentController->initializeNeuralNetwork();
 	this->resetGraphOfClusteringRate();
 }
+
 void MainWindow::on_pushButtonSave_clicked()
 {
 	if(currentController->outputs.clusteringRate <= 0)

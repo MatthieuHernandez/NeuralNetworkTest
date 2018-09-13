@@ -53,10 +53,9 @@ private:
 	bool firstLoading = true;
 
 	void startLoadingLogo();
-	void InitializeButtons();
-	void ResetComboBoxlayer();
-	void InitializeLayerButtons(int layer);
-	void initializeInputs();
+	void initializeButtons();
+	void resetComboBoxlayer();
+	void initializeLayerButtons(int layer);
 	void initializeGraphOfClusteringRate();
 	void resetGraphOfClusteringRate();
 	void refreshGraphOfClusteringRate();
