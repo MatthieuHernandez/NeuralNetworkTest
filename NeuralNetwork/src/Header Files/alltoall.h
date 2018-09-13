@@ -1,6 +1,4 @@
-#ifndef ALLTOALL_H
-#define ALLTOALL_H
-
+#pragma once
 #include "layer.h"
 #include "perceptron.h"
 
@@ -30,4 +28,9 @@ public :
 	bool operator!=(const AllToAll& layer) const;
 };
 
-#endif // ALLTOALL_H
+template <class Archive>
+void AllToAll::serialize(Archive& ar, const unsigned version)
+{
+	boost::serialization::void_cast_register<AllToAll, Layer>();
+	ar & boost::serialization::base_object<Layer>(*this);
+}

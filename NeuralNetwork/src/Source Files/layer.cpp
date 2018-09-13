@@ -7,17 +7,7 @@ Perceptron* Layer::getNeuron(int neuronNumber)
 	return &this->neurons[neuronNumber];
 }
 
-template<class Archive>
-void Layer::serialize(Archive & ar, const unsigned int version)
-{
-    ar & numberOfInputs ;
-	ar & numberOfNeurons;
-	//ar & errors;
-	//ar & outputs;
-	//ar & neurons;
-	ar & learningRate;
-	ar & momentum;
-}
+
 
 Layer& Layer::equal(const Layer& layer)
 {

@@ -1,6 +1,4 @@
-#ifndef PERCEPTRON_H
-#define PERCEPTRON_H
-
+#pragma once
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -28,13 +26,20 @@ private :
 	float momentum{};
 	float bias{};
 
+	activationFunctionType aFunctionType{};
 	ActivationFunction* activationFunction = nullptr;
 
 	float randomInitializeWeight() const;
 
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, const unsigned int version);;
+
 
 public :
 
+	Perceptron() = default;
+	~Perceptron() = default;
 	Perceptron(int numberOfInputs, activationFunctionType activationFunction, float learningRate, float momentum);
 	Perceptron(const Perceptron& perceptron);
 
@@ -63,4 +68,19 @@ public :
 	bool operator==(const Perceptron& perceptron) const;
 	bool operator!=(const Perceptron& perceptron) const;
 };
-#endif // PERCEPTRON_H
+
+template <class Archive>
+void Perceptron::serialize(Archive & ar, const unsigned int version)
+{
+	ar & weights;
+	ar & previousDeltaWeights;
+	ar & lastInputs;
+	ar & errors;
+	ar & lastOutput;
+	ar & numberOfInputs;
+	ar & learningRate;
+	ar & momentum;
+	ar & bias;
+	ar & aFunctionType;
+	this->activationFunction = ActivationFunction::create(aFunctionType);
+}

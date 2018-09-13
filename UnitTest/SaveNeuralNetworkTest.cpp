@@ -6,7 +6,7 @@ using namespace std;
 
 // ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
 
-TEST(SaveNeuralNetwork, DISABLED_EqualTest)
+TEST(SaveNeuralNetwork, EqualTest)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};

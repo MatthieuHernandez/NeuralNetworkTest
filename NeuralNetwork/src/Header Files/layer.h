@@ -1,5 +1,4 @@
-#ifndef LAYER_H
-#define LAYER_H
+#pragma once
 #include "perceptron.h"
 #include <boost/serialization/access.hpp>
 
@@ -15,7 +14,7 @@ private :
 
 	friend class boost::serialization::access;
 	template <class Archive>
-	void serialize(Archive& ar, unsigned version);
+	void serialize(Archive& ar, const unsigned int version);
 
 
 protected:
@@ -31,6 +30,7 @@ protected:
 
 public:
 
+
 	virtual ~Layer() = default;
 
 	virtual std::vector<float>& output(const std::vector<float>& inputs) = 0;
@@ -45,4 +45,14 @@ public:
 	virtual bool operator!=(const Layer& layer) const;
 };
 
-#endif // LAYER_H
+template <class Archive>
+void Layer::serialize(Archive& ar, const unsigned version)
+{
+	ar & numberOfInputs;
+	ar & numberOfNeurons;
+	ar & errors;
+	ar & outputs;
+	ar & learningRate;
+	ar & momentum;
+	ar & neurons;
+}

@@ -11,8 +11,6 @@ class NeuralNetwork
 {
 private :
 
-	Test* toto;
-
 	static bool isTheFirst;
 	static void initialize();
 

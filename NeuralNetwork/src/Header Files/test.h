@@ -1,12 +1,9 @@
 ﻿#pragma once
 #pragma warning(push, 0) 
 #include <boost/serialization/access.hpp>
-#include <boost/serialization/assume_abstract.hpp>
-#include <boost/serialization/void_cast.hpp>
 #include <boost/serialization/base_object.hpp>
 #pragma warning(pop)
 
-//BOOST_SERIALIZATION_ASSUME_ABSTRACT(Test)
 class Test
 {
 public :

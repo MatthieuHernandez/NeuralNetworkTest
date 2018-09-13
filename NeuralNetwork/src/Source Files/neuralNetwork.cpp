@@ -6,7 +6,6 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/vector.hpp>
-#include <boost/serialization/assume_abstract.hpp>
 #pragma warning(pop)
 #include "test.h"
 
@@ -32,7 +31,6 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
                              const float learningRate,
                              const float momentum)
 {
-	this->toto = new Test2(8, 15);
 	if (isTheFirst)
 		this->initialize();
 
@@ -168,10 +166,9 @@ void NeuralNetwork::serialize(Archive & ar, const unsigned int version)
     ar & errors;
     ar & outputs;
     ar & numberOfInput;
-	ar.template register_type<Test2>();
-	ar & toto;
-	((Test2*)toto)->serialize(ar, version);
-	//ar & layers[0];
+
+	ar.template register_type<AllToAll>();
+	ar & layers;
 }
 
 int NeuralNetwork::isValid()
@@ -289,8 +286,7 @@ NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 
 bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 {
-	return this->toto->x == neuralNetwork.toto->x;
-	/*bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
+	bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
 		&& this->lastError == neuralNetwork.lastError
 		&& this->learningRate == neuralNetwork.learningRate
 		&& this->clusteringRate == neuralNetwork.clusteringRate
@@ -315,7 +311,7 @@ bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 			if (*this->layers[l] != *neuralNetwork.layers[l])
 				equal = false;
 		}
-	return equal;*/
+	return equal;
 }
 
 bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork) const
