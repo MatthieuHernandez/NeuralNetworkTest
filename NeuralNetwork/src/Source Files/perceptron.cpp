@@ -184,13 +184,3 @@ bool Perceptron::operator!=(const Perceptron& perceptron) const
 	return !this->operator==(perceptron);
 }
 
-string Perceptron::display()
-{
-	string str = "Weight : ";
-	for (auto weight : weights)
-	{
-		str += to_string(weight) + " ";
-	}
-	str += "Bias : " + to_string(bias);
-	return str;
-}

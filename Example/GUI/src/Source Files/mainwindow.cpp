@@ -58,6 +58,7 @@ void MainWindow::stopCompute()
 	computeIsStop = true;
 	loadingLogo->stop();
 	timerForCount->stop();
+	this->enableModification(true);
 	ui->pushButtonCompute->setText("Compute");
 }
 
@@ -118,7 +119,7 @@ void MainWindow::initializeLayerButtons(const int layer)
 		ui->comboBoxActivationFunction->setCurrentIndex(function);
 		ui->comboBoxActivationFunction->blockSignals(false);
 		ui->comboBoxActivationFunction->show();
-		if (this->currentController->inputs.structure.size() - 1 == layer)
+		if (this->currentController->inputs.structure.size() - 1 == layer || !computeIsStop)
 			ui->spinBoxNeurons->setEnabled(false);
 		else
 			ui->spinBoxNeurons->setEnabled(true);
@@ -162,6 +163,20 @@ void MainWindow::refreshGraphOfClusteringRate()
 	ui->customPlot->replot();
 }
 
+void MainWindow::enableModification(const bool isEnable)
+{
+	ui->pushButtonReset->setEnabled(isEnable);
+	ui->pushButtonLoad->setEnabled(isEnable);
+	ui->pushButtonSave->setEnabled(isEnable);
+	ui->pushButtonEvaluate->setEnabled(isEnable);
+	ui->pushButtonAddLayer->setEnabled(isEnable);
+	ui->pushButtonRemoveLayer->setEnabled(isEnable);
+	ui->spinBoxNeurons->setEnabled(isEnable);
+	ui->comboBoxActivationFunction->setEnabled(isEnable);
+	ui->spinBoxLearningRate->setEnabled(isEnable);
+	ui->spinBoxMomentum->setEnabled(isEnable);
+}
+
 /**************************************************
  *				  	    SLOTS				  	  *
  **************************************************/
@@ -171,9 +186,10 @@ void MainWindow::on_pushButtonCompute_clicked()
 	if (computeIsStop)
 	{
 		computeIsStop = false;
-		if(&currentController->getNeuralNetwork() == nullptr)
+		if (&currentController->getNeuralNetwork() == nullptr)
 			on_pushButtonReset_clicked();
 		this->startLoadingLogo();
+		this->enableModification(false);
 		const auto future = QtConcurrent::run([=]()
 		{
 			currentController->compute(&computeIsStop);
@@ -192,8 +208,8 @@ void MainWindow::on_pushButtonCompute_clicked()
 
 void MainWindow::on_pushButtonEvaluate_clicked()
 {
-	if(&currentController->getNeuralNetwork() == nullptr)
-			on_pushButtonReset_clicked();
+	if (&currentController->getNeuralNetwork() == nullptr)
+		on_pushButtonReset_clicked();
 	this->startLoadingLogo();
 	const auto future = QtConcurrent::run([=]()
 	{
@@ -305,9 +321,10 @@ void MainWindow::on_pushButtonReset_clicked()
 
 void MainWindow::on_pushButtonSave_clicked()
 {
-	if(currentController->outputs.clusteringRate <= 0)
+	if (currentController->outputs.clusteringRate <= 0)
 	{
-		QMessageBox::warning(this, tr("Save Neural Network"), tr("Cannot save a neural network having never learned"), QMessageBox::Ok);
+		QMessageBox::warning(this, tr("Save Neural Network"), tr("Cannot save a neural network having never learned"),
+		                     QMessageBox::Ok);
 		return;
 	}
 

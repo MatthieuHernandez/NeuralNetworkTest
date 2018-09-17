@@ -60,7 +60,7 @@ private:
 	void resetGraphOfClusteringRate();
 	void refreshGraphOfClusteringRate();
 
-	void clearLayout(QLayout *layout);
+	void enableModification(bool isEnable);
 
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;

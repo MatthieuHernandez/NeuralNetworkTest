@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <string>
 #include <cstdlib>
 #include "activationFunction.h"
 
@@ -49,7 +48,6 @@ public :
 
 	void addAWeight();
 	int isValid();
-	std::string display();
 
 	ActivationFunction* getActivationFunction();
 
@@ -70,7 +68,7 @@ public :
 };
 
 template <class Archive>
-void Perceptron::serialize(Archive & ar, const unsigned int version)
+void Perceptron::serialize(Archive& ar, const unsigned int version)
 {
 	ar & weights;
 	ar & previousDeltaWeights;

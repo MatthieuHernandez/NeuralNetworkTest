@@ -26,7 +26,7 @@ void Data::shuffle()
 	if (indexes.empty())
 	{
 		indexes.resize(sets[training].size);
-		for (int i = 0; i < indexes.size(); i++)
+		for (int i = 0; i < static_cast<int>(indexes.size()); i++)
 			indexes[i] = i;
 	}
 
@@ -36,7 +36,7 @@ void Data::shuffle()
 void Data::unshuffle()
 {
 	indexes.resize(sets[training].size);
-	for (int i = 0; i < indexes.size(); i++)
+	for (int i = 0; i < static_cast<int>(indexes.size()); i++)
 		indexes[i] = i;
 }
 

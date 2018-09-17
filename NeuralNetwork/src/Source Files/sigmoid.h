@@ -12,11 +12,13 @@ public:
 
 	float function(const float x) const override
 	{
-		return 1.0f / (1.0f + exp(-x));
+		auto a = 1.0f / (1.0f + exp(-x));
+		return a;
 	}
 
 	float derivate(const float x) const override
 	{
-		return exp(-x) / pow((exp(-x) + 1.0f), 2);
+		auto b =  exp(-x) / pow((exp(-x) + 1.0f), 2);
+		return b;
 	}
 };
