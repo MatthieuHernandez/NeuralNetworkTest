@@ -28,8 +28,8 @@ void DataManager::initializeInputsNNs(int index)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
-			iSigmoid,
-			iSigmoid
+			sigmoid,
+			sigmoid
 		};
 		controllers[index]->inputs.learningRate = 0.1f;
 		controllers[index]->inputs.momentum = 0.0;
@@ -63,8 +63,8 @@ void DataManager::initializeInputsNNs(int index)
 		};
 		controllers[index]->inputs.activationFunction = vector<activationFunction>
 		{
-			iSigmoid,
-			iSigmoid,
+			sigmoid,
+			sigmoid,
 			sigmoid
 		};
 		controllers[index]->inputs.learningRate = 0.1f;

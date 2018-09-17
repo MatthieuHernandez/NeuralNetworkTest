@@ -20,6 +20,7 @@ Iris/
 Wine/
 CIFAR-10/
 numerai/
+boost/
 moc*
 .vs/
 !*.sln
