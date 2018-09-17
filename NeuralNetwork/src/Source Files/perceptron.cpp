@@ -44,7 +44,7 @@ float Perceptron::output(const vector<float>& inputs)
 	}
 	sum += bias;
 	sum = activationFunction->function(sum);
-	lastOutput = sum;²
+	lastOutput = sum;
 	return sum;
 }
 
