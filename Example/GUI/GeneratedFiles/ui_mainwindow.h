@@ -38,6 +38,7 @@ public:
     QTabWidget *tabWidgetData;
     QWidget *tab;
     QCustomPlot *customPlot;
+    QPushButton *pushButtonResetGraph;
     QWidget *tab_2;
     QWidget *gridLayoutWidget;
     QGridLayout *layout;
@@ -99,7 +100,15 @@ public:
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(0, 0, 660, 420));
+        customPlot->setGeometry(QRect(0, -1, 665, 420));
+        pushButtonResetGraph = new QPushButton(customPlot);
+        pushButtonResetGraph->setObjectName(QStringLiteral("pushButtonResetGraph"));
+        pushButtonResetGraph->setEnabled(false);
+        pushButtonResetGraph->setGeometry(QRect(643, 0, 22, 22));
+        QIcon icon;
+        icon.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonResetGraph->setIcon(icon);
+        pushButtonResetGraph->setCheckable(false);
         tabWidgetData->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -242,8 +251,6 @@ public:
         pushButtonRemoveLayer = new QPushButton(tab_4);
         pushButtonRemoveLayer->setObjectName(QStringLiteral("pushButtonRemoveLayer"));
         pushButtonRemoveLayer->setGeometry(QRect(150, 10, 22, 22));
-        QIcon icon;
-        icon.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButtonRemoveLayer->setIcon(icon);
         label_2 = new QLabel(tab_4);
         label_2->setObjectName(QStringLiteral("label_2"));
@@ -315,6 +322,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        pushButtonResetGraph->setText(QString());
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));

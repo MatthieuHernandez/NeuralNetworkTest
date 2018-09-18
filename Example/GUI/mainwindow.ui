@@ -53,11 +53,34 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>660</width>
+        <y>-1</y>
+        <width>665</width>
         <height>420</height>
        </rect>
       </property>
+      <widget class="QPushButton" name="pushButtonResetGraph">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>643</x>
+         <y>0</y>
+         <width>22</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Extra Files/cancel-circle-20.png</normaloff>Extra Files/cancel-circle-20.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

@@ -59,6 +59,7 @@ void MainWindow::stopCompute()
 	loadingLogo->stop();
 	timerForCount->stop();
 	this->enableModification(true);
+	ui->pushButtonResetGraph->setEnabled(true);
 	ui->pushButtonCompute->setText("Compute");
 }
 
@@ -149,17 +150,10 @@ void MainWindow::initializeGraphOfClusteringRate()
 	updateGraphOfClusteringRate();
 }
 
-void MainWindow::resetGraphOfClusteringRate()
-{
-	x.clear();
-	y.clear();
-	this->refreshGraphOfClusteringRate();
-}
-
 void MainWindow::refreshGraphOfClusteringRate()
 {
 	ui->customPlot->graph(0)->setData(x, y);
-	ui->customPlot->xAxis->setRange(0, currentController->outputs.numberOfIteration);
+	ui->customPlot->xAxis->setRange(0, y.size());
 	ui->customPlot->replot();
 }
 
@@ -197,6 +191,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 		watcherCompute.setFuture(future);
 		timerForCount->start(250);
 		timerForTimeEdit->start();
+		ui->pushButtonResetGraph->setEnabled(false);
 		ui->pushButtonCompute->setText("Stop");
 		ui->timeEdit->setTime(QTime(0, 0));
 	}
@@ -226,6 +221,14 @@ void MainWindow::on_pushButtonConsole_clicked()
 {
 	console->show();
 	console->activateWindow();
+}
+
+void MainWindow::on_pushButtonResetGraph_clicked()
+{
+	x.clear();
+	y.clear();
+	ui->pushButtonResetGraph->setEnabled(false);
+	this->refreshGraphOfClusteringRate();
 }
 
 void MainWindow::on_pushButtonAddLayer_clicked()
@@ -316,7 +319,7 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 void MainWindow::on_pushButtonReset_clicked()
 {
 	this->currentController->initializeNeuralNetwork();
-	this->resetGraphOfClusteringRate();
+	this->on_pushButtonResetGraph_clicked();
 }
 
 void MainWindow::on_pushButtonSave_clicked()
@@ -340,7 +343,7 @@ void MainWindow::on_pushButtonSave_clicked()
 void MainWindow::on_pushButtonLoad_clicked()
 {
 	QString fileName = "./Save/";
-	fileName = QFileDialog::getSaveFileName(this,
+	fileName = QFileDialog::getOpenFileName(this,
 	                                        tr("Save Neural Network"), fileName,
 	                                        tr("Binary (*.bin);;All Files (*)"));
 }
@@ -352,7 +355,7 @@ void MainWindow::updateGraphOfClusteringRate()
 	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
 	ui->doubleSpinBoxCR->setValue(CR);
 	ui->doubleSpinBoxCRM->setValue(CRM);
-	x.push_back(currentController->outputs.numberOfIteration);
+	x.push_back(y.size());
 	y.push_back(CR);
 	this->refreshGraphOfClusteringRate();
 	this->currentController->blockSignals(false);
