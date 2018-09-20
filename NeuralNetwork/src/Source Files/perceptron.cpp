@@ -3,6 +3,11 @@
 
 using namespace std;
 
+Perceptron::~Perceptron()
+{
+	delete this->activationFunction;
+}
+
 Perceptron::Perceptron(const int numberOfInputs,
                        activationFunctionType activationFunction,
                        const float learningRate,

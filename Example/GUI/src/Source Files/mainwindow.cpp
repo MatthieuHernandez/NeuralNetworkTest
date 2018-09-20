@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	ui->tabWidgetData->setCurrentIndex(0);
 	ui->tabWidgetNeuralNetwork->setCurrentIndex(0);
+	this->enableModification(true);
 }
 
 MainWindow::~MainWindow()
@@ -58,8 +59,9 @@ void MainWindow::stopCompute()
 	computeIsStop = true;
 	loadingLogo->stop();
 	timerForCount->stop();
-	this->enableModification(true);
+	this->refreshClusteringRate();
 	ui->pushButtonResetGraph->setEnabled(true);
+	this->enableModification(true);
 	ui->pushButtonCompute->setText("Compute");
 }
 
@@ -74,6 +76,7 @@ void MainWindow::endOfLoadingDataSet()
 	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
 	this->initializeButtons();
+	this->on_pushButtonResetGraph_clicked();
 	ui->pushButtonCompute->setEnabled(true);
 
 	const auto widget = this->manager.getWidget(indexController);
@@ -82,7 +85,7 @@ void MainWindow::endOfLoadingDataSet()
 	widget->show();
 
 	ui->tabWidgetNeuralNetwork->setEnabled(true);
-	ui->comboBoxData->setEnabled(true);
+	this->enableModification(true);
 	this->write("data loaded");
 }
 
@@ -153,12 +156,21 @@ void MainWindow::initializeGraphOfClusteringRate()
 void MainWindow::refreshGraphOfClusteringRate()
 {
 	ui->customPlot->graph(0)->setData(x, y);
-	ui->customPlot->xAxis->setRange(0, y.size());
+	ui->customPlot->xAxis->setRange(0, y.empty() ? 1 : y.size() - 1);
 	ui->customPlot->replot();
+}
+
+void MainWindow::refreshClusteringRate()
+{
+	auto CR = this->currentController->outputs.clusteringRate * 100.0f;
+	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
+	ui->doubleSpinBoxCR->setValue(CR);
+	ui->doubleSpinBoxCRM->setValue(CRM);
 }
 
 void MainWindow::enableModification(const bool isEnable)
 {
+	ui->comboBoxData->setEnabled(isEnable);
 	ui->pushButtonReset->setEnabled(isEnable);
 	ui->pushButtonLoad->setEnabled(isEnable);
 	ui->pushButtonSave->setEnabled(isEnable);
@@ -181,7 +193,13 @@ void MainWindow::on_pushButtonCompute_clicked()
 	{
 		computeIsStop = false;
 		if (&currentController->getNeuralNetwork() == nullptr)
-			on_pushButtonReset_clicked();
+		{
+			this->on_pushButtonResetGraph_clicked();
+			this->currentController->initializeNeuralNetwork();
+			this->refreshClusteringRate();
+			ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
+			ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+		}
 		this->startLoadingLogo();
 		this->enableModification(false);
 		const auto future = QtConcurrent::run([=]()
@@ -203,18 +221,28 @@ void MainWindow::on_pushButtonCompute_clicked()
 
 void MainWindow::on_pushButtonEvaluate_clicked()
 {
-	if (&currentController->getNeuralNetwork() == nullptr)
-		on_pushButtonReset_clicked();
-	this->startLoadingLogo();
-	const auto future = QtConcurrent::run([=]()
+	if (computeIsStop)
 	{
-		currentController->evaluate(&computeIsStop);
-	});
-	watcherCompute.setFuture(future);
-	timerForCount->start(250);
-	timerForTimeEdit->start();
-	ui->pushButtonCompute->setText("Stop");
-	ui->timeEdit->setTime(QTime(0, 0));
+		computeIsStop = false;
+		if (&currentController->getNeuralNetwork() == nullptr)
+		{
+			this->on_pushButtonResetGraph_clicked();
+			this->currentController->initializeNeuralNetwork();
+			this->refreshClusteringRate();
+			ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
+			ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+		}
+		this->startLoadingLogo();
+		const auto future = QtConcurrent::run([=]()
+		{
+			currentController->evaluate(&computeIsStop);
+		});
+		watcherCompute.setFuture(future);
+		timerForCount->start(250);
+		timerForTimeEdit->start();
+		ui->pushButtonCompute->setText("Stop");
+		ui->timeEdit->setTime(QTime(0, 0));
+	}
 }
 
 void MainWindow::on_pushButtonConsole_clicked()
@@ -303,22 +331,23 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
 	this->write("loading ...");
 	indexController = index;
-	ui->pushButtonCompute->setEnabled(false);
-	ui->comboBoxData->setEnabled(false);
+	this->enableModification(false);
+	ui->spinBoxTrainingRating->setEnabled(true);
 	ui->tabWidgetNeuralNetwork->setEnabled(false);
-
 	const QFuture<void> futureLoadingData = QtConcurrent::run([=]()
 	{
 		currentController = this->manager.getController(indexController);
 	});
-
 	watcherLoadingData.setFuture(futureLoadingData);
-	ui->spinBoxTrainingRating->setEnabled(true);
 }
 
 void MainWindow::on_pushButtonReset_clicked()
 {
-	this->currentController->initializeNeuralNetwork();
+	this->currentController->DeleteNeuralNetwork();
+	this->enableModification(true);
+	ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
+	ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+	this->refreshClusteringRate();
 	this->on_pushButtonResetGraph_clicked();
 }
 
@@ -338,6 +367,7 @@ void MainWindow::on_pushButtonSave_clicked()
 	fileName = QFileDialog::getSaveFileName(this,
 	                                        tr("Save Neural Network"), fileName,
 	                                        tr("Binary (*.bin);;All Files (*)"));
+	this->currentController->save(fileName);
 }
 
 void MainWindow::on_pushButtonLoad_clicked()
@@ -346,17 +376,20 @@ void MainWindow::on_pushButtonLoad_clicked()
 	fileName = QFileDialog::getOpenFileName(this,
 	                                        tr("Save Neural Network"), fileName,
 	                                        tr("Binary (*.bin);;All Files (*)"));
+	if (fileName != nullptr)
+	{
+		this->currentController->load(fileName);
+		this->on_pushButtonResetGraph_clicked();
+		this->refreshClusteringRate();
+	}
 }
 
 void MainWindow::updateGraphOfClusteringRate()
 {
 	this->currentController->blockSignals(true);
-	auto CR = this->currentController->outputs.clusteringRate * 100.0f;
-	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
-	ui->doubleSpinBoxCR->setValue(CR);
-	ui->doubleSpinBoxCRM->setValue(CRM);
+	this->refreshClusteringRate();
 	x.push_back(y.size());
-	y.push_back(CR);
+	y.push_back(ui->doubleSpinBoxCR->value());
 	this->refreshGraphOfClusteringRate();
 	this->currentController->blockSignals(false);
 }

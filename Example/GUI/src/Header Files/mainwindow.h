@@ -58,6 +58,7 @@ private:
 	void initializeLayerButtons(int layer);
 	void initializeGraphOfClusteringRate();
 	void refreshGraphOfClusteringRate();
+	void refreshClusteringRate();
 
 	void enableModification(bool isEnable);
 

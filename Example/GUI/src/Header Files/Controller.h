@@ -15,6 +15,8 @@ private :
 	std::unique_ptr<NeuralNetwork> neuralNetwork = nullptr;
 
 	void initializeData();
+	void resetOutput();
+	
 
 public:
 
@@ -22,7 +24,7 @@ public:
 	virtual ~Controller() = default;
 
 	
-
+	void DeleteNeuralNetwork();
 	void initializeNeuralNetwork();
 
 	void compute(const bool* stop);

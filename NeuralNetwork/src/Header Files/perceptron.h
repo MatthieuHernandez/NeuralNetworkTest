@@ -38,7 +38,7 @@ private :
 public :
 
 	Perceptron() = default;
-	~Perceptron() = default;
+	~Perceptron();
 	Perceptron(int numberOfInputs, activationFunctionType activationFunction, float learningRate, float momentum);
 	Perceptron(const Perceptron& perceptron);
 
