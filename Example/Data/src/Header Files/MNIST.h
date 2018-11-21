@@ -3,9 +3,10 @@
 
 #include <string>
 #include <iomanip>
-#include <exception>
 #include "DataForClassification.h"
+#include <sstream>
 
+// ReSharper disable once CppInconsistentNaming
 class MNIST : public DataForClassification
 {
 private :
@@ -21,7 +22,7 @@ template <typename T>
 std::string to_string_with_precision(const T value, const int n = 3)
 {
 	std::ostringstream out;
-	out << fixed << std::setprecision(n) << value;
+	out << std::fixed << std::setprecision(n) << value;
 	return out.str();
 }
 

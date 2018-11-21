@@ -95,7 +95,7 @@ TEST_F(CurrencyTest, DISABLED_InputTest)
 	}
 
 	const auto actualDataSize = data->sets[training].size;
-	const auto expectedDataSize = data->getNumbrOfLines() - data->getNumberOfGaps()*(data->numberOfInputRates) - sizeOfInput + 1;
+	const auto expectedDataSize = data->getNumberOfLines() - data->getNumberOfGaps()*(data->numberOfInputRates) - sizeOfInput + 1;
 
 	// Assert
 	EXPECT_EQ(sizeOfInput, 66);
