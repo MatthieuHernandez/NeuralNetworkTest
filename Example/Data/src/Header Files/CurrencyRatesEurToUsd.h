@@ -28,7 +28,7 @@ private:
 	QDateTime& getDateTimeFromLine(std::string& line);
 
 	std::vector<float> dataTemp;
-	std::vector<float> ouputTemp;
+	std::vector<float> outputTemp;
 
 	void createData();
 	bool isAGap(const int index);
@@ -47,7 +47,7 @@ public:
 	std::string path[1] = {"../Data/EURUSD/DAT_ASCII_EURUSD_M1_2016.csv"};
 
 	CurrencyRatesEurToUsd();
-	~CurrencyRatesEurToUsd();
+	~CurrencyRatesEurToUsd() {}
 
 	void loadData() override;
 	void loadCSV(int year);

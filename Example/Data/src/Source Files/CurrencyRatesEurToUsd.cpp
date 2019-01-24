@@ -10,7 +10,7 @@ CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 	this->sizeOfData = numberOfInputRates + dateTimeSize;
 	this->numberOfLabel = 1;
 	this->dataTemp.resize(this->sizeOfData);
-	this->ouputTemp.resize(1);
+	this->outputTemp.resize(1);
 }
 
 void CurrencyRatesEurToUsd::loadData()
@@ -33,14 +33,14 @@ void CurrencyRatesEurToUsd::loadCSV(int year)
 	getline(file, line);
 	while (getline(file, line, ';'))
 	{
-		this->dateTimes.push_back(this->getDateTimeFromLine(line));
+		this->dateTimes.push_back(this->getDateTimeFromLine(line)); // DateTime Stamp
 
-		getline(file, line, ';');
-		getline(file, line, ';');
-		getline(file, line, ';');
-		getline(file, line, ';');
+		getline(file, line, ';'); // Bar OPEN Bid Quote;
+		getline(file, line, ';'); // Bar HIGH Bid Quote;
+		getline(file, line, ';'); // Bar LOW Bid Quote;
+		getline(file, line, ';'); // Bar CLOSE Bid Quote;
 		this->rates.push_back(stof(line));
-		getline(file, line);
+		getline(file, line); // Volume (always 0)
 
 		if (line != "0")
 			throw exception(("Parsing error : " + path[0]).c_str());
@@ -113,7 +113,7 @@ void CurrencyRatesEurToUsd::createTrainingData(const int index)
 
 void CurrencyRatesEurToUsd::createTrainingOutputs(const int index)
 {
-	this->ouputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor / 5.0f;
+	this->outputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor / 5.0f;
 
-	this->sets[training].labels.push_back(this->ouputTemp);
+	this->sets[training].labels.push_back(this->outputTemp);
 }
