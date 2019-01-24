@@ -53,14 +53,14 @@ private:
 	bool firstLoading = true;
 
 	void startLoadingLogo();
-	void InitializeButtons();
-	void ResetComboBoxlayer();
-	void InitializeLayerButtons(int layer);
-	void initializeInputs();
+	void initializeButtons();
+	void resetComboBoxlayer();
+	void initializeLayerButtons(int layer);
 	void initializeGraphOfClusteringRate();
-	void resetGraphOfClusteringRate();
+	void refreshGraphOfClusteringRate();
+	void refreshClusteringRate();
 
-	void clearLayout(QLayout *layout);
+	void enableModification(bool isEnable);
 
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
@@ -82,15 +82,21 @@ private slots:
 	void on_spinBoxMomentum_valueChanged(double value);
 	void on_spinBoxTrainingRating_valueChanged(int value);
 
-	void on_pushButtonRemoveLayer_clicked();
-
 	void on_comboBoxLayer_currentIndexChanged(int index);
 	void on_comboBoxActivationFunction_currentIndexChanged(int index);
 
 	void on_pushButtonCompute_clicked();
+	void on_pushButtonEvaluate_clicked();
+
 	void on_pushButtonConsole_clicked();
+	void on_pushButtonResetGraph_clicked();
 
 	void on_pushButtonAddLayer_clicked();
+	void on_pushButtonRemoveLayer_clicked();
+
+	void on_pushButtonReset_clicked();
+	void on_pushButtonSave_clicked();
+	void on_pushButtonLoad_clicked();
 
 	void stopCompute();
 	void endOfLoadingDataSet();

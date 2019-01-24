@@ -20,13 +20,13 @@ void DataManager::initializeInputsNNs(int index)
 	switch (index)
 	{
 	case indexIris:
-		controllers[index]->inputs.structure = vector<unsigned int>
+		controllers[index]->inputs.structure = vector<int>
 		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			controllers[index]->getData().sizeOfData,
 			13,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid
@@ -36,14 +36,14 @@ void DataManager::initializeInputsNNs(int index)
 		break;
 
 	case indexWine:
-		controllers[index]->inputs.structure = vector<unsigned int>
+		controllers[index]->inputs.structure = vector<int>
 		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			controllers[index]->getData().sizeOfData,
 			20,
 			8,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
@@ -54,14 +54,14 @@ void DataManager::initializeInputsNNs(int index)
 		break;
 
 	case indexMNIST:
-		controllers[index]->inputs.structure = vector<unsigned int>
+		controllers[index]->inputs.structure = vector<int>
 		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			controllers[index]->getData().sizeOfData,
 			150,
 			80,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
@@ -72,14 +72,14 @@ void DataManager::initializeInputsNNs(int index)
 		break;
 
 	case indexCIFAR_10:
-		controllers[index]->inputs.structure = vector<unsigned int>
+		controllers[index]->inputs.structure = vector<int>
 		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			controllers[index]->getData().sizeOfData,
 			150,
 			80,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
@@ -90,14 +90,14 @@ void DataManager::initializeInputsNNs(int index)
 		break;
 
 	case indexCurrencyRates:
-		controllers[index]->inputs.structure = vector<unsigned int>
+		controllers[index]->inputs.structure = vector<int>
 		{
-			static_cast<unsigned int>(controllers[index]->getData().sizeOfData),
+			controllers[index]->getData().sizeOfData,
 			250,
 			60,
-			static_cast<unsigned int>(controllers[index]->getData().numberOfLabel)
+			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunction>
+		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,

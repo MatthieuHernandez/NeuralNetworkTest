@@ -11,10 +11,12 @@ Q_OBJECT
 
 private :
 
-	std::unique_ptr<Data> data;
-	std::unique_ptr<NeuralNetwork> neuralNetwork;
+	std::unique_ptr<Data> data = nullptr;
+	std::unique_ptr<NeuralNetwork> neuralNetwork = nullptr;
 
 	void initializeData();
+	void resetOutput();
+	
 
 public:
 
@@ -22,27 +24,30 @@ public:
 	virtual ~Controller() = default;
 
 	
-
+	void DeleteNeuralNetwork();
 	void initializeNeuralNetwork();
 
-	void compute(bool* stop);
+	void compute(const bool* stop);
+	void evaluate(const bool* stop);
+	void save(const QString& fileName);
+	void load(const QString& fileName);
 
 	NeuralNetwork& getNeuralNetwork() const;
 	Data& getData() const;
 
 	struct Inputs
 	{
-		std::vector<unsigned int> structure;
-		std::vector<activationFunction> activationFunction;
-		float learningRate;
-		float momentum;
-		uint numberOfTrainbyRating;
+		std::vector<int> structure;
+		std::vector<activationFunctionType> activationFunction;
+		float learningRate{};
+		float momentum{};
+		int numberOfTrainbyRating{};
 
 	} inputs;
 
 	struct Ouputs
 	{
-		uint currentIndex = 0;
+		int currentIndex = 0;
 		int numberOfIteration = 0;
 		float clusteringRate = -1.0f;
 		float clusteringRateMax = -1.0f;

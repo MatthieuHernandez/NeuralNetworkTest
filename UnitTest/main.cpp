@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "GTestTools.h"
 
 int main(int ac, char* av[])
 {

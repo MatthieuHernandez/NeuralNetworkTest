@@ -3,13 +3,17 @@
 
 using namespace std;
 
-Perceptron::Perceptron(const uint numberOfInputs, 
-					   ActivationFunction *activationFunction, 
-					   const float learningRate, 
-					   const float momentum)
+Perceptron::~Perceptron()
+{
+	delete this->activationFunction;
+}
+
+Perceptron::Perceptron(const int numberOfInputs,
+                       activationFunctionType activationFunction,
+                       const float learningRate,
+                       const float momentum)
 {
 	this->numberOfInputs = numberOfInputs;
-	this->activationFunction = activationFunction;
 	this->learningRate = learningRate;
 	this->momentum = momentum;
 
@@ -18,17 +22,26 @@ Perceptron::Perceptron(const uint numberOfInputs,
 	this->errors.resize(numberOfInputs, 0);
 	lastOutput = 0;
 
+	this->aFunctionType = activationFunction;
+	this->activationFunction = ActivationFunction::create(activationFunction);
+
+
 	this->weights.resize(numberOfInputs);
-	for(auto &&w : weights)
+	for (auto&& w : weights)
 	{
 		w = randomInitializeWeight();
 	}
 	this->bias = 1.0f;
 }
 
+Perceptron::Perceptron(const Perceptron& perceptron)
+{
+	this->operator=(perceptron);
+}
+
 float Perceptron::randomInitializeWeight() const
 {
-	const float rangeMax = 2.4f / sqrt(this->numberOfInputs);
+	const float rangeMax = 2.4f / sqrt(static_cast<float>(this->numberOfInputs));
 	return (rand() / static_cast<float>(RAND_MAX) * 2.0f - 1.0f) * rangeMax;
 }
 
@@ -36,13 +49,13 @@ float Perceptron::output(const vector<float>& inputs)
 {
 	lastInputs = inputs;
 	float sum = 0;
-	for (uint w = 0; w < numberOfInputs; ++w)
+	for (int w = 0; w < numberOfInputs; ++w)
 	{
 		sum += inputs[w] * weights[w];
 	}
 	sum += bias;
-	sum = activationFunction->function(sum);
 	lastOutput = sum;
+	sum = activationFunction->function(sum);
 	return sum;
 }
 
@@ -51,7 +64,7 @@ std::vector<float>& Perceptron::backOutput(float error)
 	error = error * activationFunction->derivate(lastOutput);
 	this->train(lastInputs, error);
 
-	for (uint w = 0; w < numberOfInputs; ++w)
+	for (int w = 0; w < numberOfInputs; ++w)
 	{
 		errors[w] = error * weights[w];
 	}
@@ -60,17 +73,12 @@ std::vector<float>& Perceptron::backOutput(float error)
 
 void Perceptron::train(const std::vector<float>& inputs, const float error)
 {
-	for (uint w = 0; w < numberOfInputs; ++w)
+	for (int w = 0; w < numberOfInputs; ++w)
 	{
-		//if (abs(weights[w]) < abs(100000))
-		//{
-			auto deltaWeights = learningRate * error * inputs[w];
-			deltaWeights += momentum * previousDeltaWeights[w];
-			weights[w] += deltaWeights;
-			previousDeltaWeights[w] = deltaWeights;
-		//}
-		//else
-		//	throw std::exception();
+		auto deltaWeights = learningRate * error * inputs[w];
+		deltaWeights += momentum * previousDeltaWeights[w];
+		weights[w] += deltaWeights;
+		previousDeltaWeights[w] = deltaWeights;
 	}
 }
 
@@ -80,21 +88,21 @@ void Perceptron::addAWeight()
 	weights.push_back(randomInitializeWeight());
 }
 
-uint Perceptron::isValid()
+int Perceptron::isValid()
 {
 	if (bias != 1 && bias != 0)
 	{
 		cout << bias << endl;
 		return 4;
 	}
-	if (numberOfInputs < 1 || numberOfInputs != weights.size())
+	if (numberOfInputs < 1 || numberOfInputs != static_cast<int>(weights.size()))
 	{
 		cout << numberOfInputs << endl;
 		cout << weights.size() << endl;
 		cout << "" << endl;
 		return 6;
 	}
-	for (uint w = 0; w < numberOfInputs; w++)
+	for (int w = 0; w < numberOfInputs; w++)
 	{
 		if (weights[w] < -100000 || weights[w] > 10000)
 		{
@@ -115,12 +123,17 @@ void Perceptron::setWeights(const vector<float>& weights)
 	this->weights = weights;
 }
 
-float Perceptron::getWeight(const uint w) const
+ActivationFunction* Perceptron::getActivationFunction()
+{
+	return this->activationFunction;
+}
+
+float Perceptron::getWeight(const int w) const
 {
 	return weights[w];
 }
 
-void Perceptron::setWeight(const uint w, const float weight)
+void Perceptron::setWeight(const int w, const float weight)
 {
 	this->weights[w] = weight;
 }
@@ -135,35 +148,44 @@ void Perceptron::setBias(const float bias)
 	this->bias = bias;
 }
 
-uint Perceptron::getNumberOfInputs() const
+int Perceptron::getNumberOfInputs() const
 {
 	return numberOfInputs;
 }
 
-bool Perceptron::operator==(const Perceptron& perceptron)
+Perceptron& Perceptron::operator=(const Perceptron& perceptron)
 {
-	if (this->bias != perceptron.bias
-		|| this->numberOfInputs != perceptron.numberOfInputs
-		|| this->weights.size() != perceptron.weights.size())
-		return false;
-	for (uint w = 0; w < numberOfInputs; ++w)
-		if (this->weights[w] != perceptron.weights[w])
-			return false;
-	return true;
+	this->weights = perceptron.weights;
+	this->previousDeltaWeights = perceptron.previousDeltaWeights;
+	this->lastInputs = perceptron.lastInputs;
+	this->errors = perceptron.errors;
+	this->lastOutput = perceptron.lastOutput;
+	this->numberOfInputs = perceptron.numberOfInputs;
+	this->learningRate = perceptron.learningRate;
+	this->momentum = perceptron.momentum;
+	this->bias = perceptron.bias;
+	this->aFunctionType = perceptron.aFunctionType;
+	this->activationFunction = ActivationFunction::create(perceptron.activationFunction->getType());
+	return *this;
 }
 
-bool Perceptron::operator!=(const Perceptron& perceptron)
+bool Perceptron::operator==(const Perceptron& perceptron) const
+{
+	return this->weights == perceptron.weights
+		&& this->previousDeltaWeights == perceptron.previousDeltaWeights
+		&& this->lastInputs == perceptron.lastInputs
+		&& this->errors == perceptron.errors
+		&& this->lastOutput == perceptron.lastOutput
+		&& this->numberOfInputs == perceptron.numberOfInputs
+		&& this->learningRate == perceptron.learningRate
+		&& this->momentum == perceptron.momentum
+		&& this->bias == perceptron.bias
+		&& this->aFunctionType == perceptron.aFunctionType
+		&& *this->activationFunction == *perceptron.activationFunction;
+}
+
+bool Perceptron::operator!=(const Perceptron& perceptron) const
 {
 	return !this->operator==(perceptron);
 }
 
-string Perceptron::display()
-{
-	string str = "Weight : ";
-	for (auto weight : weights)
-	{
-		str += to_string(weight) + " ";
-	}
-	str += "Bias : " + to_string(bias);
-	return str;
-}

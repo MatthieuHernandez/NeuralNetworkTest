@@ -13,7 +13,7 @@ MnistVisualizationWidget::MnistVisualizationWidget(QWidget *parent, Controller *
 	ImageVisualizationWidget::ui->Image->resize(280, 280);
 }
 
-unsigned char MnistVisualizationWidget::getPixel(int number, int x, int y, color color) const
+unsigned char MnistVisualizationWidget::getPixel(int number, int x, int y, color) const
 {
 	return static_cast<unsigned char>((this->controller->getData().getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
 }

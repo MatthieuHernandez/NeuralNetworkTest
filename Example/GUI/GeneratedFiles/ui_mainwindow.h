@@ -38,6 +38,7 @@ public:
     QTabWidget *tabWidgetData;
     QWidget *tab;
     QCustomPlot *customPlot;
+    QPushButton *pushButtonResetGraph;
     QWidget *tab_2;
     QWidget *gridLayoutWidget;
     QGridLayout *layout;
@@ -63,6 +64,10 @@ public:
     QLabel *label_8;
     QDoubleSpinBox *doubleSpinBoxCR;
     QDoubleSpinBox *doubleSpinBoxCRM;
+    QPushButton *pushButtonEvaluate;
+    QPushButton *pushButtonLoad;
+    QPushButton *pushButtonSave;
+    QPushButton *pushButtonReset;
     QWidget *tab_4;
     QPushButton *pushButtonRemoveLayer;
     QLabel *label_2;
@@ -87,7 +92,7 @@ public:
         centralWidget->setMinimumSize(QSize(0, 0));
         pushButtonCompute = new QPushButton(centralWidget);
         pushButtonCompute->setObjectName(QStringLiteral("pushButtonCompute"));
-        pushButtonCompute->setGeometry(QRect(710, 460, 80, 22));
+        pushButtonCompute->setGeometry(QRect(720, 460, 70, 22));
         tabWidgetData = new QTabWidget(centralWidget);
         tabWidgetData->setObjectName(QStringLiteral("tabWidgetData"));
         tabWidgetData->setGeometry(QRect(180, 1, 670, 440));
@@ -95,7 +100,15 @@ public:
         tab->setObjectName(QStringLiteral("tab"));
         customPlot = new QCustomPlot(tab);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(0, 0, 660, 420));
+        customPlot->setGeometry(QRect(0, -1, 665, 420));
+        pushButtonResetGraph = new QPushButton(customPlot);
+        pushButtonResetGraph->setObjectName(QStringLiteral("pushButtonResetGraph"));
+        pushButtonResetGraph->setEnabled(false);
+        pushButtonResetGraph->setGeometry(QRect(643, 0, 22, 22));
+        QIcon icon;
+        icon.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButtonResetGraph->setIcon(icon);
+        pushButtonResetGraph->setCheckable(false);
         tabWidgetData->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -117,7 +130,7 @@ public:
         label_5->setGeometry(QRect(340, 460, 71, 21));
         pushButtonConsole = new QPushButton(centralWidget);
         pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
-        pushButtonConsole->setGeometry(QRect(20, 460, 80, 22));
+        pushButtonConsole->setGeometry(QRect(20, 460, 70, 22));
         labelLoading = new QLabel(centralWidget);
         labelLoading->setObjectName(QStringLiteral("labelLoading"));
         labelLoading->setEnabled(true);
@@ -220,14 +233,24 @@ public:
         doubleSpinBoxCRM->setDecimals(3);
         doubleSpinBoxCRM->setMaximum(100);
         doubleSpinBoxCRM->setValue(0);
+        pushButtonEvaluate = new QPushButton(tab_3);
+        pushButtonEvaluate->setObjectName(QStringLiteral("pushButtonEvaluate"));
+        pushButtonEvaluate->setGeometry(QRect(0, 390, 70, 22));
+        pushButtonLoad = new QPushButton(tab_3);
+        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setGeometry(QRect(100, 360, 70, 22));
+        pushButtonSave = new QPushButton(tab_3);
+        pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
+        pushButtonSave->setGeometry(QRect(100, 390, 70, 22));
+        pushButtonReset = new QPushButton(tab_3);
+        pushButtonReset->setObjectName(QStringLiteral("pushButtonReset"));
+        pushButtonReset->setGeometry(QRect(100, 330, 70, 22));
         tabWidgetNeuralNetwork->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
         pushButtonRemoveLayer = new QPushButton(tab_4);
         pushButtonRemoveLayer->setObjectName(QStringLiteral("pushButtonRemoveLayer"));
         pushButtonRemoveLayer->setGeometry(QRect(150, 10, 22, 22));
-        QIcon icon;
-        icon.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButtonRemoveLayer->setIcon(icon);
         label_2 = new QLabel(tab_4);
         label_2->setObjectName(QStringLiteral("label_2"));
@@ -287,7 +310,7 @@ public:
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(1);
+        tabWidgetNeuralNetwork->setCurrentIndex(0);
         comboBoxData->setCurrentIndex(2);
         comboBoxLayer->setCurrentIndex(0);
 
@@ -299,6 +322,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        pushButtonResetGraph->setText(QString());
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
         tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
@@ -325,6 +349,10 @@ public:
         doubleSpinBoxCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxCRM->setSpecialValueText(QString());
         doubleSpinBoxCRM->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        pushButtonEvaluate->setText(QApplication::translate("MainWindow", "Evaluate", nullptr));
+        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
+        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
+        pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));

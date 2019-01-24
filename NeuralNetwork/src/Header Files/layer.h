@@ -1,15 +1,26 @@
-#ifndef LAYER_H
-#define LAYER_H
-
+#pragma once
 #include "perceptron.h"
+#include <boost/serialization/access.hpp>
+
+
+enum LayerType
+{
+	allToAll = 0
+};
 
 class Layer
 {
+private :
+
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, const unsigned int version);
+
 
 protected:
 
-	uint numberOfInputs = 0;
-	uint numberOfNeurons = 0;
+	int numberOfInputs = 0;
+	int numberOfNeurons = 0;
 	std::vector<float> errors;
 	std::vector<float> outputs;
 	std::vector<Perceptron> neurons;
@@ -19,12 +30,29 @@ protected:
 
 public:
 
+
+	virtual ~Layer() = default;
+
 	virtual std::vector<float>& output(const std::vector<float>& inputs) = 0;
 	virtual std::vector<float>& backOutput(std::vector<float>& inputsError) = 0;
 	virtual void train(std::vector<float>& inputsError) = 0;
 
-	bool operator==(const Layer& layer);
-	bool operator!=(const Layer& layer);
+	Perceptron* getNeuron(int neuronNumber);
+	virtual LayerType getType() const = 0;
+
+	virtual Layer& equal(const Layer& layer) = 0;
+	virtual bool operator==(const Layer& layer) const;
+	virtual bool operator!=(const Layer& layer) const;
 };
 
-#endif // LAYER_H
+template <class Archive>
+void Layer::serialize(Archive& ar, const unsigned version)
+{
+	ar & numberOfInputs;
+	ar & numberOfNeurons;
+	ar & errors;
+	ar & outputs;
+	ar & learningRate;
+	ar & momentum;
+	ar & neurons;
+}

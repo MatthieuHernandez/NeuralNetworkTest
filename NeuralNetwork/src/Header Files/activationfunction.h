@@ -1,12 +1,10 @@
-#ifndef ACTIVATIONFUNCTIONS_H
-#define ACTIVATIONFUNCTIONS_H
+#pragma once
+#include <boost/serialization/access.hpp>
 
-#include <cmath>
-#include <vector>
-
-enum activationFunction
+enum activationFunctionType
 {
 	sigmoid = 0,
+	iSigmoid,
 	tanH,
 	reLU,
 	gaussian
@@ -14,54 +12,28 @@ enum activationFunction
 
 class ActivationFunction
 {
+private :
+
+	friend class boost::serialization::access;
+	template <class Archive>
+	void serialize(Archive& ar, const unsigned int version);
+
+
 public :
 
-	static std::vector<ActivationFunction*> listOfActivationFunction;
+	//static std::vector<ActivationFunction*> listOfActivationFunction;
 
-	static void initialize();
+	ActivationFunction() = default;
+	ActivationFunction(const ActivationFunction& activationFunction);
 	virtual ~ActivationFunction() = default;
+	static void initialize();
+	static ActivationFunction* create(activationFunctionType type);
 
-	virtual float function(const float) const { throw std::exception(); }
-	virtual float derivate(const float) const { throw std::exception(); }
+	virtual float function(const float) const = 0;
+	virtual float derivate(const float) const = 0;
+
+	virtual activationFunctionType getType() const = 0;
+
+	virtual bool operator==(const ActivationFunction& activationFunction) const;
+	virtual bool operator!=(const ActivationFunction& activationFunction) const;
 };
-
-class Sigmoid : public ActivationFunction
-{
-public:
-	float function(const float x) const override { return 1.0f / (1.0f + exp(-x)); }
-	float derivate(const float x) const override { return x * (1.0f - x); }
-	// * x stdp // x*exp(-x) / pow((1.0f + exp(-x)), 2);
-};
-
-class TanH : public ActivationFunction
-{
-public:
-	float function(const float x) const override { return tanh(x); }
-	float derivate(const float x) const override { return 1 - (pow(tanh(x), 2)); }
-};
-
-class ReLU : public ActivationFunction // WARNING : bad function, if sum < 0 at start, neuron will never learn
-{
-public :
-	float function(const float x) const override { return (x > 0.0f) ? 0.0f : x; }
-	float derivate(const float x) const override { return (x > 0.0f) ? 0.0f : 1.0f; }
-};
-
-class Gaussian : public ActivationFunction
-{
-public :
-	float function(const float x) const override { return exp(-pow(x, 2)); }
-	float derivate(const float x) const override { return -2 * x * exp(-pow(x, 2)); }
-};
-
-
-#endif // ACTIVATIONFUNCTIONS_H
-
-
-//A * pa = &b;
-//pa->F1(); // affiche "A::F1()"
-//pa->F2(); // affiche "B::F2()" <-- grâce à virtual
-
-//A & ra = b;
-//ra.F1(); // affiche "A::F1()"
-//ra.F2(); // affiche "B::F2()" <-- grâce à virtual

@@ -23,43 +23,38 @@ void Controller::initializeData()
 	}
 }
 
+void Controller::resetOutput()
+{
+	outputs.clusteringRate = 0.0f;
+	outputs.clusteringRateMax = 0.0f;
+	outputs.currentIndex = 0;
+	outputs.numberOfIteration = 0;
+}
+
+void Controller::DeleteNeuralNetwork()
+{
+	this->neuralNetwork.reset(nullptr);
+	this->resetOutput();
+}
+
 void Controller::initializeNeuralNetwork()
 {
 	this->neuralNetwork = make_unique<NeuralNetwork>(this->inputs.structure,
 	                                                 this->inputs.activationFunction,
 	                                                 this->inputs.learningRate,
 	                                                 this->inputs.momentum);
+	this->resetOutput();
 }
 
-void Controller::compute(bool* stop)
+
+void Controller::compute(const bool* stop)
 {
-	outputs.clusteringRateMax = 0.0f;
 	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
-		for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size && !(*stop); outputs.currentIndex
-		     ++)
-		{
-			if (data->problem == classification)
-			{
-				neuralNetwork->calculateClusteringRateForClassificationProblem(
-					data->getTestingData(outputs.currentIndex),
-					data->getTestingLabel(outputs.currentIndex));
-			}
-			else
-			{
-				neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(
-					data->getTestingData(outputs.currentIndex),
-					data->getTestingOutputs(outputs.currentIndex), 0.0f);
-			}
-		}
-		outputs.clusteringRate = neuralNetwork->getClusteringRate();
-		if (outputs.clusteringRate > outputs.clusteringRateMax)
-		{
-			outputs.clusteringRateMax = outputs.clusteringRate;
-		}
+		this->evaluate(stop);
 		emit updateNumberOfIteration();
-
 		data->shuffle();
+
 		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.
 		     currentIndex++)
 		{
@@ -67,6 +62,43 @@ void Controller::compute(bool* stop)
 			                     data->getTrainingOutputs(outputs.currentIndex));
 		}
 	}
+}
+
+void Controller::evaluate(const bool* stop)
+{
+	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
+	{
+		if (*stop)
+			return;
+		if (data->problem == classification)
+		{
+			neuralNetwork->calculateClusteringRateForClassificationProblem(
+				data->getTestingData(outputs.currentIndex),
+				data->getTestingLabel(outputs.currentIndex));
+		}
+		else
+		{
+			neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(
+				data->getTestingData(outputs.currentIndex),
+				data->getTestingOutputs(outputs.currentIndex), 0.0f);
+		}
+	}
+	outputs.clusteringRate = neuralNetwork->getClusteringRate();
+	if (outputs.clusteringRate > outputs.clusteringRateMax)
+	{
+		outputs.clusteringRateMax = outputs.clusteringRate;
+	}
+}
+
+void Controller::save(const QString& fileName)
+{
+	neuralNetwork->saveAs(fileName.toStdString());
+}
+
+void Controller::load(const QString& fileName)
+{
+	neuralNetwork = make_unique<NeuralNetwork>(NeuralNetwork::loadFrom(fileName.toStdString()));
+	this->resetOutput();
 }
 
 NeuralNetwork& Controller::getNeuralNetwork() const

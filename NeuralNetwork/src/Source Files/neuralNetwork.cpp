@@ -1,6 +1,13 @@
-#include "NeuralNetwork.h"
+#include "neuralNetwork.h"
 #include <ctime>
-#include <algorithm>
+#include <omp.h>
+#include <fstream>
+#pragma warning(push, 0)
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/vector.hpp>
+#pragma warning(pop)
+#include "test.h"
 
 using namespace std;
 
@@ -8,14 +15,19 @@ bool NeuralNetwork::isTheFirst = true;
 
 void NeuralNetwork::initialize()
 {
-	srand(static_cast<uint>(time(nullptr)));
+	srand(static_cast<int>(time(nullptr)));
 	rand();
 	ActivationFunction::initialize();
+
+	const auto numberOfCore = omp_get_num_procs();
+	//omp_set_num_threads(numberOfCore * 2);
+	//omp_set_num_threads(128);
+
 	isTheFirst = false;
 }
 
-NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
-                             std::vector<activationFunction>& activationFunctionByLayer,
+NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
+                             const std::vector<activationFunctionType> activationFunctionByLayer,
                              const float learningRate,
                              const float momentum)
 {
@@ -25,13 +37,12 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 	this->structureOfNetwork = structureOfNetwork;
 	this->activationFunctionByLayer = activationFunctionByLayer;
 	this->learningRate = learningRate;
-	this->shortRunCounter = 0;
 	this->numberOfResultsClassifiedWell = 0;
 	this->numberOfResultsMisclassefied = 0;
 	this->clusteringRate = -1;
 
-	this->numberOfLayers = structureOfNetwork.size() - 1;
-	this->numberOfHiddenLayers = structureOfNetwork.size() - 2;
+	this->numberOfLayers = static_cast<int>(structureOfNetwork.size()) - 1;
+	this->numberOfHiddenLayers = static_cast<int>(structureOfNetwork.size()) - 2;
 	this->numberOfInput = structureOfNetwork[0];
 	this->numberOfOutputs = structureOfNetwork.back();
 
@@ -43,117 +54,20 @@ NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& structureOfNetwork,
 	outputs.resize(numberOfOutputs);
 
 	layers.reserve(numberOfLayers);
-	for (uint l = 1; l < structureOfNetwork.size(); ++l)
+	for (unsigned int l = 1; l < structureOfNetwork.size(); ++l)
 	{
-		const auto index = static_cast<int>(activationFunctionByLayer[l - 1]);
-		const auto function = ActivationFunction::listOfActivationFunction[index];
-
-		unique_ptr<Layer> layer(new AllToAll(structureOfNetwork[l - 1],
-		                                     structureOfNetwork[l],
-		                                     function,
-		                                     learningRate,
-		                                     momentum));
-		layers.push_back(move(layer));
+		Layer* layer(new AllToAll(structureOfNetwork[l - 1],
+		                          structureOfNetwork[l],
+		                          this->activationFunctionByLayer[l - 1],
+		                          learningRate,
+		                          momentum));
+		layers.push_back(layer);
 	}
 }
 
-vector<float> NeuralNetwork::output(const vector<float>& inputs)
+NeuralNetwork::NeuralNetwork(const NeuralNetwork& neuralNetwork)
 {
-	this->outputs = layers[0]->output(inputs);
-
-	for (uint l = 1; l < numberOfLayers; ++l)
-	{
-		outputs = layers[l]->output(outputs);
-	}
-	return outputs;
-}
-
-void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(const vector<float>& inputs, const vector<float>& desired, float precision)
-{
-	this->outputs = this->output(inputs);
-	classifiedWell = true;
-	for (uint n = 0; n < numberOfOutputs; ++n)
-	{
-		if (this->outputs[n] > desired[n] + precision
-	     && this->outputs[n] < desired[n] - precision)
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(const vector<float>& inputs, const vector<float>& desired, float separator)
-{
-	this->outputs = this->output(inputs);
-	classifiedWell = true;
-	for (uint n = 0; n < numberOfOutputs; ++n)
-	{
-		if ((this->outputs[n] >= separator && desired[n] < separator
-		 || this->outputs[n] <= separator && desired[n] > separator))
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const uint classNumber)
-{
-	maxOutputValue = -1;
-	this->outputs = this->output(inputs);
-	for (uint n = 0; n < this->outputs.size(); ++n)
-	{
-		if (maxOutputValue < this->outputs[n])
-		{
-			maxOutputValue = this->outputs[n];
-			maxOutputIndex = n;
-		}
-	}
-	if (maxOutputIndex == classNumber)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
-}
-
-void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desired)
-{
-	backpropagationAlgorithm(inputs, desired);
-}
-
-void NeuralNetwork::backpropagationAlgorithm(const vector<float>& inputs, const vector<float>& desired)
-{
-	this->outputs = this->output(inputs);
-	auto errors = calculateError(this->outputs, desired);
-
-	for (int l = numberOfLayers - 1; l > 0; --l)
-	{
-		errors = layers[l]->backOutput(errors);
-	}
-	layers[0]->train(errors);
-}
-
-inline vector<float> NeuralNetwork::calculateError(const vector<float>& outputs, const vector<float>& desired)
-{
-	for (uint n = 0; n < numberOfOutputs; ++n)
-	{
-		if (desired[n] != -1.0f)
-		{
-			float e = desired[n] - outputs[n];
-			this->errors[n] = e * abs(e);
-		}
-		else
-			this->errors[n] = 0;
-	}
-	return this->errors;
+	this->operator=(neuralNetwork);
 }
 
 void NeuralNetwork::resetAllNeurons()
@@ -169,7 +83,7 @@ void NeuralNetwork::resetAllNeurons()
 	}*/
 }
 
-void NeuralNetwork::addANeuron(uint)
+void NeuralNetwork::addANeuron(int)
 {
 	// TODO: rework function addANeuron
 	throw notImplementedException();
@@ -181,7 +95,7 @@ void NeuralNetwork::addANeuron(uint)
 	{
 	    numberOfInput ++;
 	    neurons[layerNumber].push_back(Perceptron(neurons[layerNumber][0].getWeights().size(), layerNumber, numberOfInput-1));
-	    for(uint i = 0; i < neurons[layerNumber+1].size(); i++)
+	    for(int i = 0; i < neurons[layerNumber+1].size(); i++)
 	    {
 	        neurons[layerNumber+1][i].addAWeight();
 	    }
@@ -213,31 +127,75 @@ void NeuralNetwork::addANeuron(uint)
 	}*/
 }
 
+void NeuralNetwork::saveAs(std::string filePath)
+{
+	ofstream file(filePath);
+	boost::archive::text_oarchive binaryFile(file);
+	binaryFile << this;
+	std::ofstream ofs("filename");
+	boost::archive::text_oarchive oa(ofs);
+}
+
+NeuralNetwork& NeuralNetwork::loadFrom(std::string filePath)
+{
+	NeuralNetwork* neuralNetwork{};
+	ifstream file(filePath, ios::binary);
+	boost::archive::text_iarchive binaryFile(file);
+	binaryFile >> neuralNetwork;
+	return *neuralNetwork;
+}
+
+template<class Archive>
+void NeuralNetwork::serialize(Archive & ar, const unsigned int version)
+{
+    ar & maxOutputIndex;
+    ar & lastError;
+    ar & learningRate;
+    ar & clusteringRate;
+    ar & previousClusteringRate;
+    ar & error;
+    ar & momentum;
+    ar & numberOfResultsClassifiedWell;
+    ar & numberOfResultsMisclassefied;
+    ar & numberOfHiddenLayers;
+    ar & numberOfLayers;
+    ar & numberOfInput;
+    ar & numberOfOutputs;
+    ar & structureOfNetwork;
+    ar & activationFunctionByLayer;
+    ar & errors;
+    ar & outputs;
+    ar & numberOfInput;
+
+	ar.template register_type<AllToAll>();
+	ar & layers;
+}
+
 int NeuralNetwork::isValid()
 {
 	//TODO: rework isValid
 	throw notImplementedException();
-	/*uint numberOfWeightsReal = 0;
-	uint computedNumberWeights = 0;
+	/*int numberOfWeightsReal = 0;
+	int computedNumberWeights = 0;
 
-	for(uint i = 0; i < neurons.size(); i++)
+	for(int i = 0; i < neurons.size(); i++)
 	{
-	    if(((uint)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
-	    || ((uint)neurons[i].size() != numberOfOutputs && i == numberOfHiddenLayers))
+	    if(((int)neurons[i].size() !=  structureOfNetwork[i+1] && i < numberOfHiddenLayers)
+	    || ((int)neurons[i].size() != numberOfOutputs && i == numberOfHiddenLayers))
 	    {
 	        lastError = 10;
 	        return lastError;
 	    }
 	}
-	for(uint i = 0; i < neurons.size(); i++)
+	for(int i = 0; i < neurons.size(); i++)
 	{
-	    for(uint j = 0; j < neurons[i].size(); j++)
+	    for(int j = 0; j < neurons[i].size(); j++)
 	    {
 	       numberOfWeightsReal += neurons[i][j].getNumberOfInputs();
 	    }
 	}
 
-	for(uint i=1; i<structureOfNetwork.size();i++)
+	for(int i=1; i<structureOfNetwork.size();i++)
 	{
 	    computedNumberWeights += structureOfNetwork[i-1] * structureOfNetwork[i];
 	}
@@ -270,9 +228,9 @@ int NeuralNetwork::isValid()
 	    return 5;
 	    cout << learningRate << endl;
 	}
-	for(uint i = 0; i < neurons.size(); i++)
+	for(int i = 0; i < neurons.size(); i++)
 	{
-	    for(uint j = 0; j < neurons[i].size(); j++)
+	    for(int j = 0; j < neurons[i].size(); j++)
 	    {
 	        if(neurons[i][j].isValid() != 0)
 	        {
@@ -280,8 +238,8 @@ int NeuralNetwork::isValid()
 	          return lastError;
 	        }
 	    }
-	}*/
-	return 0;
+	}
+	return 0;*/
 }
 
 int NeuralNetwork::getLastError() const
@@ -289,21 +247,74 @@ int NeuralNetwork::getLastError() const
 	return lastError;
 }
 
-bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork)
+NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 {
-	if (this->numberOfInput != neuralNetwork.numberOfInput
-		|| this->numberOfHiddenLayers != neuralNetwork.numberOfHiddenLayers
-		|| this->structureOfNetwork != neuralNetwork.structureOfNetwork
-		|| this->layers.size() != neuralNetwork.layers.size())
-		return false;
-	else
-		for (uint l = 0; l < numberOfLayers; ++l)
-			if (this->layers[l] != neuralNetwork.layers[l])
-				return false;
-	return true;
+	this->maxOutputIndex = neuralNetwork.maxOutputIndex;
+	this->lastError = neuralNetwork.lastError;
+	this->learningRate = neuralNetwork.learningRate;
+	this->clusteringRate = neuralNetwork.clusteringRate;
+	this->previousClusteringRate = neuralNetwork.previousClusteringRate;
+	this->error = neuralNetwork.error;
+	this->momentum = neuralNetwork.momentum;
+	this->numberOfResultsClassifiedWell = neuralNetwork.numberOfResultsClassifiedWell;
+	this->numberOfResultsMisclassefied = neuralNetwork.numberOfResultsMisclassefied;
+	this->numberOfHiddenLayers = neuralNetwork.numberOfHiddenLayers;
+	this->numberOfLayers = neuralNetwork.numberOfLayers;
+	this->numberOfInput = neuralNetwork.numberOfInput;
+	this->numberOfOutputs = neuralNetwork.numberOfOutputs;
+	this->structureOfNetwork = neuralNetwork.structureOfNetwork;
+	this->activationFunctionByLayer = neuralNetwork.activationFunctionByLayer;
+	this->errors = neuralNetwork.errors;
+	this->outputs = neuralNetwork.outputs;
+
+	this->layers.clear();
+	this->layers.reserve(neuralNetwork.layers.size());
+	for (const auto& layer : neuralNetwork.layers)
+	{
+		if (layer->getType() == allToAll)
+		{
+			AllToAll* newlayer = new AllToAll();
+			newlayer->equal(*layer);
+			this->layers.push_back(newlayer);
+		}
+		else
+			throw exception();
+	}
+
+	return *this;
 }
 
-bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork)
+bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
+{
+	bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
+		&& this->lastError == neuralNetwork.lastError
+		&& this->learningRate == neuralNetwork.learningRate
+		&& this->clusteringRate == neuralNetwork.clusteringRate
+		&& this->previousClusteringRate == neuralNetwork.previousClusteringRate
+		&& this->error == neuralNetwork.error
+		&& this->momentum == neuralNetwork.momentum
+		&& this->numberOfResultsClassifiedWell == neuralNetwork.numberOfResultsClassifiedWell
+		&& this->numberOfResultsMisclassefied == neuralNetwork.numberOfResultsMisclassefied
+		&& this->numberOfHiddenLayers == neuralNetwork.numberOfHiddenLayers
+		&& this->numberOfLayers == neuralNetwork.numberOfLayers
+		&& this->numberOfInput == neuralNetwork.numberOfInput
+		&& this->numberOfOutputs == neuralNetwork.numberOfOutputs
+		&& this->structureOfNetwork == neuralNetwork.structureOfNetwork
+		&& this->activationFunctionByLayer == neuralNetwork.activationFunctionByLayer
+		&& this->layers.size() == neuralNetwork.layers.size()
+		&& this->errors == neuralNetwork.errors
+		&& this->outputs == neuralNetwork.outputs);
+
+	if (equal)
+		for (int l = 0; l < numberOfLayers; l++)
+		{
+			if (*this->layers[l] != *neuralNetwork.layers[l])
+				equal = false;
+		}
+	return equal;
+}
+
+bool NeuralNetwork::operator!=(const NeuralNetwork& neuralNetwork) const
 {
 	return !this->operator==(neuralNetwork);
 }

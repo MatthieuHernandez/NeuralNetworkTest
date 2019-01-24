@@ -35,44 +35,44 @@ float NeuralNetwork::getMomentum() const
 //  Only getters
 //=====================================================================
 
-int NeuralNetwork::getShortRunCounter() const
+Layer* NeuralNetwork::getLayer(const int layerNumber)
 {
-    return shortRunCounter;
+    return this->layers[layerNumber];
 }
 
 int NeuralNetwork::getNumberOfInputs() const
 {
-    return numberOfInput;
+    return this->numberOfInput;
 }
 
 int NeuralNetwork::getNumberOfHiddenLayers() const
 {
-    return numberOfHiddenLayers;
+    return this->numberOfHiddenLayers;
 }
 
 int NeuralNetwork::getNumberOfNeuronsInLayer(const int layerNumber) const
 {
-    return structureOfNetwork[layerNumber+1];
+    return this->structureOfNetwork[layerNumber+1];
 }
 
-activationFunction NeuralNetwork::getActivationFunctionInLayer(int layerNumber) const
+activationFunctionType NeuralNetwork::getActivationFunctionInLayer(int layerNumber) const
 {
-	return activationFunctionByLayer[layerNumber];
+	return this->activationFunctionByLayer[layerNumber];
 }
 
 int NeuralNetwork::getNumberOfResultsClassifiedWell() const
 {
-    return numberOfResultsClassifiedWell;
+    return this->numberOfResultsClassifiedWell;
 }
 
 int NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
 {
-    return numberOfResultsMisclassefied;
+    return this->numberOfResultsMisclassefied;
 }
 
 int NeuralNetwork::getNumberOfOutputs() const
 {
-    return numberOfOutputs;
+    return this->numberOfOutputs;
 }
 
 float NeuralNetwork::getClusteringRate()
