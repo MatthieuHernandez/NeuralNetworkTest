@@ -15,7 +15,7 @@ public:
 		return 1.0f / (1.0f + exp(-x));
 	}
 
-	float derivate(const float x) const override
+	float derivative(const float x) const override
 	{
 		return exp(-x) / pow((exp(-x) + 1.0f), 2);
 	}

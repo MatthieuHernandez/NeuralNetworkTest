@@ -14,7 +14,7 @@ public:
 		return tanh(x);
 	}
 
-	float derivate(const float x) const override
+	float derivative(const float x) const override
 	{
 		return 1 - pow(tanh(x), 2);
 	}

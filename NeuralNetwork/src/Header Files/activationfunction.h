@@ -30,7 +30,7 @@ public :
 	static ActivationFunction* create(activationFunctionType type);
 
 	virtual float function(const float) const = 0;
-	virtual float derivate(const float) const = 0;
+	virtual float derivative(const float) const = 0;
 
 	virtual activationFunctionType getType() const = 0;
 

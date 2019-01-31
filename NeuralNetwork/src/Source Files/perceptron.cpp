@@ -61,7 +61,8 @@ float Perceptron::output(const vector<float>& inputs)
 
 std::vector<float>& Perceptron::backOutput(float error)
 {
-	error = error * activationFunction->derivate(lastOutput);
+	error = error * activationFunction->derivative(lastOutput);
+
 	this->train(lastInputs, error);
 
 	for (int w = 0; w < numberOfInputs; ++w)
