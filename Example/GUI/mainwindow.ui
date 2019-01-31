@@ -542,7 +542,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>360</y>
+        <y>330</y>
         <width>70</width>
         <height>22</height>
        </rect>
@@ -555,7 +555,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>390</y>
+        <y>360</y>
         <width>70</width>
         <height>22</height>
        </rect>
@@ -568,13 +568,26 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>330</y>
+        <y>300</y>
         <width>70</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
        <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxAutoSave">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>390</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Auto save</string>
       </property>
      </widget>
     </widget>
