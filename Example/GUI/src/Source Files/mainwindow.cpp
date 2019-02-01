@@ -91,13 +91,13 @@ void MainWindow::endOfLoadingDataSet()
 
 void MainWindow::initializeButtons()
 {
-	this->resetComboBoxlayer();
+	this->resetComboBoxLayer();
 	this->initializeLayerButtons(0);
 	ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainbyRating);
 	ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainbyRating);
 };
 
-void MainWindow::resetComboBoxlayer()
+void MainWindow::resetComboBoxLayer() const
 {
 	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
@@ -110,7 +110,7 @@ void MainWindow::resetComboBoxlayer()
 	ui->comboBoxLayer->setCurrentIndex(0);
 };
 
-void MainWindow::initializeLayerButtons(const int layer)
+void MainWindow::initializeLayerButtons(const int layer) const
 {
 	const int neuronsNumber = this->currentController->inputs.structure[layer];
 	ui->spinBoxNeurons->setValue(neuronsNumber);
@@ -118,7 +118,7 @@ void MainWindow::initializeLayerButtons(const int layer)
 
 	if (layer > 0)
 	{
-		auto function = static_cast<int>(this->currentController->inputs.activationFunction[layer - 1]);
+		const auto function = static_cast<int>(this->currentController->inputs.activationFunction[layer - 1]);
 		ui->comboBoxActivationFunction->blockSignals(true);
 		ui->comboBoxActivationFunction->setCurrentIndex(function);
 		ui->comboBoxActivationFunction->blockSignals(false);
@@ -153,14 +153,14 @@ void MainWindow::initializeGraphOfClusteringRate()
 	updateGraphOfClusteringRate();
 }
 
-void MainWindow::refreshGraphOfClusteringRate()
+void MainWindow::refreshGraphOfClusteringRate() const
 {
 	ui->customPlot->graph(0)->setData(x, y);
 	ui->customPlot->xAxis->setRange(0, y.empty() ? 1 : y.size() - 1);
 	ui->customPlot->replot();
 }
 
-void MainWindow::refreshClusteringRate()
+void MainWindow::refreshClusteringRate() const
 {
 	auto CR = this->currentController->outputs.clusteringRate * 100.0f;
 	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
@@ -168,7 +168,7 @@ void MainWindow::refreshClusteringRate()
 	ui->doubleSpinBoxCRM->setValue(CRM);
 }
 
-void MainWindow::enableModification(const bool isEnable)
+void MainWindow::enableModification(const bool isEnable) const
 {
 	ui->comboBoxData->setEnabled(isEnable);
 	ui->pushButtonReset->setEnabled(isEnable);
@@ -202,9 +202,10 @@ void MainWindow::on_pushButtonCompute_clicked()
 		}
 		this->startLoadingLogo();
 		this->enableModification(false);
+		QString data = ui->comboBoxData->currentText();
 		const auto future = QtConcurrent::run([=]()
 		{
-			currentController->compute(&computeIsStop);
+			currentController->compute(&this->computeIsStop, &this->autoSave, data);
 		});
 		watcherCompute.setFuture(future);
 		timerForCount->start(250);
@@ -235,7 +236,7 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 		this->startLoadingLogo();
 		const auto future = QtConcurrent::run([=]()
 		{
-			currentController->evaluate(&computeIsStop);
+			currentController->evaluate(&this->computeIsStop);
 		});
 		watcherCompute.setFuture(future);
 		timerForCount->start(250);
@@ -266,9 +267,9 @@ void MainWindow::on_pushButtonAddLayer_clicked()
 	const auto it2 = this->currentController->inputs.activationFunction.begin();
 	const auto value = this->currentController->inputs.structure[index];
 	this->currentController->inputs.structure.insert(it1 + index, value);
-	const auto fuction = this->currentController->inputs.activationFunction[index];
-	this->currentController->inputs.activationFunction.insert(it2 + index, fuction);
-	this->resetComboBoxlayer();
+	const auto function = this->currentController->inputs.activationFunction[index];
+	this->currentController->inputs.activationFunction.insert(it2 + index, function);
+	this->resetComboBoxLayer();
 	this->initializeLayerButtons(index + 1);
 }
 
@@ -284,7 +285,7 @@ void MainWindow::on_pushButtonRemoveLayer_clicked()
 		this->currentController->inputs.activationFunction.erase(it2 + index);
 		index = ui->comboBoxLayer->currentIndex();
 		this->initializeLayerButtons(index);
-		this->resetComboBoxlayer();
+		this->resetComboBoxLayer();
 		this->initializeLayerButtons(index);
 	}
 }
@@ -299,6 +300,18 @@ void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
 	auto layer = ui->comboBoxLayer->currentIndex();
 	auto function = static_cast<activationFunctionType>(index);
 	this->currentController->inputs.activationFunction[layer - 1] = function;
+}
+
+void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
+{
+	if(state == 2)
+	{
+		this->autoSave = true;
+		console->write("auto save enable");
+		return;
+	}
+	this->autoSave = false;
+	console->write("auto save disable");
 }
 
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)

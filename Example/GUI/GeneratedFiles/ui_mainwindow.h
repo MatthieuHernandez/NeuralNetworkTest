@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
@@ -68,6 +69,7 @@ public:
     QPushButton *pushButtonLoad;
     QPushButton *pushButtonSave;
     QPushButton *pushButtonReset;
+    QCheckBox *checkBoxAutoSave;
     QWidget *tab_4;
     QPushButton *pushButtonRemoveLayer;
     QLabel *label_2;
@@ -238,13 +240,16 @@ public:
         pushButtonEvaluate->setGeometry(QRect(0, 390, 70, 22));
         pushButtonLoad = new QPushButton(tab_3);
         pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
-        pushButtonLoad->setGeometry(QRect(100, 360, 70, 22));
+        pushButtonLoad->setGeometry(QRect(100, 330, 70, 22));
         pushButtonSave = new QPushButton(tab_3);
         pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
-        pushButtonSave->setGeometry(QRect(100, 390, 70, 22));
+        pushButtonSave->setGeometry(QRect(100, 360, 70, 22));
         pushButtonReset = new QPushButton(tab_3);
         pushButtonReset->setObjectName(QStringLiteral("pushButtonReset"));
-        pushButtonReset->setGeometry(QRect(100, 330, 70, 22));
+        pushButtonReset->setGeometry(QRect(100, 300, 70, 22));
+        checkBoxAutoSave = new QCheckBox(tab_3);
+        checkBoxAutoSave->setObjectName(QStringLiteral("checkBoxAutoSave"));
+        checkBoxAutoSave->setGeometry(QRect(100, 390, 70, 22));
         tabWidgetNeuralNetwork->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
@@ -353,6 +358,7 @@ public:
         pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
         pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
         pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
+        checkBoxAutoSave->setText(QApplication::translate("MainWindow", "Auto save", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
         label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
