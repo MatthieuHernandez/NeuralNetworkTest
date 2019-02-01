@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include "MNIST.h"
+#include <QDateTime>
 
 using namespace std;
 
@@ -47,11 +48,11 @@ void Controller::initializeNeuralNetwork()
 }
 
 
-void Controller::compute(const bool* stop)
+void Controller::compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName = nullptr)
 {
 	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
-		this->evaluate(stop);
+		this->evaluate(stop, *autoSave, autoSaveFileName);
 		emit updateNumberOfIteration();
 		data->shuffle();
 
@@ -64,7 +65,7 @@ void Controller::compute(const bool* stop)
 	}
 }
 
-void Controller::evaluate(const bool* stop)
+void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
 {
 	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
 	{
@@ -87,7 +88,17 @@ void Controller::evaluate(const bool* stop)
 	if (outputs.clusteringRate > outputs.clusteringRateMax)
 	{
 		outputs.clusteringRateMax = outputs.clusteringRate;
+		if(autoSave == true)
+			this->autoSave(autoSaveFileName);
 	}
+}
+
+void Controller::autoSave(const QString& dataSetName)
+{
+	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+	auto clusteringRate = QString::number(outputs.clusteringRate);
+	auto fileName = "./Save/autosave_" + dataSetName + "_" + clusteringRate + "_" + date;
+	neuralNetwork->saveAs(fileName.toStdString());
 }
 
 void Controller::save(const QString& fileName)

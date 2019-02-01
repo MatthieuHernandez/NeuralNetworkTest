@@ -54,16 +54,17 @@ private:
 
 	void startLoadingLogo();
 	void initializeButtons();
-	void resetComboBoxlayer();
-	void initializeLayerButtons(int layer);
+	void resetComboBoxLayer() const;
+	void initializeLayerButtons(int layer) const;
 	void initializeGraphOfClusteringRate();
-	void refreshGraphOfClusteringRate();
-	void refreshClusteringRate();
+	void refreshGraphOfClusteringRate() const;
+	void refreshClusteringRate() const;
 
-	void enableModification(bool isEnable);
+	void enableModification(bool isEnable) const;
 
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
+	bool autoSave = false;
 
 	QVector<double> x;
 	QVector<double> y;
@@ -76,7 +77,7 @@ private slots:
 	void updateNumberOfIteration();
 	void updateCount();
 
-	/* Inferface slots */
+	/* Interface slots */
 	void on_spinBoxNeurons_valueChanged(int value);
 	void on_spinBoxLearningRate_valueChanged(double value);
 	void on_spinBoxMomentum_valueChanged(double value);
@@ -84,6 +85,8 @@ private slots:
 
 	void on_comboBoxLayer_currentIndexChanged(int index);
 	void on_comboBoxActivationFunction_currentIndexChanged(int index);
+
+	void on_checkBoxAutoSave_stateChanged(int state);
 
 	void on_pushButtonCompute_clicked();
 	void on_pushButtonEvaluate_clicked();

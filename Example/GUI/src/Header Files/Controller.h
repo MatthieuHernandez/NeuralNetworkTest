@@ -16,6 +16,7 @@ private :
 
 	void initializeData();
 	void resetOutput();
+	void autoSave(const QString& dataSetName);
 	
 
 public:
@@ -27,8 +28,8 @@ public:
 	void DeleteNeuralNetwork();
 	void initializeNeuralNetwork();
 
-	void compute(const bool* stop);
-	void evaluate(const bool* stop);
+	void compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName);
+	void evaluate(const bool* stop, const bool autoSave = false, const QString& autoSaveFileName = nullptr);
 	void save(const QString& fileName);
 	void load(const QString& fileName);
 

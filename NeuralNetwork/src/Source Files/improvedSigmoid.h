@@ -6,7 +6,7 @@ class ImprovedSigmoid : public ActivationFunction
 {
 private :
 
-	virtual activationFunctionType getType() const { return iSigmoid; }
+	activationFunctionType getType() const override { return iSigmoid; }
 
 public:
 
