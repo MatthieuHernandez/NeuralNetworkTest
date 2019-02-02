@@ -62,6 +62,12 @@
     <ClInclude Include="src\Header Files\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header Files\statisticAnalysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="savable.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source Files\alltoall.cpp">
@@ -84,6 +90,12 @@
     </ClCompile>
     <ClCompile Include="src\Source Files\neuralNetworkLearning.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\statisticAnalysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="savable.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

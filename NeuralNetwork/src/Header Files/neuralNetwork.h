@@ -5,9 +5,9 @@
 #include "alltoall.h"
 #include <boost/serialization/access.hpp>
 #include "test.h"
+#include "statisticAnalysis.h"
 
-
-class NeuralNetwork
+class NeuralNetwork : StatisticAnalysis
 {
 private :
 
