@@ -30,7 +30,7 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(
 	if (classifiedWell)
 		numberOfResultsClassifiedWell++;
 	else
-		numberOfResultsMisclassefied++;
+		numberOfResultsMisclassified++;
 }
 
 void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(
@@ -50,7 +50,7 @@ void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(
 	if (classifiedWell)
 		numberOfResultsClassifiedWell++;
 	else
-		numberOfResultsMisclassefied++;
+		numberOfResultsMisclassified++;
 }
 
 void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const int classNumber)
@@ -68,7 +68,7 @@ void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector
 	if (maxOutputIndex == classNumber)
 		numberOfResultsClassifiedWell++;
 	else
-		numberOfResultsMisclassefied++;
+		numberOfResultsMisclassified++;
 }
 
 void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desired)

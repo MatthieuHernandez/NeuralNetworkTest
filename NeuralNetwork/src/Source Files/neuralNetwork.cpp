@@ -29,7 +29,7 @@ void NeuralNetwork::initialize()
 NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
                              const std::vector<activationFunctionType> activationFunctionByLayer,
                              const float learningRate,
-                             const float momentum)
+                             const float momentum) : StatisticAnalysis()
 {
 	if (isTheFirst)
 		this->initialize();
@@ -37,9 +37,7 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 	this->structureOfNetwork = structureOfNetwork;
 	this->activationFunctionByLayer = activationFunctionByLayer;
 	this->learningRate = learningRate;
-	this->numberOfResultsClassifiedWell = 0;
-	this->numberOfResultsMisclassefied = 0;
-	this->clusteringRate = -1;
+
 
 	this->numberOfLayers = static_cast<int>(structureOfNetwork.size()) - 1;
 	this->numberOfHiddenLayers = static_cast<int>(structureOfNetwork.size()) - 2;
@@ -156,7 +154,7 @@ void NeuralNetwork::serialize(Archive & ar, const unsigned int version)
     ar & error;
     ar & momentum;
     ar & numberOfResultsClassifiedWell;
-    ar & numberOfResultsMisclassefied;
+    ar & numberOfResultsMisclassified;
     ar & numberOfHiddenLayers;
     ar & numberOfLayers;
     ar & numberOfInput;
@@ -257,7 +255,7 @@ NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 	this->error = neuralNetwork.error;
 	this->momentum = neuralNetwork.momentum;
 	this->numberOfResultsClassifiedWell = neuralNetwork.numberOfResultsClassifiedWell;
-	this->numberOfResultsMisclassefied = neuralNetwork.numberOfResultsMisclassefied;
+	this->numberOfResultsMisclassified = neuralNetwork.numberOfResultsMisclassified;
 	this->numberOfHiddenLayers = neuralNetwork.numberOfHiddenLayers;
 	this->numberOfLayers = neuralNetwork.numberOfLayers;
 	this->numberOfInput = neuralNetwork.numberOfInput;
@@ -294,7 +292,7 @@ bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 		&& this->error == neuralNetwork.error
 		&& this->momentum == neuralNetwork.momentum
 		&& this->numberOfResultsClassifiedWell == neuralNetwork.numberOfResultsClassifiedWell
-		&& this->numberOfResultsMisclassefied == neuralNetwork.numberOfResultsMisclassefied
+		&& this->numberOfResultsMisclassified == neuralNetwork.numberOfResultsMisclassified
 		&& this->numberOfHiddenLayers == neuralNetwork.numberOfHiddenLayers
 		&& this->numberOfLayers == neuralNetwork.numberOfLayers
 		&& this->numberOfInput == neuralNetwork.numberOfInput

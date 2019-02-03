@@ -18,13 +18,9 @@ private :
 	int maxOutputIndex{};
 	int lastError{};
 	float learningRate{};
-	float clusteringRate{};
-	float previousClusteringRate{};
+
 	float error{};
 	float momentum{};
-
-	int numberOfResultsClassifiedWell{};
-	int numberOfResultsMisclassefied{};
 
 	int numberOfHiddenLayers{};
 	int numberOfLayers{};
@@ -88,10 +84,7 @@ public :
 	int getNumberOfHiddenLayers() const;
 	int getNumberOfNeuronsInLayer(int layerNumber) const;
 	activationFunctionType getActivationFunctionInLayer(int layerNumber) const;
-	int getNumberOfResultsClassifiedWell() const;
-	int getNumberOfNegativeResultsMisclassefied() const;
 	int getNumberOfOutputs() const;
-	float getClusteringRate();
 
 	NeuralNetwork& operator=(const NeuralNetwork& neuralNetwork);
 	bool operator==(const NeuralNetwork& neuralNetwork) const;

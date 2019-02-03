@@ -67,7 +67,7 @@ int NeuralNetwork::getNumberOfResultsClassifiedWell() const
 
 int NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
 {
-    return this->numberOfResultsMisclassefied;
+    return this->numberOfResultsMisclassified;
 }
 
 int NeuralNetwork::getNumberOfOutputs() const
@@ -77,8 +77,8 @@ int NeuralNetwork::getNumberOfOutputs() const
 
 float NeuralNetwork::getClusteringRate()
 {
-	const auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
+	const auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassified);
     numberOfResultsClassifiedWell = 0;
-    numberOfResultsMisclassefied = 0;
+    numberOfResultsMisclassified = 0;
     return clusteringRate;
 }
