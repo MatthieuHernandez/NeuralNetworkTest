@@ -7,7 +7,6 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/vector.hpp>
 #pragma warning(pop)
-#include "test.h"
 
 using namespace std;
 
@@ -19,17 +18,17 @@ void NeuralNetwork::initialize()
 	rand();
 	ActivationFunction::initialize();
 
-	const auto numberOfCore = omp_get_num_procs();
+	//const auto numberOfCore = omp_get_num_procs();
 	//omp_set_num_threads(numberOfCore * 2);
 	//omp_set_num_threads(128);
 
 	isTheFirst = false;
 }
 
-NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
-                             const std::vector<activationFunctionType> activationFunctionByLayer,
-                             const float learningRate,
-                             const float momentum) : StatisticAnalysis()
+NeuralNetwork::NeuralNetwork(const std::vector<int>& structureOfNetwork,
+                             const std::vector<activationFunctionType>& activationFunctionByLayer,
+                             float learningRate,
+                             float momentum) : StatisticAnalysis(structureOfNetwork.back())
 {
 	if (isTheFirst)
 		this->initialize();
@@ -64,6 +63,7 @@ NeuralNetwork::NeuralNetwork(const std::vector<int> structureOfNetwork,
 }
 
 NeuralNetwork::NeuralNetwork(const NeuralNetwork& neuralNetwork)
+	: StatisticAnalysis(neuralNetwork.getNumberOfOutputs())
 {
 	this->operator=(neuralNetwork);
 }
@@ -143,27 +143,27 @@ NeuralNetwork& NeuralNetwork::loadFrom(std::string filePath)
 	return *neuralNetwork;
 }
 
-template<class Archive>
-void NeuralNetwork::serialize(Archive & ar, const unsigned int version)
+template <class Archive>
+void NeuralNetwork::serialize(Archive& ar, const unsigned int version)
 {
-    ar & maxOutputIndex;
-    ar & lastError;
-    ar & learningRate;
-    ar & clusteringRate;
-    ar & previousClusteringRate;
-    ar & error;
-    ar & momentum;
-    ar & numberOfResultsClassifiedWell;
-    ar & numberOfResultsMisclassified;
-    ar & numberOfHiddenLayers;
-    ar & numberOfLayers;
-    ar & numberOfInput;
-    ar & numberOfOutputs;
-    ar & structureOfNetwork;
-    ar & activationFunctionByLayer;
-    ar & errors;
-    ar & outputs;
-    ar & numberOfInput;
+	ar & maxOutputIndex;
+	ar & lastError;
+	ar & learningRate;
+	ar & clusteringRate;
+	ar & previousClusteringRate;
+	ar & error;
+	ar & momentum;
+	ar & numberOfResultsClassifiedWell;
+	ar & numberOfResultsMisclassified;
+	ar & numberOfHiddenLayers;
+	ar & numberOfLayers;
+	ar & numberOfInput;
+	ar & numberOfOutputs;
+	ar & structureOfNetwork;
+	ar & activationFunctionByLayer;
+	ar & errors;
+	ar & outputs;
+	ar & numberOfInput;
 
 	ar.template register_type<AllToAll>();
 	ar & layers;

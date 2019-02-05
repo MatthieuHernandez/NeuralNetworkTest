@@ -7,7 +7,7 @@
 #include "test.h"
 #include "statisticAnalysis.h"
 
-class NeuralNetwork : StatisticAnalysis
+class NeuralNetwork : public StatisticAnalysis
 {
 private :
 
@@ -46,10 +46,11 @@ private :
 
 public :
 
-	NeuralNetwork(std::vector<int> structureOfNetwork,
-	              std::vector<activationFunctionType> activationFunctionByLayer,
+	NeuralNetwork(const std::vector<int>& structureOfNetwork,
+	              const std::vector<activationFunctionType>& activationFunctionByLayer,
 	              float learningRate = 0.05f,
 	              float momentum = 0.0f);
+
 	NeuralNetwork(const NeuralNetwork& neuralNetwork);
 
 	NeuralNetwork() = default;

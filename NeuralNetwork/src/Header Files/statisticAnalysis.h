@@ -15,13 +15,15 @@ protected:
 		float falseNegative{};
 	};
 
-	 std::vector<binaryClassification> clusterClassifications;
+	 std::vector<binaryClassification> clusters;
 
 public:
 	StatisticAnalysis(int numberOfCluster);
 	virtual ~StatisticAnalysis() = default;
 
 	void startTesting();
+	void insertTestWithPrecision(std::vector<float>& outputs, std::vector<float>& desiredOutputs, float precision);
+	void insertTestWithSeparateByValue(std::vector<float>& outputs, std::vector<float>& desiredOutputs, float separator);
 
 	float getClusteringRate() const;
 	float getWeightedClusteringRate() const;
