@@ -1,28 +1,60 @@
 #include "StatisticAnalysis.h"
 
 
-
-StatisticAnalysis::StatisticAnalysis()
+StatisticAnalysis::StatisticAnalysis(int numberOfCluster)
 {
+	clusterClassifications.resize(numberOfCluster);
 	this->startTesting();
 }
 
 void StatisticAnalysis::startTesting()
 {
+	for (auto cluster : clusterClassifications)
+	{
+		cluster.truePositive = 0;
+		cluster.trueNegative = 0;
+		cluster.falsePositive = 0;
+		cluster.falseNegative = 0;
+	}
 }
 
 float StatisticAnalysis::getClusteringRate() const
 {
-	return (this->truePositive + this->trueNegative)/(this->truePositive + this->trueNegative + this->falsePositive + this->falseNegative);
+	float wellClassified = 0;
+	float Total = 0;
+
+	for (const auto cluster : clusterClassifications)
+	{
+		wellClassified += cluster.truePositive;
+		wellClassified += cluster.trueNegative;
+		Total += cluster.falsePositive;
+		Total += cluster.falseNegative;
+	}
+	Total += wellClassified;
+
+	return wellClassified / Total;
 }
 
-float StatisticAnalysis::getF1Score()
+float StatisticAnalysis::getWeightedClusteringRate() const
 {
-	const float precision = truePositive / (truePositive + falsePositive);
-	const float recall = truePositive /  (truePositive + falsePositive);
-
-	const float f1Score = 2 * (precision * recall) / ( precision + recall);
-
-	return f1Score;
+	float weightedClusteringRate = 0;
+	for (const auto cluster : clusterClassifications)
+	{
+		weightedClusteringRate += (cluster.truePositive + cluster.trueNegative) / (cluster.truePositive + cluster.
+			trueNegative + cluster.falsePositive + cluster.falseNegative);
+	}
+	return weightedClusteringRate / clusterClassifications.size();
 }
 
+float StatisticAnalysis::getF1Score() const
+{
+	float f1Score = 0;
+
+	for (const auto cluster : clusterClassifications)
+	{
+		const float precision = cluster.truePositive / (cluster.truePositive + cluster.falsePositive);
+		const float recall = cluster.truePositive / (cluster.truePositive + cluster.falsePositive);
+		f1Score += (precision * recall) / (precision + recall);
+	}
+	return 2.0f * f1Score / clusterClassifications.size();
+}

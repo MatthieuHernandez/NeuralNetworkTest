@@ -18,16 +18,12 @@ protected:
 	 std::vector<binaryClassification> clusterClassifications;
 
 public:
-	StatisticAnalysis();
+	StatisticAnalysis(int numberOfCluster);
 	virtual ~StatisticAnalysis() = default;
 
 	void startTesting();
 
 	float getClusteringRate() const;
-	float getF1Score();
-
-	int getTruePositive() const { return this->truePositive; }
-	int getTrueNegative() const { return this->trueNegative; }
-	int getFalsePositive() const { return this->falsePositive; }
-	int getFalseNegative() const { return this->falseNegative; }
+	float getWeightedClusteringRate() const;
+	float getF1Score() const;
 };
