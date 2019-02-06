@@ -18,33 +18,41 @@ void StatisticAnalysis::startTesting()
 	}
 }
 
-void StatisticAnalysis::insertTestWithPrecision(std::vector<float>& outputs, std::vector<float>& desiredOutputs,
+void StatisticAnalysis::insertTestWithPrecision(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
                                                 float precision)
 {
+	bool classifiedWell = true;
 	for (int i = 0; i < clusters.size(); i++)
 	{
-		if (outputs[i] > separator && desiredOutputs[i] > separator)
+		if (outputs[i]  > desiredOutputs[i] + precision)
 		{
-			clusters[i].truePositive ++;
+			clusters[i].falsePositive ++;
+			classifiedWell = false;
 		}
-		else if (outputs[i] <= separator && desiredOutputs[i] <= separator)
+		else if (outputs[i] <= desiredOutputs[i] - precision)
+		{
+			clusters[i].falseNegative ++;
+			classifiedWell = false;
+		}
+		else if (outputs[i] > desiredOutputs[i])
 		{
 			clusters[i].trueNegative ++;
 		}
-		else if (outputs[i] > separator && desiredOutputs[i] <= separator)
+		else if (outputs[i] <= desiredOutputs[i])
 		{
-			clusters[i].falsePositive ++;
-		}
-		else if (outputs[i] <= separator && desiredOutputs[i] > separator)
-		{
-			clusters[i].falseNegative ++;
+			clusters[i].trueNegative ++;
 		}
 	}
+	if (classifiedWell)
+		numberOfDataWellClassified++;
+	else
+		numberOfDataMisclassified++;
 }
 
-void StatisticAnalysis::insertTestWithSeparateByValue(std::vector<float>& outputs, std::vector<float>& desiredOutputs,
+void StatisticAnalysis::insertTestSeparateByValue(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
                                                       float separator)
 {
+	bool classifiedWell = true;
 	for (int i = 0; i < clusters.size(); i++)
 	{
 		if (outputs[i] > separator && desiredOutputs[i] > separator)
@@ -58,29 +66,41 @@ void StatisticAnalysis::insertTestWithSeparateByValue(std::vector<float>& output
 		else if (outputs[i] > separator && desiredOutputs[i] <= separator)
 		{
 			clusters[i].falsePositive ++;
+			classifiedWell = false;
 		}
 		else if (outputs[i] <= separator && desiredOutputs[i] > separator)
 		{
 			clusters[i].falseNegative ++;
+			classifiedWell = false;
 		}
 	}
+	if (classifiedWell)
+		numberOfDataWellClassified++;
+	else
+		numberOfDataMisclassified++;
 }
 
-float StatisticAnalysis::getClusteringRate() const
+void StatisticAnalysis::insertTestWithClassNumber(const std::vector<float>& outputs, int classNumber)
 {
-	float wellClassified = 0;
-	float total = 0;
-
-	for (const auto c : clusters)
+	float maxOutputValue = -1;
+	int maxOutputIndex = -1;
+	for (int i = 0; i < clusters.size(); i++)
 	{
-		wellClassified += c.truePositive;
-		wellClassified += c.trueNegative;
-		total += c.falsePositive;
-		total += c.falseNegative;
+		if (maxOutputValue < outputs[i])
+		{
+			maxOutputValue = outputs[i];
+			maxOutputIndex = i;
+		}
 	}
-	total += wellClassified;
+	if (maxOutputIndex == classNumber)
+		numberOfDataWellClassified++;
+	else
+		numberOfDataMisclassified++;
+}
 
-	return wellClassified / total;
+float StatisticAnalysis::getGlobalClusteringRate() const
+{
+	return numberOfDataWellClassified / (numberOfDataWellClassified + numberOfDataMisclassified);
 }
 
 float StatisticAnalysis::getWeightedClusteringRate() const

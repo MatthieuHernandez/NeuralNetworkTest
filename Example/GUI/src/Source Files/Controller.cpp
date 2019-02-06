@@ -84,7 +84,7 @@ void Controller::evaluate(const bool* stop, const bool autoSave, const QString& 
 				data->getTestingOutputs(outputs.currentIndex), 0.0f);
 		}
 	}
-	outputs.clusteringRate = neuralNetwork->getClusteringRate();
+	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
 	if (outputs.clusteringRate > outputs.clusteringRateMax)
 	{
 		outputs.clusteringRateMax = outputs.clusteringRate;
