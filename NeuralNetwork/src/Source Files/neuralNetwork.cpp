@@ -1,11 +1,12 @@
 #include "neuralNetwork.h"
 #include <ctime>
-#include <omp.h>
+//#include <omp.h>
 #include <fstream>
 #pragma warning(push, 0)
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/vector.hpp>
+#include "alltoall.h"
 #pragma warning(pop)
 
 using namespace std;
@@ -146,24 +147,22 @@ NeuralNetwork& NeuralNetwork::loadFrom(std::string filePath)
 template <class Archive>
 void NeuralNetwork::serialize(Archive& ar, const unsigned int version)
 {
-	ar & maxOutputIndex;
-	ar & lastError;
-	ar & learningRate;
-	ar & clusteringRate;
-	ar & previousClusteringRate;
-	ar & error;
-	ar & momentum;
-	ar & numberOfResultsClassifiedWell;
-	ar & numberOfResultsMisclassified;
-	ar & numberOfHiddenLayers;
-	ar & numberOfLayers;
-	ar & numberOfInput;
-	ar & numberOfOutputs;
-	ar & structureOfNetwork;
-	ar & activationFunctionByLayer;
-	ar & errors;
-	ar & outputs;
-	ar & numberOfInput;
+	boost::serialization::void_cast_register<NeuralNetwork, StatisticAnalysis>();
+	ar & boost::serialization::base_object<StatisticAnalysis>(*this);
+	ar & this->maxOutputIndex;
+	ar & this->lastError;
+	ar & this->learningRate;
+	ar & this->error;
+	ar & this->momentum;
+	ar & this->numberOfHiddenLayers;
+	ar & this->numberOfLayers;
+	ar & this->numberOfInput;
+	ar & this->numberOfOutputs;
+	ar & this->structureOfNetwork;
+	ar & this->activationFunctionByLayer;
+	ar & this->errors;
+	ar & this->outputs;
+	ar & this->numberOfInput;
 
 	ar.template register_type<AllToAll>();
 	ar & layers;
@@ -250,12 +249,8 @@ NeuralNetwork& NeuralNetwork::operator=(const NeuralNetwork& neuralNetwork)
 	this->maxOutputIndex = neuralNetwork.maxOutputIndex;
 	this->lastError = neuralNetwork.lastError;
 	this->learningRate = neuralNetwork.learningRate;
-	this->clusteringRate = neuralNetwork.clusteringRate;
-	this->previousClusteringRate = neuralNetwork.previousClusteringRate;
 	this->error = neuralNetwork.error;
 	this->momentum = neuralNetwork.momentum;
-	this->numberOfResultsClassifiedWell = neuralNetwork.numberOfResultsClassifiedWell;
-	this->numberOfResultsMisclassified = neuralNetwork.numberOfResultsMisclassified;
 	this->numberOfHiddenLayers = neuralNetwork.numberOfHiddenLayers;
 	this->numberOfLayers = neuralNetwork.numberOfLayers;
 	this->numberOfInput = neuralNetwork.numberOfInput;
@@ -287,12 +282,8 @@ bool NeuralNetwork::operator==(const NeuralNetwork& neuralNetwork) const
 	bool equal(this->maxOutputIndex == neuralNetwork.maxOutputIndex
 		&& this->lastError == neuralNetwork.lastError
 		&& this->learningRate == neuralNetwork.learningRate
-		&& this->clusteringRate == neuralNetwork.clusteringRate
-		&& this->previousClusteringRate == neuralNetwork.previousClusteringRate
 		&& this->error == neuralNetwork.error
 		&& this->momentum == neuralNetwork.momentum
-		&& this->numberOfResultsClassifiedWell == neuralNetwork.numberOfResultsClassifiedWell
-		&& this->numberOfResultsMisclassified == neuralNetwork.numberOfResultsMisclassified
 		&& this->numberOfHiddenLayers == neuralNetwork.numberOfHiddenLayers
 		&& this->numberOfLayers == neuralNetwork.numberOfLayers
 		&& this->numberOfInput == neuralNetwork.numberOfInput

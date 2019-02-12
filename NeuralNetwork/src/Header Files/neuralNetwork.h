@@ -2,10 +2,10 @@
 #define NEURAL_NETWORK_H
 
 #include "activationFunction.h"
-#include "alltoall.h"
 #include <boost/serialization/access.hpp>
 #include "test.h"
 #include "statisticAnalysis.h"
+#include "layer.h"
 
 class NeuralNetwork : public StatisticAnalysis
 {

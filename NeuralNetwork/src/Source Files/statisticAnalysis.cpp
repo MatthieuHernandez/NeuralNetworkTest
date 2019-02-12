@@ -126,3 +126,23 @@ float StatisticAnalysis::getF1Score() const
 	}
 	return 2.0f * f1Score / clusters.size();
 }
+
+StatisticAnalysis& StatisticAnalysis::operator=(const StatisticAnalysis& sa)
+{
+	this->clusters = sa.clusters;
+	this->numberOfDataWellClassified = sa.numberOfDataWellClassified;
+	this->numberOfDataMisclassified = sa.numberOfDataMisclassified;
+	return *this;
+}
+
+bool StatisticAnalysis::operator==(const StatisticAnalysis& sa) const
+{
+	return /*this->clusters == sa.clusters
+	&&*/ this->numberOfDataWellClassified == sa.numberOfDataWellClassified
+	&& this->numberOfDataMisclassified == sa.numberOfDataMisclassified;
+}
+
+bool StatisticAnalysis::operator!=(const StatisticAnalysis& sa) const
+{
+	return !this->operator==(sa);
+}
