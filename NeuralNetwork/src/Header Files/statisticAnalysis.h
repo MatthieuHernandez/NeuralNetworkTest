@@ -9,8 +9,13 @@ struct binaryClassification
 	float falsePositive{};
 	float falseNegative{};
 
+	bool operator==(const binaryClassification&) const
+	{
+		return truePositive && trueNegative && falsePositive && falseNegative;
+	};
+
 	template <typename Archive>
-	void serialize(Archive& ar, unsigned version)
+	void serialize(Archive& ar, unsigned)
 	{
 		ar & truePositive;
 		ar & trueNegative;
@@ -31,29 +36,35 @@ private:
 	float numberOfDataWellClassified{};
 	float numberOfDataMisclassified{};
 
-public:
-	StatisticAnalysis() = default;
-	StatisticAnalysis(int numberOfCluster);
-	virtual ~StatisticAnalysis() = default;
 
-	void startTesting();
+protected:
+
 	void insertTestWithPrecision(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
 	                             float precision);
 	void insertTestSeparateByValue(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
 	                               float separator);
 	void insertTestWithClassNumber(const std::vector<float>& outputs, int classNumber);
 
+
+public:
+
+	StatisticAnalysis() = default;
+	StatisticAnalysis(int numberOfCluster);
+	virtual ~StatisticAnalysis() = default;
+
+	void startTesting();
+
 	float getGlobalClusteringRate() const;
 	float getWeightedClusteringRate() const;
 	float getF1Score() const;
 
-	StatisticAnalysis& operator=(const StatisticAnalysis& sa);
+	StatisticAnalysis& operator=(const StatisticAnalysis& sa) = default;
 	bool operator==(const StatisticAnalysis& sa) const;
 	bool operator!=(const StatisticAnalysis& sa) const;
 };
 
 template <class Archive>
-void StatisticAnalysis::serialize(Archive& ar, unsigned version)
+void StatisticAnalysis::serialize(Archive& ar, unsigned)
 {
 	ar & this->clusters;
 	ar & this->numberOfDataWellClassified;

@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <QDateTime>
-#include "Data.h"
 #include "DataForRegression.h"
 
 enum timeUnit

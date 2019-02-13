@@ -73,13 +73,13 @@ void Controller::evaluate(const bool* stop, const bool autoSave, const QString& 
 			return;
 		if (data->problem == classification)
 		{
-			neuralNetwork->calculateClusteringRateForClassificationProblem(
+			neuralNetwork->evaluateForClassificationProblem(
 				data->getTestingData(outputs.currentIndex),
 				data->getTestingLabel(outputs.currentIndex));
 		}
 		else
 		{
-			neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(
+			neuralNetwork->evaluateForRegressionProblemSeparateByValue(
 				data->getTestingData(outputs.currentIndex),
 				data->getTestingOutputs(outputs.currentIndex), 0.0f);
 		}

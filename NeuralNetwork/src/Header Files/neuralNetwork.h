@@ -44,6 +44,7 @@ private :
 	template <class Archive>
 	void serialize(Archive& ar, unsigned version);
 
+
 public :
 
 	NeuralNetwork(const std::vector<int>& structureOfNetwork,
@@ -59,13 +60,13 @@ public :
 	void train(const std::vector<float>& inputs, const std::vector<float>& desired);
 	std::vector<float> output(const std::vector<float>& inputs);
 
-	void calculateClusteringRateForRegressionProblemWithPrecision(const std::vector<float>& inputs,
+	void evaluateForRegressionProblemWithPrecision(const std::vector<float>& inputs,
 	                                                              const std::vector<float>& desired,
 	                                                              float precision = 0.5f);
-	void calculateClusteringRateForRegressionProblemSeparateByValue(const std::vector<float>& inputs,
+	void evaluateForRegressionProblemSeparateByValue(const std::vector<float>& inputs,
 	                                                                const std::vector<float>& desired,
 	                                                                float separator = 0.0f);
-	void calculateClusteringRateForClassificationProblem(const std::vector<float>& inputs, int classNumber);
+	void evaluateForClassificationProblem(const std::vector<float>& inputs, int classNumber);
 
 	void addANeuron(int layerNumber);
 
