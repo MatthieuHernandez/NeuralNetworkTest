@@ -16,6 +16,8 @@ void StatisticAnalysis::startTesting()
 		c.falsePositive = 0;
 		c.falseNegative = 0;
 	}
+	numberOfDataWellClassified = 0;
+	numberOfDataMisclassified = 0;
 }
 
 void StatisticAnalysis::insertTestWithPrecision(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,

@@ -98,7 +98,7 @@ class notImplementedException : public std::exception
 public:
 	notImplementedException() : std::exception("Function not yet implemented")
 	{
-	};
+	}
 };
 
 #endif // NEURAL_NETWORK_H

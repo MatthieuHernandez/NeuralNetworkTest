@@ -143,8 +143,6 @@ void MainWindow::initializeLayerButtons(const int layer) const
 void MainWindow::initializeGraphOfClusteringRate()
 {
 	x.clear();
-	y.clear();
-
 	ui->customPlot->addGraph();
 	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
 	ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
@@ -156,7 +154,7 @@ void MainWindow::initializeGraphOfClusteringRate()
 void MainWindow::refreshGraphOfClusteringRate() const
 {
 	ui->customPlot->graph(0)->setData(x, y);
-	ui->customPlot->xAxis->setRange(0, y.empty() ? 1 : y.size() - 1);
+	ui->customPlot->xAxis->setRange(0, this->currentController->outputs.numberOfIteration);
 	ui->customPlot->replot();
 }
 
@@ -401,8 +399,8 @@ void MainWindow::updateGraphOfClusteringRate()
 {
 	this->currentController->blockSignals(true);
 	this->refreshClusteringRate();
-	x.push_back(y.size());
-	y.push_back(ui->doubleSpinBoxCR->value());
+	x.push_back(this->currentController->outputs.numberOfIteration);
+	y.push_back(this->currentController->outputs.clusteringRate);
 	this->refreshGraphOfClusteringRate();
 	this->currentController->blockSignals(false);
 }
@@ -410,7 +408,7 @@ void MainWindow::updateGraphOfClusteringRate()
 void MainWindow::updateNumberOfIteration()
 {
 	this->currentController->blockSignals(true);
-	ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+	ui->spinBoxIteration->setValue(this->currentController->outputs.numberOfIteration);
 	QApplication::processEvents();
 	this->currentController->blockSignals(false);
 }

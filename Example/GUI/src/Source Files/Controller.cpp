@@ -67,6 +67,7 @@ void Controller::compute(const bool* stop, const bool* autoSave, const QString& 
 
 void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
 {
+	neuralNetwork->startTesting();
 	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
 	{
 		if (*stop)
@@ -88,7 +89,7 @@ void Controller::evaluate(const bool* stop, const bool autoSave, const QString& 
 	if (outputs.clusteringRate > outputs.clusteringRateMax)
 	{
 		outputs.clusteringRateMax = outputs.clusteringRate;
-		if(autoSave == true)
+		if(autoSave)
 			this->autoSave(autoSaveFileName);
 	}
 }
