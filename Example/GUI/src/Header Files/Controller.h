@@ -17,14 +17,14 @@ private :
 	void initializeData();
 	void resetOutput();
 	void autoSave(const QString& dataSetName);
-	
+
 
 public:
 
 	Controller(Data& data);
 	virtual ~Controller() = default;
 
-	
+
 	void DeleteNeuralNetwork();
 	void initializeNeuralNetwork();
 
@@ -43,16 +43,19 @@ public:
 		float learningRate{};
 		float momentum{};
 		int numberOfTrainbyRating{};
-
 	} inputs;
 
 	struct Ouputs
 	{
 		int currentIndex = 0;
 		int numberOfIteration = 0;
+
 		float clusteringRate = -1.0f;
 		float clusteringRateMax = -1.0f;
-
+		float weightedClusteringRate = -1.0f;
+		float weightedClusteringRateMax = -1.0f;
+		float f1Score = -1.0f;
+		float f1ScoreMax = -1.0f;
 	} outputs;
 
 signals :

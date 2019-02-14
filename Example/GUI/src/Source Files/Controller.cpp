@@ -86,10 +86,12 @@ void Controller::evaluate(const bool* stop, const bool autoSave, const QString& 
 		}
 	}
 	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
+	outputs.weightedClusteringRate = neuralNetwork->getWeightedClusteringRate();
+	outputs.f1Score = neuralNetwork->getF1Score();
 	if (outputs.clusteringRate > outputs.clusteringRateMax)
 	{
 		outputs.clusteringRateMax = outputs.clusteringRate;
-		if(autoSave)
+		if (autoSave)
 			this->autoSave(autoSaveFileName);
 	}
 }

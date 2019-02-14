@@ -143,9 +143,19 @@ void MainWindow::initializeLayerButtons(const int layer) const
 void MainWindow::initializeGraphOfClusteringRate()
 {
 	x.clear();
+	clusteringRates.clear();
+	weightedClusteringRates.clear();
+	f1Scores.clear();
+	ui->customPlot->addGraph();
+	ui->customPlot->addGraph();
 	ui->customPlot->addGraph();
 	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
-	ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+	//ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+	ui->customPlot->graph(1)->setPen(QPen(Qt::green));
+	//ui->customPlot->graph(1)->setBrush(QBrush(QColor(255, 0, 0, 20)));
+	ui->customPlot->graph(2)->setPen(QPen(Qt::red));
+	//ui->customPlot->graph(2)->setBrush(QBrush(QColor(255, 0, 0, 20)));
+
 	ui->customPlot->yAxis->setRange(0, 100);
 	ui->customPlot->replot();
 	updateGraphOfClusteringRate();
@@ -153,17 +163,19 @@ void MainWindow::initializeGraphOfClusteringRate()
 
 void MainWindow::refreshGraphOfClusteringRate() const
 {
-	ui->customPlot->graph(0)->setData(x, y);
+	ui->customPlot->graph(0)->setData(x, clusteringRates);
+	ui->customPlot->graph(1)->setData(x, weightedClusteringRates);
+	ui->customPlot->graph(2)->setData(x, f1Scores);
 	ui->customPlot->xAxis->setRange(0, this->currentController->outputs.numberOfIteration);
 	ui->customPlot->replot();
 }
 
 void MainWindow::refreshClusteringRate() const
 {
-	auto CR = this->currentController->outputs.clusteringRate * 100.0f;
-	auto CRM = this->currentController->outputs.clusteringRateMax * 100.0f;
-	ui->doubleSpinBoxCR->setValue(CR);
-	ui->doubleSpinBoxCRM->setValue(CRM);
+	ui->doubleSpinBoxCR->setValue(this->currentController->outputs.clusteringRate * 100.0f);
+	ui->doubleSpinBoxCRM->setValue(this->currentController->outputs.clusteringRateMax * 100.0f);
+	ui->doubleSpinBoxWCR->setValue(this->currentController->outputs.weightedClusteringRate * 100.0f);
+	ui->doubleSpinBoxF1S->setValue(this->currentController->outputs.f1Score * 100.0f);
 }
 
 void MainWindow::enableModification(const bool isEnable) const
@@ -253,7 +265,9 @@ void MainWindow::on_pushButtonConsole_clicked()
 void MainWindow::on_pushButtonResetGraph_clicked()
 {
 	x.clear();
-	y.clear();
+	clusteringRates.clear();
+	weightedClusteringRates.clear();
+	f1Scores.clear();
 	ui->pushButtonResetGraph->setEnabled(false);
 	this->refreshGraphOfClusteringRate();
 }
@@ -302,7 +316,7 @@ void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
 
 void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
 {
-	if(state == 2)
+	if (state == 2)
 	{
 		this->autoSave = true;
 		console->write("auto save enable");
@@ -400,7 +414,9 @@ void MainWindow::updateGraphOfClusteringRate()
 	this->currentController->blockSignals(true);
 	this->refreshClusteringRate();
 	x.push_back(this->currentController->outputs.numberOfIteration);
-	y.push_back(this->currentController->outputs.clusteringRate);
+	clusteringRates.push_back(this->currentController->outputs.clusteringRate * 100.0f);
+	weightedClusteringRates.push_back(this->currentController->outputs.weightedClusteringRate * 100.0f);
+	f1Scores.push_back(this->currentController->outputs.f1Score * 100.0f);
 	this->refreshGraphOfClusteringRate();
 	this->currentController->blockSignals(false);
 }

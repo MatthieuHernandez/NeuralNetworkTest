@@ -189,6 +189,9 @@ public:
         label_1 = new QLabel(tab_3);
         label_1->setObjectName(QStringLiteral("label_1"));
         label_1->setGeometry(QRect(10, 140, 91, 21));
+        QFont font1;
+        font1.setKerning(true);
+        label_1->setFont(font1);
         spinBoxCount = new QSpinBox(tab_3);
         spinBoxCount->setObjectName(QStringLiteral("spinBoxCount"));
         spinBoxCount->setGeometry(QRect(50, 100, 50, 22));
@@ -373,7 +376,7 @@ public:
         label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
         labelMax->setText(QApplication::translate("MainWindow", "Max", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Timer :", nullptr));
-        label_1->setText(QApplication::translate("MainWindow", "Clustering Rate :", nullptr));
+        label_1->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#0000ff;\">Clustering Rate :</span></p></body></html>", nullptr));
         timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", nullptr));
         label_9->setText(QApplication::translate("MainWindow", "/", nullptr));
         label_8->setText(QApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
@@ -387,8 +390,8 @@ public:
         pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
         pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
         checkBoxAutoSave->setText(QApplication::translate("MainWindow", "Auto save", nullptr));
-        label_11->setText(QApplication::translate("MainWindow", "Weighted CR :", nullptr));
-        label_12->setText(QApplication::translate("MainWindow", "F1 Score :", nullptr));
+        label_11->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Weighted CR :</span></p></body></html>", nullptr));
+        label_12->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#00ff00;\">F1 Score :</span></p></body></html>", nullptr));
         doubleSpinBoxWCR->setSpecialValueText(QString());
         doubleSpinBoxWCR->setPrefix(QString());
         doubleSpinBoxWCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));

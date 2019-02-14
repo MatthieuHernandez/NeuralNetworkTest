@@ -20,13 +20,14 @@ void StatisticAnalysis::startTesting()
 	numberOfDataMisclassified = 0;
 }
 
-void StatisticAnalysis::insertTestWithPrecision(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
+void StatisticAnalysis::insertTestWithPrecision(const std::vector<float>& outputs,
+                                                const std::vector<float>& desiredOutputs,
                                                 float precision)
 {
 	bool classifiedWell = true;
 	for (int i = 0; i < clusters.size(); i++)
 	{
-		if (outputs[i]  > desiredOutputs[i] + precision)
+		if (outputs[i] > desiredOutputs[i] + precision)
 		{
 			clusters[i].falsePositive ++;
 			classifiedWell = false;
@@ -51,8 +52,9 @@ void StatisticAnalysis::insertTestWithPrecision(const std::vector<float>& output
 		numberOfDataMisclassified++;
 }
 
-void StatisticAnalysis::insertTestSeparateByValue(const std::vector<float>& outputs, const std::vector<float>& desiredOutputs,
-                                                      float separator)
+void StatisticAnalysis::insertTestSeparateByValue(const std::vector<float>& outputs,
+                                                  const std::vector<float>& desiredOutputs,
+                                                  float separator)
 {
 	bool classifiedWell = true;
 	for (int i = 0; i < clusters.size(); i++)
@@ -95,9 +97,15 @@ void StatisticAnalysis::insertTestWithClassNumber(const std::vector<float>& outp
 		}
 	}
 	if (maxOutputIndex == classNumber)
+	{
+		clusters[maxOutputIndex].truePositive ++;
 		numberOfDataWellClassified++;
+	}
 	else
+	{
+		clusters[maxOutputIndex].falsePositive ++;
 		numberOfDataMisclassified++;
+	}
 }
 
 float StatisticAnalysis::getGlobalClusteringRate() const
@@ -110,8 +118,11 @@ float StatisticAnalysis::getWeightedClusteringRate() const
 	float weightedClusteringRate = 0;
 	for (const auto c : clusters)
 	{
-		weightedClusteringRate += (c.truePositive + c.trueNegative)
-			/ (c.truePositive + c.trueNegative + c.falsePositive + c.falseNegative);
+		const float denominator = c.truePositive + c.trueNegative;
+		const float numerator = c.truePositive + c.trueNegative + c.falsePositive + c.falseNegative;
+
+		if (denominator > 0)
+			weightedClusteringRate += denominator / numerator;
 	}
 	return weightedClusteringRate / clusters.size();
 }
@@ -122,9 +133,12 @@ float StatisticAnalysis::getF1Score() const
 
 	for (const auto c : clusters)
 	{
-		const float precision = c.truePositive / (c.truePositive + c.falsePositive);
-		const float recall = c.truePositive / (c.truePositive + c.falsePositive);
-		f1Score += (precision * recall) / (precision + recall);
+		if (c.truePositive > 0)
+		{
+			const float precision = c.truePositive / (c.truePositive + c.falsePositive);
+			const float recall = c.truePositive / (c.truePositive + c.falsePositive);
+			f1Score += (precision * recall) / (precision + recall);
+		}
 	}
 	return 2.0f * f1Score / clusters.size();
 }
@@ -132,8 +146,8 @@ float StatisticAnalysis::getF1Score() const
 bool StatisticAnalysis::operator==(const StatisticAnalysis& sa) const
 {
 	return this->clusters == sa.clusters
-	&& this->numberOfDataWellClassified == sa.numberOfDataWellClassified
-	&& this->numberOfDataMisclassified == sa.numberOfDataMisclassified;
+		&& this->numberOfDataWellClassified == sa.numberOfDataWellClassified
+		&& this->numberOfDataMisclassified == sa.numberOfDataMisclassified;
 }
 
 bool StatisticAnalysis::operator!=(const StatisticAnalysis& sa) const
