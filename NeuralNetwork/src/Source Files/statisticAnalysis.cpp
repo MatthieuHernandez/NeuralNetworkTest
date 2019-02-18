@@ -86,6 +86,7 @@ void StatisticAnalysis::insertTestSeparateByValue(const std::vector<float>& outp
 
 void StatisticAnalysis::insertTestWithClassNumber(const std::vector<float>& outputs, int classNumber)
 {
+	float separator = 0.5f;
 	float maxOutputValue = -1;
 	int maxOutputIndex = -1;
 	for (int i = 0; i < clusters.size(); i++)
@@ -95,15 +96,29 @@ void StatisticAnalysis::insertTestWithClassNumber(const std::vector<float>& outp
 			maxOutputValue = outputs[i];
 			maxOutputIndex = i;
 		}
+		if (i == classNumber && outputs[i] > separator)
+		{
+			clusters[i].truePositive ++;
+		}
+		else if (i == classNumber && outputs[i] <= separator)
+		{
+			clusters[i].falseNegative ++;
+		}
+		else if (outputs[i] > separator)
+		{
+			clusters[i].falsePositive ++;
+		}
+		else if (outputs[i] <= separator)
+		{
+			clusters[i].trueNegative ++;
+		}
 	}
 	if (maxOutputIndex == classNumber)
 	{
-		clusters[maxOutputIndex].truePositive ++;
 		numberOfDataWellClassified++;
 	}
 	else
 	{
-		clusters[maxOutputIndex].falsePositive ++;
 		numberOfDataMisclassified++;
 	}
 }
@@ -118,11 +133,11 @@ float StatisticAnalysis::getWeightedClusteringRate() const
 	float weightedClusteringRate = 0;
 	for (const auto c : clusters)
 	{
-		const float denominator = c.truePositive + c.trueNegative;
-		const float numerator = c.truePositive + c.trueNegative + c.falsePositive + c.falseNegative;
+		const float numerator = c.truePositive;
+		const float denominator = c.truePositive + c.falsePositive;
 
-		if (denominator > 0)
-			weightedClusteringRate += denominator / numerator;
+		if (numerator > 0)
+			weightedClusteringRate += numerator / denominator;
 	}
 	return weightedClusteringRate / clusters.size();
 }
@@ -136,7 +151,7 @@ float StatisticAnalysis::getF1Score() const
 		if (c.truePositive > 0)
 		{
 			const float precision = c.truePositive / (c.truePositive + c.falsePositive);
-			const float recall = c.truePositive / (c.truePositive + c.falsePositive);
+			const float recall = c.truePositive / (c.truePositive + c.falseNegative);
 			f1Score += (precision * recall) / (precision + recall);
 		}
 	}
@@ -146,7 +161,7 @@ float StatisticAnalysis::getF1Score() const
 bool StatisticAnalysis::operator==(const StatisticAnalysis& sa) const
 {
 	return this->clusters == sa.clusters
-		&& this->numberOfDataWellClassified == sa.numberOfDataWellClassified
+		&& this->numberOfDataWellClassified == sa.numberOfDataWellClassified 
 		&& this->numberOfDataMisclassified == sa.numberOfDataMisclassified;
 }
 

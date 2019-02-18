@@ -1,7 +1,7 @@
 #pragma once
 #include "DataForClassification.h"
 
-class Wine : public DataForClassification
+class Wine final : public DataForClassification
 {
 public:
 	Wine();

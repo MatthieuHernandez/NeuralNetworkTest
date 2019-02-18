@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "activationFunction.h"
+#include <limits>
 
 class Sigmoid : public ActivationFunction
 {
@@ -12,11 +13,21 @@ public:
 
 	float function(const float x) const override
 	{
-		return 1.0f / (1.0f + exp(-x));
+		float result = 1.0f / (1.0f + exp(-x));
+		if (result != result)
+		{
+			if (x > 0)
+				return 1;
+			return 0;
+		}
+		return result;
 	}
 
 	float derivative(const float x) const override
 	{
-		return exp(-x) / pow((exp(-x) + 1.0f), 2);
+		float result = exp(-0) / pow((exp(-0) + 1.0f), 2);
+		if (result != result)
+			return exp(-0) / pow((exp(-0) + 1.0f), 2);
+		return result;
 	}
 };

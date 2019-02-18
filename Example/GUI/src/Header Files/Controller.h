@@ -45,7 +45,7 @@ public:
 		int numberOfTrainbyRating{};
 	} inputs;
 
-	struct Ouputs
+	struct Outputs
 	{
 		int currentIndex = 0;
 		int numberOfIteration = 0;

@@ -151,9 +151,9 @@ void MainWindow::initializeGraphOfClusteringRate()
 	ui->customPlot->addGraph();
 	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
 	//ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-	ui->customPlot->graph(1)->setPen(QPen(Qt::green));
+	ui->customPlot->graph(1)->setPen(QPen(Qt::red));
 	//ui->customPlot->graph(1)->setBrush(QBrush(QColor(255, 0, 0, 20)));
-	ui->customPlot->graph(2)->setPen(QPen(Qt::red));
+	ui->customPlot->graph(2)->setPen(QPen(Qt::green));
 	//ui->customPlot->graph(2)->setBrush(QBrush(QColor(255, 0, 0, 20)));
 
 	ui->customPlot->yAxis->setRange(0, 100);
