@@ -76,7 +76,7 @@ void Wine::loadData()
 	}
 
 	// Doesn't work if wine's values isn't normalize
-	/*for (int j = 0; j < this->sizeOfData; j++)
+	for (int j = 0; j < this->sizeOfData; j++)
 	{
 		float maxValue = -1024;
 		for (int i = 0; i < this->sets[training].size; i++)
@@ -88,7 +88,7 @@ void Wine::loadData()
 		{
 			sets[training].data[i][j] /= maxValue;
 		}
-	}*/
+	}
 
 	sets[testing] = sets[training];
 }

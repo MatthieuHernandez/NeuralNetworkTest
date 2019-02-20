@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "activationFunction.h"
 #include <limits>
+#include <string>
+#include <cassert>
 
 class Sigmoid : public ActivationFunction
 {
@@ -14,7 +16,7 @@ public:
 	float function(const float x) const override
 	{
 		float result = 1.0f / (1.0f + exp(-x));
-		if (result != result)
+		if (isnan(result))
 		{
 			if (x > 0)
 				return 1;
@@ -25,9 +27,10 @@ public:
 
 	float derivative(const float x) const override
 	{
-		float result = exp(-0) / pow((exp(-0) + 1.0f), 2);
-		if (result != result)
-			return exp(-0) / pow((exp(-0) + 1.0f), 2);
+		float result = exp(-x) / pow((exp(-x) + 1.0f), 2);
+		if (isnan(result))
+			return 0.0f;
+		assert(!isnan(result));
 		return result;
 	}
 };
