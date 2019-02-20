@@ -1,5 +1,7 @@
-# NeuralNetwork
-A neural network library in C++
+# NeuralNetworkTest
+
+NeuralNetworkTest is a draft project to test the github project SimpleNeuralNetwork
+
 
 ## Classification datasets results
 |__Data Set Name__|__Link__|__Accuracy__| Number of Neurones |
