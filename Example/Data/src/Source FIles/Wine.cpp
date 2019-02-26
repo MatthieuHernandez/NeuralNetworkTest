@@ -19,6 +19,7 @@ void Wine::loadData()
 	ifstream file(path);
 	int count = 0;
 	vector<vector<string>> individuals;
+	individuals.reserve(this->sets[training].size);
 	const vector<string> temp;
 	if (!file.is_open())
 	{
@@ -26,7 +27,7 @@ void Wine::loadData()
 	}
 	while (getline(file, line))
 	{
-		individuals.push_back(temp); 
+		individuals.push_back(temp);
 		for (int i = 0; line != line.substr(line.find(',') + 1); i++)
 		{
 			individuals[count].push_back(line.substr(0, line.find(',')));
@@ -48,7 +49,9 @@ void Wine::loadData()
 	for (int i = 0; i < this->sets[training].size; i++)
 	{
 		for (int j = 0; j < this->sizeOfData; j++)
-			sets[training].data[i][j] = stof(individuals[i][j]);
+		{
+			sets[training].data[i][j] = stof(individuals[i][j + 1]);
+		}
 
 		if (individuals[i][0] == "1")
 		{
@@ -71,5 +74,21 @@ void Wine::loadData()
 		else
 			throw exception("Cannot load wine data set");
 	}
+
+	// Doesn't work if wine's values isn't normalize
+	for (int j = 0; j < this->sizeOfData; j++)
+	{
+		float maxValue = -1024;
+		for (int i = 0; i < this->sets[training].size; i++)
+		{
+			if (sets[training].data[i][j] > maxValue)
+				maxValue = sets[training].data[i][j];
+		}
+		for (int i = 0; i < this->sets[training].size; i++)
+		{
+			sets[training].data[i][j] /= maxValue;
+		}
+	}
+
 	sets[testing] = sets[training];
 }

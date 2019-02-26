@@ -2,12 +2,12 @@
 #define NEURAL_NETWORK_H
 
 #include "activationFunction.h"
-#include "alltoall.h"
 #include <boost/serialization/access.hpp>
 #include "test.h"
+#include "statisticAnalysis.h"
+#include "layer.h"
 
-
-class NeuralNetwork
+class NeuralNetwork : public StatisticAnalysis
 {
 private :
 
@@ -18,13 +18,9 @@ private :
 	int maxOutputIndex{};
 	int lastError{};
 	float learningRate{};
-	float clusteringRate{};
-	float previousClusteringRate{};
+
 	float error{};
 	float momentum{};
-
-	int numberOfResultsClassifiedWell{};
-	int numberOfResultsMisclassefied{};
 
 	int numberOfHiddenLayers{};
 	int numberOfLayers{};
@@ -48,12 +44,14 @@ private :
 	template <class Archive>
 	void serialize(Archive& ar, unsigned version);
 
+
 public :
 
-	NeuralNetwork(std::vector<int> structureOfNetwork,
-	              std::vector<activationFunctionType> activationFunctionByLayer,
+	NeuralNetwork(const std::vector<int>& structureOfNetwork,
+	              const std::vector<activationFunctionType>& activationFunctionByLayer,
 	              float learningRate = 0.05f,
 	              float momentum = 0.0f);
+
 	NeuralNetwork(const NeuralNetwork& neuralNetwork);
 
 	NeuralNetwork() = default;
@@ -62,13 +60,13 @@ public :
 	void train(const std::vector<float>& inputs, const std::vector<float>& desired);
 	std::vector<float> output(const std::vector<float>& inputs);
 
-	void calculateClusteringRateForRegressionProblemWithPrecision(const std::vector<float>& inputs,
+	void evaluateForRegressionProblemWithPrecision(const std::vector<float>& inputs,
 	                                                              const std::vector<float>& desired,
 	                                                              float precision = 0.5f);
-	void calculateClusteringRateForRegressionProblemSeparateByValue(const std::vector<float>& inputs,
+	void evaluateForRegressionProblemSeparateByValue(const std::vector<float>& inputs,
 	                                                                const std::vector<float>& desired,
 	                                                                float separator = 0.0f);
-	void calculateClusteringRateForClassificationProblem(const std::vector<float>& inputs, int classNumber);
+	void evaluateForClassificationProblem(const std::vector<float>& inputs, int classNumber);
 
 	void addANeuron(int layerNumber);
 
@@ -88,10 +86,7 @@ public :
 	int getNumberOfHiddenLayers() const;
 	int getNumberOfNeuronsInLayer(int layerNumber) const;
 	activationFunctionType getActivationFunctionInLayer(int layerNumber) const;
-	int getNumberOfResultsClassifiedWell() const;
-	int getNumberOfNegativeResultsMisclassefied() const;
 	int getNumberOfOutputs() const;
-	float getClusteringRate();
 
 	NeuralNetwork& operator=(const NeuralNetwork& neuralNetwork);
 	bool operator==(const NeuralNetwork& neuralNetwork) const;
@@ -103,7 +98,7 @@ class notImplementedException : public std::exception
 public:
 	notImplementedException() : std::exception("Function not yet implemented")
 	{
-	};
+	}
 };
 
 #endif // NEURAL_NETWORK_H

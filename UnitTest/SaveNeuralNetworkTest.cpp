@@ -38,6 +38,11 @@ TEST(SaveNeuralNetwork, EqualTest)
 	B.train(inputs, desired);
 
 	EXPECT_TRUE(A == B) << "A == B";
+
+	A.startTesting();
+	A.evaluateForRegressionProblemSeparateByValue(inputs, desired);
+
+	EXPECT_TRUE(A.getF1Score() == B.getF1Score()) << "A == B";
 }
 
 TEST(SaveNeuralNetwork, Save)

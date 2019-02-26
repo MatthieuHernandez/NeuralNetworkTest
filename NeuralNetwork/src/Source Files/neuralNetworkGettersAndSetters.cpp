@@ -60,25 +60,7 @@ activationFunctionType NeuralNetwork::getActivationFunctionInLayer(int layerNumb
 	return this->activationFunctionByLayer[layerNumber];
 }
 
-int NeuralNetwork::getNumberOfResultsClassifiedWell() const
-{
-    return this->numberOfResultsClassifiedWell;
-}
-
-int NeuralNetwork::getNumberOfNegativeResultsMisclassefied() const
-{
-    return this->numberOfResultsMisclassefied;
-}
-
 int NeuralNetwork::getNumberOfOutputs() const
 {
     return this->numberOfOutputs;
-}
-
-float NeuralNetwork::getClusteringRate()
-{
-	const auto clusteringRate = static_cast<float>(numberOfResultsClassifiedWell) / (numberOfResultsClassifiedWell + numberOfResultsMisclassefied);
-    numberOfResultsClassifiedWell = 0;
-    numberOfResultsMisclassefied = 0;
-    return clusteringRate;
 }

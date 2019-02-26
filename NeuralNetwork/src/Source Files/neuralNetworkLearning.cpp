@@ -13,62 +13,25 @@ vector<float> NeuralNetwork::output(const vector<float>& inputs)
 	return outputs;
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblemWithPrecision(
+void NeuralNetwork::evaluateForRegressionProblemWithPrecision(
 	const vector<float>& inputs, const vector<float>& desired, float precision)
 {
 	this->outputs = this->output(inputs);
-	bool classifiedWell = true;
-	for (int n = 0; n < numberOfOutputs; ++n)
-	{
-		if (this->outputs[n] > desired[n] + precision
-			&& this->outputs[n] < desired[n] - precision)
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
+	this->insertTestWithPrecision(this->outputs, desired, precision);
 }
 
-void NeuralNetwork::calculateClusteringRateForRegressionProblemSeparateByValue(
+void NeuralNetwork::evaluateForRegressionProblemSeparateByValue(
 	const vector<float>& inputs, const vector<float>& desired, float separator)
 {
 	this->outputs = this->output(inputs);
-	bool classifiedWell = true;
-	for (int n = 0; n < numberOfOutputs; ++n)
-	{
-		if ((this->outputs[n] >= separator && desired[n] < separator
-			|| this->outputs[n] <= separator && desired[n] > separator))
-		{
-			classifiedWell = false;
-			break;
-		}
-	}
-	if (classifiedWell)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
+	this->insertTestSeparateByValue(this->outputs, desired, separator);
 }
 
-void NeuralNetwork::calculateClusteringRateForClassificationProblem(const vector<float>& inputs, const int classNumber)
+void NeuralNetwork::evaluateForClassificationProblem(const vector<float>& inputs, int classNumber)
 {
 	maxOutputValue = -1;
 	this->outputs = this->output(inputs);
-	for (unsigned int n = 0; n < this->outputs.size(); ++n)
-	{
-		if (maxOutputValue < this->outputs[n])
-		{
-			maxOutputValue = this->outputs[n];
-			maxOutputIndex = n;
-		}
-	}
-	if (maxOutputIndex == classNumber)
-		numberOfResultsClassifiedWell++;
-	else
-		numberOfResultsMisclassefied++;
+	this->insertTestWithClassNumber(this->outputs, classNumber);
 }
 
 void NeuralNetwork::train(const vector<float>& inputs, const vector<float>& desired)

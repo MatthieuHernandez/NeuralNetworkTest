@@ -67,8 +67,9 @@ private:
 	bool autoSave = false;
 
 	QVector<double> x;
-	QVector<double> y;
-
+	QVector<double> clusteringRates;
+	QVector<double> weightedClusteringRates;
+	QVector<double> f1Scores;
 
 private slots:
 

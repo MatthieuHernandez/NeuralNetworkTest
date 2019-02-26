@@ -9,6 +9,7 @@ Iris::Iris()
 	this->sizeOfData = 4;
 	this->numberOfLabel = 3;
 	this->sets[training].size = 150;
+	this->sets[testing].size = this->sets[training].size;
 }
 
 void Iris::loadData()
@@ -18,6 +19,7 @@ void Iris::loadData()
 	ifstream file(path);
 	int count = 0;
 	vector<vector<string>> individuals;
+	individuals.reserve(this->sets[training].size);
 	const vector<string> temp;
 	if (!file.is_open())
 	{

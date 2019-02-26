@@ -14,7 +14,7 @@ private :
 
 	friend class boost::serialization::access;
 	template <class Archive>
-	void serialize(Archive& ar, const unsigned int version);
+	void serialize(Archive& ar, unsigned version);
 
 
 protected:
@@ -46,13 +46,13 @@ public:
 };
 
 template <class Archive>
-void Layer::serialize(Archive& ar, const unsigned version)
+void Layer::serialize(Archive& ar, unsigned version)
 {
-	ar & numberOfInputs;
-	ar & numberOfNeurons;
-	ar & errors;
-	ar & outputs;
-	ar & learningRate;
-	ar & momentum;
-	ar & neurons;
+	ar & this->numberOfInputs;
+	ar & this->numberOfNeurons;
+	ar & this->errors;
+	ar & this->outputs;
+	ar & this->learningRate;
+	ar & this->momentum;
+	ar & this->neurons;
 }

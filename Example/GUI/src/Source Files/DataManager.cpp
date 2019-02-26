@@ -47,7 +47,7 @@ void DataManager::initializeInputsNNs(int index)
 		{
 			sigmoid,
 			sigmoid,
-			sigmoid,
+			sigmoid
 		};
 		controllers[index]->inputs.learningRate = 0.01f;
 		controllers[index]->inputs.momentum = 0.0f;

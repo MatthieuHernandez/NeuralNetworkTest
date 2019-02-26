@@ -67,28 +67,31 @@ void Controller::compute(const bool* stop, const bool* autoSave, const QString& 
 
 void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
 {
+	neuralNetwork->startTesting();
 	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
 	{
 		if (*stop)
 			return;
 		if (data->problem == classification)
 		{
-			neuralNetwork->calculateClusteringRateForClassificationProblem(
+			neuralNetwork->evaluateForClassificationProblem(
 				data->getTestingData(outputs.currentIndex),
 				data->getTestingLabel(outputs.currentIndex));
 		}
 		else
 		{
-			neuralNetwork->calculateClusteringRateForRegressionProblemSeparateByValue(
+			neuralNetwork->evaluateForRegressionProblemSeparateByValue(
 				data->getTestingData(outputs.currentIndex),
 				data->getTestingOutputs(outputs.currentIndex), 0.0f);
 		}
 	}
-	outputs.clusteringRate = neuralNetwork->getClusteringRate();
+	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
+	outputs.weightedClusteringRate = neuralNetwork->getWeightedClusteringRate();
+	outputs.f1Score = neuralNetwork->getF1Score();
 	if (outputs.clusteringRate > outputs.clusteringRateMax)
 	{
 		outputs.clusteringRateMax = outputs.clusteringRate;
-		if(autoSave == true)
+		if (autoSave)
 			this->autoSave(autoSaveFileName);
 	}
 }

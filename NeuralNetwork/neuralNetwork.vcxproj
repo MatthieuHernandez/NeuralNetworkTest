@@ -191,6 +191,7 @@
     <ClInclude Include="src\Header Files\layer.h" />
     <ClInclude Include="src\Header Files\neuralNetwork.h" />
     <ClInclude Include="src\Header Files\perceptron.h" />
+    <ClInclude Include="src\Header Files\statisticAnalysis.h" />
     <ClInclude Include="src\Header Files\test.h" />
     <ClInclude Include="src\Source Files\gaussian.h" />
     <ClInclude Include="src\Source Files\improvedSigmoid.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="src\Source Files\neuralNetworkLearning.cpp" />
     <ClCompile Include="src\Source Files\neuralNetworkGettersAndSetters.cpp" />
     <ClCompile Include="src\Source Files\perceptron.cpp" />
+    <ClCompile Include="src\Source Files\statisticAnalysis.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
