@@ -1,7 +1,9 @@
 #pragma once
+#include "DataSet.h"
 #include <string>
 #include <QDateTime>
-#include "DataForRegression.h"
+#include <vector>
+
 
 enum timeUnit
 {
@@ -13,7 +15,7 @@ enum timeUnit
 	second
 };
 
-class CurrencyRatesEurToUsd : public DataForRegression
+class CurrencyRatesEurToUsd : public DataSet
 {
 private:
 

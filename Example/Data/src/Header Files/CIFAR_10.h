@@ -1,11 +1,14 @@
 #pragma once
-#include "DataForClassification.h"
+#include "DataSet.h"
+#include "Data.h"
+#include <string>
 
-class CIFAR_10 : public DataForClassification
+
+class CIFAR_10 : public DataSet
 {
 private :
 	void readImages(const std::string path_MNIST[]);
-	void readSet(const set set, std::ifstream& file);
+	void readSet(const snn::set set, std::ifstream& file);
 	void loadData() override;
 
 public:

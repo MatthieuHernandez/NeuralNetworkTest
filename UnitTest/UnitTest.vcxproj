@@ -68,9 +68,6 @@
     <ProjectReference Include="..\Example\Data\Data.vcxproj">
       <Project>{8838f0cc-89ce-403c-ab4b-5eedaaf65c90}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\NeuralNetwork\neuralNetwork.vcxproj">
-      <Project>{d4aae28c-e4ea-3212-82f0-74c31bd9c662}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

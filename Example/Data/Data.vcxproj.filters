@@ -14,19 +14,10 @@
     <ClCompile Include="src\Source FIles\MNIST.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source FIles\Data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\Iris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source Files\DataForClassification.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source Files\DataForRegression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\Wine.cpp">
@@ -35,24 +26,18 @@
     <ClCompile Include="src\Source FIles\CIFAR_10.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Source FIles\DataSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\MNIST.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\Iris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\DataForClassification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\DataForRegression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header Files\Wine.h">
@@ -62,6 +47,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DataException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\DataSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

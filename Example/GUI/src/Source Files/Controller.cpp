@@ -1,12 +1,12 @@
 #include "Controller.h"
 #include "MNIST.h"
 #include <QDateTime>
-
 using namespace std;
+using namespace snn;
 
 Controller::Controller(Data& data)
 {
-	this->data = unique_ptr<Data>(&data);
+	this->data = unique_ptr<DataSet>(&data);
 	this->initializeData();
 	this->inputs.numberOfTrainbyRating = this->data->sets[training].size;
 }
@@ -26,10 +26,7 @@ void Controller::initializeData()
 
 void Controller::resetOutput()
 {
-	outputs.clusteringRate = 0.0f;
-	outputs.clusteringRateMax = 0.0f;
-	outputs.currentIndex = 0;
-	outputs.numberOfIteration = 0;
+	this->neuralNetwork->trainingStop();
 }
 
 void Controller::DeleteNeuralNetwork()
@@ -48,7 +45,7 @@ void Controller::initializeNeuralNetwork()
 }
 
 
-void Controller::compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName = nullptr)
+/*void Controller::compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName = nullptr)
 {
 	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
 	{
@@ -63,9 +60,9 @@ void Controller::compute(const bool* stop, const bool* autoSave, const QString& 
 			                     data->getTrainingOutputs(outputs.currentIndex));
 		}
 	}
-}
+}*/
 
-void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
+/*void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
 {
 	neuralNetwork->startTesting();
 	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
@@ -88,18 +85,18 @@ void Controller::evaluate(const bool* stop, const bool autoSave, const QString& 
 	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
 	outputs.weightedClusteringRate = neuralNetwork->getWeightedClusteringRate();
 	outputs.f1Score = neuralNetwork->getF1Score();
-	if (outputs.clusteringRate > outputs.clusteringRateMax)
+	if (neuralNetwork->getGlobalClusteringRate() > outputs.clusteringRateMax)
 	{
-		outputs.clusteringRateMax = outputs.clusteringRate;
+		outputs.clusteringRateMax = neuralNetwork->getGlobalClusteringRate();
 		if (autoSave)
 			this->autoSave(autoSaveFileName);
 	}
-}
+}*/
 
 void Controller::autoSave(const QString& dataSetName)
 {
 	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
-	auto clusteringRate = QString::number(outputs.clusteringRate);
+	auto clusteringRate = QString::number(neuralNetwork->getGlobalClusteringRate());
 	auto fileName = "./Save/autosave_" + dataSetName + "_" + clusteringRate + "_" + date;
 	neuralNetwork->saveAs(fileName.toStdString());
 }
@@ -115,7 +112,7 @@ void Controller::load(const QString& fileName)
 	this->resetOutput();
 }
 
-NeuralNetwork& Controller::getNeuralNetwork() const
+StraightforwardNeuralNetwork& Controller::getNeuralNetwork() const
 {
 	return *neuralNetwork;
 }

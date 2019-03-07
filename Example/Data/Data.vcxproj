@@ -88,7 +88,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;$(ProjectDir)\..\..\..\StraightforwardNeuralNetwork\src\data;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -110,7 +110,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;$(ProjectDir)\..\..\..\StraightforwardNeuralNetwork\src\data;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -118,7 +118,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;$(ProjectDir)\..\..\..\StraightforwardNeuralNetwork\src\data;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -132,7 +132,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;$(ProjectDir)\..\..\..\StraightforwardNeuralNetwork\src\data;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -142,9 +142,7 @@
   <ItemGroup>
     <ClCompile Include="src\Source FIles\CIFAR_10.cpp" />
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp" />
-    <ClCompile Include="src\Source FIles\Data.cpp" />
-    <ClCompile Include="src\Source Files\DataForClassification.cpp" />
-    <ClCompile Include="src\Source Files\DataForRegression.cpp" />
+    <ClCompile Include="src\Source FIles\DataSet.cpp" />
     <ClCompile Include="src\Source Files\Iris.cpp" />
     <ClCompile Include="src\Source FIles\MNIST.cpp" />
     <ClCompile Include="src\Source Files\Wine.cpp" />
@@ -153,9 +151,7 @@
     <ClInclude Include="DataException.h" />
     <ClInclude Include="src\Header Files\CIFAR_10.h" />
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h" />
-    <ClInclude Include="src\Header Files\Data.h" />
-    <ClInclude Include="src\Header Files\DataForClassification.h" />
-    <ClInclude Include="src\Header Files\DataForRegression.h" />
+    <ClInclude Include="src\Header Files\DataSet.h" />
     <ClInclude Include="src\Header Files\Iris.h" />
     <ClInclude Include="src\Header Files\MNIST.h" />
     <ClInclude Include="src\Header Files\Wine.h" />

@@ -1,13 +1,12 @@
-#ifndef MNIST_H
-#define MNIST_H
-
+#pragma once
+#include "DataSet.h"
 #include <string>
 #include <iomanip>
-#include "DataForClassification.h"
+
 #include <sstream>
 
 // ReSharper disable once CppInconsistentNaming
-class MNIST : public DataForClassification
+class MNIST : public DataSet
 {
 private :
 	void readImages(const std::string path_MNIST[]);
@@ -25,5 +24,3 @@ std::string to_string_with_precision(const T value, const int n = 3)
 	out << std::fixed << std::setprecision(n) << value;
 	return out.str();
 }
-
-#endif // MNIST_H

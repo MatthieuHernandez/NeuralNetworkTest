@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeuralNetwork", "..\..\neuralNetwork.vcxproj", "{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{F56D5306-3100-491D-A533-0C4F7D352256}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Data", "..\..\..\Example\Data\Data.vcxproj", "{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "..\..\..\UnitTest\UnitTest.vcxproj", "{2C19E499-A091-474F-A19E-A52AADA7C039}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StraightforwardNeuralNetwork", "StraightforwardNeuralNetwork\StraightforwardNeuralNetwork.vcxproj", "{06DC00D5-263D-495A-936C-1E12FFEF9096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,12 +23,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Debug|x64.ActiveCfg = Debug|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Debug|x64.Build.0 = Debug|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Debug|x86.ActiveCfg = Debug|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x64.ActiveCfg = Release|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x64.Build.0 = Release|x64
-		{D4AAE28C-E4EA-3212-82F0-74C31BD9C662}.Release|x86.ActiveCfg = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.ActiveCfg = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.Build.0 = Debug|x64
 		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.ActiveCfg = Debug|x64
@@ -51,6 +45,14 @@ Global
 		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x64.Build.0 = Release|x64
 		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x86.ActiveCfg = Debug|x64
 		{2C19E499-A091-474F-A19E-A52AADA7C039}.Release|x86.Build.0 = Debug|x64
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Debug|x64.ActiveCfg = Debug|x64
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Debug|x64.Build.0 = Debug|x64
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Debug|x86.ActiveCfg = Debug|Win32
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Debug|x86.Build.0 = Debug|Win32
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Release|x64.ActiveCfg = Release|x64
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Release|x64.Build.0 = Release|x64
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Release|x86.ActiveCfg = Release|Win32
+		{06DC00D5-263D-495A-936C-1E12FFEF9096}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

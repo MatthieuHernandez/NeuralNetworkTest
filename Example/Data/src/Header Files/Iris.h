@@ -1,7 +1,7 @@
 #pragma once
-#include "DataForClassification.h"
+#include "DataSet.h"
 
-class Iris final : public DataForClassification
+class Iris final : public DataSet
 {
 public:
 	Iris();
