@@ -3,13 +3,14 @@
 #include <fstream>
 
 using namespace std;
+using namespace snn;
 
 Iris::Iris()
 {
 	this->sizeOfData = 4;
 	this->numberOfLabel = 3;
-	this->sets[training].size = 150;
-	this->sets[testing].size = this->sets[training].size;
+	this->sizeOfTrainingSet = 150;
+	this->sizeOfTestingSet = this->sizeOfTrainingSet;
 }
 
 void Iris::loadData()
@@ -19,7 +20,7 @@ void Iris::loadData()
 	ifstream file(path);
 	int count = 0;
 	vector<vector<string>> individuals;
-	individuals.reserve(this->sets[training].size);
+	individuals.reserve(this->sizeOfTrainingSet);
 	const vector<string> temp;
 	if (!file.is_open())
 	{
@@ -38,40 +39,47 @@ void Iris::loadData()
 		count++;
 	}
 	file.close();
-	sets[training].data.resize(this->sets[training].size);
-	sets[training].labels.resize(this->sets[training].size);
-	for (int i = 0; i < this->sets[training].size; i++)
+
+
+	vector<vector<float>> inputsTraining;
+	vector<vector<float>> labelsTraining;
+
+
+	inputsTraining.resize(this->sizeOfTrainingSet);
+	labelsTraining.resize(this->sizeOfTrainingSet);
+	for (int i = 0; i < this->sizeOfTrainingSet; i++)
 	{
-		sets[training].data[i].resize(this->sizeOfData);
-		sets[training].labels[i].resize(this->numberOfLabel);
+		inputsTraining[i].resize(this->sizeOfData);
+		labelsTraining[i].resize(this->numberOfLabel);
 	}
 
 
-	for (int i = 0; i < this->sets[training].size; i++)
+	for (int i = 0; i < this->sizeOfTrainingSet; i++)
 	{
 		for (int j = 0; j < this->sizeOfData; j++)
-			sets[training].data[i][j] = stof(individuals[i][j]);
+			inputsTraining[i][j] = stof(individuals[i][j]);
 
 		if (individuals[i][4] == "setosa")
 		{
-			sets[training].labels[i][0] = 1;
-			sets[training].labels[i][1] = 0;
-			sets[training].labels[i][2] = 0;
+			labelsTraining[i][0] = 1;
+			labelsTraining[i][1] = 0;
+			labelsTraining[i][2] = 0;
 		}
 		else if (individuals[i][4] == "versicolor")
 		{
-			sets[training].labels[i][0] = 0;
-			sets[training].labels[i][1] = 1;
-			sets[training].labels[i][2] = 0;
+			labelsTraining[i][0] = 0;
+			labelsTraining[i][1] = 1;
+			labelsTraining[i][2] = 0;
 		}
 		else if (individuals[i][4] == "virginica")
 		{
-			sets[training].labels[i][0] = 0;
-			sets[training].labels[i][1] = 0;
-			sets[training].labels[i][2] = 1;
+			labelsTraining[i][0] = 0;
+			labelsTraining[i][1] = 0;
+			labelsTraining[i][2] = 1;
 		}
 		else
 			throw exception("Cannot load iris data set");
 	}
-	sets[testing] = sets[training];
+	
+	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining);
 }

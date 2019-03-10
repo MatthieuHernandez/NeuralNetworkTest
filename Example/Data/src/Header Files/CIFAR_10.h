@@ -8,7 +8,8 @@ class CIFAR_10 : public DataSet
 {
 private :
 	void readImages(const std::string path_MNIST[]);
-	void readSet(const snn::set set, std::ifstream& file);
+	void readSet(std::vector<std::vector<float>>& inputs,
+	             std::vector<std::vector<float>>& labels, std::ifstream& file);
 	void loadData() override;
 
 public:

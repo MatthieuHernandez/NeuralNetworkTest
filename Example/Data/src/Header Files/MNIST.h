@@ -10,11 +10,14 @@ class MNIST : public DataSet
 {
 private :
 	void readImages(const std::string path_MNIST[]);
-	void readSet(const set set, std::ifstream& images, std::ifstream& labels);
-	void loadData() override;
+	void readSet(std::vector<std::vector<float>>& inputs,
+	             std::vector<std::vector<float>>& labels,
+	             std::ifstream& images,
+	             std::ifstream& imageLabels);
 
 public :
 	MNIST();
+	void loadData() override;
 };
 
 template <typename T>

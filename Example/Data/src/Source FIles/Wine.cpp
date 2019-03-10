@@ -3,13 +3,14 @@
 #include <fstream>
 
 using namespace std;
+using namespace snn;
 
 Wine::Wine()
 {
 	this->sizeOfData = 13;
 	this->numberOfLabel = 3;
-	this->sets[training].size = 178;
-	this->sets[testing].size = this->sets[training].size;
+	this->sizeOfTrainingSet = 178;
+	this->sizeOfTestingSet = this->sizeOfTrainingSet;
 }
 
 void Wine::loadData()
@@ -19,7 +20,7 @@ void Wine::loadData()
 	ifstream file(path);
 	int count = 0;
 	vector<vector<string>> individuals;
-	individuals.reserve(this->sets[training].size);
+	individuals.reserve(this->sizeOfTrainingSet);
 	const vector<string> temp;
 	if (!file.is_open())
 	{
@@ -37,58 +38,62 @@ void Wine::loadData()
 		count++;
 	}
 	file.close();
-	sets[training].data.resize(this->sets[training].size);
-	sets[training].labels.resize(this->sets[training].size);
-	for (int i = 0; i < this->sets[training].size; i++)
+
+	vector<vector<float>> inputsTraining(this->sizeOfTrainingSet);
+	vector<vector<float>> labelsTraining(this->sizeOfTrainingSet);
+
+	for (int i = 0; i < this->sizeOfTrainingSet; i++)
 	{
-		sets[training].data[i].resize(this->sizeOfData);
-		sets[training].labels[i].resize(this->numberOfLabel);
+		inputsTraining[i].resize(this->sizeOfData);
+		labelsTraining[i].resize(this->numberOfLabel);
 	}
 
 
-	for (int i = 0; i < this->sets[training].size; i++)
+	for (int i = 0; i < this->sizeOfTrainingSet; i++)
 	{
 		for (int j = 0; j < this->sizeOfData; j++)
 		{
-			sets[training].data[i][j] = stof(individuals[i][j + 1]);
+			inputsTraining[i][j] = stof(individuals[i][j + 1]);
 		}
 
 		if (individuals[i][0] == "1")
 		{
-			sets[training].labels[i][0] = 1;
-			sets[training].labels[i][1] = 0;
-			sets[training].labels[i][2] = 0;
+			labelsTraining[i][0] = 1;
+			labelsTraining[i][1] = 0;
+			labelsTraining[i][2] = 0;
 		}
 		else if (individuals[i][0] == "2")
 		{
-			sets[training].labels[i][0] = 0;
-			sets[training].labels[i][1] = 1;
-			sets[training].labels[i][2] = 0;
+			labelsTraining[i][0] = 0;
+			labelsTraining[i][1] = 1;
+			labelsTraining[i][2] = 0;
 		}
 		else if (individuals[i][0] == "3")
 		{
-			sets[training].labels[i][0] = 0;
-			sets[training].labels[i][1] = 0;
-			sets[training].labels[i][2] = 1;
+			labelsTraining[i][0] = 0;
+			labelsTraining[i][1] = 0;
+			labelsTraining[i][2] = 1;
 		}
 		else
 			throw exception("Cannot load wine data set");
 	}
 
 	// Doesn't work if wine's values isn't normalize
-	for (int j = 0; j < this->sizeOfData; j++)
+	// Normalization
+	/*for (int j = 0; j < this->sizeOfData; j++)
 	{
 		float maxValue = -1024;
-		for (int i = 0; i < this->sets[training].size; i++)
+		for (int i = 0; i < this->sizeOfTrainingSet; i++)
 		{
-			if (sets[training].data[i][j] > maxValue)
-				maxValue = sets[training].data[i][j];
+			if (inputsTraining[i][j] > maxValue)
+				maxValue = inputsTraining[i][j];
 		}
-		for (int i = 0; i < this->sets[training].size; i++)
+		for (int i = 0; i < this->sizeOfTrainingSet; i++)
 		{
-			sets[training].data[i][j] /= maxValue;
+			inputsTraining[i][j] /= maxValue;
 		}
-	}
-
-	sets[testing] = sets[training];
+	}*/
+	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining);
 }
+
+

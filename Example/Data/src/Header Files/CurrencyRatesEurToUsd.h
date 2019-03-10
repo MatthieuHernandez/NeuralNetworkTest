@@ -31,7 +31,7 @@ private:
 	std::vector<float> dataTemp;
 	std::vector<float> outputTemp;
 
-	void createData();
+	void createData(std::vector<std::vector<float>>& inputs, std::vector<std::vector<float>>& labels);
 	bool isAGap(const int index);
 	bool isWrongDate(const int index);
 
@@ -48,11 +48,10 @@ public:
 	std::string path[1] = {"../Data/EURUSD/DAT_ASCII_EURUSD_M1_2016.csv"};
 
 	CurrencyRatesEurToUsd();
-	~CurrencyRatesEurToUsd() {}
 
 	void loadData() override;
 	void loadCSV(int year);
 
-	void createTrainingData(const int index);
-	void createTrainingOutputs(const int index);
+	void createTrainingData(const int index, std::vector<std::vector<float>>& inputs);
+	void createTrainingOutputs(const int index, std::vector<std::vector<float>>& labels);
 };

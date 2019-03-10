@@ -4,11 +4,10 @@
 using namespace std;
 using namespace snn;
 
-Controller::Controller(Data& data)
+Controller::Controller(DataSet& data)
 {
 	this->data = unique_ptr<DataSet>(&data);
 	this->initializeData();
-	this->inputs.numberOfTrainbyRating = this->data->sets[training].size;
 }
 
 void Controller::initializeData()
@@ -37,10 +36,10 @@ void Controller::DeleteNeuralNetwork()
 
 void Controller::initializeNeuralNetwork()
 {
-	this->neuralNetwork = make_unique<NeuralNetwork>(this->inputs.structure,
-	                                                 this->inputs.activationFunction,
-	                                                 this->inputs.learningRate,
-	                                                 this->inputs.momentum);
+	this->neuralNetwork = make_unique<StraightforwardNeuralNetwork>(this->inputs.structure,
+	                                                                this->inputs.activationFunction,
+	                                                                this->inputs.learningRate,
+	                                                                this->inputs.momentum);
 	this->resetOutput();
 }
 
@@ -108,7 +107,7 @@ void Controller::save(const QString& fileName)
 
 void Controller::load(const QString& fileName)
 {
-	neuralNetwork = make_unique<NeuralNetwork>(NeuralNetwork::loadFrom(fileName.toStdString()));
+	neuralNetwork = make_unique<StraightforwardNeuralNetwork>(StraightforwardNeuralNetwork::loadFrom(fileName.toStdString()));
 	this->resetOutput();
 }
 
@@ -117,7 +116,7 @@ StraightforwardNeuralNetwork& Controller::getNeuralNetwork() const
 	return *neuralNetwork;
 }
 
-Data& Controller::getData() const
+DataSet& Controller::getData() const
 {
 	return *data;
 }

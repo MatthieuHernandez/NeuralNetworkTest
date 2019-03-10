@@ -3,6 +3,7 @@
 #include <fstream>
 
 using namespace std;
+using namespace snn;
 
 CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 {
@@ -15,9 +16,13 @@ CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 
 void CurrencyRatesEurToUsd::loadData()
 {
+	vector<vector<float>> inputs;
+	vector<vector<float>> labels;
+
 	this->loadCSV(2016);
-	this->createData();
-	this->unshuffle();
+	this->createData(inputs, labels);
+	//this->unshuffle();	
+	this->data = new StraightforwardData(classification, inputs, labels);
 }
 
 void CurrencyRatesEurToUsd::loadCSV(int year)
@@ -52,10 +57,8 @@ void CurrencyRatesEurToUsd::loadCSV(int year)
 	file.close();
 }
 
-void CurrencyRatesEurToUsd::createData()
+void CurrencyRatesEurToUsd::createData(vector<vector<float>>& inputs, vector<vector<float>>& labels)
 {
-	this->clearData();
-
 	for (int i = numberOfInputRates; i < (static_cast<int>(dateTimes.size()) - intervalBetweenTwoTrade); i++)
 	{
 		if (isAGap(i) || isWrongDate(i))
@@ -67,11 +70,10 @@ void CurrencyRatesEurToUsd::createData()
 		if(i < numberOfInputRates)
 		 continue;
 
-		this->createTrainingData(i - this->sets[training].size);
-		this->createTrainingOutputs(i);
+		this->createTrainingData(i - this->sizeOfTrainingSet, inputs);
+		this->createTrainingOutputs(i,labels);
 	}
-	this->sets[training].size = static_cast<int>(this->sets[training].labels.size());
-	this->sets[testing] = this->sets[training];
+	this->sizeOfTrainingSet = static_cast<int>(labels.size());
 }
 
 inline
@@ -96,7 +98,7 @@ inline QDateTime& CurrencyRatesEurToUsd::getDateTimeFromLine(string& line)
 }
 
 
-void CurrencyRatesEurToUsd::createTrainingData(const int index)
+void CurrencyRatesEurToUsd::createTrainingData(const int index, vector<vector<float>>& inputs)
 {
 	for (int i = 0; i < numberOfInputRates; i++)
 		this->dataTemp[i] = (rates[index - i] - rates[index - i - 1]) / rates[index - i - 1] * multiplicationFactor;
@@ -108,12 +110,12 @@ void CurrencyRatesEurToUsd::createTrainingData(const int index)
 	this->dataTemp[numberOfInputRates + 4] = static_cast<float>(this->dateTimes[index].time().minute()) / 60.0f;
 	this->dataTemp[numberOfInputRates + 5] = static_cast<float>(this->dateTimes[index].time().second()) / 60.0f;
 
-	this->sets[training].data.push_back(this->dataTemp);
+	inputs.push_back(this->dataTemp);
 }
 
-void CurrencyRatesEurToUsd::createTrainingOutputs(const int index)
+void CurrencyRatesEurToUsd::createTrainingOutputs(const int index, vector<vector<float>>& labels)
 {
 	this->outputTemp[0] = (rates[index + intervalBetweenTwoTrade] - rates[index]) * multiplicationFactor / 5.0f;
 
-	this->sets[training].labels.push_back(this->outputTemp);
+	labels.push_back(this->outputTemp);
 }

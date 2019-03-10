@@ -3,13 +3,14 @@
 #include "../../DataException.h"
 
 using namespace std;
+using namespace snn;
 
 MNIST::MNIST()
 {
 	this->sizeOfData = 784;
 	this->numberOfLabel = 10;
-	this->sets[training].size = 60000;
-	this->sets[testing].size = 10000;
+	this->sizeOfTrainingSet = 60000;
+	this->sizeOfTestingSet = 10000;
 }
 
 void MNIST::loadData()
@@ -22,7 +23,7 @@ void MNIST::loadData()
 		path + "train-labels.idx1-ubyte"
 	};
 	this->readImages(path_MNIST);
-	this->unshuffle();
+	//this->unshuffle();
 }
 
 void MNIST::readImages(const string path_MNIST[])
@@ -37,39 +38,49 @@ void MNIST::readImages(const string path_MNIST[])
 	imagesTrainFile.open(path_MNIST[2], ios::in | ios::binary);
 	labelsTrainFile.open(path_MNIST[3], ios::in | ios::binary);
 
-	this->readSet(testing, imagesTestFile, labelsTestFile);
-	this->readSet(training, imagesTrainFile, labelsTrainFile);
+	vector<vector<float>> inputsTraining;
+	vector<vector<float>> labelsTraining;
+	vector<vector<float>> inputsTesting;
+	vector<vector<float>> labelsTesting;
+
+	this->readSet(inputsTraining, labelsTraining, imagesTrainFile, labelsTrainFile);
+	this->readSet(inputsTesting, labelsTesting, imagesTestFile, labelsTestFile);
+
+	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining, inputsTesting, labelsTesting);
 }
 
-void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
+void MNIST::readSet(vector<vector<float>>& inputs,
+                      vector<vector<float>>& labels,
+                      ifstream& images,
+                      ifstream& imageLabels)
 {
 	if (!images.is_open()
-		&& !labels.is_open())
+		&& !imageLabels.is_open())
 	{
 		throw FileOpeningFailed();
 	}
 	int i;
 	unsigned char c;
 
-	for (i = 0; !labels.eof(); i++)
+	for (i = 0; !imageLabels.eof(); i++)
 	{
-		c = labels.get();
+		c = imageLabels.get();
 
 		const vector<float> labelsTemp(10, 0);
-		sets[set].labels.push_back(labelsTemp);
+		labels.push_back(labelsTemp);
 
-		if (!labels.eof())
-			sets[set].labels.back()[c] = 1.0;
+		if (!imageLabels.eof())
+			labels.back()[c] = 1.0;
 		else
-			sets[set].labels.resize(sets[set].labels.size() - 1);
+			labels.resize(labels.size() - 1);
 	}
 	int shift = 0;
 
 	for (i = 0; !images.eof(); i++)
 	{
 		const vector<float> imageTemp;
-		sets[set].data.push_back(imageTemp);
-		sets[set].data.back().reserve(this->sizeOfData);
+		inputs.push_back(imageTemp);
+		inputs.back().reserve(this->sizeOfData);
 		if (!images.eof())
 			for (int j = 0; !images.eof() && j < this->sizeOfData;)
 			{
@@ -78,7 +89,7 @@ void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
 				if (shift > 15)
 				{
 					const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
-					sets[set].data.back().push_back(value);
+					inputs.data.back().push_back(value);
 					j++;
 				}
 				else
@@ -86,5 +97,5 @@ void MNIST::readSet(const set set, ifstream& images, ifstream& labels)
 			}
 	}
 	images.close();
-	labels.close();
+	imageLabels.close();
 }
