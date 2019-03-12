@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
 #include "DataManager.h"
-
 using namespace std;
+using namespace snn;
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent),
@@ -93,8 +93,8 @@ void MainWindow::initializeButtons()
 {
 	this->resetComboBoxLayer();
 	this->initializeLayerButtons(0);
-	ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainbyRating);
-	ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainbyRating);
+	ui->spinBoxTrainingRating->setMaximum(this->currentController->getNeuralNetwork().getNumberOfTrainingsBetweenTwoEvaluations());
+	ui->spinBoxTrainingRating->setValue(this->currentController->getNeuralNetwork().getNumberOfTrainingsBetweenTwoEvaluations());
 };
 
 void MainWindow::resetComboBoxLayer() const
@@ -173,7 +173,7 @@ void MainWindow::refreshGraphOfClusteringRate() const
 void MainWindow::refreshClusteringRate() const
 {
 	ui->doubleSpinBoxCR->setValue(this->currentController->getNeuralNetwork().getGlobalClusteringRate() * 100.0f);
-	ui->doubleSpinBoxCRM->setValue(this->currentController->getNeuralNetwork()->clusteringRateMax * 100.0f);
+	/////ui->doubleSpinBoxCRM->setValue(this->currentController->getNeuralNetwork()->clusteringRateMax * 100.0f);
 	ui->doubleSpinBoxWCR->setValue(this->currentController->getNeuralNetwork().getWeightedClusteringRate() * 100.0f);
 	ui->doubleSpinBoxF1S->setValue(this->currentController->getNeuralNetwork().getF1Score() * 100.0f);
 }
@@ -246,7 +246,7 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 		this->startLoadingLogo();
 		const auto future = QtConcurrent::run([=]()
 		{
-			currentController->evaluate(&this->computeIsStop);
+			currentController->getNeuralNetwork().evaluate(*currentController->getData().data/*&this->computeIsStop*/);
 		});
 		watcherCompute.setFuture(future);
 		timerForCount->start(250);
@@ -344,9 +344,9 @@ void MainWindow::on_spinBoxMomentum_valueChanged(double value)
 
 void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 {
-	currentController->inputs.numberOfTrainbyRating = value;
+	currentController->getNeuralNetwork().setNumberOfTrainingsBetweenTwoEvaluations(value);
 
-	if (ui->spinBoxTrainingRating->value() == currentController->getData().sets[training].size)
+	if (ui->spinBoxTrainingRating->value() == currentController->getData().data->data->sets[training].size)
 		ui->labelMax->show();
 	else
 		ui->labelMax->hide();

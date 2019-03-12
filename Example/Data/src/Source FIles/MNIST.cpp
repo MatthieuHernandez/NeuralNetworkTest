@@ -89,7 +89,7 @@ void MNIST::readSet(vector<vector<float>>& inputs,
 				if (shift > 15)
 				{
 					const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
-					inputs.data.back().push_back(value);
+					inputs.back().push_back(value);
 					j++;
 				}
 				else

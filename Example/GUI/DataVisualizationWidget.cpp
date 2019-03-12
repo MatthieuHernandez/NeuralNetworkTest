@@ -1,7 +1,7 @@
 #include "DataVisualizationWidget.h"
 #include "ui_DataVisualizationWidget.h"
-
 using namespace std;
+using namespace snn;
 
 DataVisualizationWidget::DataVisualizationWidget(QWidget *parent, Controller *controller)
 	: QWidget(parent), ui(new Ui::DataVisualizationWidget)
@@ -12,7 +12,7 @@ DataVisualizationWidget::DataVisualizationWidget(QWidget *parent, Controller *co
 	ui->labelName->setText("");
 	ui->labelDataSize->setText(QString::number(controller->getData().sizeOfData));
 	ui->labelNumberOfLabel->setText(QString::number(controller->getData().numberOfLabel));
-	ui->labelTrainingSetSize->setText(QString::number(controller->getData().sets[training].size));
-	ui->labelTestingSetSize->setText(QString::number(controller->getData().sets[testing].size));
+	ui->labelTrainingSetSize->setText(QString::number(controller->getData().data->data->sets[training].size));
+	ui->labelTestingSetSize->setText(QString::number(controller->getData().data->data->sets[testing].size));
 	
 }

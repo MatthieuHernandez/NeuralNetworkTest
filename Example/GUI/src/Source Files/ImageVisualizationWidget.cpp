@@ -27,16 +27,16 @@ void ImageVisualizationWidget::displayImage(int value)
 	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
 	const string label = static_cast<string>("Label : ") + to_string(
-		this->controller->getData().getLabel(displayedSet, value));
+		this->controller->getData().data->data->getLabel(displayedSet, value));
 	ui->labelImage->setText(QString::fromStdString(label));
 }
 
 void ImageVisualizationWidget::on_comboBoxSet_currentIndexChanged(int index)
 {
-	this->displayedSet = static_cast<set>(index);
-	ui->spinBoxImageId->setMaximum(this->controller->getData().sets[this->displayedSet].size - 1);
+	this->displayedSet = static_cast<snn::set>(index);
+	ui->spinBoxImageId->setMaximum(this->controller->getData().data->data->sets[this->displayedSet].size - 1);
 	ui->labelImage->setText("Label : " + QString::number(
-		this->controller->getData().getTrainingLabel(ui->spinBoxImageId->value())));
+		this->controller->getData().data->data->getTrainingLabel(ui->spinBoxImageId->value())));
 	this->displayImage(ui->spinBoxImageId->value());
 }
 

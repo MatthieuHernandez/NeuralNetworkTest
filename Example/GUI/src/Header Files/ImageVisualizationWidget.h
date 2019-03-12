@@ -1,5 +1,6 @@
 #pragma once
 #include "DataVisualizationWidget.h"
+#include "StraightforwardData.h"
 
 namespace Ui
 {
@@ -25,7 +26,7 @@ protected :
 
 	Ui::ImageVisualizationWidget* ui;
 
-	set displayedSet = testing;
+	snn::set displayedSet = snn::testing;
 
 	virtual unsigned char getPixel(int number, int x, int y, color color) const = 0;
 	void displayImage(int value);
