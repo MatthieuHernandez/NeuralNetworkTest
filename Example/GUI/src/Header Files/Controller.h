@@ -9,7 +9,6 @@ class Controller : public QObject
 Q_OBJECT
 
 private :
-
 	std::unique_ptr<DataSet> data = nullptr;
 	std::unique_ptr<snn::StraightforwardNeuralNetwork> neuralNetwork = nullptr;
 
@@ -17,9 +16,7 @@ private :
 	void resetOutput();
 	void autoSave(const QString& dataSetName);
 
-
 public:
-
 	Controller(DataSet& data);
 	virtual ~Controller() = default;
 
@@ -27,8 +24,6 @@ public:
 	void DeleteNeuralNetwork();
 	void initializeNeuralNetwork();
 
-	//void compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName);
-	//void evaluate(const bool* stop, const bool autoSave = false, const QString& autoSaveFileName = nullptr);
 	void save(const QString& fileName);
 	void load(const QString& fileName);
 

@@ -84,7 +84,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -102,7 +102,7 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <EnablePREfast>false</EnablePREfast>
@@ -130,7 +130,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -148,7 +148,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>

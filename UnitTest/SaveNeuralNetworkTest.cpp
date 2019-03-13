@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "GTestTools.h"
-#include "neuralNetwork.h"
-
+#include "neuralNetwork/StraightforwardNeuralNetwork.h"
 using namespace std;
+using namespace snn;
 
 // ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
 
@@ -10,9 +10,9 @@ TEST(SaveNeuralNetwork, EqualTest)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
-	NeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
-	NeuralNetwork C(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
-	NeuralNetwork B = A;
+	StraightforwardNeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
+	StraightforwardNeuralNetwork C(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
+	StraightforwardNeuralNetwork B = A;
 
 	EXPECT_TRUE(A == B) << "A == B";
 	EXPECT_TRUE(&A != &B) << "A != B";

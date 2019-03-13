@@ -43,55 +43,6 @@ void Controller::initializeNeuralNetwork()
 	this->resetOutput();
 }
 
-
-/*void Controller::compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName = nullptr)
-{
-	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
-	{
-		this->evaluate(stop, *autoSave, autoSaveFileName);
-		emit updateNumberOfIteration();
-		data->shuffle();
-
-		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.
-		     currentIndex++)
-		{
-			neuralNetwork->train(data->getTrainingData(outputs.currentIndex),
-			                     data->getTrainingOutputs(outputs.currentIndex));
-		}
-	}
-}*/
-
-/*void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
-{
-	neuralNetwork->startTesting();
-	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
-	{
-		if (*stop)
-			return;
-		if (data->problem == classification)
-		{
-			neuralNetwork->evaluateForClassificationProblem(
-				data->getTestingData(outputs.currentIndex),
-				data->getTestingLabel(outputs.currentIndex));
-		}
-		else
-		{
-			neuralNetwork->evaluateForRegressionProblemSeparateByValue(
-				data->getTestingData(outputs.currentIndex),
-				data->getTestingOutputs(outputs.currentIndex), 0.0f);
-		}
-	}
-	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
-	outputs.weightedClusteringRate = neuralNetwork->getWeightedClusteringRate();
-	outputs.f1Score = neuralNetwork->getF1Score();
-	if (neuralNetwork->getGlobalClusteringRate() > outputs.clusteringRateMax)
-	{
-		outputs.clusteringRateMax = neuralNetwork->getGlobalClusteringRate();
-		if (autoSave)
-			this->autoSave(autoSaveFileName);
-	}
-}*/
-
 void Controller::autoSave(const QString& dataSetName)
 {
 	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");

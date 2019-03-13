@@ -19,11 +19,10 @@ class ImageVisualizationWidget : public DataVisualizationWidget
 Q_OBJECT
 
 public:
-	ImageVisualizationWidget(QWidget* parent, Controller *controller);
+	ImageVisualizationWidget(QWidget* parent, Controller* controller);
 	~ImageVisualizationWidget() = default;
 
 protected :
-
 	Ui::ImageVisualizationWidget* ui;
 
 	snn::set displayedSet = snn::testing;

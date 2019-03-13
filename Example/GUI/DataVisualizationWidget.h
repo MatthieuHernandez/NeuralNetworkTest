@@ -16,7 +16,6 @@ public:
 	~DataVisualizationWidget() = default;
 
 protected:
-
 	Ui::DataVisualizationWidget* ui;
 	Controller* controller;
 };
