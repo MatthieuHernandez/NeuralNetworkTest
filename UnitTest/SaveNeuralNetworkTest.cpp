@@ -31,16 +31,16 @@ TEST(SaveNeuralNetwork, EqualTest)
 	const vector<float> inputs {1.5, 0.75, -0.25, 0, 0};
 	const vector<float> desired {1, 0, 0.5, 0};
 
-	A.train(inputs, desired);
+	A.trainOnce(inputs, desired);
 
 	EXPECT_TRUE(A != B) << "A != B";
 
-	B.train(inputs, desired);
+	B.trainOnce(inputs, desired);
 
 	EXPECT_TRUE(A == B) << "A == B";
 
-	A.startTesting();
-	A.evaluateForRegressionProblemSeparateByValue(inputs, desired);
+	//A.startTesting();
+	A.evaluate(inputs, desired);
 
 	EXPECT_TRUE(A.getF1Score() == B.getF1Score()) << "A == B";
 }
