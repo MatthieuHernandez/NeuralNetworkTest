@@ -1,5 +1,5 @@
 #pragma once
-#include "StraightforwardData.h"
+#include "data/StraightforwardData.h"
 
 class DataSet
 {
@@ -12,7 +12,7 @@ public:
 	int sizeOfTrainingSet;
 	int sizeOfTestingSet;
 
-	DataSet();
+	DataSet() = default;
 	virtual ~DataSet() = default;
 	virtual void loadData() = 0;
 };

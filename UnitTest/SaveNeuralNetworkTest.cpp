@@ -28,19 +28,19 @@ TEST(SaveNeuralNetwork, EqualTest)
 
 	EXPECT_TRUE(A != C) << "A != C";
 
-	const vector<float> inputs {1.5, 0.75, -0.25, 0, 0};
-	const vector<float> desired {1, 0, 0.5, 0};
+	vector<vector<float>> inputs {{1.5, 0.75, -0.25, 0, 0}};
+	vector<vector<float>> desired {{1, 0, 0.5, 0}};
+	StraightforwardData data(regression, inputs, desired);
 
-	A.trainOnce(inputs, desired);
+	A.trainOnce(inputs.back(), desired.back());
 
 	EXPECT_TRUE(A != B) << "A != B";
 
-	B.trainOnce(inputs, desired);
+	B.trainOnce(inputs.back(), desired.back());
 
 	EXPECT_TRUE(A == B) << "A == B";
 
-	//A.startTesting();
-	A.evaluate(inputs, desired);
+	A.evaluate(data);
 
 	EXPECT_TRUE(A.getF1Score() == B.getF1Score()) << "A == B";
 }
@@ -49,11 +49,11 @@ TEST(SaveNeuralNetwork, Save)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
-	NeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
+	StraightforwardNeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
 
 	A.saveAs("./testSave.bin");
 
-	NeuralNetwork B = NeuralNetwork::loadFrom("./testSave.bin");
+	StraightforwardNeuralNetwork B = StraightforwardNeuralNetwork::loadFrom("./testSave.bin");
 
 	EXPECT_TRUE(A == B) << "A == B";
 }
