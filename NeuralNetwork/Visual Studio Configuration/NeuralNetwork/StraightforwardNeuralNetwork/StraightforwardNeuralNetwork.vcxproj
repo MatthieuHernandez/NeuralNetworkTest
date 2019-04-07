@@ -81,7 +81,7 @@
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\boost_serialization-vc141-mt-x64-1_69.dll;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -89,7 +89,7 @@
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\boost_serialization-vc141-mt-x64-1_69.dll;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>

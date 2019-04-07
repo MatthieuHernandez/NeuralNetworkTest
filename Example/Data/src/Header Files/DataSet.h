@@ -5,12 +5,12 @@ class DataSet
 {
 public:
 
-	snn::StraightforwardData *data;
+	snn::StraightforwardData *data{};
 
-	int sizeOfData;
-	int numberOfLabel;
-	int sizeOfTrainingSet;
-	int sizeOfTestingSet;
+	int sizeOfData{};
+	int numberOfLabel{};
+	int sizeOfTrainingSet{};
+	int sizeOfTestingSet{};
 
 	DataSet() = default;
 	virtual ~DataSet() = default;
