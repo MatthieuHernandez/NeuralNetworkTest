@@ -39,7 +39,7 @@
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -81,7 +81,7 @@
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0;$(IncludePath)</IncludePath>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -89,7 +89,7 @@
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0;$(IncludePath)</IncludePath>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -100,7 +100,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnablePREfast>true</EnablePREfast>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -144,7 +144,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnablePREfast>true</EnablePREfast>
       <CallingConvention>Cdecl</CallingConvention>
@@ -154,7 +154,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\libboost_serialization-vc141-mt-x64-1_69.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>

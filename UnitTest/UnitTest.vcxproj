@@ -109,7 +109,7 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\NeuralNetwork\UnitTest\googletest-release-1.8.1\googletest\include;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <EnablePREfast>false</EnablePREfast>
@@ -122,9 +122,9 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib\libboost_serialization-vc141-mt-x64-1_68.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)UnitTest.exe</OutputFile>
       <LinkStatus>false</LinkStatus>
     </Link>
@@ -155,7 +155,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <AdditionalIncludeDirectories>C:\Programming\Github\NeuralNetwork\UnitTest\googletest-release-1.8.1\googletest\include;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction;C:\Programming\Github\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron;C:\Programming\Github\StraightforwardNeuralNetwork\src\neuralNetwork\layer;C:\Programming\Github\StraightforwardNeuralNetwork\src\neuralNetwork;C:\Programming\Github\StraightforwardNeuralNetwork\src\data;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\NeuralNetwork\UnitTest\googletest-release-1.8.1\googletest\include;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -167,8 +167,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupport.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\libboost_serialization-vc141-mt-x64-1_69.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupport.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>

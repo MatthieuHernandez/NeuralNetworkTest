@@ -1,6 +1,6 @@
 #pragma once
 #include "DataVisualizationWidget.h"
-#include "StraightforwardData.h"
+#include "data/StraightforwardData.h"
 
 namespace Ui
 {
