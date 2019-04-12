@@ -32,8 +32,8 @@ private:
 
 	Console* console;
 
-	Controller* currentController;
-	DataVisualizationWidget* currentWidget;
+	Controller* currentController{};
+	DataVisualizationWidget* currentWidget{};
 	DataManager manager;
 
 	MnistVisualizationWidget* visu = nullptr;
@@ -44,7 +44,10 @@ private:
 	std::vector<float> desired;
 
 	QMovie* loadingLogo = nullptr;
-	QTimer* timerForCount; // TO RENAME
+
+	QTimer* countTimer;
+	QTimer* updateTimer;
+
 	QElapsedTimer* timerForTimeEdit; // TO RENAME
 
 	QFutureWatcher<void> watcherCompute;
