@@ -17,22 +17,25 @@ MainWindow::MainWindow(QWidget* parent)
 	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingDataSet()));
 
 	updateTimer = new QTimer(this);
-	countTimer = new QTimer(this);
 	timerForTimeEdit = new QElapsedTimer();
 
 	connect(&watcherCompute, SIGNAL(finished()), this, SLOT(stopCompute()));
 
-	connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateGraphOfClusteringRate()));
-	connect(countTimer, SIGNAL(timeout()), this, SLOT(updateCount()));
+	connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateInterface()));
 
 	ui->tabWidgetData->setCurrentIndex(0);
 	ui->tabWidgetNeuralNetwork->setCurrentIndex(0);
+
+	this->mainChart = new MainChart();
+	ui->chartView->setChart(this->mainChart->getChart());
+	ui->chartView->setRenderHint(QPainter::Antialiasing);
+
 	this->enableModification(true);
 }
 
 MainWindow::~MainWindow()
 {
-	computeIsStop = true;
+	this->computeIsStop = true;
 	delete ui;
 }
 
@@ -45,10 +48,10 @@ void MainWindow::write(const string text, bool onlyConsole)
 
 void MainWindow::startLoadingLogo()
 {
-	if (loadingLogo == nullptr)
+	if (this->loadingLogo == nullptr)
 	{
-		loadingLogo = new QMovie("./Extra Files/loading.gif");
-		loadingLogo->setScaledSize(QSize(50, 50));
+		this->loadingLogo = new QMovie("./Extra Files/loading.gif");
+		this->loadingLogo->setScaledSize(QSize(50, 50));
 	}
 
 	if (!loadingLogo->isValid())
@@ -59,11 +62,10 @@ void MainWindow::startLoadingLogo()
 
 void MainWindow::stopCompute()
 {
-	currentController->getNeuralNetwork().trainingStop();
-	computeIsStop = true;
-	loadingLogo->stop();
-	updateTimer->stop();
-	countTimer->stop();
+	this->currentController->getNeuralNetwork().trainingStop();
+	this->computeIsStop = true;
+	this->loadingLogo->stop();
+	this->updateTimer->stop();
 	this->refreshClusteringRate();
 	ui->pushButtonResetGraph->setEnabled(true);
 	this->enableModification(true);
@@ -74,11 +76,9 @@ void MainWindow::endOfLoadingDataSet()
 {
 	if (firstLoading)
 	{
-		initializeGraphOfClusteringRate();
+		this->mainChart->clear();
 		firstLoading = false;
 	}
-	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
-	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
 	this->initializeButtons();
 	this->on_pushButtonResetGraph_clicked();
@@ -110,7 +110,7 @@ void MainWindow::resetComboBoxLayer() const
 	const int numberOfLayer = static_cast<int>(this->currentController->inputs.structure.size()) - 1;
 	for (int i = 0; i < numberOfLayer - 1; i++)
 		ui->comboBoxLayer->addItem(QString::number(i));
-	ui->comboBoxLayer->addItem("Ouput");
+	ui->comboBoxLayer->addItem("Output");
 	ui->comboBoxLayer->blockSignals(false);
 	ui->comboBoxLayer->setCurrentIndex(0);
 };
@@ -143,36 +143,6 @@ void MainWindow::initializeLayerButtons(const int layer) const
 
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
 	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
-}
-
-void MainWindow::initializeGraphOfClusteringRate()
-{
-	x.clear();
-	clusteringRates.clear();
-	weightedClusteringRates.clear();
-	f1Scores.clear();
-	ui->customPlot->addGraph();
-	ui->customPlot->addGraph();
-	ui->customPlot->addGraph();
-	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
-	//ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-	ui->customPlot->graph(1)->setPen(QPen(Qt::red));
-	//ui->customPlot->graph(1)->setBrush(QBrush(QColor(255, 0, 0, 20)));
-	ui->customPlot->graph(2)->setPen(QPen(Qt::green));
-	//ui->customPlot->graph(2)->setBrush(QBrush(QColor(255, 0, 0, 20)));
-
-	ui->customPlot->yAxis->setRange(0, 100);
-	ui->customPlot->replot();
-	//updateGraphOfClusteringRate();
-}
-
-void MainWindow::refreshGraphOfClusteringRate() const
-{
-	ui->customPlot->graph(0)->setData(x, clusteringRates);
-	ui->customPlot->graph(1)->setData(x, weightedClusteringRates);
-	ui->customPlot->graph(2)->setData(x, f1Scores);
-	ui->customPlot->xAxis->setRange(0, 2);
-	ui->customPlot->replot();
 }
 
 void MainWindow::refreshClusteringRate() const
@@ -221,11 +191,10 @@ void MainWindow::on_pushButtonCompute_clicked()
 		//this->currentController->getNeuralNetwork().trainingStart();
 		//*const auto future = QtConcurrent::run([=]()
 		//{
-			currentController->getNeuralNetwork().trainingStart(*currentController->getData().data);
+		currentController->getNeuralNetwork().trainingStart(*currentController->getData().data);
 		//});*/
 		//watcherCompute.setFuture(future);
-		updateTimer->start(1000);
-		countTimer->start(250);
+		updateTimer->start(200);
 		timerForTimeEdit->start();
 		ui->pushButtonResetGraph->setEnabled(false);
 		ui->pushButtonCompute->setText("Stop");
@@ -256,7 +225,7 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 			currentController->getNeuralNetwork().evaluate(*currentController->getData().data/*&this->computeIsStop*/);
 		});
 		watcherCompute.setFuture(future);
-		countTimer->start(250);
+		updateTimer->start(200);
 		timerForTimeEdit->start();
 		ui->pushButtonCompute->setText("Stop");
 		ui->timeEdit->setTime(QTime(0, 0));
@@ -271,12 +240,8 @@ void MainWindow::on_pushButtonConsole_clicked()
 
 void MainWindow::on_pushButtonResetGraph_clicked()
 {
-	x.clear();
-	clusteringRates.clear();
-	weightedClusteringRates.clear();
-	f1Scores.clear();
+	this->mainChart->clear();
 	ui->pushButtonResetGraph->setEnabled(false);
-	this->refreshGraphOfClusteringRate();
 }
 
 void MainWindow::on_pushButtonAddLayer_clicked()
@@ -416,28 +381,20 @@ void MainWindow::on_pushButtonLoad_clicked()
 	}
 }
 
-void MainWindow::updateGraphOfClusteringRate()
+void MainWindow::updateInterface()
 {
 	this->currentController->blockSignals(true);
-	this->refreshClusteringRate();
-	x.push_back(this->currentController->getNeuralNetwork().getNumberOfIteration());
-	clusteringRates.push_back(this->currentController->getNeuralNetwork().getGlobalClusteringRate() * 100.0f);
-	weightedClusteringRates.push_back(this->currentController->getNeuralNetwork().getWeightedClusteringRate() * 100.0f);
-	f1Scores.push_back(this->currentController->getNeuralNetwork().getF1Score() * 100.0f);
-	this->refreshGraphOfClusteringRate();
-	this->currentController->blockSignals(false);
-}
 
-void MainWindow::updateNumberOfIteration()
-{
-	this->currentController->blockSignals(true);
-	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
-	QApplication::processEvents();
-	this->currentController->blockSignals(false);
-}
-
-void MainWindow::updateCount()
-{
+	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());	
 	ui->timeEdit->setTime(QTime::fromMSecsSinceStartOfDay(static_cast<int>(timerForTimeEdit->elapsed())));
 	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
+	mainChart->updateLineSeries(
+		this->currentController->getNeuralNetwork().getNumberOfIteration(),
+		this->currentController->getNeuralNetwork().getGlobalClusteringRate(),
+		this->currentController->getNeuralNetwork().getWeightedClusteringRate(),
+		this->currentController->getNeuralNetwork().getF1Score()
+	);
+
+	QApplication::processEvents();
+	this->currentController->blockSignals(false);
 }

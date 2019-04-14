@@ -147,11 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source FIles\CIFAR_10.cpp" />
+    <ClCompile Include="src\Source Files\CIFAR_10.cpp" />
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp" />
-    <ClCompile Include="src\Source FIles\DataSet.cpp" />
+    <ClCompile Include="src\Source Files\DataSet.cpp" />
     <ClCompile Include="src\Source Files\Iris.cpp" />
-    <ClCompile Include="src\Source FIles\MNIST.cpp" />
+    <ClCompile Include="src\Source Files\MNIST.cpp" />
     <ClCompile Include="src\Source Files\Wine.cpp" />
   </ItemGroup>
   <ItemGroup>

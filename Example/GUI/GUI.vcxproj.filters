@@ -44,9 +44,6 @@
     <QtMoc Include="src\Header Files\Controller.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="DataVisualizationWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="src\Header Files\ImageVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -54,6 +51,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\Header Files\Cifar10VisualizationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -104,9 +104,6 @@
     <ClCompile Include="src\Source Files\DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataVisualizationWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\ImageVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -116,9 +113,24 @@
     <ClCompile Include="src\Source Files\Cifar10VisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mainChart.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\mainChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainChart.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\mainChart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

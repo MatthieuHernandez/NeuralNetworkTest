@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MnistVisualization.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_MNISTVISUALIZATION_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
@@ -27,10 +24,10 @@ public:
     void setupUi(QWidget *MnistVisualization)
     {
         if (MnistVisualization->objectName().isEmpty())
-            MnistVisualization->setObjectName(QStringLiteral("MnistVisualization"));
+            MnistVisualization->setObjectName(QString::fromUtf8("MnistVisualization"));
         MnistVisualization->resize(660, 420);
         label = new QLabel(MnistVisualization);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(340, 10, 310, 130));
         label->setTextFormat(Qt::AutoText);
         label->setScaledContents(false);

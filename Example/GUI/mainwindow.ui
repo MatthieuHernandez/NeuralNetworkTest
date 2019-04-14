@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
+    <width>850</width>
     <height>500</height>
    </rect>
   </property>
@@ -49,13 +49,13 @@
      <attribute name="title">
       <string>Graph of classification rate</string>
      </attribute>
-     <widget class="QCustomPlot" name="customPlot" native="true">
+     <widget class="QChartView" name="chartView">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1</y>
-        <width>665</width>
-        <height>420</height>
+        <y>0</y>
+        <width>664</width>
+        <height>413</height>
        </rect>
       </property>
       <widget class="QPushButton" name="pushButtonResetGraph">
@@ -64,7 +64,7 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>643</x>
+         <x>642</x>
          <y>0</y>
          <width>22</width>
          <height>22</height>
@@ -920,10 +920,9 @@ function :</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>qchartview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

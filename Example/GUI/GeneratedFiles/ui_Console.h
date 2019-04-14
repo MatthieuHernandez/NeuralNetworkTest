@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Console.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_CONSOLE_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
@@ -27,10 +24,10 @@ public:
     void setupUi(QWidget *Console)
     {
         if (Console->objectName().isEmpty())
-            Console->setObjectName(QStringLiteral("Console"));
+            Console->setObjectName(QString::fromUtf8("Console"));
         Console->resize(500, 300);
         textEdit = new QTextEdit(Console);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setGeometry(QRect(0, 0, 500, 300));
         textEdit->setReadOnly(true);
 

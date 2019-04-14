@@ -8,6 +8,7 @@
 #include "DataManager.h"
 #include <qelapsedtimer.h>
 #include "MnistVisualizationWidget.h"
+#include "mainChart.h"
 
 namespace Ui
 {
@@ -38,6 +39,8 @@ private:
 
 	MnistVisualizationWidget* visu = nullptr;
 
+	MainChart* mainChart;
+
 	int indexController = 0;
 
 	std::vector<float> input;
@@ -45,7 +48,6 @@ private:
 
 	QMovie* loadingLogo = nullptr;
 
-	QTimer* countTimer;
 	QTimer* updateTimer;
 
 	QElapsedTimer* timerForTimeEdit; // TO RENAME
@@ -59,8 +61,6 @@ private:
 	void initializeButtons();
 	void resetComboBoxLayer() const;
 	void initializeLayerButtons(int layer) const;
-	void initializeGraphOfClusteringRate();
-	void refreshGraphOfClusteringRate() const;
 	void refreshClusteringRate() const;
 
 	void enableModification(bool isEnable) const;
@@ -69,17 +69,10 @@ private:
 	bool computeIsStop = true;
 	bool autoSave = false;
 
-	QVector<double> x;
-	QVector<double> clusteringRates;
-	QVector<double> weightedClusteringRates;
-	QVector<double> f1Scores;
-
 private slots:
 
 	/* Controller slots */
-	void updateGraphOfClusteringRate();
-	void updateNumberOfIteration();
-	void updateCount();
+	void updateInterface();
 
 	/* Interface slots */
 	void on_spinBoxNeurons_valueChanged(int value);
