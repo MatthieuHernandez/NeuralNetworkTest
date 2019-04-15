@@ -9,6 +9,7 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <QtCharts>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
@@ -25,7 +26,6 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
-#include "qchartview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -104,7 +104,7 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         chartView = new QChartView(tab);
         chartView->setObjectName(QString::fromUtf8("chartView"));
-        chartView->setGeometry(QRect(0, 0, 664, 413));
+        chartView->setGeometry(QRect(0, 0, 664, 414));
         pushButtonResetGraph = new QPushButton(chartView);
         pushButtonResetGraph->setObjectName(QString::fromUtf8("pushButtonResetGraph"));
         pushButtonResetGraph->setEnabled(false);

@@ -11,16 +11,19 @@ MainChart::MainChart()
 	this->clusteringRates = new QLineSeries();
 	this->clusteringRates->setName("clustering rates");
 	this->clusteringRates->setColor(Qt::blue);
+	this->chart->addSeries(this->clusteringRates);
 	this->clusteringRates->attachAxis(this->axisY);
 
 	this->weightedClusteringRates = new QLineSeries();
 	this->weightedClusteringRates->setName("weighted clustering rates");
 	this->weightedClusteringRates->setColor(Qt::red);
+	this->chart->addSeries(this->weightedClusteringRates);
 	this->weightedClusteringRates->attachAxis(this->axisY);
 
 	this->f1Scores = new QLineSeries();
 	this->f1Scores->setName("F1 scores");
 	this->f1Scores->setColor(Qt::green);
+	this->chart->addSeries(this->f1Scores);
 	this->f1Scores->attachAxis(this->axisY);
 }
 

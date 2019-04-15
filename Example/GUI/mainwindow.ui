@@ -49,13 +49,13 @@
      <attribute name="title">
       <string>Graph of classification rate</string>
      </attribute>
-     <widget class="QChartView" name="chartView">
+     <widget class="QChartView" name="chartView" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>664</width>
-        <height>413</height>
+        <height>414</height>
        </rect>
       </property>
       <widget class="QPushButton" name="pushButtonResetGraph">
@@ -921,8 +921,9 @@ function :</string>
  <customwidgets>
   <customwidget>
    <class>QChartView</class>
-   <extends>QGraphicsView</extends>
-   <header>qchartview.h</header>
+   <extends>QWidget</extends>
+   <header location="global">QtCharts</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
