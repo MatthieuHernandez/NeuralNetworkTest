@@ -35,9 +35,6 @@
     <QtMoc Include="src\Header Files\mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="External Library\qcustomplot.h">
-      <Filter>External Library</Filter>
-    </QtMoc>
     <QtMoc Include="src\Header Files\Console.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -55,6 +52,9 @@
     </QtMoc>
     <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\Header Files\mainChart.h">
+      <Filter>Generated Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +92,6 @@
     <ClCompile Include="src\Source Files\mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="External Library\qcustomplot.cpp">
-      <Filter>External Library</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -113,9 +110,6 @@
     <ClCompile Include="src\Source Files\Cifar10VisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainChart.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\mainChart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -125,12 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mainChart.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\mainChart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
