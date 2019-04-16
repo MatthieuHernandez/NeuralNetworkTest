@@ -1,6 +1,8 @@
 #pragma once
 #include <QtCharts>
 
+QT_CHARTS_USE_NAMESPACE
+
 class MainChart
 {
 public:
@@ -18,6 +20,7 @@ private:
 
 	QChart* chart{};
 
+	QValueAxis* axisX{};
 	QValueAxis* axisY{};
 
 	QLineSeries* clusteringRates{};

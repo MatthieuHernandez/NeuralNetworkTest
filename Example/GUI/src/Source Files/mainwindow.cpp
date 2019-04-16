@@ -395,6 +395,5 @@ void MainWindow::updateInterface()
 		this->currentController->getNeuralNetwork().getF1Score()
 	);
 
-	QApplication::processEvents();
 	this->currentController->blockSignals(false);
 }

@@ -64,11 +64,10 @@ void CIFAR_10::readSet(std::vector<std::vector<float>>& inputs,
 	{
 		throw FileOpeningFailed();
 	}
-	unsigned char c;
 
 	for (int i = 0; !file.eof(); i++)
 	{
-		c = file.get();
+		unsigned char c = file.get();
 
 		const vector<float> labelsTemp(10, 0);
 		labels.push_back(labelsTemp);
