@@ -225,7 +225,7 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 			currentController->getNeuralNetwork().evaluate(*currentController->getData().data/*&this->computeIsStop*/);
 		});
 		watcherCompute.setFuture(future);
-		updateTimer->start(200);
+		updateTimer->start(40);
 		timerForTimeEdit->start();
 		ui->pushButtonCompute->setText("Stop");
 		ui->timeEdit->setTime(QTime(0, 0));

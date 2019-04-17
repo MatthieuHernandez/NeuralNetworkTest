@@ -39,9 +39,6 @@
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimplestExample.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\StraightforwardData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

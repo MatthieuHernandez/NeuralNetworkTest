@@ -120,7 +120,7 @@
       <LinkIncremental>false</LinkIncremental>
       <OutputFile>$(OutDir)\NeuralNetwork.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkStatus>
       </LinkStatus>

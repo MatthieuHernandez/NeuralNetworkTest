@@ -185,7 +185,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimplestExample.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.cpp" />

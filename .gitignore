@@ -3,7 +3,6 @@
 *.exe
 *.dll
 *.lib
-*.user*
 *.o
 Makefile*
 *.stash

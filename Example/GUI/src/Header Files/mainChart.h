@@ -20,10 +20,14 @@ private:
 
 	QChart* chart{};
 
-	QValueAxis* axisX{};
-	QValueAxis* axisY{};
+	QLineSeries* series{};
+	QLineSeries* clusteringRateSeries{};
+	QLineSeries* weightedClusteringRateSeries{};
+	QLineSeries* f1ScoreSeries{};
 
-	QLineSeries* clusteringRates{};
-	QLineSeries* weightedClusteringRates{};
-	QLineSeries* f1Scores{};
+	QVector<QPointF> clusteringRatePoints{};
+	QVector<QPointF> weightedClusteringRatePoints{};
+	QVector<QPointF> f1ScorePoints{};
+
+
 };
