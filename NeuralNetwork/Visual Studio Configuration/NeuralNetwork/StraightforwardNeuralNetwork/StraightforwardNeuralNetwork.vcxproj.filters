@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

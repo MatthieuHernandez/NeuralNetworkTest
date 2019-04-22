@@ -104,15 +104,18 @@
     <ClCompile Include="src\Source Files\Cifar10VisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\mainChart.cpp">
+    <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp">
+    <ClCompile Include="src\Source Files\MainChart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\MainChart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

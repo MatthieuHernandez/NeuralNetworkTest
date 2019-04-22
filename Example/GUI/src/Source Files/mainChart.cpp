@@ -1,4 +1,4 @@
-#include "mainChart.h"
+#include "MainChart.h"
 
 
 MainChart::MainChart()
@@ -6,7 +6,6 @@ MainChart::MainChart()
 	QPen a(Qt::blue, 1.5, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
 	QPen b(Qt::red, 1.5, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
 	QPen c(Qt::green, 1.5, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
-
 
 	this->chart = new QChart();
 	this->chart->legend()->hide();
@@ -27,9 +26,18 @@ MainChart::MainChart()
 	this->f1ScoreSeries->setPen(c);
 	this->chart->addSeries(this->f1ScoreSeries);
 
-	this->chart->createDefaultAxes();
-	this->chart->axisX()->setRange(0, 2);
-	this->chart->axisY()->setRange(0, 100);
+	this->axisX = new QValueAxis();
+	this->axisY = new QValueAxis();
+	this->axisX->setRange(0, 2);
+	this->axisY->setRange(0, 100);
+	this->axisX->setLabelFormat("%i");
+	this->axisY->setLabelFormat("%i");
+	this->chart->setAxisX(this->axisX, this->clusteringRateSeries);
+	this->chart->setAxisY(this->axisY, this->clusteringRateSeries);
+	this->chart->setAxisX(this->axisX, this->weightedClusteringRateSeries);
+	this->chart->setAxisY(this->axisY, this->weightedClusteringRateSeries);
+	this->chart->setAxisX(this->axisX, this->f1ScoreSeries);
+	this->chart->setAxisY(this->axisY, this->f1ScoreSeries);
 
 	this->clusteringRateSeries->setUseOpenGL(true);
 	this->weightedClusteringRateSeries->setUseOpenGL(true);
@@ -45,6 +53,7 @@ void MainChart::clear()
 	this->weightedClusteringRatePoints.push_back(QPointF(0, 0));
 	this->f1ScorePoints.clear();
 	this->f1ScorePoints.push_back(QPointF(0, 0));
+
 	this->clusteringRateSeries->replace(clusteringRatePoints);
 	this->weightedClusteringRateSeries->replace(weightedClusteringRatePoints);
 	this->f1ScoreSeries->replace(f1ScorePoints);
@@ -55,17 +64,15 @@ void MainChart::updateLineSeries(float x, float clusteringRate, float weightedCl
 	if (this->previousAxisXValue < x)
 	{
 		this->previousAxisXValue = x;
+
 		this->clusteringRatePoints.push_back(QPointF(x, clusteringRate * 100.0f));
 		this->weightedClusteringRatePoints.push_back(QPointF(x, weightedClusteringRate * 100.0f));
 		this->f1ScorePoints.push_back(QPointF(x, f1Score * 100.0f));
-
 
 		this->clusteringRateSeries->replace(clusteringRatePoints);
 		this->weightedClusteringRateSeries->replace(weightedClusteringRatePoints);
 		this->f1ScoreSeries->replace(f1ScorePoints);
 
-		this->chart->axisX()->setRange(0, x);
-		//this->chart->createDefaultAxes();
-		//this->chart->zoomReset(); // to refresh chart
+		this->axisX->setRange(0, x);
 	}
 }

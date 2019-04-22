@@ -66,7 +66,7 @@ void MainWindow::stopCompute()
 	this->computeIsStop = true;
 	this->loadingLogo->stop();
 	this->updateTimer->stop();
-	this->refreshClusteringRate();
+	this->updateInterface();
 	ui->pushButtonResetGraph->setEnabled(true);
 	this->enableModification(true);
 	ui->pushButtonCompute->setText("Compute");
@@ -76,7 +76,6 @@ void MainWindow::endOfLoadingDataSet()
 {
 	if (firstLoading)
 	{
-		this->mainChart->clear();
 		firstLoading = false;
 	}
 
@@ -177,6 +176,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 	if (computeIsStop)
 	{
 		computeIsStop = false;
+		this->mainChart->clear();
 		if (&currentController->getNeuralNetwork() == nullptr)
 		{
 			this->on_pushButtonResetGraph_clicked();
@@ -188,13 +188,10 @@ void MainWindow::on_pushButtonCompute_clicked()
 		this->startLoadingLogo();
 		this->enableModification(false);
 		QString data = ui->comboBoxData->currentText();
-		//this->currentController->getNeuralNetwork().trainingStart();
-		//*const auto future = QtConcurrent::run([=]()
-		//{
+
 		currentController->getNeuralNetwork().trainingStart(*currentController->getData().data);
-		//});*/
-		//watcherCompute.setFuture(future);
-		updateTimer->start(200);
+
+		updateTimer->start(40);
 		timerForTimeEdit->start();
 		ui->pushButtonResetGraph->setEnabled(false);
 		ui->pushButtonCompute->setText("Stop");
@@ -220,11 +217,9 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 			ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 		}
 		this->startLoadingLogo();
-		const auto future = QtConcurrent::run([=]()
-		{
-			currentController->getNeuralNetwork().evaluate(*currentController->getData().data/*&this->computeIsStop*/);
-		});
-		watcherCompute.setFuture(future);
+
+		currentController->getNeuralNetwork().evaluate(*currentController->getData().data);
+
 		updateTimer->start(40);
 		timerForTimeEdit->start();
 		ui->pushButtonCompute->setText("Stop");
@@ -383,17 +378,16 @@ void MainWindow::on_pushButtonLoad_clicked()
 
 void MainWindow::updateInterface()
 {
-	this->currentController->blockSignals(true);
+	this->refreshClusteringRate();
 
 	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());	
 	ui->timeEdit->setTime(QTime::fromMSecsSinceStartOfDay(static_cast<int>(timerForTimeEdit->elapsed())));
 	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
-	mainChart->updateLineSeries(
+
+	this->mainChart->updateLineSeries(
 		this->currentController->getNeuralNetwork().getNumberOfIteration(),
 		this->currentController->getNeuralNetwork().getGlobalClusteringRate(),
 		this->currentController->getNeuralNetwork().getWeightedClusteringRate(),
 		this->currentController->getNeuralNetwork().getF1Score()
 	);
-
-	this->currentController->blockSignals(false);
 }

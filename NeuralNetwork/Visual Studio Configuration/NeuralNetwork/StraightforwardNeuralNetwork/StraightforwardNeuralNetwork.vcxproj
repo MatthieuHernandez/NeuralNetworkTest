@@ -198,6 +198,7 @@
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetworkLearning.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.h" />
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.h" />
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

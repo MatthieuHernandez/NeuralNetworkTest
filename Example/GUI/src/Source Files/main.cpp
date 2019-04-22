@@ -11,13 +11,9 @@ int main(int argc, char *argv[])
 }
 
 /*RELEASE */
-int WinMain(HINSTANCE hInstance,
-  HINSTANCE hPrevInstance,
-  LPSTR     lpCmdLine,
-  int       nShowCmd)
+int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	int argc = 0;
-
     QApplication a(argc, {});
     MainWindow w;
     w.show();

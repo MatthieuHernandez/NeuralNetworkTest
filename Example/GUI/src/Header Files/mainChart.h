@@ -20,6 +20,9 @@ private:
 
 	QChart* chart{};
 
+	QValueAxis* axisX;
+	QValueAxis* axisY;
+
 	QLineSeries* series{};
 	QLineSeries* clusteringRateSeries{};
 	QLineSeries* weightedClusteringRateSeries{};

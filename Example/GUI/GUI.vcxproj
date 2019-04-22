@@ -22,11 +22,13 @@
     <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>
+    </CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>release\</IntermediateDirectory>
     <PrimaryOutput>NeuralNetwork</PrimaryOutput>
     <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
@@ -124,13 +126,19 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkStatus>
       </LinkStatus>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <OptimizeReferences>
       </OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
       <NoEntryPoint>false</NoEntryPoint>
       <ForceFileOutput>
       </ForceFileOutput>
+      <PreventDllBinding>
+      </PreventDllBinding>
+      <CreateHotPatchableImage>
+      </CreateHotPatchableImage>
+      <Driver>NotSet</Driver>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -163,6 +171,7 @@
     </PostBuildEvent>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -196,7 +205,7 @@
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <OutputFile>$(OutDir)\NeuralNetwork.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkStatus>
       </LinkStatus>
@@ -268,7 +277,7 @@
     <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp" />
     <ClCompile Include="src\Source Files\ImageVisualizationWidget.cpp" />
     <ClCompile Include="src\Source Files\main.cpp" />
-    <ClCompile Include="src\Source Files\mainChart.cpp" />
+    <ClCompile Include="src\Source Files\MainChart.cpp" />
     <ClCompile Include="src\Source Files\mainwindow.cpp" />
     <ClCompile Include="src\Source Files\MnistVisualizationWidget.cpp" />
   </ItemGroup>
@@ -276,6 +285,7 @@
     <QtMoc Include="src\Header Files\mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Header Files\MainChart.h" />
     <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB</Define>
