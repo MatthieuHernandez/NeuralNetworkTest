@@ -59,6 +59,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="CurrencyRatesEurToUsdTests.cpp" />
+    <ClCompile Include="DataTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SaveNeuralNetworkTest.cpp" />
     <ClCompile Include="UnitTestTests.cpp" />

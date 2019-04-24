@@ -1,6 +1,7 @@
 #pragma once
 #include "CurrencyRatesEurToUsd.h"
 #include "GTestTools.h"
+#include <gtest/gtest.h>
 using namespace std;
 using namespace snn;
 
@@ -23,8 +24,8 @@ public:
 TEST_F(CurrencyTest, DISABLED_OutputTest)
 {
 	// Arrange
-	int positifRates = 0;
-	int negatifRates = 0;
+	int positiveRates = 0;
+	int negativeRates = 0;
 	const int errorSize = 3;
 	int error[errorSize] = {0};
 
@@ -37,10 +38,10 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 			error[0]++;
 
 		if (output > 0 && output < 3)
-			positifRates++;
+			positiveRates++;
 		else if (output <= 0 && output > -3)
 		{
-			negatifRates++;
+			negativeRates++;
 			if (output == 0)
 				error[2]++;
 		}
@@ -48,9 +49,9 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 		else
 			error[1]++;
 	}
-	const int totalRates = positifRates + negatifRates;
-	const float positifRatesRatio = static_cast<float>(positifRates) / totalRates;
-	const float negatifRatesRatio = static_cast<float>(negatifRates) / totalRates;
+	const int totalRates = positiveRates + negativeRates;
+	const float positifRatesRatio = static_cast<float>(positiveRates) / totalRates;
+	const float negatifRatesRatio = static_cast<float>(negativeRates) / totalRates;
 
 	const int DateToRemove = data->getNumberOfGaps() * data->numberOfInputRates;
 
