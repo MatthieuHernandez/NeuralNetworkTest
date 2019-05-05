@@ -1,7 +1,6 @@
-#pragma once
 #include <gtest/gtest.h>
 #include "neuralNetwork/StraightforwardNeuralNetwork.h"
-#include "GTestTools.h"
+#include "TestTools.h"
 
 using namespace std;
 using namespace snn;
@@ -11,17 +10,31 @@ using namespace snn;
 TEST(NormalizeData, BasicTest)
 {
 	// Arrange
-	vector<vector<float>> inputsTraining = {{10, 0.83, 102}, {15, 1, 100}, {20, 0, 100.5}};
-	vector<vector<float>> inputsTesting = {{21, 0.75, 104}, {12, 0.125, 101}};
+	vector<vector<float>> inputsTraining = {
+		{10.0f, 0.8f, 102.0f},
+		{20.0f, 1.0f, 100.0f},
+		{15.0f, -1.0f, 100.5f}
+	};
+	vector<vector<float>> inputsTesting = {
+		{21.0f, 0.7f, 104.0f},
+		{12.0f, 0.4f, 101.0f}
+	};
 	vector<vector<float>> labels = {{0}, {1}};
 
-	vector<vector<float>> expectedInputsTraining = {{0, 0.83, 1}, {0.5, 1, 0}, {1.0, 0, 0.25}};
-	vector<vector<float>> expectedInputsTesting = {{1.1, 0.75, 2}, {0.2, 0.125, 0.5}};
+	vector<vector<float>> expectedInputsTraining = {
+		{-1.0f, 0.8f, 1.0f},
+		{1.0f, 1.0f, -1.0f},
+		{0.0f, -1.0f, -0.5f}
+	};
+	vector<vector<float>> expectedInputsTesting = {
+		{1.2f, 0.7f, 3.0f},
+		{-0.6f, 0.4f, 0.0f}
+	};
 
 	// Act
 	StraightforwardData data(snn::regression, inputsTraining, labels, inputsTesting, labels);
 
 	// Assert
-	EXPECT_EQ_VECTOR(data.data->sets[training].inputs, expectedInputsTraining);
-	EXPECT_EQ_VECTOR(data.data->sets[snn::testing].inputs, expectedInputsTesting);
+	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.data->sets[training].inputs, expectedInputsTraining);
+	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.data->sets[snn::testing].inputs, expectedInputsTesting);
 }

@@ -1,5 +1,5 @@
-﻿#pragma once
-#include "GTestTools.h"
+﻿#include <gtest/gtest.h>
+#include "TestTools.h"
 #include "neuralNetwork/StraightforwardNeuralNetwork.h"
 using namespace std;
 using namespace snn;

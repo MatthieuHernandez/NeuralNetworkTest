@@ -1,5 +1,5 @@
 #pragma once
-#include "GTestTools.h"
+#include "TestTools.h"
 #include <gtest/gtest.h>
 
 TEST(DISABLED_TestCaseName, TestName) 

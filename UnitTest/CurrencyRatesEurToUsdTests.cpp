@@ -1,6 +1,6 @@
 #pragma once
 #include "CurrencyRatesEurToUsd.h"
-#include "GTestTools.h"
+#include "TestTools.h"
 #include <gtest/gtest.h>
 using namespace std;
 using namespace snn;
@@ -50,8 +50,8 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 			error[1]++;
 	}
 	const int totalRates = positiveRates + negativeRates;
-	const float positifRatesRatio = static_cast<float>(positiveRates) / totalRates;
-	const float negatifRatesRatio = static_cast<float>(negativeRates) / totalRates;
+	const float positiveRatesRatio = static_cast<float>(positiveRates) / totalRates;
+	const float negativeRatesRatio = static_cast<float>(negativeRates) / totalRates;
 
 	const int DateToRemove = data->getNumberOfGaps() * data->numberOfInputRates;
 
@@ -59,13 +59,13 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 	const int maxRates = 373000 - DateToRemove;
 
 	// Assert
-	EXPECT_ABOUT_EQ(300, data->getNumberOfGaps(), 400, "Number of gaps");
-	EXPECT_ABOUT_EQ(minRates, totalRates, maxRates, "Total rates without gap");
-	EXPECT_ABOUT_EQ(0.48f, positifRatesRatio, 0.52f, "Positif Ratio");
-	EXPECT_ABOUT_EQ(0.48f, negatifRatesRatio, 0.52f, "Negatif Ratio");
+	TestTools::EXPECT_ABOUT_EQ(300, data->getNumberOfGaps(), 400, "Number of gaps");
+	TestTools::EXPECT_ABOUT_EQ(minRates, totalRates, maxRates, "Total rates without gap");
+	TestTools::EXPECT_ABOUT_EQ(0.48f, positiveRatesRatio, 0.52f, "Positif Ratio");
+	TestTools::EXPECT_ABOUT_EQ(0.48f, negativeRatesRatio, 0.52f, "Negatif Ratio");
 	EXPECT_EQ(error[0], 0);
 	EXPECT_EQ(error[1], 0);
-	EXPECT_ABOUT_EQ(100, error[2], 10000, "Number of rates to 0");
+	TestTools::EXPECT_ABOUT_EQ(100, error[2], 10000, "Number of rates to 0");
 }
 
 TEST_F(CurrencyTest, DISABLED_InputTest)

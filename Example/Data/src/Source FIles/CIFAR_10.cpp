@@ -67,7 +67,7 @@ void CIFAR_10::readSet(std::vector<std::vector<float>>& inputs,
 
 	for (int i = 0; !file.eof(); i++)
 	{
-		unsigned char c = file.get();
+		auto c = static_cast<unsigned char>(file.get());
 
 		const vector<float> labelsTemp(10, 0);
 		labels.push_back(labelsTemp);
@@ -83,7 +83,7 @@ void CIFAR_10::readSet(std::vector<std::vector<float>>& inputs,
 
 		for (int j = 0; !file.eof() && j < this->sizeOfData; j++)
 		{
-			c = file.get();
+			c = static_cast<unsigned char>(file.get());
 
 			const float value = static_cast<int>(c) / 255.0f * 2.0f - 1.0f;
 			inputs.back().push_back(value);
