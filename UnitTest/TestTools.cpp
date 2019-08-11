@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 void TestTools::EXPECT_EQ_VECTOR(vector<float> actual, vector<float> expected)
 {
 	ASSERT_EQ(actual.size(), expected.size()) << "Vectors are of unequal length";

@@ -31,24 +31,22 @@ void Controller::resetOutput()
 void Controller::DeleteNeuralNetwork()
 {
 	this->neuralNetwork.reset(nullptr);
-	this->resetOutput();
 }
 
-void Controller::initializeNeuralNetwork()
+void Controller::initializeNeuralNetwork(const QString& dataSetName)
 {
+	StraightforwardOption option;
+	option.learningRate = this->inputs.learningRate;
+	option.momentum = this->inputs.momentum;
+
+	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+	auto fileName = "./Save/autosave_" + dataSetName + "_" + date;
+	option.saveFilePath = fileName.toStdString();
+
 	this->neuralNetwork = make_unique<StraightforwardNeuralNetwork>(this->inputs.structure,
 	                                                                this->inputs.activationFunction,
-	                                                                this->inputs.learningRate,
-	                                                                this->inputs.momentum);
+	                                                                option);
 	this->resetOutput();
-}
-
-void Controller::autoSave(const QString& dataSetName)
-{
-	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
-	auto clusteringRate = QString::number(neuralNetwork->getGlobalClusteringRate());
-	auto fileName = "./Save/autosave_" + dataSetName + "_" + clusteringRate + "_" + date;
-	neuralNetwork->saveAs(fileName.toStdString());
 }
 
 void Controller::save(const QString& fileName)
@@ -58,7 +56,8 @@ void Controller::save(const QString& fileName)
 
 void Controller::load(const QString& fileName)
 {
-	neuralNetwork = make_unique<StraightforwardNeuralNetwork>(StraightforwardNeuralNetwork::loadFrom(fileName.toStdString()));
+	neuralNetwork = make_unique<StraightforwardNeuralNetwork>(
+		StraightforwardNeuralNetwork::loadFrom(fileName.toStdString()));
 	this->resetOutput();
 }
 

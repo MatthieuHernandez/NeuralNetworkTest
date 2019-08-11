@@ -179,15 +179,15 @@ void MainWindow::on_pushButtonCompute_clicked()
 		this->mainChart->clear();
 		if (&currentController->getNeuralNetwork() == nullptr)
 		{
+			QString dataSetName = ui->comboBoxData->currentText();
 			this->on_pushButtonResetGraph_clicked();
-			this->currentController->initializeNeuralNetwork();
+			this->currentController->initializeNeuralNetwork(dataSetName);
 			this->refreshClusteringRate();
 			ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
 			ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 		}
 		this->startLoadingLogo();
 		this->enableModification(false);
-		QString data = ui->comboBoxData->currentText();
 
 		currentController->getNeuralNetwork().trainingStart(*currentController->getData().data);
 
@@ -210,8 +210,9 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 		computeIsStop = false;
 		if (&currentController->getNeuralNetwork() == nullptr)
 		{
+			QString dataSetName = ui->comboBoxData->currentText();
 			this->on_pushButtonResetGraph_clicked();
-			this->currentController->initializeNeuralNetwork();
+			this->currentController->initializeNeuralNetwork(dataSetName);
 			this->refreshClusteringRate();
 			ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
 			ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
@@ -285,12 +286,16 @@ void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
 {
 	if (state == 2)
 	{
+		if (&currentController->getNeuralNetwork() != nullptr)
+			this->currentController->getNeuralNetwork().option.autoSaveWhenBetter = true;
 		this->autoSave = true;
-		console->write("auto save enable");
+		this->console->write("auto save enable");
 		return;
 	}
+	if (&currentController->getNeuralNetwork() != nullptr)
+		this->currentController->getNeuralNetwork().option.autoSaveWhenBetter = false;
 	this->autoSave = false;
-	console->write("auto save disable");
+	this->console->write("auto save disable");
 }
 
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)
@@ -335,11 +340,11 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 
 void MainWindow::on_pushButtonReset_clicked()
 {
-	this->currentController->DeleteNeuralNetwork();
 	this->enableModification(true);
 	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
 	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 	this->refreshClusteringRate();
+	this->currentController->DeleteNeuralNetwork();
 	this->on_pushButtonResetGraph_clicked();
 }
 

@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestTools.cpp" />
+    <ClCompile Include="ExamplesTests.cpp" />
     <ClInclude Include="TestTools.h" />
   </ItemGroup>
   <ItemGroup>
