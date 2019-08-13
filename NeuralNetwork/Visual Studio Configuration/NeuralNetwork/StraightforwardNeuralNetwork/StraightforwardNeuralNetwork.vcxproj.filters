@@ -83,23 +83,26 @@
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.cpp">
       <Filter>Source Files\neuralNetwork\layer\perceptron</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimpleExamplesClassification.cpp">
-      <Filter>Source Files\Example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimpleExamplesRegression.cpp">
-      <Filter>Source Files\Example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.cpp">
       <Filter>Source Files\neuralNetwork</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardOption.cpp">
       <Filter>Source Files\neuralNetwork</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.cpp">
       <Filter>Source Files\neuralNetwork</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.cpp">
-      <Filter>Source Files\data</Filter>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\MultipleClassificationExemple.cpp">
+      <Filter>Source Files\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\RegressionExample.cpp">
+      <Filter>Source Files\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\ClassificationExample.cpp">
+      <Filter>Source Files\Example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

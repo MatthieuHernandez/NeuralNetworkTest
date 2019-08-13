@@ -1,6 +1,7 @@
 #include "Iris.h"
 #include <string>
 #include <fstream>
+#include "data/DataForClassification.h"
 
 using namespace std;
 using namespace snn;
@@ -81,5 +82,5 @@ void Iris::loadData()
 			throw exception("Cannot load iris data set");
 	}
 	
-	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining);
+	this->data = new DataForClassification(inputsTraining, labelsTraining);
 }

@@ -1,28 +1,23 @@
 ﻿#include <gtest/gtest.h>
 #include "TestTools.h"
 #include "neuralNetwork/StraightforwardNeuralNetwork.h"
-#include "../example/SimpleExamplesRegression.cpp"
-#include "../example/SimpleExamplesClassification.cpp"
+#include "../example/RegressionExample.cpp"
+#include "../example/ClassificationExample.cpp"
+#include "../example/MultipleClassificationExemple.cpp"
 using namespace std;
 using namespace snn;
 
-TEST(DISABLED_Example, simpleExampleRegression1)
+TEST(DISABLED_Example, regressionExample)
 {
-	EXPECT_EQ(simpleExampleRegression1(), EXIT_SUCCESS);
+	EXPECT_EQ(regressionExample(), EXIT_SUCCESS);
 }
 
-TEST(DISABLED_Example, simpleExampleRegression2)
+TEST(DISABLED_Example, multipleClassificationExample)
 {
-	EXPECT_EQ(simpleExampleRegression2(), EXIT_SUCCESS);
+	EXPECT_EQ(multipleClassificationExample(), EXIT_SUCCESS);
 }
 
-
-TEST(DISABLED_Example, simpleExampleClassification1)
+TEST(DISABLED_Example, classificationExample)
 {
-	EXPECT_EQ(simpleExampleClassification1(), EXIT_SUCCESS);
-}
-
-TEST(Example, simpleExampleClassification2)
-{
-	EXPECT_EQ(simpleExampleClassification2(), EXIT_SUCCESS);
+	EXPECT_EQ(classificationExample(), EXIT_SUCCESS);
 }

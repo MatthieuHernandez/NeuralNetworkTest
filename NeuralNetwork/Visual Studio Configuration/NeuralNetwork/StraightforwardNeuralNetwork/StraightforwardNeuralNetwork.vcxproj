@@ -194,8 +194,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimpleExamplesClassification.cpp" />
-    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\SimpleExamplesRegression.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\ClassificationExample.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\RegressionExample.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\MultipleClassificationExemple.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.cpp" />
     <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.cpp" />

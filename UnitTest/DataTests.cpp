@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "neuralNetwork/StraightforwardNeuralNetwork.h"
 #include "TestTools.h"
+#include "data/DataForRegression.h"
 
 using namespace std;
 using namespace snn;
@@ -32,9 +33,9 @@ TEST(DISABLED_NormalizeData, BasicTest)
 	};
 
 	// Act
-	StraightforwardData data(snn::regression, inputsTraining, labels, inputsTesting, labels);
+	DataForRegression data(inputsTraining, labels, inputsTesting, labels);
 
 	// Assert
-	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.data->sets[training].inputs, expectedInputsTraining);
-	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.data->sets[snn::testing].inputs, expectedInputsTesting);
+	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.sets[training].inputs, expectedInputsTraining);
+	TestTools::EXPECT_EQ_VECTOR_VECTOR(data.sets[snn::testing].inputs, expectedInputsTesting);
 }

@@ -1,6 +1,7 @@
 #include "Wine.h"
 #include <string>
 #include <fstream>
+#include "data/DataForClassification.h"
 
 using namespace std;
 using namespace snn;
@@ -93,7 +94,7 @@ void Wine::loadData()
 			inputsTraining[i][j] /= maxValue;
 		}
 	}*/
-	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining);
+	this->data = new DataForClassification(inputsTraining, labelsTraining);
 }
 
 

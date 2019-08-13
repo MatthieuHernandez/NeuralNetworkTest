@@ -1,6 +1,7 @@
 #include "CIFAR_10.h"
 #include <fstream>
 #include "../../DataException.h"
+#include "data/DataForClassification.h"
 
 using namespace std;
 using namespace snn;
@@ -53,7 +54,7 @@ void CIFAR_10::readImages(const string path_CIFAR_10[])
 	              labelsTesting,
 	              testingFile);
 
-	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining, inputsTesting, labelsTesting);
+	this->data = new DataForClassification(inputsTraining, labelsTraining, inputsTesting, labelsTesting);
 }
 
 void CIFAR_10::readSet(std::vector<std::vector<float>>& inputs,

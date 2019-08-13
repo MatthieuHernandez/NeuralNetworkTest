@@ -1,6 +1,7 @@
 #include "MNIST.h"
 #include <fstream>
 #include "../../DataException.h"
+#include "data/DataForClassification.h"
 
 using namespace std;
 using namespace snn;
@@ -46,7 +47,7 @@ void MNIST::readImages(const string path_MNIST[])
 	this->readSet(inputsTraining, labelsTraining, imagesTrainFile, labelsTrainFile);
 	this->readSet(inputsTesting, labelsTesting, imagesTestFile, labelsTestFile);
 
-	this->data = new StraightforwardData(classification, inputsTraining, labelsTraining, inputsTesting, labelsTesting);
+	this->data = new DataForClassification(inputsTraining, labelsTraining, inputsTesting, labelsTesting);
 }
 
 void MNIST::readSet(vector<vector<float>>& inputs,

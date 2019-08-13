@@ -30,11 +30,11 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 	int error[errorSize] = {0};
 
 	// Act
-	for (int i = 0; i < data->data->data->sets[training].size; i++)
+	for (int i = 0; i < data->data->sets[training].size; i++)
 	{
-		auto output = data->data->data->getTrainingOutputs(i)[0];
+		auto output = data->data->getTrainingOutputs(i)[0];
 
-		if (output != data->data->data->getTestingOutputs(i)[0])
+		if (output != data->data->getTestingOutputs(i)[0])
 			error[0]++;
 
 		if (output > 0 && output < 3)
@@ -75,13 +75,13 @@ TEST_F(CurrencyTest, DISABLED_InputTest)
 	int error[errorSize] = {0};
 
 	// Act
-	auto sizeOfInput = data->data->data->getTrainingData(0).size();
+	auto sizeOfInput = data->data->getTrainingData(0).size();
 
-	for (int i = 0; i < data->data->data->sets[training].size; i++)
+	for (int i = 0; i < data->data->sets[training].size; i++)
 	{
-		auto inputs = data->data->data->getTrainingData(i);
+		auto inputs = data->data->getTrainingData(i);
 
-		if (inputs != data->data->data->getTestingData(i))
+		if (inputs != data->data->getTestingData(i))
 			error[0]++;
 
 		for (int j = 0; j < inputs.size(); j++)
@@ -90,12 +90,12 @@ TEST_F(CurrencyTest, DISABLED_InputTest)
 				error[1]++;
 		}
 		const int k = 25;
-		if (i + 1 < data->data->data->sets[training].size)
-			if (data->data->data->getTrainingData(i)[k] != data->data->data->getTrainingData(i + 1)[k + 1])
+		if (i + 1 < data->data->sets[training].size)
+			if (data->data->getTrainingData(i)[k] != data->data->getTrainingData(i + 1)[k + 1])
 				error[2]++;
 	}
 
-	const auto actualDataSize = data->data->data->sets[training].size;
+	const auto actualDataSize = data->data->sets[training].size;
 	const auto expectedDataSize = data->getNumberOfLines() - data->getNumberOfGaps()*(data->numberOfInputRates) - sizeOfInput + 1;
 
 	// Assert

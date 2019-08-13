@@ -1,6 +1,8 @@
 #include "CurrencyRatesEurToUsd.h"
 #include <string>
 #include <fstream>
+#include "data/DataForRegression.h"
+#include "data/DataForClassification.h"
 
 using namespace std;
 using namespace snn;
@@ -22,7 +24,7 @@ void CurrencyRatesEurToUsd::loadData()
 	this->loadCSV(2016);
 	this->createData(inputs, labels);
 	//this->unshuffle();	
-	this->data = new StraightforwardData(classification, inputs, labels);
+	this->data = new DataForClassification(inputs, labels, 0.0f);
 }
 
 void CurrencyRatesEurToUsd::loadCSV(int year)

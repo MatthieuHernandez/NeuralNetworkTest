@@ -1,6 +1,7 @@
 ﻿#include <gtest/gtest.h>
 #include "TestTools.h"
 #include "neuralNetwork/StraightforwardNeuralNetwork.h"
+#include "data/DataForRegression.h"
 using namespace std;
 using namespace snn;
 
@@ -39,7 +40,7 @@ TEST(DISABLED_SaveNeuralNetwork, EqualTest)
 
 	vector<vector<float>> inputs {{1.5, 0.75, -0.25, 0, 0}};
 	vector<vector<float>> desired {{1, 0, 0.5, 0}};
-	StraightforwardData data(regression, inputs, desired);
+	DataForRegression data(inputs, desired, 0.2f);
 
 	A.trainOnce(inputs.back(), desired.back());
 

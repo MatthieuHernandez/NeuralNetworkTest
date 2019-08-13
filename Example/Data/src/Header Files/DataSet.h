@@ -1,11 +1,11 @@
 #pragma once
-#include "data/StraightforwardData.h"
+#include "data/Data.h"
 
 class DataSet
 {
 public:
 
-	snn::StraightforwardData *data{};
+	snn::Data *data{};
 
 	int sizeOfData{};
 	int numberOfLabel{};
