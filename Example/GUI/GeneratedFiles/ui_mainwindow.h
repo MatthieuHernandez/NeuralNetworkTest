@@ -85,6 +85,7 @@ public:
     QLabel *label_3;
     QLabel *label_10;
     QDoubleSpinBox *spinBoxMomentum;
+    QCheckBox *checkBoxOpenMP;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -338,6 +339,15 @@ public:
         spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxMomentum->setDecimals(6);
         spinBoxMomentum->setMaximum(100.000000000000000);
+        checkBoxOpenMP = new QCheckBox(tab_4);
+        checkBoxOpenMP->setObjectName(QString::fromUtf8("checkBoxOpenMP"));
+        checkBoxOpenMP->setGeometry(QRect(10, 210, 161, 21));
+        QFont font2;
+        font2.setStrikeOut(false);
+        font2.setKerning(true);
+        checkBoxOpenMP->setFont(font2);
+        checkBoxOpenMP->setChecked(true);
+        checkBoxOpenMP->setTristate(false);
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
@@ -413,6 +423,7 @@ public:
 "function :", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
         label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
+        checkBoxOpenMP->setText(QApplication::translate("MainWindow", "OpenMP multithreading", nullptr));
         tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 

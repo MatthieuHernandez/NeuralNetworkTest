@@ -7,7 +7,7 @@ using namespace snn;
 
 // ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
 
-TEST(DISABLED_SaveNeuralNetwork, EqualTest)
+TEST(SaveNeuralNetwork, EqualTest)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
@@ -55,7 +55,7 @@ TEST(DISABLED_SaveNeuralNetwork, EqualTest)
 	EXPECT_TRUE(A.getF1Score() == B.getF1Score()) << "A == B";
 }
 
-TEST(DISABLED_SaveNeuralNetwork, Save)
+TEST(SaveNeuralNetwork, Save)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};

@@ -16,6 +16,16 @@ private :
 	void resetOutput();
 
 public:
+
+	struct Inputs
+	{
+		std::vector<int> structure;
+		std::vector<snn::activationFunctionType> activationFunctions;
+		snn::StraightforwardOption option;
+		//int numberOfTrainingsBetweenTwoEvaluations{};
+
+	} inputs;
+
 	Controller(DataSet& data);
 	virtual ~Controller() = default;
 
@@ -29,14 +39,29 @@ public:
 	snn::StraightforwardNeuralNetwork& getNeuralNetwork() const;
 	DataSet& getData() const;
 
-	struct Inputs
-	{
-		std::vector<int> structure;
-		std::vector<activationFunctionType> activationFunction;
-		float learningRate{};
-		float momentum{};
-		int numberOfTrainingsBetweenTwoEvaluations{};
-	} inputs;
+	bool getAutoSave() const;
+	void setAutoSave(bool value);
+	
+	bool getMultithreading() const;
+	void setMultithreading(bool value);
+
+	float getLearningRate() const;
+	void setLearningRate(float value);
+
+	float getMomentum() const;
+	void setMomentum(float value);
+
+	float getStructure(int layer) const;
+	void setStructure(int layer, float value);
+
+	int getNumberOfLayer() const;
+
+	float getActivationFunctions(int layer);
+	void setActivationFunctions(int layer, snn::activationFunctionType value);
+
+	void addLayer(int index);
+	void removeLayer(int index);
+
 
 signals :
 

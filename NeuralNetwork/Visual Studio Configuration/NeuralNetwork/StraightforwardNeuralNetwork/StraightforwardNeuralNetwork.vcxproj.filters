@@ -115,25 +115,16 @@
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.h">
       <Filter>Header Files\data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.h">
-      <Filter>Header Files\data</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.h">
       <Filter>Header Files\neuralNetwork</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.h">
       <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.h">
-      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\gaussian.h">
       <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\improvedSigmoid.h">
-      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.h">
       <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\layer.h">
@@ -159,6 +150,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.h">
       <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.h">
+      <Filter>Header Files\neuralNetwork\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.h">
+      <Filter>Header Files\neuralNetwork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

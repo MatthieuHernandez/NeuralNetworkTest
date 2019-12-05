@@ -67,7 +67,6 @@ private:
 
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
-	bool autoSave = false;
 
 private slots:
 
@@ -84,11 +83,12 @@ private slots:
 	void on_comboBoxActivationFunction_currentIndexChanged(int index);
 
 	void on_checkBoxAutoSave_stateChanged(int state);
+	void on_checkBoxOpenMP_stateChanged(int state);
 
 	void on_pushButtonCompute_clicked();
 	void on_pushButtonEvaluate_clicked();
 
-	void on_pushButtonConsole_clicked();
+	void on_pushButtonConsole_clicked() const;
 	void on_pushButtonResetGraph_clicked();
 
 	void on_pushButtonAddLayer_clicked();

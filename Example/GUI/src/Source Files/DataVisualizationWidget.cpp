@@ -12,7 +12,7 @@ DataVisualizationWidget::DataVisualizationWidget(QWidget *parent, Controller *co
 	ui->labelName->setText("");
 	ui->labelDataSize->setText(QString::number(controller->getData().sizeOfData));
 	ui->labelNumberOfLabel->setText(QString::number(controller->getData().numberOfLabel));
-	ui->labelTrainingSetSize->setText(QString::number(controller->getData().data->data->sets[training].size));
-	ui->labelTestingSetSize->setText(QString::number(controller->getData().data->data->sets[testing].size));
+	ui->labelTrainingSetSize->setText(QString::number(controller->getData().data->sets[training].size));
+	ui->labelTestingSetSize->setText(QString::number(controller->getData().data->sets[testing].size));
 	
 }

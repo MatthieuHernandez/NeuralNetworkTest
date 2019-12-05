@@ -61,7 +61,8 @@ void MainChart::clear()
 
 void MainChart::updateLineSeries(float x, float clusteringRate, float weightedClusteringRate, float f1Score)
 {
-	if (this->previousAxisXValue < x)
+	if (this->previousAxisXValue != x
+		|| (this->previousAxisXValue == 0 || clusteringRate != 0))
 	{
 		this->previousAxisXValue = x;
 

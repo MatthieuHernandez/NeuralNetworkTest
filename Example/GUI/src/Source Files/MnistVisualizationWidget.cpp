@@ -15,5 +15,5 @@ MnistVisualizationWidget::MnistVisualizationWidget(QWidget *parent, Controller *
 
 unsigned char MnistVisualizationWidget::getPixel(int number, int x, int y, color) const
 {
-	return static_cast<unsigned char>((this->controller->getData().data->data->getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
+	return static_cast<unsigned char>((this->controller->getData().data->getData(displayedSet, number)[y * 28 + x] + 1.0) * 127.4);
 }

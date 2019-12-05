@@ -8,6 +8,7 @@
 #include "Cifar10VisualizationWidget.h"
 
 using namespace std;
+using namespace snn;
 
 DataManager::DataManager()
 {
@@ -26,13 +27,13 @@ void DataManager::initializeInputsNNs(int index)
 			13,
 			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
+		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0;
+		controllers[index]->setLearningRate(0.1f);
+		controllers[index]->setMomentum(0.0);
 		break;
 
 	case indexWine:
@@ -43,14 +44,14 @@ void DataManager::initializeInputsNNs(int index)
 			8,
 			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
+		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.01f;
-		controllers[index]->inputs.momentum = 0.0f;
+		controllers[index]->setLearningRate(0.01f);
+		controllers[index]->setMomentum(0.0f);
 		break;
 
 	case indexMNIST:
@@ -61,14 +62,14 @@ void DataManager::initializeInputsNNs(int index)
 			80,
 			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
+		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0f;
+		controllers[index]->setLearningRate(0.1f);
+		controllers[index]->setMomentum(0.0f);
 		break;
 
 	case indexCIFAR_10:
@@ -79,14 +80,14 @@ void DataManager::initializeInputsNNs(int index)
 			80,
 			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
+		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
 			sigmoid
 		};
-		controllers[index]->inputs.learningRate = 0.01f;
-		controllers[index]->inputs.momentum = 0.85f;
+		controllers[index]->setLearningRate(0.01f);
+		controllers[index]->setMomentum(0.85f);
 		break;
 
 	case indexCurrencyRates:
@@ -97,14 +98,14 @@ void DataManager::initializeInputsNNs(int index)
 			60,
 			controllers[index]->getData().numberOfLabel
 		};
-		controllers[index]->inputs.activationFunction = vector<activationFunctionType>
+		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
 		{
 			sigmoid,
 			sigmoid,
 			tanH
 		};
-		controllers[index]->inputs.learningRate = 0.003f;
-		controllers[index]->inputs.momentum = 0.0f;
+		controllers[index]->setLearningRate(0.003f);
+		controllers[index]->setMomentum(0.0f);
 		break;
 
 	default:

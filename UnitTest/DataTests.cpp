@@ -8,7 +8,7 @@ using namespace snn;
 
 // ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
 
-TEST(DISABLED_NormalizeData, BasicTest)
+TEST(NormalizeData, BasicTest)
 {
 	// Arrange
 	vector<vector<float>> inputsTraining = {
