@@ -21,91 +21,62 @@ void DataManager::initializeInputsNNs(int index)
 	switch (index)
 	{
 	case indexIris:
-		controllers[index]->inputs.structure = vector<int>
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
 		{
-			controllers[index]->getData().sizeOfData,
-			13,
-			controllers[index]->getData().numberOfLabel
+			AllToAll(13, sigmoid),
+			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
 		};
-		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
-		{
-			sigmoid,
-			sigmoid
-		};
-		controllers[index]->setLearningRate(0.1f);
-		controllers[index]->setMomentum(0.0);
+		controllers[index]->inputs.learningRate = 0.1f;
+		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexWine:
-		controllers[index]->inputs.structure = vector<int>
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
 		{
-			controllers[index]->getData().sizeOfData,
-			20,
-			8,
-			controllers[index]->getData().numberOfLabel
+			AllToAll(20, sigmoid),
+			AllToAll(8, sigmoid),
+			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
 		};
-		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
-		{
-			sigmoid,
-			sigmoid,
-			sigmoid
-		};
-		controllers[index]->setLearningRate(0.01f);
-		controllers[index]->setMomentum(0.0f);
+		controllers[index]->inputs.learningRate = 0.01f;
+		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexMNIST:
-		controllers[index]->inputs.structure = vector<int>
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
 		{
-			controllers[index]->getData().sizeOfData,
-			150,
-			80,
-			controllers[index]->getData().numberOfLabel
+			AllToAll(150, sigmoid),
+			AllToAll(80, sigmoid),
+			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
 		};
-		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
-		{
-			sigmoid,
-			sigmoid,
-			sigmoid
-		};
-		controllers[index]->setLearningRate(0.1f);
-		controllers[index]->setMomentum(0.0f);
+		controllers[index]->inputs.learningRate = 0.1f;
+		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexCIFAR_10:
-		controllers[index]->inputs.structure = vector<int>
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
 		{
-			controllers[index]->getData().sizeOfData,
-			150,
-			80,
-			controllers[index]->getData().numberOfLabel
+			AllToAll(150, sigmoid),
+			AllToAll(80, sigmoid),
+			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
 		};
-		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
-		{
-			sigmoid,
-			sigmoid,
-			sigmoid
-		};
-		controllers[index]->setLearningRate(0.01f);
-		controllers[index]->setMomentum(0.85f);
+		controllers[index]->inputs.learningRate = 0.01f;
+		controllers[index]->inputs.momentum = 0.85;
 		break;
 
 	case indexCurrencyRates:
-		controllers[index]->inputs.structure = vector<int>
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
 		{
-			controllers[index]->getData().sizeOfData,
-			250,
-			60,
-			controllers[index]->getData().numberOfLabel
+			AllToAll(250, sigmoid),
+			AllToAll(60, sigmoid),
+			AllToAll(controllers[index]->getData().numberOfLabel, snn::tanh)
 		};
-		controllers[index]->inputs.activationFunctions = vector<activationFunctionType>
-		{
-			sigmoid,
-			sigmoid,
-			tanH
-		};
-		controllers[index]->setLearningRate(0.003f);
-		controllers[index]->setMomentum(0.0f);
+		controllers[index]->inputs.learningRate = 0.003f;
+		controllers[index]->inputs.momentum = 0.0f;
 		break;
 
 	default:

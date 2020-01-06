@@ -108,7 +108,7 @@ void MainWindow::resetComboBoxLayer() const
 	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
 	ui->comboBoxLayer->addItem("Input");
-	const int numberOfLayer = this->currentController->getNumberOfLayer();
+	const int numberOfLayer = this->currentController->inputs.structure.size();
 	for (int i = 0; i < numberOfLayer - 1; i++)
 		ui->comboBoxLayer->addItem(QString::number(i));
 	ui->comboBoxLayer->addItem("Output");
@@ -118,17 +118,17 @@ void MainWindow::resetComboBoxLayer() const
 
 void MainWindow::initializeLayerButtons(const int layer) const
 {
-	const int neuronsNumber = this->currentController->getActivationFunctions(layer);
+	const int neuronsNumber = this->currentController->inputs.structure[layer].numberOfNeurons;
 	ui->spinBoxNeurons->setValue(neuronsNumber);
 
 	if (layer > 0)
 	{
-		const auto function = static_cast<int>(this->currentController->getActivationFunctions(layer - 1));
+		const auto function = static_cast<int>(this->currentController->inputs.structure[layer - 1].activation);
 		ui->comboBoxActivationFunction->blockSignals(true);
 		ui->comboBoxActivationFunction->setCurrentIndex(function);
 		ui->comboBoxActivationFunction->blockSignals(false);
 		ui->comboBoxActivationFunction->show();
-		if (this->currentController->getNumberOfLayer() == layer || !computeIsStop)
+		if (this->currentController->inputs.structure.size() == layer || !computeIsStop)
 			ui->spinBoxNeurons->setEnabled(false);
 		else
 			ui->spinBoxNeurons->setEnabled(true);
@@ -141,8 +141,8 @@ void MainWindow::initializeLayerButtons(const int layer) const
 		ui->labelNeurons->setText("Inputs :");
 	}
 
-	ui->spinBoxLearningRate->setValue(this->currentController->getLearningRate());
-	ui->spinBoxMomentum->setValue(this->currentController->getMomentum());
+	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
+	ui->spinBoxMomentum->setValue(this->currentController->inputs.learningRate);
 }
 
 void MainWindow::refreshClusteringRate() const
@@ -170,7 +170,7 @@ void MainWindow::enableModification(const bool isEnable) const
 }
 
 /**************************************************
- *				  	    SLOTS				  	  *
+ *                      SLOTS                     *
  **************************************************/
 
 void MainWindow::on_pushButtonCompute_clicked()
@@ -273,8 +273,8 @@ void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
 {
 	auto layer = ui->comboBoxLayer->currentIndex();
-	auto function = static_cast<activationFunctionType>(index);
-	this->currentController->setActivationFunctions(layer - 1, function);
+	auto function = static_cast<activationFunction>(index);
+	this->currentController->inputs.structure[layer-1].activation = function;
 }
 
 void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
@@ -283,13 +283,13 @@ void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
 	{
 		if (&currentController->getNeuralNetwork() != nullptr)
 		{
-			this->currentController->setAutoSave(true);
+			this->currentController->inputs.autoSaveWhenBetter = true;
 			this->console->write("auto save enable");
 		}
 	}
 	else
 	{
-		this->currentController->setAutoSave(false);
+		this->currentController->inputs.autoSaveWhenBetter = false;
 		this->console->write("auto save disable");
 	}
 }
@@ -300,14 +300,14 @@ void MainWindow::on_checkBoxOpenMP_stateChanged(int state)
 	{
 		if (&currentController->getNeuralNetwork() != nullptr)
 		{
-			this->currentController->setMultithreading(true);
+			this->currentController->inputs.useMultithreading = true;
 			this->console->write("Multithreading enable");
 			
 		}
 	}
 	else
 	{
-		this->currentController->setMultithreading(false);
+		this->currentController->inputs.useMultithreading = false;
 		this->console->write("Multithreading save disable");
 	}
 }
@@ -315,17 +315,18 @@ void MainWindow::on_checkBoxOpenMP_stateChanged(int state)
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 {
 	int index = ui->comboBoxLayer->currentIndex();
-	this->currentController->setStructure(index, value);
+	//TODO: only for AllToAll
+	this->currentController->inputs.structure[index].numberOfNeurons = value;
 }
 
 void MainWindow::on_spinBoxLearningRate_valueChanged(double value)
 {
-	currentController->setLearningRate(value);
+	currentController->inputs.learningRate = value;
 }
 
 void MainWindow::on_spinBoxMomentum_valueChanged(double value)
 {
-	currentController->setMomentum(value);
+	currentController->inputs.momentum = value;
 }
 
 void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)

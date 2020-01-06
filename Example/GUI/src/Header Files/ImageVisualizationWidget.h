@@ -1,6 +1,6 @@
 #pragma once
 #include "DataVisualizationWidget.h"
-#include "data/Data.h"
+#include "data/Data.hpp"
 
 namespace Ui
 {
