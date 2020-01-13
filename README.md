@@ -1,6 +1,6 @@
 # NeuralNetworkTest
 
-NeuralNetworkTest is a draft project to test the github project SimpleNeuralNetwork
+NeuralNetworkTest is a draft project to test the github project StraightforwardNeuralNetwork. Run with Visual Studio and Qt.
 
 
 ## Classification datasets results
