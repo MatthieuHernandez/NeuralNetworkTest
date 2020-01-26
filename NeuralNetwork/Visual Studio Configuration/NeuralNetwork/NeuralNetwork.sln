@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StraightforwardNeuralNetwor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest", "..\..\..\..\StraightforwardNeuralNetwork\.vcx\tests\googletest-release-1.10.0\googletest\gtest.vcxproj", "{F275C0FF-B69D-3F91-978F-A0ED50231133}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Data", "..\..\..\Example\Data\Data.vcxproj", "{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -119,6 +121,22 @@ Global
 		{F275C0FF-B69D-3F91-978F-A0ED50231133}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{F275C0FF-B69D-3F91-978F-A0ED50231133}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{F275C0FF-B69D-3F91-978F-A0ED50231133}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.ActiveCfg = Debug|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x64.Build.0 = Debug|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.ActiveCfg = Debug|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Debug|x86.Build.0 = Debug|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.MinSizeRel|x64.Build.0 = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.MinSizeRel|x86.ActiveCfg = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.MinSizeRel|x86.Build.0 = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x64.ActiveCfg = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x64.Build.0 = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.ActiveCfg = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.Release|x86.Build.0 = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}.RelWithDebInfo|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,6 @@
 #include "ImageVisualizationWidget.h"
 #include "ui_ImageVisualizationWidget.h"
 
-using namespace std;
-
 ImageVisualizationWidget::ImageVisualizationWidget(QWidget* parent, Controller* controller)
 	: DataVisualizationWidget(parent, controller), ui(new Ui::ImageVisualizationWidget)
 {
@@ -27,16 +25,16 @@ void ImageVisualizationWidget::displayImage(int value)
 	ui->Image->setPixmap(QPixmap::fromImage(scalePicture));
 
 	const string label = static_cast<string>("Label : ") + to_string(
-		this->controller->getData().data->getLabel(displayedSet, value));
+		this->controller->getDataset().data->getLabel(displayedSet, value));
 	ui->labelImage->setText(QString::fromStdString(label));
 }
 
 void ImageVisualizationWidget::on_comboBoxSet_currentIndexChanged(int index)
 {
 	this->displayedSet = static_cast<snn::set>(index);
-	ui->spinBoxImageId->setMaximum(this->controller->getData().data->sets[this->displayedSet].size - 1);
+	ui->spinBoxImageId->setMaximum(this->controller->getDataset().data->sets[this->displayedSet].size - 1);
 	ui->labelImage->setText("Label : " + QString::number(
-		this->controller->getData().data->getTrainingLabel(ui->spinBoxImageId->value())));
+		this->controller->getDataset().data->getTrainingLabel(ui->spinBoxImageId->value())));
 	this->displayImage(ui->spinBoxImageId->value());
 }
 

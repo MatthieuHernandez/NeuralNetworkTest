@@ -28,7 +28,6 @@
     <IntermediateDirectory>release\</IntermediateDirectory>
     <PrimaryOutput>NeuralNetwork</PrimaryOutput>
     <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
-    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
@@ -96,7 +95,7 @@
       <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB;QT_CHARTS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <WarningLevel>Level4</WarningLevel>
@@ -141,6 +140,7 @@
       <CreateHotPatchableImage>
       </CreateHotPatchableImage>
       <Driver>NotSet</Driver>
+      <IgnoreSpecificDefaultLibraries>libboost_serialization-vc142-mt-x64-1_71.lib;libboost_serialization-vc142-mt-s-x64-1_71.lib;libboost_serialization-vc142-mt-gd-x64-1_71.lib;libboost_serialization-vc142-mt-sgd-x64-1_71.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -189,7 +189,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;WIN64;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_CONCURRENT_LIB;QT_UITOOLS_LIB;QT_CHARTS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <WarningLevel>Level4</WarningLevel>
@@ -216,6 +216,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <ForceFileOutput>
       </ForceFileOutput>
+      <IgnoreSpecificDefaultLibraries>libboost_serialization-vc142-mt-x64-1_71.lib;libboost_serialization-vc142-mt-s-x64-1_71.lib;libboost_serialization-vc142-mt-gd-x64-1_71.lib;libboost_serialization-vc142-mt-sgd-x64-1_71.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -328,6 +329,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\StraightforwardNeuralNetwork\.vcx\src\StraightforwardNeuralNetwork.vcxproj">
       <Project>{0f7f20ba-8590-37b6-b3b2-b24c74e72217}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\StraightforwardNeuralNetwork\.vcx\tests\dataset_tests\DatasetTests.out.vcxproj">
+      <Project>{04b26e58-9399-3f0f-90d3-ba943409f92d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

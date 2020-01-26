@@ -1,13 +1,12 @@
 #include "DataManager.h"
-#include "MNIST.h"
-#include "Iris.h"
-#include "Wine.h"
+#include "../tests/dataset_tests/Iris/Iris.hpp"
+#include "../tests/dataset_tests/MNIST/Mnist.hpp"
+#include "../tests/dataset_tests/Wine//Wine.hpp"
+#include "../tests/dataset_tests/CIFAR-10//Cifar10.hpp"
 #include "CurrencyRatesEurToUsd.h"
 #include "MnistVisualizationWidget.h"
-#include "CIFAR_10.h"
 #include "Cifar10VisualizationWidget.h"
 
-using namespace std;
 using namespace snn;
 
 DataManager::DataManager()
@@ -21,59 +20,59 @@ void DataManager::initializeInputsNNs(int index)
 	switch (index)
 	{
 	case indexIris:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
 		{
 			AllToAll(13, sigmoid),
-			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
 		};
 		controllers[index]->inputs.learningRate = 0.1f;
 		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexWine:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
 		{
 			AllToAll(20, sigmoid),
 			AllToAll(8, sigmoid),
-			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
 		};
 		controllers[index]->inputs.learningRate = 0.01f;
 		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexMNIST:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
 		{
 			AllToAll(150, sigmoid),
 			AllToAll(80, sigmoid),
-			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
 		};
 		controllers[index]->inputs.learningRate = 0.1f;
 		controllers[index]->inputs.momentum = 0.0;
 		break;
 
 	case indexCIFAR_10:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
 		{
 			AllToAll(150, sigmoid),
 			AllToAll(80, sigmoid),
-			AllToAll(controllers[index]->getData().numberOfLabel, sigmoid)
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
 		};
 		controllers[index]->inputs.learningRate = 0.01f;
 		controllers[index]->inputs.momentum = 0.85;
 		break;
 
 	case indexCurrencyRates:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getData().sizeOfData;
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
 		{
 			AllToAll(250, sigmoid),
 			AllToAll(60, sigmoid),
-			AllToAll(controllers[index]->getData().numberOfLabel, snn::tanh)
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, snn::tanh)
 		};
 		controllers[index]->inputs.learningRate = 0.003f;
 		controllers[index]->inputs.momentum = 0.0f;
@@ -91,7 +90,7 @@ Controller* DataManager::getController(int index)
 		switch (index)
 		{
 		case indexMNIST:
-			controllers[index] = new Controller(*new MNIST());
+			controllers[index] = new Controller(*new Mnist());
 			break;
 
 		case indexIris:
@@ -107,7 +106,7 @@ Controller* DataManager::getController(int index)
 			break;
 
 		case indexCIFAR_10:
-			controllers[index] = new Controller(*new CIFAR_10());
+			controllers[index] = new Controller(*new Cifar10());
 			break;
 
 		default:

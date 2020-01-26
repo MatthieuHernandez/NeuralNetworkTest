@@ -1,34 +1,19 @@
 #include "Controller.h"
-#include "MNIST.h"
 #include <QDateTime>
-using namespace std;
+
 using namespace snn;
 
-Controller::Controller(DataSet& data)
+Controller::Controller(Dataset& data)
 {
-	this->data = unique_ptr<DataSet>(&data);
-	this->initializeData();
-}
-
-void Controller::initializeData()
-{
-	try
-	{
-		this->data->loadData();
-	}
-	catch (exception e)
-	{
-		auto message = static_cast<string>("Reading data error : ") + e.what();
-		exception(message.c_str());
-	}
+	this->data = unique_ptr<Dataset>(&data);
 }
 
 void Controller::resetOutput()
 {
-	this->neuralNetwork->trainingStop();
+	this->neuralNetwork->stopTraining();
 }
 
-void Controller::DeleteNeuralNetwork()
+void Controller::deleteNeuralNetwork()
 {
 	this->neuralNetwork.reset(nullptr);
 }
@@ -60,7 +45,7 @@ StraightforwardNeuralNetwork& Controller::getNeuralNetwork() const
 	return *neuralNetwork;
 }
 
-DataSet& Controller::getData() const
+Dataset& Controller::getDataset() const
 {
 	return *data;
 }

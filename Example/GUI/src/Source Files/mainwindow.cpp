@@ -1,9 +1,9 @@
+#define _HAS_STD_BYTE 0
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>
 #include "DataManager.h"
 
-using namespace std;
 using namespace snn;
 
 MainWindow::MainWindow(QWidget* parent)
@@ -63,7 +63,7 @@ void MainWindow::startLoadingLogo()
 
 void MainWindow::stopCompute()
 {
-	this->currentController->getNeuralNetwork().trainingStop();
+	this->currentController->getNeuralNetwork().stopTraining();
 	this->computeIsStop = true;
 	this->loadingLogo->stop();
 	this->updateTimer->stop();
@@ -191,7 +191,7 @@ void MainWindow::on_pushButtonCompute_clicked()
 		this->startLoadingLogo();
 		this->enableModification(false);
 
-		currentController->getNeuralNetwork().trainingStart(*currentController->getData().data);
+		currentController->getNeuralNetwork().startTraining(*currentController->getDataset().data);
 
 		updateTimer->start();
 		timerForTimeEdit->start();
@@ -221,7 +221,7 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 		}
 		this->startLoadingLogo();
 
-		currentController->getNeuralNetwork().evaluate(*currentController->getData().data);
+		currentController->getNeuralNetwork().evaluate(*currentController->getDataset().data);
 
 		updateTimer->start(60);
 		timerForTimeEdit->start();
@@ -333,7 +333,7 @@ void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 {
 	currentController->getNeuralNetwork().setNumberOfTrainingsBetweenTwoEvaluations(value);
 
-	if (ui->spinBoxTrainingRating->value() == currentController->getData().data->sets[training].size)
+	if (ui->spinBoxTrainingRating->value() == currentController->getDataset().data->sets[training].size)
 		ui->labelMax->show();
 	else
 		ui->labelMax->hide();
@@ -359,7 +359,7 @@ void MainWindow::on_pushButtonReset_clicked()
 	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
 	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 	this->refreshClusteringRate();
-	this->currentController->DeleteNeuralNetwork();
+	this->currentController->deleteNeuralNetwork();
 	this->on_pushButtonResetGraph_clicked();
 }
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "DataSet.h"
+#include "../tests/dataset_tests/Dataset.hpp"
 #include <string>
 #include <QDateTime>
 #include <vector>
@@ -15,7 +15,7 @@ enum timeUnit
 	second
 };
 
-class CurrencyRatesEurToUsd : public DataSet
+class CurrencyRatesEurToUsd : public Dataset
 {
 private:
 
@@ -34,7 +34,7 @@ private:
 	void createData(std::vector<std::vector<float>>& inputs, std::vector<std::vector<float>>& labels);
 	bool isAGap(const int index);
 	bool isWrongDate(const int index);
-
+	void loadData() override;
 
 public:
 
@@ -49,7 +49,6 @@ public:
 
 	CurrencyRatesEurToUsd();
 
-	void loadData() override;
 	void loadCSV(int year);
 
 	void createTrainingData(const int index, std::vector<std::vector<float>>& inputs);

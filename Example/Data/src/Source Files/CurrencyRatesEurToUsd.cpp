@@ -1,8 +1,8 @@
 #include "CurrencyRatesEurToUsd.h"
 #include <string>
 #include <fstream>
-#include "data/DataForRegression.h"
-#include "data/DataForClassification.h"
+#include "data/DataForRegression.hpp"
+#include "data/DataForClassification.hpp"
 
 using namespace std;
 using namespace snn;
@@ -10,9 +10,9 @@ using namespace snn;
 CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 {
 	this->dateTimeTemp = nullptr;
-	this->sizeOfData = numberOfInputRates + dateTimeSize;
-	this->numberOfLabel = 1;
-	this->dataTemp.resize(this->sizeOfData);
+	this->data->sizeOfData = numberOfInputRates + dateTimeSize;
+	this->data->numberOfLabel = 1;
+	this->dataTemp.resize(this->data->sizeOfData);
 	this->outputTemp.resize(1);
 }
 
@@ -23,8 +23,8 @@ void CurrencyRatesEurToUsd::loadData()
 
 	this->loadCSV(2016);
 	this->createData(inputs, labels);
-	//this->unshuffle();	
-	this->data = new DataForClassification(inputs, labels, 0.0f);
+	//this->unshuffle();
+	this->data = make_unique<DataForClassification>(inputs, labels, 0.0f);
 }
 
 void CurrencyRatesEurToUsd::loadCSV(int year)
@@ -72,10 +72,10 @@ void CurrencyRatesEurToUsd::createData(vector<vector<float>>& inputs, vector<vec
 		if(i < numberOfInputRates)
 		 continue;
 
-		this->createTrainingData(i - this->sizeOfTrainingSet, inputs);
+		this->createTrainingData(i - this->data->sets[training].size, inputs);
 		this->createTrainingOutputs(i,labels);
 	}
-	this->sizeOfTrainingSet = static_cast<int>(labels.size());
+	this->data->sets[training].size = static_cast<int>(labels.size());
 }
 
 inline
