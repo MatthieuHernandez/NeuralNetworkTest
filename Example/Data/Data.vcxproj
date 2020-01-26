@@ -104,6 +104,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -136,6 +137,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -159,6 +161,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\CIFAR-10\Cifar10.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Fashion-MNIST\FashionMnist.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Iris\Iris.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\MNIST\Mnist.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Wine\Wine.cpp" />
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp" />
   </ItemGroup>
   <ItemGroup>

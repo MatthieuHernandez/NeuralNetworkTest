@@ -14,6 +14,21 @@
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Wine\Wine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\MNIST\Mnist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Iris\Iris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Fashion-MNIST\FashionMnist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\CIFAR-10\Cifar10.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h">
