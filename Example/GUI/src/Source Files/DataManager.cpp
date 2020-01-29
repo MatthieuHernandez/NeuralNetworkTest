@@ -89,9 +89,6 @@ Controller* DataManager::getController(int index)
 	{
 		switch (index)
 		{
-		case indexMNIST:
-			controllers[index] = new Controller(*new Mnist());
-			break;
 
 		case indexIris:
 			controllers[index] = new Controller(*new Iris());
@@ -99,6 +96,10 @@ Controller* DataManager::getController(int index)
 
 		case indexWine:
 			controllers[index] = new Controller(*new Wine());
+			break;
+
+		case indexMNIST:
+			controllers[index] = new Controller(*new Mnist());
 			break;
 
 		case indexCurrencyRates:
