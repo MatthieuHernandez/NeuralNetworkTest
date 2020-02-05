@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.3
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -364,67 +364,67 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        pushButtonCompute->setText(QCoreApplication::translate("MainWindow", "Compute", nullptr));
         pushButtonResetGraph->setText(QString());
-        tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
-        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
-        label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
-        pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
+        tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QCoreApplication::translate("MainWindow", "Graph of classification rate", nullptr));
+        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Data visualization", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Information :", nullptr));
+        pushButtonConsole->setText(QCoreApplication::translate("MainWindow", "Console", nullptr));
         labelLoading->setText(QString());
-        label->setText(QApplication::translate("MainWindow", "Iteration : ", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Iteration : ", nullptr));
         spinBoxIteration->setSpecialValueText(QString());
-        labelProject->setText(QApplication::translate("MainWindow", "Project :", nullptr));
-        comboBoxData->setItemText(0, QApplication::translate("MainWindow", "Iris", nullptr));
-        comboBoxData->setItemText(1, QApplication::translate("MainWindow", "Wine", nullptr));
-        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "MNIST", nullptr));
-        comboBoxData->setItemText(3, QApplication::translate("MainWindow", "CIFAR-10", nullptr));
-        comboBoxData->setItemText(4, QApplication::translate("MainWindow", "CurrencyRates", nullptr));
+        labelProject->setText(QCoreApplication::translate("MainWindow", "Project :", nullptr));
+        comboBoxData->setItemText(0, QCoreApplication::translate("MainWindow", "Iris", nullptr));
+        comboBoxData->setItemText(1, QCoreApplication::translate("MainWindow", "Wine", nullptr));
+        comboBoxData->setItemText(2, QCoreApplication::translate("MainWindow", "MNIST", nullptr));
+        comboBoxData->setItemText(3, QCoreApplication::translate("MainWindow", "CIFAR-10", nullptr));
+        comboBoxData->setItemText(4, QCoreApplication::translate("MainWindow", "CurrencyRates", nullptr));
 
-        label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
-        labelMax->setText(QApplication::translate("MainWindow", "Max", nullptr));
-        label_6->setText(QApplication::translate("MainWindow", "Timer :", nullptr));
-        label_1->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#0000ff;\">Clustering Rate :</span></p></body></html>", nullptr));
-        timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", nullptr));
-        label_9->setText(QApplication::translate("MainWindow", "/", nullptr));
-        label_8->setText(QApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Count :", nullptr));
+        labelMax->setText(QCoreApplication::translate("MainWindow", "Max", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Timer :", nullptr));
+        label_1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#0000ff;\">Clustering Rate :</span></p></body></html>", nullptr));
+        timeEdit->setDisplayFormat(QCoreApplication::translate("MainWindow", "HH:mm:ss", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "/", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
         doubleSpinBoxCR->setSpecialValueText(QString());
         doubleSpinBoxCR->setPrefix(QString());
-        doubleSpinBoxCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        doubleSpinBoxCR->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxCRM->setSpecialValueText(QString());
-        doubleSpinBoxCRM->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
-        pushButtonEvaluate->setText(QApplication::translate("MainWindow", "Evaluate", nullptr));
-        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
-        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
-        pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
-        checkBoxAutoSave->setText(QApplication::translate("MainWindow", "Auto save", nullptr));
-        label_11->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Weighted CR :</span></p></body></html>", nullptr));
-        label_12->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#00ff00;\">F1 Score :</span></p></body></html>", nullptr));
+        doubleSpinBoxCRM->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
+        pushButtonEvaluate->setText(QCoreApplication::translate("MainWindow", "Evaluate", nullptr));
+        pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load...", nullptr));
+        pushButtonSave->setText(QCoreApplication::translate("MainWindow", "Save...", nullptr));
+        pushButtonReset->setText(QCoreApplication::translate("MainWindow", "Reset", nullptr));
+        checkBoxAutoSave->setText(QCoreApplication::translate("MainWindow", "Auto save", nullptr));
+        label_11->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Weighted CR :</span></p></body></html>", nullptr));
+        label_12->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#00ff00;\">F1 Score :</span></p></body></html>", nullptr));
         doubleSpinBoxWCR->setSpecialValueText(QString());
         doubleSpinBoxWCR->setPrefix(QString());
-        doubleSpinBoxWCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        doubleSpinBoxWCR->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxF1S->setSpecialValueText(QString());
         doubleSpinBoxF1S->setPrefix(QString());
-        doubleSpinBoxF1S->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
-        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
+        doubleSpinBoxF1S->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
+        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
-        label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
-        comboBoxLayer->setItemText(0, QApplication::translate("MainWindow", "Loading", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Layer  :", nullptr));
+        comboBoxLayer->setItemText(0, QCoreApplication::translate("MainWindow", "Loading", nullptr));
 
-        labelNeurons->setText(QApplication::translate("MainWindow", "Neurons :", nullptr));
-        comboBoxActivationFunction->setItemText(0, QApplication::translate("MainWindow", "Sigmoid", nullptr));
-        comboBoxActivationFunction->setItemText(1, QApplication::translate("MainWindow", "Improved Sigmoid", nullptr));
-        comboBoxActivationFunction->setItemText(2, QApplication::translate("MainWindow", "TanH", nullptr));
-        comboBoxActivationFunction->setItemText(3, QApplication::translate("MainWindow", "ReLU", nullptr));
-        comboBoxActivationFunction->setItemText(4, QApplication::translate("MainWindow", "Gaussian", nullptr));
+        labelNeurons->setText(QCoreApplication::translate("MainWindow", "Neurons :", nullptr));
+        comboBoxActivationFunction->setItemText(0, QCoreApplication::translate("MainWindow", "Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(1, QCoreApplication::translate("MainWindow", "Improved Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(2, QCoreApplication::translate("MainWindow", "TanH", nullptr));
+        comboBoxActivationFunction->setItemText(3, QCoreApplication::translate("MainWindow", "ReLU", nullptr));
+        comboBoxActivationFunction->setItemText(4, QCoreApplication::translate("MainWindow", "Gaussian", nullptr));
 
         pushButtonAddLayer->setText(QString());
-        label_4->setText(QApplication::translate("MainWindow", "Activation\n"
+        label_4->setText(QCoreApplication::translate("MainWindow", "Activation\n"
 "function :", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
-        label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
-        checkBoxOpenMP->setText(QApplication::translate("MainWindow", "OpenMP multithreading", nullptr));
-        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Learning rate :", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Momentum :", nullptr));
+        checkBoxOpenMP->setText(QCoreApplication::translate("MainWindow", "OpenMP multithreading", nullptr));
+        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 
 };

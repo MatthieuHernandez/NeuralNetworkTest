@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Cifar10Visualization.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.3
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -32,7 +32,7 @@ public:
 
     void retranslateUi(QWidget *Cifar10Visualization)
     {
-        Cifar10Visualization->setWindowTitle(QApplication::translate("Cifar10Visualization", "Cifar10Visualization", nullptr));
+        Cifar10Visualization->setWindowTitle(QCoreApplication::translate("Cifar10Visualization", "Cifar10Visualization", nullptr));
     } // retranslateUi
 
 };

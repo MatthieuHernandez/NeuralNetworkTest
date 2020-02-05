@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ImageVisualizationWidget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.3
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -58,10 +58,10 @@ public:
 
     void retranslateUi(QWidget *ImageVisualizationWidget)
     {
-        ImageVisualizationWidget->setWindowTitle(QApplication::translate("ImageVisualizationWidget", "ImageVisualizationWidget", nullptr));
-        labelImage->setText(QApplication::translate("ImageVisualizationWidget", "Label :", nullptr));
-        comboBoxSet->setItemText(0, QApplication::translate("ImageVisualizationWidget", "Testing", nullptr));
-        comboBoxSet->setItemText(1, QApplication::translate("ImageVisualizationWidget", "Training", nullptr));
+        ImageVisualizationWidget->setWindowTitle(QCoreApplication::translate("ImageVisualizationWidget", "ImageVisualizationWidget", nullptr));
+        labelImage->setText(QCoreApplication::translate("ImageVisualizationWidget", "Label :", nullptr));
+        comboBoxSet->setItemText(0, QCoreApplication::translate("ImageVisualizationWidget", "Testing", nullptr));
+        comboBoxSet->setItemText(1, QCoreApplication::translate("ImageVisualizationWidget", "Training", nullptr));
 
         Image->setText(QString());
     } // retranslateUi

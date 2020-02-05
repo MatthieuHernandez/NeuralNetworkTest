@@ -1,4 +1,3 @@
-#define _HAS_STD_BYTE 0
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qtconcurrentrun.h>

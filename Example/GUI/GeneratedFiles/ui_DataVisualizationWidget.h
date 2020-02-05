@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DataVisualizationWidget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.3
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -127,15 +127,15 @@ public:
 
     void retranslateUi(QWidget *DataVisualizationWidget)
     {
-        DataVisualizationWidget->setWindowTitle(QApplication::translate("DataVisualizationWidget", "DataVisualizationWidget", nullptr));
-        label_5->setText(QApplication::translate("DataVisualizationWidget", "Name of Data Set : ", nullptr));
+        DataVisualizationWidget->setWindowTitle(QCoreApplication::translate("DataVisualizationWidget", "DataVisualizationWidget", nullptr));
+        label_5->setText(QCoreApplication::translate("DataVisualizationWidget", "Name of Data Set : ", nullptr));
         labelName->setText(QString());
-        label->setText(QApplication::translate("DataVisualizationWidget", "Size of Data :", nullptr));
+        label->setText(QCoreApplication::translate("DataVisualizationWidget", "Size of Data :", nullptr));
         labelDataSize->setText(QString());
-        label_2->setText(QApplication::translate("DataVisualizationWidget", "Number of Label :", nullptr));
+        label_2->setText(QCoreApplication::translate("DataVisualizationWidget", "Number of Label :", nullptr));
         labelNumberOfLabel->setText(QString());
-        label_3->setText(QApplication::translate("DataVisualizationWidget", "Size of Trainig Set :", nullptr));
-        label_10->setText(QApplication::translate("DataVisualizationWidget", "Size of Testing Set :", nullptr));
+        label_3->setText(QCoreApplication::translate("DataVisualizationWidget", "Size of Trainig Set :", nullptr));
+        label_10->setText(QCoreApplication::translate("DataVisualizationWidget", "Size of Testing Set :", nullptr));
         labelTestingSetSize->setText(QString());
         label_12->setText(QString());
         labelTrainingSetSize->setText(QString());
