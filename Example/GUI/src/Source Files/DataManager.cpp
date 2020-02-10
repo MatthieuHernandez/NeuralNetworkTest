@@ -91,15 +91,15 @@ Controller* DataManager::getController(int index)
 		{
 
 		case indexIris:
-			controllers[index] = new Controller(*new Iris());
+			controllers[index] = new Controller(*new Iris("../../../Datasets-for-Machine-Learning/Iris"));
 			break;
 
 		case indexWine:
-			controllers[index] = new Controller(*new Wine());
+			controllers[index] = new Controller(*new Wine("../../../Datasets-for-Machine-Learning/Wine"));
 			break;
 
 		case indexMNIST:
-			controllers[index] = new Controller(*new Mnist());
+			controllers[index] = new Controller(*new Mnist("../../../Datasets-for-Machine-Learning/MNIST"));
 			break;
 
 		case indexCurrencyRates:
@@ -107,7 +107,7 @@ Controller* DataManager::getController(int index)
 			break;
 
 		case indexCIFAR_10:
-			controllers[index] = new Controller(*new Cifar10());
+			controllers[index] = new Controller(*new Cifar10("../../../Datasets-for-Machine-Learning/CIFAR-10"));
 			break;
 
 		default:

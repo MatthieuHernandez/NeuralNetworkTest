@@ -16,7 +16,7 @@ CurrencyRatesEurToUsd::CurrencyRatesEurToUsd()
 	this->outputTemp.resize(1);
 }
 
-void CurrencyRatesEurToUsd::loadData()
+void CurrencyRatesEurToUsd::loadData(string folderPth = nullptr)
 {
 	vector<vector<float>> inputs;
 	vector<vector<float>> labels;

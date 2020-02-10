@@ -1,7 +1,4 @@
-#define _HAS_STD_BYTE 0
 #pragma once
-#include <QMainWindow>
-#include <QMovie>
 #include <vector>
 #include <qfuturewatcher.h>
 #include "Controller.h"

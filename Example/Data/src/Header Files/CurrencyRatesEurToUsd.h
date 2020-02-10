@@ -34,7 +34,7 @@ private:
 	void createData(std::vector<std::vector<float>>& inputs, std::vector<std::vector<float>>& labels);
 	bool isAGap(const int index);
 	bool isWrongDate(const int index);
-	void loadData() override;
+	void loadData(std::string folderPath) override;
 
 public:
 
