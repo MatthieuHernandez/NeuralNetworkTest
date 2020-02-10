@@ -75,13 +75,10 @@ void MainWindow::stopCompute()
 void MainWindow::endOfLoadingDataSet()
 {
 	if (firstLoading)
-	{
 		firstLoading = false;
-	}
 
 	this->initializeButtons();
 	this->on_pushButtonResetGraph_clicked();
-	ui->pushButtonCompute->setEnabled(true);
 
 	const auto widget = this->manager.getWidget(indexController);
 	ui->layout->itemAt(0)->widget()->hide();
@@ -91,6 +88,7 @@ void MainWindow::endOfLoadingDataSet()
 	ui->tabWidgetNeuralNetwork->setEnabled(true);
 	this->enableModification(true);
 	this->write("data loaded");
+	ui->pushButtonCompute->setEnabled(true);
 }
 
 void MainWindow::initializeButtons()
@@ -341,6 +339,7 @@ void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
 	this->write("loading ...");
+	ui->pushButtonCompute->setEnabled(false);
 	indexController = index;
 	this->enableModification(false);
 	ui->spinBoxTrainingRating->setEnabled(true);
