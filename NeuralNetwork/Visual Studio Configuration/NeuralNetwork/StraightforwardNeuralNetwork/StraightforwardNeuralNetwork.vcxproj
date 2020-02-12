@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{06DC00D5-263D-495A-936C-1E12FFEF9096}</ProjectGuid>
+    <RootNamespace>StraightforwardNeuralNetwork</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>StraightforwardNeuralNetwork_old</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0;$(IncludePath)</IncludePath>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0;$(IncludePath)</IncludePath>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>true</EnablePREfast>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
+      <SDLCheck>true</SDLCheck>
+      <BasicRuntimeChecks />
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\libboost_serialization-vc141-mt-x64-1_69.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>true</EnablePREfast>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_68_0\lib\libboost_serialization-vc141-mt-gd-x64-1_68.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>true</EnablePREfast>
+      <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <BasicRuntimeChecks />
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\bin.v2\libs\serialization\build\msvc-14.1\release\address-model-64\threading-multi\libboost_serialization-vc141-mt-x64-1_69.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>true</EnablePREfast>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_68_0\lib\libboost_serialization-vc141-mt-gd-x64-1_68.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\ClassificationExample.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\RegressionExample.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\MultipleClassificationExemple.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\layer.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetworkGettersAndSetters.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetworkLearning.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardOption.cpp" />
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\layer.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\gaussian.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\improvedSigmoid.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\ReLU.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\sigmoid.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\tanh.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardOption.h" />
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

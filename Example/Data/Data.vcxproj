@@ -22,35 +22,35 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{8838F0CC-89CE-403C-AB4B-5EEDAAF65C90}</ProjectGuid>
     <RootNamespace>Data</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -82,14 +82,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <SDLCheck>
+      </SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;$(ProjectDir)..\..\..\StraightforwardNeuralNetwork\src;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
@@ -98,11 +101,18 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,19 +120,29 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;$(ProjectDir)..\..\..\StraightforwardNeuralNetwork\src;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;$(ProjectDir)..\..\..\StraightforwardNeuralNetwork\src;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -132,7 +152,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src\Header Files;$(ProjectDir)\src\Source Files;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;$(ProjectDir)..\..\..\StraightforwardNeuralNetwork\src;%(AdditionalIncludeDirectories)$(QTDIR)\include;$(QTDIR)\include;$(QTDIR)\include\QtCore</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -140,25 +161,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source FIles\CIFAR_10.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\CIFAR-10\Cifar10.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Fashion-MNIST\FashionMnist.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Iris\Iris.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\MNIST\Mnist.cpp" />
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Wine\Wine.cpp" />
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp" />
-    <ClCompile Include="src\Source FIles\Data.cpp" />
-    <ClCompile Include="src\Source Files\DataForClassification.cpp" />
-    <ClCompile Include="src\Source Files\DataForRegression.cpp" />
-    <ClCompile Include="src\Source Files\Iris.cpp" />
-    <ClCompile Include="src\Source FIles\MNIST.cpp" />
-    <ClCompile Include="src\Source Files\Wine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataException.h" />
-    <ClInclude Include="src\Header Files\CIFAR_10.h" />
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h" />
-    <ClInclude Include="src\Header Files\Data.h" />
-    <ClInclude Include="src\Header Files\DataForClassification.h" />
-    <ClInclude Include="src\Header Files\DataForRegression.h" />
-    <ClInclude Include="src\Header Files\Iris.h" />
-    <ClInclude Include="src\Header Files\MNIST.h" />
-    <ClInclude Include="src\Header Files\Wine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

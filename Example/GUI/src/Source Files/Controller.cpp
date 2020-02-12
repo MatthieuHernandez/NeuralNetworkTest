@@ -1,107 +1,31 @@
 #include "Controller.h"
-#include "MNIST.h"
 #include <QDateTime>
 
-using namespace std;
+using namespace snn;
 
-Controller::Controller(Data& data)
+Controller::Controller(Dataset& data)
 {
-	this->data = unique_ptr<Data>(&data);
-	this->initializeData();
-	this->inputs.numberOfTrainbyRating = this->data->sets[training].size;
-}
-
-void Controller::initializeData()
-{
-	try
-	{
-		this->data->loadData();
-	}
-	catch (exception e)
-	{
-		auto message = static_cast<string>("Reading data error : ") + e.what();
-		exception(message.c_str());
-	}
+    this->data = unique_ptr<Dataset>(&data);
 }
 
 void Controller::resetOutput()
 {
-	outputs.clusteringRate = 0.0f;
-	outputs.clusteringRateMax = 0.0f;
-	outputs.currentIndex = 0;
-	outputs.numberOfIteration = 0;
+	this->neuralNetwork->stopTraining();
 }
 
-void Controller::DeleteNeuralNetwork()
+void Controller::deleteNeuralNetwork()
 {
-	this->neuralNetwork.reset(nullptr);
+	this->neuralNetwork.reset();
+}
+
+void Controller::initializeNeuralNetwork(const QString& dataSetName)
+{
+	const auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+	const auto fileName = "./Save/autosave_" + dataSetName + "_" + date;
+	this->inputs.saveFilePath = fileName.toStdString();
+
+	this->neuralNetwork = make_unique<StraightforwardNeuralNetwork>(this->inputs.NumberOfInputs, this->inputs.structure);
 	this->resetOutput();
-}
-
-void Controller::initializeNeuralNetwork()
-{
-	this->neuralNetwork = make_unique<NeuralNetwork>(this->inputs.structure,
-	                                                 this->inputs.activationFunction,
-	                                                 this->inputs.learningRate,
-	                                                 this->inputs.momentum);
-	this->resetOutput();
-}
-
-
-void Controller::compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName = nullptr)
-{
-	for (outputs.numberOfIteration = 0; !(*stop); outputs.numberOfIteration++)
-	{
-		this->evaluate(stop, *autoSave, autoSaveFileName);
-		emit updateNumberOfIteration();
-		data->shuffle();
-
-		for (outputs.currentIndex = 0; outputs.currentIndex < this->inputs.numberOfTrainbyRating && !(*stop); outputs.
-		     currentIndex++)
-		{
-			neuralNetwork->train(data->getTrainingData(outputs.currentIndex),
-			                     data->getTrainingOutputs(outputs.currentIndex));
-		}
-	}
-}
-
-void Controller::evaluate(const bool* stop, const bool autoSave, const QString& autoSaveFileName)
-{
-	neuralNetwork->startTesting();
-	for (outputs.currentIndex = 0; outputs.currentIndex < data->sets[testing].size; outputs.currentIndex++)
-	{
-		if (*stop)
-			return;
-		if (data->problem == classification)
-		{
-			neuralNetwork->evaluateForClassificationProblem(
-				data->getTestingData(outputs.currentIndex),
-				data->getTestingLabel(outputs.currentIndex));
-		}
-		else
-		{
-			neuralNetwork->evaluateForRegressionProblemSeparateByValue(
-				data->getTestingData(outputs.currentIndex),
-				data->getTestingOutputs(outputs.currentIndex), 0.0f);
-		}
-	}
-	outputs.clusteringRate = neuralNetwork->getGlobalClusteringRate();
-	outputs.weightedClusteringRate = neuralNetwork->getWeightedClusteringRate();
-	outputs.f1Score = neuralNetwork->getF1Score();
-	if (outputs.clusteringRate > outputs.clusteringRateMax)
-	{
-		outputs.clusteringRateMax = outputs.clusteringRate;
-		if (autoSave)
-			this->autoSave(autoSaveFileName);
-	}
-}
-
-void Controller::autoSave(const QString& dataSetName)
-{
-	auto date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
-	auto clusteringRate = QString::number(outputs.clusteringRate);
-	auto fileName = "./Save/autosave_" + dataSetName + "_" + clusteringRate + "_" + date;
-	neuralNetwork->saveAs(fileName.toStdString());
 }
 
 void Controller::save(const QString& fileName)
@@ -111,16 +35,34 @@ void Controller::save(const QString& fileName)
 
 void Controller::load(const QString& fileName)
 {
-	neuralNetwork = make_unique<NeuralNetwork>(NeuralNetwork::loadFrom(fileName.toStdString()));
+	neuralNetwork = make_unique<StraightforwardNeuralNetwork>(
+		StraightforwardNeuralNetwork::loadFrom(fileName.toStdString()));
 	this->resetOutput();
 }
 
-NeuralNetwork& Controller::getNeuralNetwork() const
+StraightforwardNeuralNetwork& Controller::getNeuralNetwork() const
 {
 	return *neuralNetwork;
 }
 
-Data& Controller::getData() const
+Dataset& Controller::getDataset() const
 {
 	return *data;
+}
+
+void Controller::addLayer(int index)
+{
+	const auto it1 = this->inputs.structure.begin();
+	const auto value = this->inputs.structure[index];
+	this->inputs.structure.insert(it1 + index, value);
+}
+
+void Controller::removeLayer(int index)
+{
+	if (index < this->inputs.structure.size() - 1)
+	{
+		
+		const auto it1 = this->inputs.structure.begin();
+		this->inputs.structure.erase(it1 + index);
+	}
 }

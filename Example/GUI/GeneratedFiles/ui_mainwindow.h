@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.1
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -9,16 +9,15 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <QtCharts>
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -27,7 +26,6 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
-#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -38,7 +36,7 @@ public:
     QPushButton *pushButtonCompute;
     QTabWidget *tabWidgetData;
     QWidget *tab;
-    QCustomPlot *customPlot;
+    QChartView *chartView;
     QPushButton *pushButtonResetGraph;
     QWidget *tab_2;
     QWidget *gridLayoutWidget;
@@ -87,84 +85,85 @@ public:
     QLabel *label_3;
     QLabel *label_10;
     QDoubleSpinBox *spinBoxMomentum;
+    QCheckBox *checkBoxOpenMP;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(851, 500);
+            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+        MainWindow->resize(850, 500);
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setMinimumSize(QSize(0, 0));
         pushButtonCompute = new QPushButton(centralWidget);
-        pushButtonCompute->setObjectName(QStringLiteral("pushButtonCompute"));
+        pushButtonCompute->setObjectName(QString::fromUtf8("pushButtonCompute"));
         pushButtonCompute->setGeometry(QRect(720, 460, 70, 22));
         tabWidgetData = new QTabWidget(centralWidget);
-        tabWidgetData->setObjectName(QStringLiteral("tabWidgetData"));
+        tabWidgetData->setObjectName(QString::fromUtf8("tabWidgetData"));
         tabWidgetData->setGeometry(QRect(180, 1, 670, 440));
         tab = new QWidget();
-        tab->setObjectName(QStringLiteral("tab"));
-        customPlot = new QCustomPlot(tab);
-        customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(0, -1, 665, 420));
-        pushButtonResetGraph = new QPushButton(customPlot);
-        pushButtonResetGraph->setObjectName(QStringLiteral("pushButtonResetGraph"));
+        tab->setObjectName(QString::fromUtf8("tab"));
+        chartView = new QChartView(tab);
+        chartView->setObjectName(QString::fromUtf8("chartView"));
+        chartView->setGeometry(QRect(0, 0, 664, 414));
+        pushButtonResetGraph = new QPushButton(chartView);
+        pushButtonResetGraph->setObjectName(QString::fromUtf8("pushButtonResetGraph"));
         pushButtonResetGraph->setEnabled(false);
-        pushButtonResetGraph->setGeometry(QRect(643, 0, 22, 22));
+        pushButtonResetGraph->setGeometry(QRect(642, 0, 22, 22));
         QIcon icon;
-        icon.addFile(QStringLiteral("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("Extra Files/cancel-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButtonResetGraph->setIcon(icon);
         pushButtonResetGraph->setCheckable(false);
         tabWidgetData->addTab(tab, QString());
         tab_2 = new QWidget();
-        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
         gridLayoutWidget = new QWidget(tab_2);
-        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
         gridLayoutWidget->setGeometry(QRect(0, 0, 661, 420));
         layout = new QGridLayout(gridLayoutWidget);
         layout->setSpacing(6);
         layout->setContentsMargins(11, 11, 11, 11);
-        layout->setObjectName(QStringLiteral("layout"));
+        layout->setObjectName(QString::fromUtf8("layout"));
         layout->setContentsMargins(0, 0, 0, 0);
         tabWidgetData->addTab(tab_2, QString());
         lineEditInformation = new QLineEdit(centralWidget);
-        lineEditInformation->setObjectName(QStringLiteral("lineEditInformation"));
+        lineEditInformation->setObjectName(QString::fromUtf8("lineEditInformation"));
         lineEditInformation->setGeometry(QRect(410, 460, 120, 22));
         lineEditInformation->setReadOnly(true);
         label_5 = new QLabel(centralWidget);
-        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(340, 460, 71, 21));
         pushButtonConsole = new QPushButton(centralWidget);
-        pushButtonConsole->setObjectName(QStringLiteral("pushButtonConsole"));
+        pushButtonConsole->setObjectName(QString::fromUtf8("pushButtonConsole"));
         pushButtonConsole->setGeometry(QRect(20, 460, 70, 22));
         labelLoading = new QLabel(centralWidget);
-        labelLoading->setObjectName(QStringLiteral("labelLoading"));
+        labelLoading->setObjectName(QString::fromUtf8("labelLoading"));
         labelLoading->setEnabled(true);
         labelLoading->setGeometry(QRect(798, 449, 40, 40));
         labelLoading->setScaledContents(true);
         label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(180, 450, 51, 21));
         spinBoxIteration = new QSpinBox(centralWidget);
-        spinBoxIteration->setObjectName(QStringLiteral("spinBoxIteration"));
+        spinBoxIteration->setObjectName(QString::fromUtf8("spinBoxIteration"));
         spinBoxIteration->setGeometry(QRect(230, 450, 45, 22));
         spinBoxIteration->setReadOnly(true);
         spinBoxIteration->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxIteration->setProperty("showGroupSeparator", QVariant(true));
         spinBoxIteration->setMaximum(999999);
         tabWidgetNeuralNetwork = new QTabWidget(centralWidget);
-        tabWidgetNeuralNetwork->setObjectName(QStringLiteral("tabWidgetNeuralNetwork"));
+        tabWidgetNeuralNetwork->setObjectName(QString::fromUtf8("tabWidgetNeuralNetwork"));
         tabWidgetNeuralNetwork->setGeometry(QRect(1, 1, 180, 440));
         tabWidgetNeuralNetwork->setTabBarAutoHide(false);
         tab_3 = new QWidget();
-        tab_3->setObjectName(QStringLiteral("tab_3"));
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
         line = new QFrame(tab_3);
-        line->setObjectName(QStringLiteral("line"));
+        line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(0, 20, 181, 41));
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
         labelProject = new QLabel(tab_3);
-        labelProject->setObjectName(QStringLiteral("labelProject"));
+        labelProject->setObjectName(QString::fromUtf8("labelProject"));
         labelProject->setGeometry(QRect(10, 1, 60, 21));
         comboBoxData = new QComboBox(tab_3);
         comboBoxData->addItem(QString());
@@ -172,28 +171,28 @@ public:
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
-        comboBoxData->setObjectName(QStringLiteral("comboBoxData"));
+        comboBoxData->setObjectName(QString::fromUtf8("comboBoxData"));
         comboBoxData->setGeometry(QRect(60, 1, 111, 22));
         label_7 = new QLabel(tab_3);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setGeometry(QRect(10, 100, 51, 21));
         labelMax = new QLabel(tab_3);
-        labelMax->setObjectName(QStringLiteral("labelMax"));
+        labelMax->setObjectName(QString::fromUtf8("labelMax"));
         labelMax->setGeometry(QRect(150, 120, 31, 16));
         QFont font;
         font.setPointSize(6);
         labelMax->setFont(font);
         label_6 = new QLabel(tab_3);
-        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(10, 60, 51, 21));
         label_1 = new QLabel(tab_3);
-        label_1->setObjectName(QStringLiteral("label_1"));
+        label_1->setObjectName(QString::fromUtf8("label_1"));
         label_1->setGeometry(QRect(10, 140, 91, 21));
         QFont font1;
         font1.setKerning(true);
         label_1->setFont(font1);
         spinBoxCount = new QSpinBox(tab_3);
-        spinBoxCount->setObjectName(QStringLiteral("spinBoxCount"));
+        spinBoxCount->setObjectName(QString::fromUtf8("spinBoxCount"));
         spinBoxCount->setGeometry(QRect(50, 100, 50, 22));
         spinBoxCount->setReadOnly(true);
         spinBoxCount->setButtonSymbols(QAbstractSpinBox::NoButtons);
@@ -201,14 +200,14 @@ public:
         spinBoxCount->setMaximum(999999);
         spinBoxCount->setValue(0);
         spinBoxTrainingRating = new QSpinBox(tab_3);
-        spinBoxTrainingRating->setObjectName(QStringLiteral("spinBoxTrainingRating"));
+        spinBoxTrainingRating->setObjectName(QString::fromUtf8("spinBoxTrainingRating"));
         spinBoxTrainingRating->setGeometry(QRect(115, 100, 55, 22));
         spinBoxTrainingRating->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxTrainingRating->setProperty("showGroupSeparator", QVariant(true));
         spinBoxTrainingRating->setMaximum(999999);
         spinBoxTrainingRating->setValue(0);
         timeEdit = new QTimeEdit(tab_3);
-        timeEdit->setObjectName(QStringLiteral("timeEdit"));
+        timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
         timeEdit->setGeometry(QRect(50, 60, 50, 22));
         timeEdit->setWrapping(false);
         timeEdit->setFrame(true);
@@ -221,78 +220,78 @@ public:
         timeEdit->setCalendarPopup(false);
         timeEdit->setTime(QTime(0, 0, 0));
         label_9 = new QLabel(tab_3);
-        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(105, 100, 16, 21));
         label_8 = new QLabel(tab_3);
-        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(10, 230, 111, 21));
         doubleSpinBoxCR = new QDoubleSpinBox(tab_3);
-        doubleSpinBoxCR->setObjectName(QStringLiteral("doubleSpinBoxCR"));
+        doubleSpinBoxCR->setObjectName(QString::fromUtf8("doubleSpinBoxCR"));
         doubleSpinBoxCR->setGeometry(QRect(120, 140, 50, 22));
         doubleSpinBoxCR->setWrapping(false);
         doubleSpinBoxCR->setFrame(true);
         doubleSpinBoxCR->setReadOnly(true);
         doubleSpinBoxCR->setButtonSymbols(QAbstractSpinBox::NoButtons);
         doubleSpinBoxCR->setDecimals(3);
-        doubleSpinBoxCR->setMaximum(100);
+        doubleSpinBoxCR->setMaximum(100.000000000000000);
         doubleSpinBoxCRM = new QDoubleSpinBox(tab_3);
-        doubleSpinBoxCRM->setObjectName(QStringLiteral("doubleSpinBoxCRM"));
+        doubleSpinBoxCRM->setObjectName(QString::fromUtf8("doubleSpinBoxCRM"));
         doubleSpinBoxCRM->setGeometry(QRect(120, 230, 50, 22));
         doubleSpinBoxCRM->setButtonSymbols(QAbstractSpinBox::NoButtons);
         doubleSpinBoxCRM->setDecimals(3);
-        doubleSpinBoxCRM->setMaximum(100);
-        doubleSpinBoxCRM->setValue(0);
+        doubleSpinBoxCRM->setMaximum(100.000000000000000);
+        doubleSpinBoxCRM->setValue(0.000000000000000);
         pushButtonEvaluate = new QPushButton(tab_3);
-        pushButtonEvaluate->setObjectName(QStringLiteral("pushButtonEvaluate"));
+        pushButtonEvaluate->setObjectName(QString::fromUtf8("pushButtonEvaluate"));
         pushButtonEvaluate->setGeometry(QRect(0, 390, 70, 22));
         pushButtonLoad = new QPushButton(tab_3);
-        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setObjectName(QString::fromUtf8("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(100, 330, 70, 22));
         pushButtonSave = new QPushButton(tab_3);
-        pushButtonSave->setObjectName(QStringLiteral("pushButtonSave"));
+        pushButtonSave->setObjectName(QString::fromUtf8("pushButtonSave"));
         pushButtonSave->setGeometry(QRect(100, 360, 70, 22));
         pushButtonReset = new QPushButton(tab_3);
-        pushButtonReset->setObjectName(QStringLiteral("pushButtonReset"));
+        pushButtonReset->setObjectName(QString::fromUtf8("pushButtonReset"));
         pushButtonReset->setGeometry(QRect(100, 300, 70, 22));
         checkBoxAutoSave = new QCheckBox(tab_3);
-        checkBoxAutoSave->setObjectName(QStringLiteral("checkBoxAutoSave"));
+        checkBoxAutoSave->setObjectName(QString::fromUtf8("checkBoxAutoSave"));
         checkBoxAutoSave->setGeometry(QRect(100, 390, 70, 22));
         label_11 = new QLabel(tab_3);
-        label_11->setObjectName(QStringLiteral("label_11"));
+        label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(10, 170, 131, 21));
         label_12 = new QLabel(tab_3);
-        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setGeometry(QRect(10, 200, 91, 21));
         doubleSpinBoxWCR = new QDoubleSpinBox(tab_3);
-        doubleSpinBoxWCR->setObjectName(QStringLiteral("doubleSpinBoxWCR"));
+        doubleSpinBoxWCR->setObjectName(QString::fromUtf8("doubleSpinBoxWCR"));
         doubleSpinBoxWCR->setGeometry(QRect(120, 170, 50, 22));
         doubleSpinBoxWCR->setWrapping(false);
         doubleSpinBoxWCR->setFrame(true);
         doubleSpinBoxWCR->setReadOnly(true);
         doubleSpinBoxWCR->setButtonSymbols(QAbstractSpinBox::NoButtons);
         doubleSpinBoxWCR->setDecimals(3);
-        doubleSpinBoxWCR->setMaximum(100);
+        doubleSpinBoxWCR->setMaximum(100.000000000000000);
         doubleSpinBoxF1S = new QDoubleSpinBox(tab_3);
-        doubleSpinBoxF1S->setObjectName(QStringLiteral("doubleSpinBoxF1S"));
+        doubleSpinBoxF1S->setObjectName(QString::fromUtf8("doubleSpinBoxF1S"));
         doubleSpinBoxF1S->setGeometry(QRect(120, 200, 50, 22));
         doubleSpinBoxF1S->setWrapping(false);
         doubleSpinBoxF1S->setFrame(true);
         doubleSpinBoxF1S->setReadOnly(true);
         doubleSpinBoxF1S->setButtonSymbols(QAbstractSpinBox::NoButtons);
         doubleSpinBoxF1S->setDecimals(3);
-        doubleSpinBoxF1S->setMaximum(100);
+        doubleSpinBoxF1S->setMaximum(100.000000000000000);
         tabWidgetNeuralNetwork->addTab(tab_3, QString());
         tab_4 = new QWidget();
-        tab_4->setObjectName(QStringLiteral("tab_4"));
+        tab_4->setObjectName(QString::fromUtf8("tab_4"));
         pushButtonRemoveLayer = new QPushButton(tab_4);
-        pushButtonRemoveLayer->setObjectName(QStringLiteral("pushButtonRemoveLayer"));
+        pushButtonRemoveLayer->setObjectName(QString::fromUtf8("pushButtonRemoveLayer"));
         pushButtonRemoveLayer->setGeometry(QRect(150, 10, 22, 22));
         pushButtonRemoveLayer->setIcon(icon);
         label_2 = new QLabel(tab_4);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(10, 10, 41, 21));
         spinBoxNeurons = new QSpinBox(tab_4);
-        spinBoxNeurons->setObjectName(QStringLiteral("spinBoxNeurons"));
+        spinBoxNeurons->setObjectName(QString::fromUtf8("spinBoxNeurons"));
         spinBoxNeurons->setGeometry(QRect(60, 50, 50, 22));
         spinBoxNeurons->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         spinBoxNeurons->setMaximum(20000);
@@ -300,10 +299,10 @@ public:
         spinBoxNeurons->setDisplayIntegerBase(10);
         comboBoxLayer = new QComboBox(tab_4);
         comboBoxLayer->addItem(QString());
-        comboBoxLayer->setObjectName(QStringLiteral("comboBoxLayer"));
+        comboBoxLayer->setObjectName(QString::fromUtf8("comboBoxLayer"));
         comboBoxLayer->setGeometry(QRect(60, 10, 61, 22));
         labelNeurons = new QLabel(tab_4);
-        labelNeurons->setObjectName(QStringLiteral("labelNeurons"));
+        labelNeurons->setObjectName(QString::fromUtf8("labelNeurons"));
         labelNeurons->setGeometry(QRect(10, 50, 47, 21));
         comboBoxActivationFunction = new QComboBox(tab_4);
         comboBoxActivationFunction->addItem(QString());
@@ -311,35 +310,44 @@ public:
         comboBoxActivationFunction->addItem(QString());
         comboBoxActivationFunction->addItem(QString());
         comboBoxActivationFunction->addItem(QString());
-        comboBoxActivationFunction->setObjectName(QStringLiteral("comboBoxActivationFunction"));
+        comboBoxActivationFunction->setObjectName(QString::fromUtf8("comboBoxActivationFunction"));
         comboBoxActivationFunction->setGeometry(QRect(70, 90, 101, 22));
         pushButtonAddLayer = new QPushButton(tab_4);
-        pushButtonAddLayer->setObjectName(QStringLiteral("pushButtonAddLayer"));
+        pushButtonAddLayer->setObjectName(QString::fromUtf8("pushButtonAddLayer"));
         pushButtonAddLayer->setGeometry(QRect(125, 10, 22, 22));
         QIcon icon1;
-        icon1.addFile(QStringLiteral("Extra Files/add-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8("Extra Files/add-circle-20.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButtonAddLayer->setIcon(icon1);
         label_4 = new QLabel(tab_4);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(10, 80, 51, 31));
         spinBoxLearningRate = new QDoubleSpinBox(tab_4);
-        spinBoxLearningRate->setObjectName(QStringLiteral("spinBoxLearningRate"));
+        spinBoxLearningRate->setObjectName(QString::fromUtf8("spinBoxLearningRate"));
         spinBoxLearningRate->setGeometry(QRect(90, 130, 55, 22));
         spinBoxLearningRate->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxLearningRate->setDecimals(6);
-        spinBoxLearningRate->setMaximum(100);
+        spinBoxLearningRate->setMaximum(100.000000000000000);
         label_3 = new QLabel(tab_4);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(10, 130, 71, 21));
         label_10 = new QLabel(tab_4);
-        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setGeometry(QRect(10, 170, 71, 21));
         spinBoxMomentum = new QDoubleSpinBox(tab_4);
-        spinBoxMomentum->setObjectName(QStringLiteral("spinBoxMomentum"));
+        spinBoxMomentum->setObjectName(QString::fromUtf8("spinBoxMomentum"));
         spinBoxMomentum->setGeometry(QRect(90, 170, 55, 22));
         spinBoxMomentum->setButtonSymbols(QAbstractSpinBox::NoButtons);
         spinBoxMomentum->setDecimals(6);
-        spinBoxMomentum->setMaximum(100);
+        spinBoxMomentum->setMaximum(100.000000000000000);
+        checkBoxOpenMP = new QCheckBox(tab_4);
+        checkBoxOpenMP->setObjectName(QString::fromUtf8("checkBoxOpenMP"));
+        checkBoxOpenMP->setGeometry(QRect(10, 210, 161, 21));
+        QFont font2;
+        font2.setStrikeOut(false);
+        font2.setKerning(true);
+        checkBoxOpenMP->setFont(font2);
+        checkBoxOpenMP->setChecked(true);
+        checkBoxOpenMP->setTristate(false);
         tabWidgetNeuralNetwork->addTab(tab_4, QString());
         MainWindow->setCentralWidget(centralWidget);
 
@@ -356,66 +364,67 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButtonCompute->setText(QApplication::translate("MainWindow", "Compute", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        pushButtonCompute->setText(QCoreApplication::translate("MainWindow", "Compute", nullptr));
         pushButtonResetGraph->setText(QString());
-        tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QApplication::translate("MainWindow", "Graph of classification rate", nullptr));
-        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QApplication::translate("MainWindow", "Data visualization", nullptr));
-        label_5->setText(QApplication::translate("MainWindow", "Information :", nullptr));
-        pushButtonConsole->setText(QApplication::translate("MainWindow", "Console", nullptr));
+        tabWidgetData->setTabText(tabWidgetData->indexOf(tab), QCoreApplication::translate("MainWindow", "Graph of classification rate", nullptr));
+        tabWidgetData->setTabText(tabWidgetData->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Data visualization", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Information :", nullptr));
+        pushButtonConsole->setText(QCoreApplication::translate("MainWindow", "Console", nullptr));
         labelLoading->setText(QString());
-        label->setText(QApplication::translate("MainWindow", "Iteration : ", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Iteration : ", nullptr));
         spinBoxIteration->setSpecialValueText(QString());
-        labelProject->setText(QApplication::translate("MainWindow", "Project :", nullptr));
-        comboBoxData->setItemText(0, QApplication::translate("MainWindow", "Iris", nullptr));
-        comboBoxData->setItemText(1, QApplication::translate("MainWindow", "Wine", nullptr));
-        comboBoxData->setItemText(2, QApplication::translate("MainWindow", "MNIST", nullptr));
-        comboBoxData->setItemText(3, QApplication::translate("MainWindow", "CIFAR-10", nullptr));
-        comboBoxData->setItemText(4, QApplication::translate("MainWindow", "CurrencyRates", nullptr));
+        labelProject->setText(QCoreApplication::translate("MainWindow", "Project :", nullptr));
+        comboBoxData->setItemText(0, QCoreApplication::translate("MainWindow", "Iris", nullptr));
+        comboBoxData->setItemText(1, QCoreApplication::translate("MainWindow", "Wine", nullptr));
+        comboBoxData->setItemText(2, QCoreApplication::translate("MainWindow", "MNIST", nullptr));
+        comboBoxData->setItemText(3, QCoreApplication::translate("MainWindow", "CIFAR-10", nullptr));
+        comboBoxData->setItemText(4, QCoreApplication::translate("MainWindow", "CurrencyRates", nullptr));
 
-        label_7->setText(QApplication::translate("MainWindow", "Count :", nullptr));
-        labelMax->setText(QApplication::translate("MainWindow", "Max", nullptr));
-        label_6->setText(QApplication::translate("MainWindow", "Timer :", nullptr));
-        label_1->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#0000ff;\">Clustering Rate :</span></p></body></html>", nullptr));
-        timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", nullptr));
-        label_9->setText(QApplication::translate("MainWindow", "/", nullptr));
-        label_8->setText(QApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Count :", nullptr));
+        labelMax->setText(QCoreApplication::translate("MainWindow", "Max", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Timer :", nullptr));
+        label_1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#0000ff;\">Clustering Rate :</span></p></body></html>", nullptr));
+        timeEdit->setDisplayFormat(QCoreApplication::translate("MainWindow", "HH:mm:ss", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "/", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Clustering Rate Max : ", nullptr));
         doubleSpinBoxCR->setSpecialValueText(QString());
         doubleSpinBoxCR->setPrefix(QString());
-        doubleSpinBoxCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        doubleSpinBoxCR->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxCRM->setSpecialValueText(QString());
-        doubleSpinBoxCRM->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
-        pushButtonEvaluate->setText(QApplication::translate("MainWindow", "Evaluate", nullptr));
-        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load...", nullptr));
-        pushButtonSave->setText(QApplication::translate("MainWindow", "Save...", nullptr));
-        pushButtonReset->setText(QApplication::translate("MainWindow", "Reset", nullptr));
-        checkBoxAutoSave->setText(QApplication::translate("MainWindow", "Auto save", nullptr));
-        label_11->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Weighted CR :</span></p></body></html>", nullptr));
-        label_12->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#00ff00;\">F1 Score :</span></p></body></html>", nullptr));
+        doubleSpinBoxCRM->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
+        pushButtonEvaluate->setText(QCoreApplication::translate("MainWindow", "Evaluate", nullptr));
+        pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load...", nullptr));
+        pushButtonSave->setText(QCoreApplication::translate("MainWindow", "Save...", nullptr));
+        pushButtonReset->setText(QCoreApplication::translate("MainWindow", "Reset", nullptr));
+        checkBoxAutoSave->setText(QCoreApplication::translate("MainWindow", "Auto save", nullptr));
+        label_11->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#ff0000;\">Weighted CR :</span></p></body></html>", nullptr));
+        label_12->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; color:#00ff00;\">F1 Score :</span></p></body></html>", nullptr));
         doubleSpinBoxWCR->setSpecialValueText(QString());
         doubleSpinBoxWCR->setPrefix(QString());
-        doubleSpinBoxWCR->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
+        doubleSpinBoxWCR->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
         doubleSpinBoxF1S->setSpecialValueText(QString());
         doubleSpinBoxF1S->setPrefix(QString());
-        doubleSpinBoxF1S->setSuffix(QApplication::translate("MainWindow", "%", nullptr));
-        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QApplication::translate("MainWindow", "Data", nullptr));
+        doubleSpinBoxF1S->setSuffix(QCoreApplication::translate("MainWindow", "%", nullptr));
+        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Data", nullptr));
         pushButtonRemoveLayer->setText(QString());
-        label_2->setText(QApplication::translate("MainWindow", "Layer  :", nullptr));
-        comboBoxLayer->setItemText(0, QApplication::translate("MainWindow", "Loading", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Layer  :", nullptr));
+        comboBoxLayer->setItemText(0, QCoreApplication::translate("MainWindow", "Loading", nullptr));
 
-        labelNeurons->setText(QApplication::translate("MainWindow", "Neurons :", nullptr));
-        comboBoxActivationFunction->setItemText(0, QApplication::translate("MainWindow", "Sigmoid", nullptr));
-        comboBoxActivationFunction->setItemText(1, QApplication::translate("MainWindow", "Improved Sigmoid", nullptr));
-        comboBoxActivationFunction->setItemText(2, QApplication::translate("MainWindow", "TanH", nullptr));
-        comboBoxActivationFunction->setItemText(3, QApplication::translate("MainWindow", "ReLU", nullptr));
-        comboBoxActivationFunction->setItemText(4, QApplication::translate("MainWindow", "Gaussian", nullptr));
+        labelNeurons->setText(QCoreApplication::translate("MainWindow", "Neurons :", nullptr));
+        comboBoxActivationFunction->setItemText(0, QCoreApplication::translate("MainWindow", "Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(1, QCoreApplication::translate("MainWindow", "Improved Sigmoid", nullptr));
+        comboBoxActivationFunction->setItemText(2, QCoreApplication::translate("MainWindow", "TanH", nullptr));
+        comboBoxActivationFunction->setItemText(3, QCoreApplication::translate("MainWindow", "ReLU", nullptr));
+        comboBoxActivationFunction->setItemText(4, QCoreApplication::translate("MainWindow", "Gaussian", nullptr));
 
         pushButtonAddLayer->setText(QString());
-        label_4->setText(QApplication::translate("MainWindow", "Activation\n"
+        label_4->setText(QCoreApplication::translate("MainWindow", "Activation\n"
 "function :", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Learning rate :", nullptr));
-        label_10->setText(QApplication::translate("MainWindow", "Momentum :", nullptr));
-        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QApplication::translate("MainWindow", "Neural Network", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Learning rate :", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Momentum :", nullptr));
+        checkBoxOpenMP->setText(QCoreApplication::translate("MainWindow", "OpenMP multithreading", nullptr));
+        tabWidgetNeuralNetwork->setTabText(tabWidgetNeuralNetwork->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Neural Network", nullptr));
     } // retranslateUi
 
 };

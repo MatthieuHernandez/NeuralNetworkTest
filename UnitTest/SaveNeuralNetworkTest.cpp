@@ -1,8 +1,9 @@
-﻿#pragma once
-#include "GTestTools.h"
-#include "neuralNetwork.h"
-
+﻿#include <gtest/gtest.h>
+#include "TestTools.h"
+#include "neuralNetwork/StraightforwardNeuralNetwork.h"
+#include "data/DataForRegression.h"
 using namespace std;
+using namespace snn;
 
 // ReSharper disable CppInconsistentNaming CppLocalVariableMayBeConst CppUseAuto
 
@@ -10,9 +11,18 @@ TEST(SaveNeuralNetwork, EqualTest)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
-	NeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
-	NeuralNetwork C(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
-	NeuralNetwork B = A;
+
+	StraightforwardOption optionA{};
+	optionA.learningRate  = 0.03f;
+	optionA.momentum = 0.78f;
+
+	StraightforwardOption optionB{};
+	optionB.learningRate  = 0.03f;
+	optionB.momentum = 0.78f;
+
+	StraightforwardNeuralNetwork A(structureOfNetwork, activationFunctionByLayer, optionA);
+	StraightforwardNeuralNetwork C(structureOfNetwork, activationFunctionByLayer, optionB);
+	StraightforwardNeuralNetwork B = A;
 
 	EXPECT_TRUE(A == B) << "A == B";
 	EXPECT_TRUE(&A != &B) << "A != B";
@@ -28,19 +38,19 @@ TEST(SaveNeuralNetwork, EqualTest)
 
 	EXPECT_TRUE(A != C) << "A != C";
 
-	const vector<float> inputs {1.5, 0.75, -0.25, 0, 0};
-	const vector<float> desired {1, 0, 0.5, 0};
+	vector<vector<float>> inputs {{1.5, 0.75, -0.25, 0, 0}};
+	vector<vector<float>> desired {{1, 0, 0.5, 0}};
+	DataForRegression data(inputs, desired, 0.2f);
 
-	A.train(inputs, desired);
+	A.trainOnce(inputs.back(), desired.back());
 
 	EXPECT_TRUE(A != B) << "A != B";
 
-	B.train(inputs, desired);
+	B.trainOnce(inputs.back(), desired.back());
 
 	EXPECT_TRUE(A == B) << "A == B";
 
-	A.startTesting();
-	A.evaluateForRegressionProblemSeparateByValue(inputs, desired);
+	A.evaluate(data);
 
 	EXPECT_TRUE(A.getF1Score() == B.getF1Score()) << "A == B";
 }
@@ -49,11 +59,16 @@ TEST(SaveNeuralNetwork, Save)
 {
 	const vector<int> structureOfNetwork {5, 20, 10, 3};
 	const vector<activationFunctionType> activationFunctionByLayer{iSigmoid, tanH, sigmoid};
-	NeuralNetwork A(structureOfNetwork, activationFunctionByLayer, 0.03f, 0.78f);
+
+	StraightforwardOption option{};
+	option.learningRate  = 0.03f;
+	option.momentum = 0.78f;
+
+	StraightforwardNeuralNetwork A(structureOfNetwork, activationFunctionByLayer, option);
 
 	A.saveAs("./testSave.bin");
 
-	NeuralNetwork B = NeuralNetwork::loadFrom("./testSave.bin");
+	StraightforwardNeuralNetwork B = StraightforwardNeuralNetwork::loadFrom("./testSave.bin");
 
 	EXPECT_TRUE(A == B) << "A == B";
 }

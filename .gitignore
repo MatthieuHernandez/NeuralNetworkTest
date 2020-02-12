@@ -3,7 +3,6 @@
 *.exe
 *.dll
 *.lib
-*.user*
 *.o
 Makefile*
 *.stash
@@ -23,6 +22,7 @@ numerai/
 boost/
 moc*
 .vs/
+googletest*/
 !*.sln
 
 !build 32 bits/*.keep

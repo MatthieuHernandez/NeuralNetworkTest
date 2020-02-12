@@ -14,7 +14,6 @@ enum indexData
 class DataManager
 {
 public:
-
 	DataManager();
 	virtual ~DataManager() = default;
 
@@ -24,7 +23,6 @@ public:
 	DataVisualizationWidget* getWidget(int index);
 
 private:
-
 	std::vector<Controller*> controllers;
 	std::vector<DataVisualizationWidget*> widgets;
 };

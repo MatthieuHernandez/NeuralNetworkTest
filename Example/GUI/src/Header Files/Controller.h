@@ -1,62 +1,49 @@
 #pragma once
+#include "neural_network/StraightforwardNeuralNetwork.hpp"
+#include "../tests/dataset_tests/Dataset.hpp"
 #include <QObject>
-#include "neuralNetwork.h"
-#include "Data.h"
 
-using namespace data;
 
 class Controller : public QObject
 {
 Q_OBJECT
 
 private :
+	std::unique_ptr<Dataset> data = nullptr;
+	std::unique_ptr<snn::StraightforwardNeuralNetwork> neuralNetwork = nullptr;
 
-	std::unique_ptr<Data> data = nullptr;
-	std::unique_ptr<NeuralNetwork> neuralNetwork = nullptr;
-
-	void initializeData();
 	void resetOutput();
-	void autoSave(const QString& dataSetName);
-
 
 public:
 
-	Controller(Data& data);
+	struct Inputs
+	{
+		int NumberOfInputs;
+		std::vector<snn::LayerModel> structure;
+		bool autoSaveWhenBetter;
+        std::string saveFilePath;
+		bool useMultithreading;
+		float learningRate;
+		float momentum;
+		//int numberOfTrainingsBetweenTwoEvaluations{};
+	} inputs;
+
+	Controller(Dataset& data);
 	virtual ~Controller() = default;
 
 
-	void DeleteNeuralNetwork();
-	void initializeNeuralNetwork();
+	void deleteNeuralNetwork();
+	void initializeNeuralNetwork(const QString& dataSetName);
 
-	void compute(const bool* stop, const bool* autoSave, const QString& autoSaveFileName);
-	void evaluate(const bool* stop, const bool autoSave = false, const QString& autoSaveFileName = nullptr);
 	void save(const QString& fileName);
 	void load(const QString& fileName);
 
-	NeuralNetwork& getNeuralNetwork() const;
-	Data& getData() const;
+	snn::StraightforwardNeuralNetwork& getNeuralNetwork() const;
+	Dataset& getDataset() const;
 
-	struct Inputs
-	{
-		std::vector<int> structure;
-		std::vector<activationFunctionType> activationFunction;
-		float learningRate{};
-		float momentum{};
-		int numberOfTrainbyRating{};
-	} inputs;
+	void addLayer(int index);
+	void removeLayer(int index);
 
-	struct Outputs
-	{
-		int currentIndex = 0;
-		int numberOfIteration = 0;
-
-		float clusteringRate = -1.0f;
-		float clusteringRateMax = -1.0f;
-		float weightedClusteringRate = -1.0f;
-		float weightedClusteringRateMax = -1.0f;
-		float f1Score = -1.0f;
-		float f1ScoreMax = -1.0f;
-	} outputs;
 
 signals :
 

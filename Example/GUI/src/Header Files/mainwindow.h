@@ -1,6 +1,4 @@
 #pragma once
-#include <QMainWindow>
-#include <QMovie>
 #include <vector>
 #include <qfuturewatcher.h>
 #include "Controller.h"
@@ -8,6 +6,7 @@
 #include "DataManager.h"
 #include <qelapsedtimer.h>
 #include "MnistVisualizationWidget.h"
+#include "mainChart.h"
 
 namespace Ui
 {
@@ -32,11 +31,13 @@ private:
 
 	Console* console;
 
-	Controller* currentController;
-	DataVisualizationWidget* currentWidget;
+	Controller* currentController{};
+	DataVisualizationWidget* currentWidget{};
 	DataManager manager;
 
 	MnistVisualizationWidget* visu = nullptr;
+
+	MainChart* mainChart;
 
 	int indexController = 0;
 
@@ -44,7 +45,9 @@ private:
 	std::vector<float> desired;
 
 	QMovie* loadingLogo = nullptr;
-	QTimer* timerForCount; // TO RENAME
+
+	QTimer* updateTimer;
+
 	QElapsedTimer* timerForTimeEdit; // TO RENAME
 
 	QFutureWatcher<void> watcherCompute;
@@ -56,27 +59,17 @@ private:
 	void initializeButtons();
 	void resetComboBoxLayer() const;
 	void initializeLayerButtons(int layer) const;
-	void initializeGraphOfClusteringRate();
-	void refreshGraphOfClusteringRate() const;
 	void refreshClusteringRate() const;
 
 	void enableModification(bool isEnable) const;
 
 	bool isOnGraphTab = true;
 	bool computeIsStop = true;
-	bool autoSave = false;
-
-	QVector<double> x;
-	QVector<double> clusteringRates;
-	QVector<double> weightedClusteringRates;
-	QVector<double> f1Scores;
 
 private slots:
 
 	/* Controller slots */
-	void updateGraphOfClusteringRate();
-	void updateNumberOfIteration();
-	void updateCount();
+	void updateInterface();
 
 	/* Interface slots */
 	void on_spinBoxNeurons_valueChanged(int value);
@@ -88,11 +81,12 @@ private slots:
 	void on_comboBoxActivationFunction_currentIndexChanged(int index);
 
 	void on_checkBoxAutoSave_stateChanged(int state);
+	void on_checkBoxOpenMP_stateChanged(int state);
 
 	void on_pushButtonCompute_clicked();
 	void on_pushButtonEvaluate_clicked();
 
-	void on_pushButtonConsole_clicked();
+	void on_pushButtonConsole_clicked() const;
 	void on_pushButtonResetGraph_clicked();
 
 	void on_pushButtonAddLayer_clicked();

@@ -35,16 +35,10 @@
     <QtMoc Include="src\Header Files\mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="External Library\qcustomplot.h">
-      <Filter>External Library</Filter>
-    </QtMoc>
     <QtMoc Include="src\Header Files\Console.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\Header Files\Controller.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="DataVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\Header Files\ImageVisualizationWidget.h">
@@ -56,11 +50,11 @@
     <QtMoc Include="src\Header Files\Cifar10VisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="debug\moc_predefs.h.cbt">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -92,9 +86,6 @@
     <ClCompile Include="src\Source Files\mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="External Library\qcustomplot.cpp">
-      <Filter>External Library</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +93,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\DataManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DataVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\ImageVisualizationWidget.cpp">
@@ -116,9 +104,18 @@
     <ClCompile Include="src\Source Files\Cifar10VisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\MainChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header Files\DataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header Files\MainChart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

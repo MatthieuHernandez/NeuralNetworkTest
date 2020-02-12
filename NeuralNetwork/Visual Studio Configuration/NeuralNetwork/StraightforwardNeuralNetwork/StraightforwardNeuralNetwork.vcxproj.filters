@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\data">
+      <UniqueIdentifier>{c05fab6c-b2d3-4045-ad5f-d3eecf7a75fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\neuralNetwork">
+      <UniqueIdentifier>{1685ad7a-32b4-4a8e-8972-fc41a90df4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\neuralNetwork\layer">
+      <UniqueIdentifier>{77e1d369-2e8e-41e0-8265-2f1f284d408f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data">
+      <UniqueIdentifier>{1ce07004-62a2-4602-ba17-5432194791e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\neuralNetwork">
+      <UniqueIdentifier>{c093e842-77d6-4b8d-96fb-7bac164cec27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\neuralNetwork\layer">
+      <UniqueIdentifier>{a34336a4-cc9b-48b8-beb7-a331837027bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\neuralNetwork\layer\perceptron">
+      <UniqueIdentifier>{14b9ec9d-0a1f-4d97-acdc-046fe80f4b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\neuralNetwork\layer\perceptron">
+      <UniqueIdentifier>{ac8c70e9-628b-4e67-a1dd-4286bed9f031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\neuralNetwork\layer\perceptron\activationFunction">
+      <UniqueIdentifier>{69c5cae2-b853-4700-a0b9-a5727c5d2e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\neuralNetwork\layer\perceptron\activationFunction">
+      <UniqueIdentifier>{445b1d03-b5cf-4a61-b34d-1d0bff282bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tools">
+      <UniqueIdentifier>{3ccc2669-4da0-417f-9d50-a46c2c2a8848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools">
+      <UniqueIdentifier>{6d18b706-1fd0-4037-affd-b4474f9c106d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Example">
+      <UniqueIdentifier>{0278da92-be87-4978-9a79-e42665129d09}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.cpp">
+      <Filter>Source Files\neuralNetwork\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.cpp">
+      <Filter>Source Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\layer.cpp">
+      <Filter>Source Files\neuralNetwork\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetworkGettersAndSetters.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetworkLearning.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.cpp">
+      <Filter>Source Files\neuralNetwork\layer\perceptron</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardOption.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.cpp">
+      <Filter>Source Files\data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.cpp">
+      <Filter>Source Files\neuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\MultipleClassificationExemple.cpp">
+      <Filter>Source Files\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\RegressionExample.cpp">
+      <Filter>Source Files\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\StraightforwardNeuralNetwork\example\ClassificationExample.cpp">
+      <Filter>Source Files\Example</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\Data.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForClassification.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForRegression.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\neuralNetwork.h">
+      <Filter>Header Files\neuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\activationFunction.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\gaussian.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\improvedSigmoid.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\layer.h">
+      <Filter>Header Files\neuralNetwork\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\sigmoid.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\ReLU.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\statisticAnalysis.h">
+      <Filter>Header Files\neuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardOption.h">
+      <Filter>Header Files\neuralNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\activationFunction\tanh.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron\activationFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\tools\Tools.h">
+      <Filter>Header Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\data\DataForMultipleClassification.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\alltoall.h">
+      <Filter>Header Files\neuralNetwork\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\layer\perceptron\perceptron.h">
+      <Filter>Header Files\neuralNetwork\layer\perceptron</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\StraightforwardNeuralNetwork\src\neuralNetwork\StraightforwardNeuralNetwork.h">
+      <Filter>Header Files\neuralNetwork</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

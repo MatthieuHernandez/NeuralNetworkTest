@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ImageVisualizationWidget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.1
+** Created by: Qt User Interface Compiler version 5.14.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_IMAGEVISUALIZATIONWIDGET_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
@@ -32,22 +29,22 @@ public:
     void setupUi(QWidget *ImageVisualizationWidget)
     {
         if (ImageVisualizationWidget->objectName().isEmpty())
-            ImageVisualizationWidget->setObjectName(QStringLiteral("ImageVisualizationWidget"));
+            ImageVisualizationWidget->setObjectName(QString::fromUtf8("ImageVisualizationWidget"));
         ImageVisualizationWidget->resize(660, 420);
         spinBoxImageId = new QSpinBox(ImageVisualizationWidget);
-        spinBoxImageId->setObjectName(QStringLiteral("spinBoxImageId"));
+        spinBoxImageId->setObjectName(QString::fromUtf8("spinBoxImageId"));
         spinBoxImageId->setGeometry(QRect(10, 360, 80, 22));
         spinBoxImageId->setMaximum(9999);
         labelImage = new QLabel(ImageVisualizationWidget);
-        labelImage->setObjectName(QStringLiteral("labelImage"));
+        labelImage->setObjectName(QString::fromUtf8("labelImage"));
         labelImage->setGeometry(QRect(10, 340, 80, 16));
         comboBoxSet = new QComboBox(ImageVisualizationWidget);
         comboBoxSet->addItem(QString());
         comboBoxSet->addItem(QString());
-        comboBoxSet->setObjectName(QStringLiteral("comboBoxSet"));
+        comboBoxSet->setObjectName(QString::fromUtf8("comboBoxSet"));
         comboBoxSet->setGeometry(QRect(10, 390, 80, 22));
         Image = new QLabel(ImageVisualizationWidget);
-        Image->setObjectName(QStringLiteral("Image"));
+        Image->setObjectName(QString::fromUtf8("Image"));
         Image->setGeometry(QRect(10, 10, 50, 50));
         comboBoxSet->raise();
         spinBoxImageId->raise();
@@ -61,10 +58,10 @@ public:
 
     void retranslateUi(QWidget *ImageVisualizationWidget)
     {
-        ImageVisualizationWidget->setWindowTitle(QApplication::translate("ImageVisualizationWidget", "ImageVisualizationWidget", nullptr));
-        labelImage->setText(QApplication::translate("ImageVisualizationWidget", "Label :", nullptr));
-        comboBoxSet->setItemText(0, QApplication::translate("ImageVisualizationWidget", "Testing", nullptr));
-        comboBoxSet->setItemText(1, QApplication::translate("ImageVisualizationWidget", "Training", nullptr));
+        ImageVisualizationWidget->setWindowTitle(QCoreApplication::translate("ImageVisualizationWidget", "ImageVisualizationWidget", nullptr));
+        labelImage->setText(QCoreApplication::translate("ImageVisualizationWidget", "Label :", nullptr));
+        comboBoxSet->setItemText(0, QCoreApplication::translate("ImageVisualizationWidget", "Testing", nullptr));
+        comboBoxSet->setItemText(1, QCoreApplication::translate("ImageVisualizationWidget", "Training", nullptr));
 
         Image->setText(QString());
     } // retranslateUi

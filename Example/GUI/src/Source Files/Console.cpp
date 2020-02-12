@@ -1,7 +1,5 @@
 #include "Console.h"
 
-using namespace std;
-
 Console::Console(QWidget *parent)
 	: QWidget(parent)
 {
@@ -13,7 +11,7 @@ Console::~Console()
 {
 }
 
-void Console::write(const string text)
+void Console::write(const std::string text)
 {
 	ui.textEdit->append(QString::fromStdString(text));
 } 

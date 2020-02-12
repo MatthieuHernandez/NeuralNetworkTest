@@ -1,7 +1,9 @@
 #pragma once
+#include "../tests/dataset_tests/Dataset.hpp"
 #include <string>
 #include <QDateTime>
-#include "DataForRegression.h"
+#include <vector>
+
 
 enum timeUnit
 {
@@ -13,7 +15,7 @@ enum timeUnit
 	second
 };
 
-class CurrencyRatesEurToUsd : public DataForRegression
+class CurrencyRatesEurToUsd : public Dataset
 {
 private:
 
@@ -29,10 +31,10 @@ private:
 	std::vector<float> dataTemp;
 	std::vector<float> outputTemp;
 
-	void createData();
+	void createData(std::vector<std::vector<float>>& inputs, std::vector<std::vector<float>>& labels);
 	bool isAGap(const int index);
 	bool isWrongDate(const int index);
-
+	void loadData(std::string folderPath) override;
 
 public:
 
@@ -46,11 +48,9 @@ public:
 	std::string path[1] = {"../Data/EURUSD/DAT_ASCII_EURUSD_M1_2016.csv"};
 
 	CurrencyRatesEurToUsd();
-	~CurrencyRatesEurToUsd() {}
 
-	void loadData() override;
 	void loadCSV(int year);
 
-	void createTrainingData(const int index);
-	void createTrainingOutputs(const int index);
+	void createTrainingData(const int index, std::vector<std::vector<float>>& inputs);
+	void createTrainingOutputs(const int index, std::vector<std::vector<float>>& labels);
 };

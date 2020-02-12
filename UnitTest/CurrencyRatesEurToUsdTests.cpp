@@ -1,8 +1,9 @@
 #pragma once
 #include "CurrencyRatesEurToUsd.h"
-#include "GTestTools.h"
-
+#include "TestTools.h"
+#include <gtest/gtest.h>
 using namespace std;
+using namespace snn;
 
 class CurrencyTest : public testing::Test
 {
@@ -23,24 +24,24 @@ public:
 TEST_F(CurrencyTest, DISABLED_OutputTest)
 {
 	// Arrange
-	int positifRates = 0;
-	int negatifRates = 0;
+	int positiveRates = 0;
+	int negativeRates = 0;
 	const int errorSize = 3;
 	int error[errorSize] = {0};
 
 	// Act
-	for (int i = 0; i < data->sets[training].size; i++)
+	for (int i = 0; i < data->data->sets[training].size; i++)
 	{
-		auto output = data->getTrainingOutputs(i)[0];
+		auto output = data->data->getTrainingOutputs(i)[0];
 
-		if (output != data->getTestingOutputs(i)[0])
+		if (output != data->data->getTestingOutputs(i)[0])
 			error[0]++;
 
 		if (output > 0 && output < 3)
-			positifRates++;
+			positiveRates++;
 		else if (output <= 0 && output > -3)
 		{
-			negatifRates++;
+			negativeRates++;
 			if (output == 0)
 				error[2]++;
 		}
@@ -48,9 +49,9 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 		else
 			error[1]++;
 	}
-	const int totalRates = positifRates + negatifRates;
-	const float positifRatesRatio = static_cast<float>(positifRates) / totalRates;
-	const float negatifRatesRatio = static_cast<float>(negatifRates) / totalRates;
+	const int totalRates = positiveRates + negativeRates;
+	const float positiveRatesRatio = static_cast<float>(positiveRates) / totalRates;
+	const float negativeRatesRatio = static_cast<float>(negativeRates) / totalRates;
 
 	const int DateToRemove = data->getNumberOfGaps() * data->numberOfInputRates;
 
@@ -58,13 +59,13 @@ TEST_F(CurrencyTest, DISABLED_OutputTest)
 	const int maxRates = 373000 - DateToRemove;
 
 	// Assert
-	EXPECT_ABOUT_EQ(300, data->getNumberOfGaps(), 400, "Number of gaps");
-	EXPECT_ABOUT_EQ(minRates, totalRates, maxRates, "Total rates without gap");
-	EXPECT_ABOUT_EQ(0.48f, positifRatesRatio, 0.52f, "Positif Ratio");
-	EXPECT_ABOUT_EQ(0.48f, negatifRatesRatio, 0.52f, "Negatif Ratio");
+	TestTools::EXPECT_ABOUT_EQ(300, data->getNumberOfGaps(), 400, "Number of gaps");
+	TestTools::EXPECT_ABOUT_EQ(minRates, totalRates, maxRates, "Total rates without gap");
+	TestTools::EXPECT_ABOUT_EQ(0.48f, positiveRatesRatio, 0.52f, "Positif Ratio");
+	TestTools::EXPECT_ABOUT_EQ(0.48f, negativeRatesRatio, 0.52f, "Negatif Ratio");
 	EXPECT_EQ(error[0], 0);
 	EXPECT_EQ(error[1], 0);
-	EXPECT_ABOUT_EQ(100, error[2], 10000, "Number of rates to 0");
+	TestTools::EXPECT_ABOUT_EQ(100, error[2], 10000, "Number of rates to 0");
 }
 
 TEST_F(CurrencyTest, DISABLED_InputTest)
@@ -74,13 +75,13 @@ TEST_F(CurrencyTest, DISABLED_InputTest)
 	int error[errorSize] = {0};
 
 	// Act
-	auto sizeOfInput = data->getTrainingData(0).size();
+	auto sizeOfInput = data->data->getTrainingData(0).size();
 
-	for (int i = 0; i < data->sets[training].size; i++)
+	for (int i = 0; i < data->data->sets[training].size; i++)
 	{
-		auto inputs = data->getTrainingData(i);
+		auto inputs = data->data->getTrainingData(i);
 
-		if (inputs != data->getTestingData(i))
+		if (inputs != data->data->getTestingData(i))
 			error[0]++;
 
 		for (int j = 0; j < inputs.size(); j++)
@@ -89,12 +90,12 @@ TEST_F(CurrencyTest, DISABLED_InputTest)
 				error[1]++;
 		}
 		const int k = 25;
-		if (i + 1 < data->sets[training].size)
-			if (data->getTrainingData(i)[k] != data->getTrainingData(i + 1)[k + 1])
+		if (i + 1 < data->data->sets[training].size)
+			if (data->data->getTrainingData(i)[k] != data->data->getTrainingData(i + 1)[k + 1])
 				error[2]++;
 	}
 
-	const auto actualDataSize = data->sets[training].size;
+	const auto actualDataSize = data->data->sets[training].size;
 	const auto expectedDataSize = data->getNumberOfLines() - data->getNumberOfGaps()*(data->numberOfInputRates) - sizeOfInput + 1;
 
 	// Assert

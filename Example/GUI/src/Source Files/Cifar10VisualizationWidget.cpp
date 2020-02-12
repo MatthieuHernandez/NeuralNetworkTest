@@ -2,8 +2,6 @@
 #include "ui_Cifar10Visualization.h"
 #include <ui_ImageVisualizationWidget.h>
 
-using namespace std;
-
 Cifar10VisualizationWidget::Cifar10VisualizationWidget(QWidget *parent, Controller *controller)
 	: ImageVisualizationWidget(parent, controller), ui(new Ui::Cifar10Visualization)
 {
@@ -14,5 +12,5 @@ Cifar10VisualizationWidget::Cifar10VisualizationWidget(QWidget *parent, Controll
 
 unsigned char Cifar10VisualizationWidget::getPixel(int number, int x, int y, color color) const
 {
-	return static_cast<unsigned char>((this->controller->getData().getData(displayedSet, number)[(y * 32 + x) +  color * 1024] + 1.0) * 127.4);
+	return static_cast<unsigned char>((this->controller->getDataset().data->getData(displayedSet, number)[(y * 32 + x) +  color * 1024] + 1.0) * 127.4);
 }

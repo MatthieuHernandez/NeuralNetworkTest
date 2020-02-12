@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
+    <width>850</width>
     <height>500</height>
    </rect>
   </property>
@@ -49,13 +49,13 @@
      <attribute name="title">
       <string>Graph of classification rate</string>
      </attribute>
-     <widget class="QCustomPlot" name="customPlot" native="true">
+     <widget class="QChartView" name="chartView" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1</y>
-        <width>665</width>
-        <height>420</height>
+        <y>0</y>
+        <width>664</width>
+        <height>414</height>
        </rect>
       </property>
       <widget class="QPushButton" name="pushButtonResetGraph">
@@ -64,7 +64,7 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>643</x>
+         <x>642</x>
          <y>0</y>
          <width>22</width>
          <height>22</height>
@@ -913,6 +913,31 @@ function :</string>
        <double>100.000000000000000</double>
       </property>
      </widget>
+     <widget class="QCheckBox" name="checkBoxOpenMP">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>161</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <strikeout>false</strikeout>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>OpenMP multithreading</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -920,9 +945,9 @@ function :</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QCustomPlot</class>
+   <class>QChartView</class>
    <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
+   <header location="global">QtCharts</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

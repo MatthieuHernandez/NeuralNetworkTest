@@ -21,10 +21,11 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2c19e499-a091-474f-a19e-a52aada7c039}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>
+    </CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -44,32 +45,41 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn-Disable-gtest_main>true</Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn-Disable-gtest_main>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)bin\debug\</OutDir>
+    <OutDir>bin\debug\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn-Disable-gtest_main>true</Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn-Disable-gtest_main>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)bin\release\</OutDir>
+    <OutDir>bin\release\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="CurrencyRatesEurToUsdTests.cpp" />
+    <ClCompile Include="DataTests.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OpenMPTests.cpp" />
     <ClCompile Include="SaveNeuralNetworkTest.cpp" />
     <ClCompile Include="UnitTestTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GTestTools.h" />
+    <ClCompile Include="TestTools.cpp" />
+    <ClCompile Include="ExamplesTests.cpp" />
+    <ClInclude Include="TestTools.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Example\Data\Data.vcxproj">
       <Project>{8838f0cc-89ce-403c-ab4b-5eedaaf65c90}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\NeuralNetwork\neuralNetwork.vcxproj">
-      <Project>{d4aae28c-e4ea-3212-82f0-74c31bd9c662}</Project>
+    <ProjectReference Include="..\NeuralNetwork\Visual Studio Configuration\NeuralNetwork\StraightforwardNeuralNetwork\StraightforwardNeuralNetwork.vcxproj">
+      <Project>{06dc00d5-263d-495a-936c-1e12ffef9096}</Project>
+    </ProjectReference>
+    <ProjectReference Include="googletest-release-1.8.1\googletest\msvc\2010\gtest.vcxproj">
+      <Project>{c8f6c172-56f2-4e76-b5fa-c3b423b31be7}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
@@ -87,8 +97,9 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -100,29 +111,43 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <PreprocessorDefinitions>
+      </PreprocessorDefinitions>
+      <BasicRuntimeChecks>
+      </BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\NeuralNetwork\UnitTest\googletest-release-1.8.1\googletest\include;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <OpenMPSupport>true</OpenMPSupport>
-      <FloatingPointExceptions>true</FloatingPointExceptions>
+      <OpenMPSupport>
+      </OpenMPSupport>
+      <FloatingPointExceptions>
+      </FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib\libboost_serialization-vc141-mt-x64-1_68.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupportd.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)UnitTest.exe</OutputFile>
-      <LinkStatus>false</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalOptions />
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,8 +158,9 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\..\StraightforwardNeuralNetwork\src;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -147,25 +173,31 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>X64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Library;$(ProjectDir)..\Example\Data\src\Header Files;$(ProjectDir)..\NeuralNetwork\src\Header Files;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Github\NeuralNetwork\UnitTest\googletest-release-1.8.1\googletest\include;$(ProjectDir)..\Example\Data\src\Header Files;C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\Boost_1_69_0\;$(QTDIR)\include;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <BasicRuntimeChecks />
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)..\NeuralNetwork\External Library\Boost_1_68_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>C:\Programming\Github\StraightforwardNeuralNetwork\src\externalLibrary\boost_1_69_0\stage\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(QTDIR)\lib\Qt5PrintSupport.lib;$(QTDIR)\lib\Qt5Widgets.lib;$(QTDIR)\lib\Qt5Gui.lib;$(QTDIR)\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <LinkStatus>false</LinkStatus>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalOptions />
     </Link>
   </ItemDefinitionGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

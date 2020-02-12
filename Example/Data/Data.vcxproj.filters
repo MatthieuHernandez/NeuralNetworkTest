@@ -11,57 +11,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source FIles\MNIST.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source FIles\Data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source Files\Iris.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source Files\CurrencyRatesEurToUsd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\DataForClassification.cpp">
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Wine\Wine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\DataForRegression.cpp">
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\MNIST\Mnist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source Files\Wine.cpp">
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Iris\Iris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source FIles\CIFAR_10.cpp">
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\Fashion-MNIST\FashionMnist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\StraightforwardNeuralNetwork\tests\dataset_tests\CIFAR-10\Cifar10.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Header Files\MNIST.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\Data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\Iris.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header Files\CurrencyRatesEurToUsd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\DataForClassification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\DataForRegression.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\Wine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header Files\CIFAR_10.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

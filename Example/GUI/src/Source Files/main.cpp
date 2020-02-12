@@ -11,9 +11,10 @@ int main(int argc, char *argv[])
 }
 
 /*RELEASE */
-int WinMain(int argc, char *argv[])
+int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-    QApplication a(argc, argv);
+	int argc = 0;
+    QApplication a(argc, {});
     MainWindow w;
     w.show();
 

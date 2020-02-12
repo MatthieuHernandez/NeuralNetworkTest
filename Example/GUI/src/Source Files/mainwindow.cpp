@@ -3,7 +3,7 @@
 #include <qtconcurrentrun.h>
 #include "DataManager.h"
 
-using namespace std;
+using namespace snn;
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent),
@@ -16,20 +16,26 @@ MainWindow::MainWindow(QWidget* parent)
 
 	connect(&watcherLoadingData, SIGNAL(finished()), this, SLOT(endOfLoadingDataSet()));
 
-	timerForCount = new QTimer(this);
+	updateTimer = new QTimer(this);
 	timerForTimeEdit = new QElapsedTimer();
 
 	connect(&watcherCompute, SIGNAL(finished()), this, SLOT(stopCompute()));
-	connect(timerForCount, SIGNAL(timeout()), this, SLOT(updateCount()));
+
+	connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateInterface()));
 
 	ui->tabWidgetData->setCurrentIndex(0);
 	ui->tabWidgetNeuralNetwork->setCurrentIndex(0);
+
+	this->mainChart = new MainChart();
+	ui->chartView->setChart(this->mainChart->getChart());
+	ui->chartView->setRenderHint(QPainter::Antialiasing);
+
 	this->enableModification(true);
 }
 
 MainWindow::~MainWindow()
 {
-	computeIsStop = true;
+	this->computeIsStop = true;
 	delete ui;
 }
 
@@ -42,10 +48,10 @@ void MainWindow::write(const string text, bool onlyConsole)
 
 void MainWindow::startLoadingLogo()
 {
-	if (loadingLogo == nullptr)
+	if (this->loadingLogo == nullptr)
 	{
-		loadingLogo = new QMovie("./Extra Files/loading.gif");
-		loadingLogo->setScaledSize(QSize(50, 50));
+		this->loadingLogo = new QMovie("./Extra Files/loading.gif");
+		this->loadingLogo->setScaledSize(QSize(50, 50));
 	}
 
 	if (!loadingLogo->isValid())
@@ -56,10 +62,11 @@ void MainWindow::startLoadingLogo()
 
 void MainWindow::stopCompute()
 {
-	computeIsStop = true;
-	loadingLogo->stop();
-	timerForCount->stop();
-	this->refreshClusteringRate();
+	this->currentController->getNeuralNetwork().stopTraining();
+	this->computeIsStop = true;
+	this->loadingLogo->stop();
+	this->updateTimer->stop();
+	this->updateInterface();
 	ui->pushButtonResetGraph->setEnabled(true);
 	this->enableModification(true);
 	ui->pushButtonCompute->setText("Compute");
@@ -68,16 +75,10 @@ void MainWindow::stopCompute()
 void MainWindow::endOfLoadingDataSet()
 {
 	if (firstLoading)
-	{
-		initializeGraphOfClusteringRate();
 		firstLoading = false;
-	}
-	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateNumberOfIteration()));
-	connect(currentController, SIGNAL(updateNumberOfIteration()), this, SLOT(updateGraphOfClusteringRate()));
 
 	this->initializeButtons();
 	this->on_pushButtonResetGraph_clicked();
-	ui->pushButtonCompute->setEnabled(true);
 
 	const auto widget = this->manager.getWidget(indexController);
 	ui->layout->itemAt(0)->widget()->hide();
@@ -87,14 +88,16 @@ void MainWindow::endOfLoadingDataSet()
 	ui->tabWidgetNeuralNetwork->setEnabled(true);
 	this->enableModification(true);
 	this->write("data loaded");
+	ui->pushButtonCompute->setEnabled(true);
 }
 
 void MainWindow::initializeButtons()
 {
 	this->resetComboBoxLayer();
 	this->initializeLayerButtons(0);
-	ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainbyRating);
-	ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainbyRating);
+	// TODO: to rework
+	//ui->spinBoxTrainingRating->setMaximum(this->currentController->inputs.numberOfTrainingsBetweenTwoEvaluations);
+	//ui->spinBoxTrainingRating->setValue(this->currentController->inputs.numberOfTrainingsBetweenTwoEvaluations);
 };
 
 void MainWindow::resetComboBoxLayer() const
@@ -102,80 +105,51 @@ void MainWindow::resetComboBoxLayer() const
 	ui->comboBoxLayer->blockSignals(true);
 	ui->comboBoxLayer->clear();
 	ui->comboBoxLayer->addItem("Input");
-	const int numberOfLayer = static_cast<int>(this->currentController->inputs.structure.size()) - 1;
+	const int numberOfLayer = this->currentController->inputs.structure.size();
 	for (int i = 0; i < numberOfLayer - 1; i++)
 		ui->comboBoxLayer->addItem(QString::number(i));
-	ui->comboBoxLayer->addItem("Ouput");
+	ui->comboBoxLayer->addItem("Output");
 	ui->comboBoxLayer->blockSignals(false);
 	ui->comboBoxLayer->setCurrentIndex(0);
 };
 
 void MainWindow::initializeLayerButtons(const int layer) const
 {
-	const int neuronsNumber = this->currentController->inputs.structure[layer];
-	ui->spinBoxNeurons->setValue(neuronsNumber);
-
-
-	if (layer > 0)
+	if (layer == 0)
 	{
-		const auto function = static_cast<int>(this->currentController->inputs.activationFunction[layer - 1]);
+		const int neuronsNumber = this->currentController->inputs.NumberOfInputs;
+		ui->comboBoxActivationFunction->hide();
+		ui->spinBoxNeurons->setEnabled(false);
+		ui->labelNeurons->setText("Inputs :");
+		ui->spinBoxNeurons->setValue(neuronsNumber);
+	}
+	else
+	{
+		const int neuronsNumber = this->currentController->inputs.structure[layer - 1].numberOfNeurons;
+		const auto function = static_cast<int>(this->currentController->inputs.structure[layer - 1].activation);
 		ui->comboBoxActivationFunction->blockSignals(true);
 		ui->comboBoxActivationFunction->setCurrentIndex(function);
 		ui->comboBoxActivationFunction->blockSignals(false);
 		ui->comboBoxActivationFunction->show();
-		if (this->currentController->inputs.structure.size() - 1 == layer || !computeIsStop)
+		if (this->currentController->inputs.structure.size() == layer - 1 || !computeIsStop)
 			ui->spinBoxNeurons->setEnabled(false);
 		else
 			ui->spinBoxNeurons->setEnabled(true);
 		ui->labelNeurons->setText("Neurons :");
-	}
-	else
-	{
-		ui->comboBoxActivationFunction->hide();
-		ui->spinBoxNeurons->setEnabled(false);
-		ui->labelNeurons->setText("Inputs :");
+		ui->spinBoxNeurons->setValue(neuronsNumber);
 	}
 
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
-	ui->spinBoxMomentum->setValue(this->currentController->inputs.momentum);
-}
-
-void MainWindow::initializeGraphOfClusteringRate()
-{
-	x.clear();
-	clusteringRates.clear();
-	weightedClusteringRates.clear();
-	f1Scores.clear();
-	ui->customPlot->addGraph();
-	ui->customPlot->addGraph();
-	ui->customPlot->addGraph();
-	ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
-	//ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-	ui->customPlot->graph(1)->setPen(QPen(Qt::red));
-	//ui->customPlot->graph(1)->setBrush(QBrush(QColor(255, 0, 0, 20)));
-	ui->customPlot->graph(2)->setPen(QPen(Qt::green));
-	//ui->customPlot->graph(2)->setBrush(QBrush(QColor(255, 0, 0, 20)));
-
-	ui->customPlot->yAxis->setRange(0, 100);
-	ui->customPlot->replot();
-	updateGraphOfClusteringRate();
-}
-
-void MainWindow::refreshGraphOfClusteringRate() const
-{
-	ui->customPlot->graph(0)->setData(x, clusteringRates);
-	ui->customPlot->graph(1)->setData(x, weightedClusteringRates);
-	ui->customPlot->graph(2)->setData(x, f1Scores);
-	ui->customPlot->xAxis->setRange(0, this->currentController->outputs.numberOfIteration);
-	ui->customPlot->replot();
+	ui->spinBoxMomentum->setValue(this->currentController->inputs.learningRate);
 }
 
 void MainWindow::refreshClusteringRate() const
 {
-	ui->doubleSpinBoxCR->setValue(this->currentController->outputs.clusteringRate * 100.0f);
-	ui->doubleSpinBoxCRM->setValue(this->currentController->outputs.clusteringRateMax * 100.0f);
-	ui->doubleSpinBoxWCR->setValue(this->currentController->outputs.weightedClusteringRate * 100.0f);
-	ui->doubleSpinBoxF1S->setValue(this->currentController->outputs.f1Score * 100.0f);
+	ui->doubleSpinBoxCR->setValue(this->currentController->getNeuralNetwork().getGlobalClusteringRate() * 100.0f);
+	if(ui->doubleSpinBoxCR->value() > ui->doubleSpinBoxCRM->value())
+	ui->doubleSpinBoxCRM->setValue(ui->doubleSpinBoxCR->value());
+	ui->doubleSpinBoxWCR->setValue(this->currentController->getNeuralNetwork().getWeightedClusteringRate() * 100.0f);
+	ui->doubleSpinBoxF1S->setValue(this->currentController->getNeuralNetwork().getF1Score() * 100.0f);
 }
 
 void MainWindow::enableModification(const bool isEnable) const
@@ -187,14 +161,13 @@ void MainWindow::enableModification(const bool isEnable) const
 	ui->pushButtonEvaluate->setEnabled(isEnable);
 	ui->pushButtonAddLayer->setEnabled(isEnable);
 	ui->pushButtonRemoveLayer->setEnabled(isEnable);
-	ui->spinBoxNeurons->setEnabled(isEnable);
 	ui->comboBoxActivationFunction->setEnabled(isEnable);
 	ui->spinBoxLearningRate->setEnabled(isEnable);
 	ui->spinBoxMomentum->setEnabled(isEnable);
 }
 
 /**************************************************
- *				  	    SLOTS				  	  *
+ *                      SLOTS                     *
  **************************************************/
 
 void MainWindow::on_pushButtonCompute_clicked()
@@ -202,23 +175,22 @@ void MainWindow::on_pushButtonCompute_clicked()
 	if (computeIsStop)
 	{
 		computeIsStop = false;
+		this->mainChart->clear();
 		if (&currentController->getNeuralNetwork() == nullptr)
 		{
+			const auto dataSetName = ui->comboBoxData->currentText();
 			this->on_pushButtonResetGraph_clicked();
-			this->currentController->initializeNeuralNetwork();
+			this->currentController->initializeNeuralNetwork(dataSetName);
 			this->refreshClusteringRate();
-			ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
-			ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+			ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
+			ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 		}
 		this->startLoadingLogo();
 		this->enableModification(false);
-		QString data = ui->comboBoxData->currentText();
-		const auto future = QtConcurrent::run([=]()
-		{
-			currentController->compute(&this->computeIsStop, &this->autoSave, data);
-		});
-		watcherCompute.setFuture(future);
-		timerForCount->start(250);
+
+		currentController->getNeuralNetwork().startTraining(*currentController->getDataset().data);
+
+		updateTimer->start();
 		timerForTimeEdit->start();
 		ui->pushButtonResetGraph->setEnabled(false);
 		ui->pushButtonCompute->setText("Stop");
@@ -237,26 +209,25 @@ void MainWindow::on_pushButtonEvaluate_clicked()
 		computeIsStop = false;
 		if (&currentController->getNeuralNetwork() == nullptr)
 		{
+			QString dataSetName = ui->comboBoxData->currentText();
 			this->on_pushButtonResetGraph_clicked();
-			this->currentController->initializeNeuralNetwork();
+			this->currentController->initializeNeuralNetwork(dataSetName);
 			this->refreshClusteringRate();
-			ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
-			ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+			ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
+			ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
 		}
 		this->startLoadingLogo();
-		const auto future = QtConcurrent::run([=]()
-		{
-			currentController->evaluate(&this->computeIsStop);
-		});
-		watcherCompute.setFuture(future);
-		timerForCount->start(250);
+
+		currentController->getNeuralNetwork().evaluate(*currentController->getDataset().data);
+
+		updateTimer->start(60);
 		timerForTimeEdit->start();
 		ui->pushButtonCompute->setText("Stop");
 		ui->timeEdit->setTime(QTime(0, 0));
 	}
 }
 
-void MainWindow::on_pushButtonConsole_clicked()
+void MainWindow::on_pushButtonConsole_clicked() const
 {
 	console->show();
 	console->activateWindow();
@@ -264,23 +235,14 @@ void MainWindow::on_pushButtonConsole_clicked()
 
 void MainWindow::on_pushButtonResetGraph_clicked()
 {
-	x.clear();
-	clusteringRates.clear();
-	weightedClusteringRates.clear();
-	f1Scores.clear();
+	this->mainChart->clear();
 	ui->pushButtonResetGraph->setEnabled(false);
-	this->refreshGraphOfClusteringRate();
 }
 
 void MainWindow::on_pushButtonAddLayer_clicked()
 {
-	const int index = ui->comboBoxLayer->currentIndex();
-	const auto it1 = this->currentController->inputs.structure.begin();
-	const auto it2 = this->currentController->inputs.activationFunction.begin();
-	const auto value = this->currentController->inputs.structure[index];
-	this->currentController->inputs.structure.insert(it1 + index, value);
-	const auto function = this->currentController->inputs.activationFunction[index];
-	this->currentController->inputs.activationFunction.insert(it2 + index, function);
+	const int index = ui->comboBoxLayer->currentIndex();	
+	this->currentController->addLayer(index);
 	this->resetComboBoxLayer();
 	this->initializeLayerButtons(index + 1);
 }
@@ -288,13 +250,11 @@ void MainWindow::on_pushButtonAddLayer_clicked()
 void MainWindow::on_pushButtonRemoveLayer_clicked()
 {
 	int index = ui->comboBoxLayer->currentIndex();
-	if (index > 0 && index < this->currentController->inputs.structure.size() - 1)
+
+	if (index > 0)
 	{
+		this->currentController->removeLayer(index);
 		ui->comboBoxLayer->removeItem(index);
-		const auto it1 = this->currentController->inputs.structure.begin();
-		const auto it2 = this->currentController->inputs.activationFunction.begin();
-		this->currentController->inputs.structure.erase(it1 + index);
-		this->currentController->inputs.activationFunction.erase(it2 + index);
 		index = ui->comboBoxLayer->currentIndex();
 		this->initializeLayerButtons(index);
 		this->resetComboBoxLayer();
@@ -310,26 +270,51 @@ void MainWindow::on_comboBoxLayer_currentIndexChanged(int index)
 void MainWindow::on_comboBoxActivationFunction_currentIndexChanged(int index)
 {
 	auto layer = ui->comboBoxLayer->currentIndex();
-	auto function = static_cast<activationFunctionType>(index);
-	this->currentController->inputs.activationFunction[layer - 1] = function;
+	auto function = static_cast<activationFunction>(index);
+	this->currentController->inputs.structure[layer-1].activation = function;
 }
 
 void MainWindow::on_checkBoxAutoSave_stateChanged(int state)
 {
 	if (state == 2)
 	{
-		this->autoSave = true;
-		console->write("auto save enable");
-		return;
+		if (&currentController->getNeuralNetwork() != nullptr)
+		{
+			this->currentController->inputs.autoSaveWhenBetter = true;
+			this->console->write("auto save enable");
+		}
 	}
-	this->autoSave = false;
-	console->write("auto save disable");
+	else
+	{
+		this->currentController->inputs.autoSaveWhenBetter = false;
+		this->console->write("auto save disable");
+	}
+}
+
+void MainWindow::on_checkBoxOpenMP_stateChanged(int state)
+{
+	if (state == 2)
+	{
+		if (&currentController->getNeuralNetwork() != nullptr)
+		{
+			this->currentController->inputs.useMultithreading = true;
+			this->console->write("Multithreading enable");
+			
+		}
+	}
+	else
+	{
+		this->currentController->inputs.useMultithreading = false;
+		this->console->write("Multithreading save disable");
+	}
 }
 
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 {
 	int index = ui->comboBoxLayer->currentIndex();
-	this->currentController->inputs.structure[index] = value;
+	//TODO: only for AllToAll
+	if(index > 0)
+	    this->currentController->inputs.structure[index-1].numberOfNeurons = value;
 }
 
 void MainWindow::on_spinBoxLearningRate_valueChanged(double value)
@@ -344,9 +329,9 @@ void MainWindow::on_spinBoxMomentum_valueChanged(double value)
 
 void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 {
-	currentController->inputs.numberOfTrainbyRating = value;
+	currentController->getNeuralNetwork().setNumberOfTrainingsBetweenTwoEvaluations(value);
 
-	if (ui->spinBoxTrainingRating->value() == currentController->getData().sets[training].size)
+	if (ui->spinBoxTrainingRating->value() == currentController->getDataset().data->sets[training].size)
 		ui->labelMax->show();
 	else
 		ui->labelMax->hide();
@@ -355,6 +340,7 @@ void MainWindow::on_spinBoxTrainingRating_valueChanged(int value)
 void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 {
 	this->write("loading ...");
+	ui->pushButtonCompute->setEnabled(false);
 	indexController = index;
 	this->enableModification(false);
 	ui->spinBoxTrainingRating->setEnabled(true);
@@ -368,17 +354,17 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 
 void MainWindow::on_pushButtonReset_clicked()
 {
-	this->currentController->DeleteNeuralNetwork();
 	this->enableModification(true);
-	ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
-	ui->spinBoxIteration->setValue(currentController->outputs.numberOfIteration);
+	ui->spinBoxCount->setValue(0);
+	ui->spinBoxIteration->setValue(0);
 	this->refreshClusteringRate();
+	this->currentController->deleteNeuralNetwork();
 	this->on_pushButtonResetGraph_clicked();
 }
 
 void MainWindow::on_pushButtonSave_clicked()
 {
-	if (currentController->outputs.clusteringRate <= 0)
+	if (this->currentController->getNeuralNetwork().getGlobalClusteringRate() <= 0)
 	{
 		QMessageBox::warning(this, tr("Save Neural Network"), tr("Cannot save a neural network having never learned"),
 		                     QMessageBox::Ok);
@@ -386,7 +372,7 @@ void MainWindow::on_pushButtonSave_clicked()
 	}
 
 	QString data = ui->comboBoxData->currentText();
-	QString clustering_rate = QString::number(currentController->outputs.clusteringRate);
+	QString clustering_rate = QString::number(this->currentController->getNeuralNetwork().getGlobalClusteringRate());
 	QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
 	QString fileName = "./Save/" + data + "_" + clustering_rate + "_" + date;
 	fileName = QFileDialog::getSaveFileName(this,
@@ -409,28 +395,18 @@ void MainWindow::on_pushButtonLoad_clicked()
 	}
 }
 
-void MainWindow::updateGraphOfClusteringRate()
+void MainWindow::updateInterface()
 {
-	this->currentController->blockSignals(true);
 	this->refreshClusteringRate();
-	x.push_back(this->currentController->outputs.numberOfIteration);
-	clusteringRates.push_back(this->currentController->outputs.clusteringRate * 100.0f);
-	weightedClusteringRates.push_back(this->currentController->outputs.weightedClusteringRate * 100.0f);
-	f1Scores.push_back(this->currentController->outputs.f1Score * 100.0f);
-	this->refreshGraphOfClusteringRate();
-	this->currentController->blockSignals(false);
-}
 
-void MainWindow::updateNumberOfIteration()
-{
-	this->currentController->blockSignals(true);
-	ui->spinBoxIteration->setValue(this->currentController->outputs.numberOfIteration);
-	QApplication::processEvents();
-	this->currentController->blockSignals(false);
-}
-
-void MainWindow::updateCount()
-{
+	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());	
 	ui->timeEdit->setTime(QTime::fromMSecsSinceStartOfDay(static_cast<int>(timerForTimeEdit->elapsed())));
-	ui->spinBoxCount->setValue(currentController->outputs.currentIndex);
+	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
+
+	this->mainChart->updateLineSeries(
+		this->currentController->getNeuralNetwork().getNumberOfIteration(),
+		this->currentController->getNeuralNetwork().getGlobalClusteringRate(),
+		this->currentController->getNeuralNetwork().getWeightedClusteringRate(),
+		this->currentController->getNeuralNetwork().getF1Score()
+	);
 }
