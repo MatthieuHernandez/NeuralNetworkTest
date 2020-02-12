@@ -28,6 +28,7 @@
     <IntermediateDirectory>release\</IntermediateDirectory>
     <PrimaryOutput>NeuralNetwork</PrimaryOutput>
     <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>

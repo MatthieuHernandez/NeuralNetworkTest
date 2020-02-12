@@ -115,27 +115,28 @@ void MainWindow::resetComboBoxLayer() const
 
 void MainWindow::initializeLayerButtons(const int layer) const
 {
-	const int neuronsNumber = this->currentController->inputs.structure[layer].numberOfNeurons;
-	ui->spinBoxNeurons->setValue(neuronsNumber);
-
-	if (layer > 0)
+	if (layer == 0)
 	{
+		const int neuronsNumber = this->currentController->inputs.NumberOfInputs;
+		ui->comboBoxActivationFunction->hide();
+		ui->spinBoxNeurons->setEnabled(false);
+		ui->labelNeurons->setText("Inputs :");
+		ui->spinBoxNeurons->setValue(neuronsNumber);
+	}
+	else
+	{
+		const int neuronsNumber = this->currentController->inputs.structure[layer - 1].numberOfNeurons;
 		const auto function = static_cast<int>(this->currentController->inputs.structure[layer - 1].activation);
 		ui->comboBoxActivationFunction->blockSignals(true);
 		ui->comboBoxActivationFunction->setCurrentIndex(function);
 		ui->comboBoxActivationFunction->blockSignals(false);
 		ui->comboBoxActivationFunction->show();
-		if (this->currentController->inputs.structure.size() == layer || !computeIsStop)
+		if (this->currentController->inputs.structure.size() == layer - 1 || !computeIsStop)
 			ui->spinBoxNeurons->setEnabled(false);
 		else
 			ui->spinBoxNeurons->setEnabled(true);
 		ui->labelNeurons->setText("Neurons :");
-	}
-	else
-	{
-		ui->comboBoxActivationFunction->hide();
-		ui->spinBoxNeurons->setEnabled(false);
-		ui->labelNeurons->setText("Inputs :");
+		ui->spinBoxNeurons->setValue(neuronsNumber);
 	}
 
 	ui->spinBoxLearningRate->setValue(this->currentController->inputs.learningRate);
@@ -160,7 +161,6 @@ void MainWindow::enableModification(const bool isEnable) const
 	ui->pushButtonEvaluate->setEnabled(isEnable);
 	ui->pushButtonAddLayer->setEnabled(isEnable);
 	ui->pushButtonRemoveLayer->setEnabled(isEnable);
-	ui->spinBoxNeurons->setEnabled(isEnable);
 	ui->comboBoxActivationFunction->setEnabled(isEnable);
 	ui->spinBoxLearningRate->setEnabled(isEnable);
 	ui->spinBoxMomentum->setEnabled(isEnable);
@@ -313,7 +313,8 @@ void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 {
 	int index = ui->comboBoxLayer->currentIndex();
 	//TODO: only for AllToAll
-	this->currentController->inputs.structure[index].numberOfNeurons = value;
+	if(index > 0)
+	    this->currentController->inputs.structure[index-1].numberOfNeurons = value;
 }
 
 void MainWindow::on_spinBoxLearningRate_valueChanged(double value)
@@ -354,8 +355,8 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 void MainWindow::on_pushButtonReset_clicked()
 {
 	this->enableModification(true);
-	ui->spinBoxCount->setValue(this->currentController->getNeuralNetwork().getCurrentIndex());
-	ui->spinBoxIteration->setValue(this->currentController->getNeuralNetwork().getNumberOfIteration());
+	ui->spinBoxCount->setValue(0);
+	ui->spinBoxIteration->setValue(0);
 	this->refreshClusteringRate();
 	this->currentController->deleteNeuralNetwork();
 	this->on_pushButtonResetGraph_clicked();

@@ -5,7 +5,7 @@ using namespace snn;
 
 Controller::Controller(Dataset& data)
 {
-	this->data = unique_ptr<Dataset>(&data);
+    this->data = unique_ptr<Dataset>(&data);
 }
 
 void Controller::resetOutput()
@@ -15,7 +15,7 @@ void Controller::resetOutput()
 
 void Controller::deleteNeuralNetwork()
 {
-	this->neuralNetwork.reset(nullptr);
+	this->neuralNetwork.reset();
 }
 
 void Controller::initializeNeuralNetwork(const QString& dataSetName)
