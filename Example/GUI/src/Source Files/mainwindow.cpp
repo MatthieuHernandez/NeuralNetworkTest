@@ -355,6 +355,7 @@ void MainWindow::on_comboBoxData_currentIndexChanged(int index)
 void MainWindow::on_pushButtonReset_clicked()
 {
 	this->enableModification(true);
+	ui->pushButtonReset->setEnabled(false);
 	ui->spinBoxCount->setValue(0);
 	ui->spinBoxIteration->setValue(0);
 	this->refreshClusteringRate();

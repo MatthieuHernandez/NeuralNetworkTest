@@ -48,11 +48,11 @@ void MainChart::clear()
 {
 	this->previousAxisXValue = 0;
 	this->clusteringRatePoints.clear();
-	this->clusteringRatePoints.push_back(QPointF(0, 0));
+	//this->clusteringRatePoints.push_back(QPointF(0, 0));
 	this->weightedClusteringRatePoints.clear();
-	this->weightedClusteringRatePoints.push_back(QPointF(0, 0));
+	//this->weightedClusteringRatePoints.push_back(QPointF(0, 0));
 	this->f1ScorePoints.clear();
-	this->f1ScorePoints.push_back(QPointF(0, 0));
+	//this->f1ScorePoints.push_back(QPointF(0, 0));
 
 	this->clusteringRateSeries->replace(clusteringRatePoints);
 	this->weightedClusteringRateSeries->replace(weightedClusteringRatePoints);
@@ -61,8 +61,8 @@ void MainChart::clear()
 
 void MainChart::updateLineSeries(float x, float clusteringRate, float weightedClusteringRate, float f1Score)
 {
-	if (this->previousAxisXValue != x
-		|| (this->previousAxisXValue == 0 || clusteringRate != 0))
+	if (this->previousAxisXValue < x
+	|| (this->previousAxisXValue == 0 && clusteringRate != 0))
 	{
 		this->previousAxisXValue = x;
 
