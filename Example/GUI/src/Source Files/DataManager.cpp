@@ -6,13 +6,15 @@
 #include "CurrencyRatesEurToUsd.h"
 #include "MnistVisualizationWidget.h"
 #include "Cifar10VisualizationWidget.h"
+#include "Fashion-MNIST/FashionMnist.hpp"
+#include "FashionMnistVisualizationWidget.h"
 
 using namespace snn;
 
 DataManager::DataManager()
 {
-	controllers.resize(End, nullptr);
-	widgets.resize(End, nullptr);
+	controllers.resize(numberOfIndex, nullptr);
+	widgets.resize(numberOfIndex, nullptr);
 }
 
 void DataManager::initializeInputsNNs(int index)
@@ -54,6 +56,18 @@ void DataManager::initializeInputsNNs(int index)
 		controllers[index]->inputs.momentum = 0.0;
 		break;
 
+	case indexFashionMNIST:
+		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
+		controllers[index]->inputs.structure = vector<LayerModel>
+		{
+			AllToAll(150, sigmoid),
+			AllToAll(80, sigmoid),
+			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+		};
+		controllers[index]->inputs.learningRate = 0.1f;
+		controllers[index]->inputs.momentum = 0.0;
+		break;
+
 	case indexCIFAR_10:
 		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
 		controllers[index]->inputs.structure = vector<LayerModel>
@@ -79,7 +93,7 @@ void DataManager::initializeInputsNNs(int index)
 		break;
 
 	default:
-		throw exception();
+		throw exception("Missing neural network configuration for this dataset");
 	}
 }
 
@@ -100,6 +114,10 @@ Controller* DataManager::getController(int index)
 
 		case indexMNIST:
 			controllers[index] = new Controller(*new Mnist("../../../Datasets-for-Machine-Learning/MNIST"));
+			break;
+
+		case indexFashionMNIST:
+			controllers[index] = new Controller(*new FashionMnist("../../../Datasets-for-Machine-Learning/Fashion-MNIST"));
 			break;
 
 		case indexCurrencyRates:
@@ -127,6 +145,10 @@ DataVisualizationWidget* DataManager::getWidget(int index)
 		{
 		case indexMNIST:
 			widgets[index] = new MnistVisualizationWidget(nullptr, this->getController(index));
+			break;
+
+		case indexFashionMNIST:
+			widgets[index] = new FashionMnistVisualizationWidget(nullptr, this->getController(index));
 			break;
 
 		case indexIris:

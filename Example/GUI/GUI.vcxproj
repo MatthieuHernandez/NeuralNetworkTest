@@ -269,10 +269,10 @@
     <QtUic Include="Cifar10Visualization.ui" />
     <QtUic Include="Console.ui" />
     <QtUic Include="DataVisualizationWidget.ui" />
+    <QtUic Include="FashionMnistVisualization.ui" />
     <QtUic Include="ImageVisualizationWidget.ui" />
-    <QtUic Include="mainwindow.ui">
-    </QtUic>
     <QtUic Include="MnistVisualization.ui" />
+	<QtUic Include="mainwindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source Files\Cifar10VisualizationWidget.cpp" />
@@ -280,6 +280,7 @@
     <ClCompile Include="src\Source Files\Controller.cpp" />
     <ClCompile Include="src\Source Files\DataManager.cpp" />
     <ClCompile Include="src\Source Files\DataVisualizationWidget.cpp" />
+    <ClCompile Include="src\Source Files\FashionMnistVisualizationWidget.cpp" />
     <ClCompile Include="src\Source Files\ImageVisualizationWidget.cpp" />
     <ClCompile Include="src\Source Files\main.cpp" />
     <ClCompile Include="src\Source Files\MainChart.cpp" />
@@ -290,6 +291,10 @@
     <QtMoc Include="src\Header Files\mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\Header Files\FashionMnistVisualizationWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\tests\dataset_tests;C:\Programming\Github\StraightforwardNeuralNetwork\src\external_library\boost_1_71_0_minimal;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtUiTools;.</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Programming\Github\StraightforwardNeuralNetwork\src;C:\Programming\Github\StraightforwardNeuralNetwork\tests\dataset_tests;C:\Programming\Github\StraightforwardNeuralNetwork\src\external_library\boost_1_71_0_minimal;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtSvg;$(QTDIR)\include\QtUiTools;.</IncludePath>
+    </QtMoc>
     <ClInclude Include="src\Header Files\MainChart.h" />
     <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)External Library;$(ProjectDir)..\..\NeuralNetwork\src\Header Files;$(ProjectDir)..\Data\src\Header Files;$(ProjectDir)src\Header Files;$(ProjectDir)src\Source Files;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.\..\..\lib;$(QTDIR)\include;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtSvg;.;$(QTDIR)\include\QtUiTools</IncludePath>

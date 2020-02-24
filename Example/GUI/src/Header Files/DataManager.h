@@ -6,9 +6,10 @@ enum indexData
 	indexIris = 0,
 	indexWine,
 	indexMNIST,
+	indexFashionMNIST,
 	indexCIFAR_10,
 	indexCurrencyRates,
-	End
+	numberOfIndex
 };
 
 class DataManager

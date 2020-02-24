@@ -17,17 +17,5 @@ public:
 
 private:
 	Ui::MnistVisualization* ui;
-
 	unsigned char getPixel(int number, int x, int y, color color) const override;
-
-private slots:
-	void on_comboBoxSet_currentIndexChanged(int index)
-	{
-		ImageVisualizationWidget::on_comboBoxSet_currentIndexChanged(index);
-	}
-
-	void on_spinBoxImageId_valueChanged(int value)
-	{
-		ImageVisualizationWidget::on_spinBoxImageId_valueChanged(value);
-	}
 };

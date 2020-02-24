@@ -8,6 +8,7 @@ Cifar10VisualizationWidget::Cifar10VisualizationWidget(QWidget *parent, Controll
 	ui->setupUi(this);
 	this->controller = controller;
 	ImageVisualizationWidget::ui->Image->resize(320, 320);
+	this->displayImage(0);
 }
 
 unsigned char Cifar10VisualizationWidget::getPixel(int number, int x, int y, color color) const

@@ -171,6 +171,7 @@ public:
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
         comboBoxData->addItem(QString());
+        comboBoxData->addItem(QString());
         comboBoxData->setObjectName(QString::fromUtf8("comboBoxData"));
         comboBoxData->setGeometry(QRect(60, 1, 111, 22));
         label_7 = new QLabel(tab_3);
@@ -355,7 +356,7 @@ public:
 
         tabWidgetData->setCurrentIndex(0);
         tabWidgetNeuralNetwork->setCurrentIndex(0);
-        comboBoxData->setCurrentIndex(2);
+        comboBoxData->setCurrentIndex(0);
         comboBoxLayer->setCurrentIndex(0);
 
 
@@ -378,8 +379,9 @@ public:
         comboBoxData->setItemText(0, QCoreApplication::translate("MainWindow", "Iris", nullptr));
         comboBoxData->setItemText(1, QCoreApplication::translate("MainWindow", "Wine", nullptr));
         comboBoxData->setItemText(2, QCoreApplication::translate("MainWindow", "MNIST", nullptr));
-        comboBoxData->setItemText(3, QCoreApplication::translate("MainWindow", "CIFAR-10", nullptr));
-        comboBoxData->setItemText(4, QCoreApplication::translate("MainWindow", "CurrencyRates", nullptr));
+        comboBoxData->setItemText(3, QCoreApplication::translate("MainWindow", "Fashion-MNIST", nullptr));
+        comboBoxData->setItemText(4, QCoreApplication::translate("MainWindow", "CIFAR-10", nullptr));
+        comboBoxData->setItemText(5, QCoreApplication::translate("MainWindow", "CurrencyRates", nullptr));
 
         label_7->setText(QCoreApplication::translate("MainWindow", "Count :", nullptr));
         labelMax->setText(QCoreApplication::translate("MainWindow", "Max", nullptr));

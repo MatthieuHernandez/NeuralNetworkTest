@@ -53,6 +53,9 @@
     <QtMoc Include="src\Header Files\DataVisualizationWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\Header Files\FashionMnistVisualizationWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="release\moc_predefs.h.cbt">
@@ -76,6 +79,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ImageVisualizationWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="FashionMnistVisualization.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -108,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Source Files\MainChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source Files\FashionMnistVisualizationWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

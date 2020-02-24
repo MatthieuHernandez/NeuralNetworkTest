@@ -11,6 +11,7 @@ MnistVisualizationWidget::MnistVisualizationWidget(QWidget *parent, Controller *
 	ui->setupUi(this);
 	this->controller = controller;
 	ImageVisualizationWidget::ui->Image->resize(280, 280);
+	this->displayImage(0);
 }
 
 unsigned char MnistVisualizationWidget::getPixel(int number, int x, int y, color) const

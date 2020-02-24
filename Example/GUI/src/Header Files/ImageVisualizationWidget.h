@@ -30,6 +30,7 @@ protected :
 	virtual unsigned char getPixel(int number, int x, int y, color color) const = 0;
 	void displayImage(int value);
 
+protected slots:
 	void on_comboBoxSet_currentIndexChanged(int index);
 	void on_spinBoxImageId_valueChanged(int value);
 };

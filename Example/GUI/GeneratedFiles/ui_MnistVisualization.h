@@ -31,6 +31,7 @@ public:
         label->setGeometry(QRect(340, 10, 310, 130));
         label->setTextFormat(Qt::AutoText);
         label->setScaledContents(false);
+        label->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label->setWordWrap(true);
         label->setOpenExternalLinks(false);
 
