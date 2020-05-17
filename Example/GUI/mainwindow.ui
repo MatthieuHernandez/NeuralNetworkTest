@@ -206,7 +206,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -732,14 +732,14 @@
        </rect>
       </property>
       <property name="text">
-       <string>Layer  :</string>
+       <string>Layer:</string>
       </property>
      </widget>
      <widget class="QSpinBox" name="spinBoxNeurons">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>50</y>
+        <x>70</x>
+        <y>90</y>
         <width>50</width>
         <height>22</height>
        </rect>
@@ -779,21 +779,21 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>90</y>
         <width>47</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Neurons :</string>
+       <string>Neurons:</string>
       </property>
      </widget>
      <widget class="QComboBox" name="comboBoxActivationFunction">
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>90</y>
-        <width>101</width>
+        <y>130</y>
+        <width>102</width>
         <height>22</height>
        </rect>
       </property>
@@ -822,6 +822,11 @@
         <string>Gaussian</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Identity</string>
+       </property>
+      </item>
      </widget>
      <widget class="QPushButton" name="pushButtonAddLayer">
       <property name="geometry">
@@ -844,21 +849,21 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
+        <y>120</y>
         <width>51</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>Activation
-function :</string>
+function:</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="spinBoxLearningRate">
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>130</y>
+        <y>170</y>
         <width>55</width>
         <height>22</height>
        </rect>
@@ -877,33 +882,33 @@ function :</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>170</y>
         <width>71</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Learning rate :</string>
+       <string>Learning rate:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>170</y>
+        <y>210</y>
         <width>71</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Momentum :</string>
+       <string>Momentum:</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="spinBoxMomentum">
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>170</y>
+        <y>210</y>
         <width>55</width>
         <height>22</height>
        </rect>
@@ -919,10 +924,13 @@ function :</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="checkBoxOpenMP">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>210</y>
+        <y>250</y>
         <width>161</width>
         <height>21</height>
        </rect>
@@ -942,6 +950,44 @@ function :</string>
       <property name="tristate">
        <bool>false</bool>
       </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>60</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Layer type:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxLayerType">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>50</y>
+        <width>102</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>AllToAll</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Recurence</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Convolution</string>
+       </property>
+      </item>
      </widget>
     </widget>
    </widget>

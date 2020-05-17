@@ -115,7 +115,8 @@
     <Lib>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
-      <AdditionalDependencies>$(QTDIR)\include\QtCore</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -149,7 +150,8 @@
     <Lib>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
-      <AdditionalDependencies>$(QTDIR)\include\QtCore</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

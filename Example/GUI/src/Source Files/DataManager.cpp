@@ -14,163 +14,163 @@ using namespace snn;
 
 DataManager::DataManager()
 {
-	controllers.resize(numberOfIndex, nullptr);
-	widgets.resize(numberOfIndex, nullptr);
+    controllers.resize(numberOfIndex, nullptr);
+    widgets.resize(numberOfIndex, nullptr);
 }
 
 void DataManager::initializeInputsNNs(int index)
 {
-	switch (index)
-	{
-	case indexIris:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(13, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
-		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0;
-		break;
+    switch (index)
+    {
+    case indexIris:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(13, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+        };
+        controllers[index]->inputs.learningRate = 0.1f;
+        controllers[index]->inputs.momentum = 0.0;
+        break;
 
-	case indexWine:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(20, sigmoid),
-			AllToAll(8, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
-		};
-		controllers[index]->inputs.learningRate = 0.01f;
-		controllers[index]->inputs.momentum = 0.0;
-		break;
+    case indexWine:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(20, sigmoid),
+            AllToAll(8, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+        };
+        controllers[index]->inputs.learningRate = 0.01f;
+        controllers[index]->inputs.momentum = 0.0;
+        break;
 
-	case indexMNIST:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(150, sigmoid),
-			AllToAll(80, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
-		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0;
-		break;
+    case indexMNIST:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(150, sigmoid),
+            AllToAll(80, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+        };
+        controllers[index]->inputs.learningRate = 0.1f;
+        controllers[index]->inputs.momentum = 0.0;
+        break;
 
-	case indexFashionMNIST:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(150, sigmoid),
-			AllToAll(80, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
-		};
-		controllers[index]->inputs.learningRate = 0.1f;
-		controllers[index]->inputs.momentum = 0.0;
-		break;
+    case indexFashionMNIST:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(150, sigmoid),
+            AllToAll(80, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+        };
+        controllers[index]->inputs.learningRate = 0.1f;
+        controllers[index]->inputs.momentum = 0.0;
+        break;
 
-	case indexCIFAR_10:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(150, sigmoid),
-			AllToAll(80, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
-		};
-		controllers[index]->inputs.learningRate = 0.01f;
-		controllers[index]->inputs.momentum = 0.85;
-		break;
+    case indexCIFAR_10:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(150, sigmoid),
+            AllToAll(80, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+        };
+        controllers[index]->inputs.learningRate = 0.01f;
+        controllers[index]->inputs.momentum = 0.85;
+        break;
 
-	case indexCurrencyRates:
-		controllers[index]->inputs.NumberOfInputs = controllers[index]->getDataset().data->sizeOfData;
-		controllers[index]->inputs.structure = vector<LayerModel>
-		{
-			AllToAll(250, sigmoid),
-			AllToAll(60, sigmoid),
-			AllToAll(controllers[index]->getDataset().data->numberOfLabel, snn::tanh)
-		};
-		controllers[index]->inputs.learningRate = 0.003f;
-		controllers[index]->inputs.momentum = 0.0f;
-		break;
+    case indexCurrencyRates:
+        controllers[index]->inputs.structure = vector<LayerModel>
+        {
+            Input(controllers[index]->getDataset().data->sizeOfData),
+            AllToAll(250, sigmoid),
+            AllToAll(60, sigmoid),
+            AllToAll(controllers[index]->getDataset().data->numberOfLabel, snn::tanh)
+        };
+        controllers[index]->inputs.learningRate = 0.003f;
+        controllers[index]->inputs.momentum = 0.0f;
+        break;
 
-	default:
-		throw exception("Missing neural network configuration for this dataset");
-	}
+    default:
+        throw exception("Missing neural network configuration for this dataset");
+    }
 }
 
 Controller* DataManager::getController(int index)
 {
-	if (controllers[index] == nullptr)
-	{
-		switch (index)
-		{
+    if (controllers[index] == nullptr)
+    {
+        switch (index)
+        {
 
-		case indexIris:
-			controllers[index] = new Controller(*new Iris("../../../Datasets-for-Machine-Learning/Iris"));
-			break;
+        case indexIris:
+            controllers[index] = new Controller(*new Iris("../../../Datasets-for-Machine-Learning/Iris"));
+            break;
 
-		case indexWine:
-			controllers[index] = new Controller(*new Wine("../../../Datasets-for-Machine-Learning/Wine"));
-			break;
+        case indexWine:
+            controllers[index] = new Controller(*new Wine("../../../Datasets-for-Machine-Learning/Wine"));
+            break;
 
-		case indexMNIST:
-			controllers[index] = new Controller(*new Mnist("../../../Datasets-for-Machine-Learning/MNIST"));
-			break;
+        case indexMNIST:
+            controllers[index] = new Controller(*new Mnist("../../../Datasets-for-Machine-Learning/MNIST"));
+            break;
 
-		case indexFashionMNIST:
-			controllers[index] = new Controller(*new FashionMnist("../../../Datasets-for-Machine-Learning/Fashion-MNIST"));
-			break;
+        case indexFashionMNIST:
+            controllers[index] = new Controller(*new FashionMnist("../../../Datasets-for-Machine-Learning/Fashion-MNIST"));
+            break;
 
-		case indexCurrencyRates:
-			controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
-			break;
+        case indexCurrencyRates:
+            controllers[index] = new Controller(*new CurrencyRatesEurToUsd());
+            break;
 
-		case indexCIFAR_10:
-			controllers[index] = new Controller(*new Cifar10("../../../Datasets-for-Machine-Learning/CIFAR-10"));
-			break;
+        case indexCIFAR_10:
+            controllers[index] = new Controller(*new Cifar10("../../../Datasets-for-Machine-Learning/CIFAR-10"));
+            break;
 
-		default:
-			throw exception("The data doesn't exist !");
-		}
-		this->initializeInputsNNs(index);
-	}
-	return controllers[index];
+        default:
+            throw exception("The data doesn't exist !");
+        }
+        this->initializeInputsNNs(index);
+    }
+    return controllers[index];
 }
 
 
 DataVisualizationWidget* DataManager::getWidget(int index)
 {
-	if (widgets[index] == nullptr)
-	{
-		switch (index)
-		{
-		case indexMNIST:
-			widgets[index] = new MnistVisualizationWidget(nullptr, this->getController(index));
-			break;
+    if (widgets[index] == nullptr)
+    {
+        switch (index)
+        {
+        case indexMNIST:
+            widgets[index] = new MnistVisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		case indexFashionMNIST:
-			widgets[index] = new FashionMnistVisualizationWidget(nullptr, this->getController(index));
-			break;
+        case indexFashionMNIST:
+            widgets[index] = new FashionMnistVisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		case indexIris:
-			widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
-			break;
+        case indexIris:
+            widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		case indexWine:
-			widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
-			break;
+        case indexWine:
+            widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		case indexCurrencyRates:
-			widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
-			break;
+        case indexCurrencyRates:
+            widgets[index] = new DataVisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		case indexCIFAR_10:
-			widgets[index] = new Cifar10VisualizationWidget(nullptr, this->getController(index));
-			break;
+        case indexCIFAR_10:
+            widgets[index] = new Cifar10VisualizationWidget(nullptr, this->getController(index));
+            break;
 
-		default:
-			throw exception("The widget doesn't exist !");
-		}
-	}
-	return widgets[index];
+        default:
+            throw exception("The widget doesn't exist !");
+        }
+    }
+    return widgets[index];
 }
