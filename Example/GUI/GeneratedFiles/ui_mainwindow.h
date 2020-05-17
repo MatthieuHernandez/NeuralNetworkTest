@@ -368,8 +368,8 @@ public:
         retranslateUi(MainWindow);
 
         tabWidgetData->setCurrentIndex(0);
-        tabWidgetNeuralNetwork->setCurrentIndex(1);
-        comboBoxData->setCurrentIndex(0);
+        tabWidgetNeuralNetwork->setCurrentIndex(0);
+        comboBoxData->setCurrentIndex(1);
         comboBoxLayer->setCurrentIndex(0);
 
 

@@ -107,7 +107,7 @@ void MainWindow::resetComboBoxLayer() const
     ui->comboBoxLayer->clear();
     ui->comboBoxLayer->addItem("Input");
     const int numberOfLayer = this->currentController->inputs.structure.size();
-    for (int i = 0; i < numberOfLayer - 1; i++)
+    for (int i = 0; i < numberOfLayer - 2; i++)
         ui->comboBoxLayer->addItem(QString::number(i));
     ui->comboBoxLayer->addItem("Output");
     ui->comboBoxLayer->blockSignals(false);
