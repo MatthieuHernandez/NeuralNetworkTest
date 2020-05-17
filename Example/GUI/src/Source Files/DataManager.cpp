@@ -9,6 +9,7 @@
 #include "Fashion-MNIST/FashionMnist.hpp"
 #include "FashionMnistVisualizationWidget.h"
 
+using namespace std;
 using namespace snn;
 
 DataManager::DataManager()

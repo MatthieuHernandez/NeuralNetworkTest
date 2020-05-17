@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include <QDateTime>
 
+using namespace std;
 using namespace snn;
 
 Controller::Controller(Dataset& data)
@@ -24,7 +25,7 @@ void Controller::initializeNeuralNetwork(const QString& dataSetName)
 	const auto fileName = "./Save/autosave_" + dataSetName + "_" + date;
 	this->inputs.saveFilePath = fileName.toStdString();
 
-	this->neuralNetwork = make_unique<StraightforwardNeuralNetwork>(this->inputs.NumberOfInputs, this->inputs.structure);
+	this->neuralNetwork = make_unique<StraightforwardNeuralNetwork>(this->inputs.structure);
 	this->resetOutput();
 }
 

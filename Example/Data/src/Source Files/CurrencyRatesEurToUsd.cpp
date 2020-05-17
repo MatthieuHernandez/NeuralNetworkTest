@@ -1,8 +1,7 @@
 #include "CurrencyRatesEurToUsd.h"
 #include <string>
 #include <fstream>
-#include "data/DataForRegression.hpp"
-#include "data/DataForClassification.hpp"
+#include "data/Data.hpp"
 
 using namespace std;
 using namespace snn;
@@ -24,7 +23,7 @@ void CurrencyRatesEurToUsd::loadData(string folderPth = nullptr)
 	this->loadCSV(2016);
 	this->createData(inputs, labels);
 	//this->unshuffle();
-	this->data = make_unique<DataForClassification>(inputs, labels, 0.0f);
+	this->data = make_unique<Data>(classification, inputs, labels);
 }
 
 void CurrencyRatesEurToUsd::loadCSV(int year)

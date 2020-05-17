@@ -3,6 +3,7 @@
 #include <qtconcurrentrun.h>
 #include "DataManager.h"
 
+using namespace std;
 using namespace snn;
 
 MainWindow::MainWindow(QWidget* parent)
