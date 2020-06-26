@@ -26,8 +26,8 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(13, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+            FullyConnected(13, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
         };
         controllers[index]->inputs.learningRate = 0.1f;
         controllers[index]->inputs.momentum = 0.0;
@@ -37,9 +37,9 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(20, sigmoid),
-            AllToAll(8, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+            FullyConnected(20, sigmoid),
+            FullyConnected(8, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
         };
         controllers[index]->inputs.learningRate = 0.01f;
         controllers[index]->inputs.momentum = 0.0;
@@ -49,9 +49,9 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(150, sigmoid),
-            AllToAll(80, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+            FullyConnected(150, sigmoid),
+            FullyConnected(80, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
         };
         controllers[index]->inputs.learningRate = 0.1f;
         controllers[index]->inputs.momentum = 0.0;
@@ -61,9 +61,9 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(150, sigmoid),
-            AllToAll(80, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+            FullyConnected(150, sigmoid),
+            FullyConnected(80, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
         };
         controllers[index]->inputs.learningRate = 0.1f;
         controllers[index]->inputs.momentum = 0.0;
@@ -73,9 +73,9 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(150, sigmoid),
-            AllToAll(80, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
+            FullyConnected(150, sigmoid),
+            FullyConnected(80, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, sigmoid)
         };
         controllers[index]->inputs.learningRate = 0.01f;
         controllers[index]->inputs.momentum = 0.85;
@@ -85,9 +85,9 @@ void DataManager::initializeInputsNNs(int index)
         controllers[index]->inputs.structure = vector<LayerModel>
         {
             Input(controllers[index]->getDataset().data->sizeOfData),
-            AllToAll(250, sigmoid),
-            AllToAll(60, sigmoid),
-            AllToAll(controllers[index]->getDataset().data->numberOfLabel, snn::tanh)
+            FullyConnected(250, sigmoid),
+            FullyConnected(60, sigmoid),
+            FullyConnected(controllers[index]->getDataset().data->numberOfLabel, snn::tanh)
         };
         controllers[index]->inputs.learningRate = 0.003f;
         controllers[index]->inputs.momentum = 0.0f;

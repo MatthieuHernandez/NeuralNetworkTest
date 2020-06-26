@@ -313,7 +313,7 @@ void MainWindow::on_checkBoxOpenMP_stateChanged(int state)
 void MainWindow::on_spinBoxNeurons_valueChanged(int value)
 {
     int index = ui->comboBoxLayer->currentIndex();
-    //TODO: only for AllToAll
+    //TODO: only for FullyConnected
     if(index > 0)
         this->currentController->inputs.structure[index-1].numberOfNeurons = value;
 }

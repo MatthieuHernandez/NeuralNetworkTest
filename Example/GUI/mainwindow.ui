@@ -975,7 +975,7 @@ function:</string>
       </property>
       <item>
        <property name="text">
-        <string>AllToAll</string>
+        <string>FullyConnected</string>
        </property>
       </item>
       <item>
