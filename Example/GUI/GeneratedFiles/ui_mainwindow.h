@@ -441,7 +441,7 @@ public:
         label_10->setText(QCoreApplication::translate("MainWindow", "Momentum:", nullptr));
         checkBoxOpenMP->setText(QCoreApplication::translate("MainWindow", "OpenMP multithreading", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "Layer type:", nullptr));
-        comboBoxLayerType->setItemText(0, QCoreApplication::translate("MainWindow", "AllToAll", nullptr));
+        comboBoxLayerType->setItemText(0, QCoreApplication::translate("MainWindow", "FullyConnected", nullptr));
         comboBoxLayerType->setItemText(1, QCoreApplication::translate("MainWindow", "Recurence", nullptr));
         comboBoxLayerType->setItemText(2, QCoreApplication::translate("MainWindow", "Convolution", nullptr));
 
